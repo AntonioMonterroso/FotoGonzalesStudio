@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F5F2EC">
+<title>Propuesta · Foto Gonzáles Studio</title>
+<meta name="description" content="Propuesta de Monterroso Dev Studio para Foto Gonzáles Studio: página, tienda en línea y sistema completo, con base de datos Supabase Pro, dominio propio y tiempo real.">
+<meta property="og:title" content="Propuesta para Foto Gonzáles Studio">
+<meta property="og:description" content="Ustedes toman la foto. El sistema hace lo demás.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://antoniomonterroso.github.io/FotoGonzalesStudio/img/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<!-- Intro: el diafragma se abre -->
+<div class="intro" id="intro" aria-hidden="true">
+  <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <mask id="hueco">
+        <rect width="1000" height="1000" fill="#fff"/>
+        <g id="hueco-g" style="transform-box: view-box; transform-origin: 500px 500px; transform: scale(0.01)">
+          <polygon points="500,380 604,440 604,560 500,620 396,560 396,440" fill="#000"/>
+        </g>
+      </mask>
+    </defs>
+    <rect width="1000" height="1000" fill="#161513" mask="url(#hueco)"/>
+    <g id="hojas" style="transform-box: view-box; transform-origin: 500px 500px; transform: scale(0.01)" stroke="#4d4843" stroke-width="2" fill="none" vector-effect="non-scaling-stroke">
+      <path d="M500 380 L1500 -197" vector-effect="non-scaling-stroke"/>
+      <path d="M604 440 L1604 1017" vector-effect="non-scaling-stroke"/>
+      <path d="M604 560 L604 1715" vector-effect="non-scaling-stroke"/>
+      <path d="M500 620 L-500 1197" vector-effect="non-scaling-stroke"/>
+      <path d="M396 560 L-604 -17" vector-effect="non-scaling-stroke"/>
+      <path d="M396 440 L396 -715" vector-effect="non-scaling-stroke"/>
+    </g>
+  </svg>
+  <div class="flash"></div>
+  <p class="exif mono" id="intro-exif">f/1.8 · 1/250 · ISO 100</p>
+</div>
+<div class="destello" id="destello" aria-hidden="true"></div>
+
+<header class="barra" id="barra">
+  <a class="barra-firma" href="#portada"><img src="img/firma-m.png" alt=""><span>Monterroso Dev Studio</span></a>
+  <nav id="menu" aria-label="Secciones">
+    <a href="#sistemas">Sistemas</a>
+    <a href="#vivo">En vivo</a>
+    <a href="#base">Base de datos</a>
+    <a href="#dominio">Dominio</a>
+    <a href="#precios">Precios</a>
+    <a href="#arranque">Arranque</a>
+  </nav>
+  <a class="btn btn-tinta btn-barra" href="#precios">Ver precios</a>
+  <button class="menu-btn" id="menu-btn" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu"><span data-i="menu"></span></button>
+</header>
+
+<main>
+  <!-- 00 Portada -->
+  <section class="portada" id="portada">
+    <div class="envoltura">
+      <div>
+        <p class="para"><span class="marca" data-i="aperture"></span>Propuesta para <b>&nbsp;Foto Gonzáles Studio</b></p>
+        <h1 id="titulo">
+          <span class="linea"><span>Ustedes toman</span></span>
+          <span class="linea"><span>la foto.</span></span>
+          <span class="linea"><span>El sistema hace</span></span>
+          <span class="linea"><span><em>lo demás.</em></span></span>
+        </h1>
+        <p class="bajada">Página, tienda y sistema completo para el estudio. Reservas, galerías privadas y pedidos que se actualizan al instante, en el celular del cliente y en el suyo.</p>
+        <div class="acciones">
+          <a class="btn btn-tinta" href="#sistemas">Ver los tres sistemas <span data-i="arrow"></span></a>
+          <a class="btn" href="#vivo">Probar la demo en vivo</a>
+        </div>
+      </div>
+      <div class="visor" id="visor" aria-label="Visor de cámara con una foto de muestra">
+        <div class="foto f-boda" id="visor-foto"></div>
+        <div class="tercios"></div>
+        <div class="esquinas"><span></span><span></span><span></span><span></span></div>
+        <div class="enfoque" id="enfoque"></div>
+        <p class="rec mono"><i></i> EN VIVO</p>
+        <div class="datos mono"><span id="visor-exif">f/2.8 · 1/250 · ISO 100</span><span id="visor-cuadro">FGS · 0001</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 Hoy -->
+  <section class="sec" id="hoy">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">01</span> Lo que pasa hoy</p>
+        <h2 class="enfoca">Mucho talento. Demasiado WhatsApp.</h2>
+      </header>
+      <div class="dolores">
+        <article class="dolor revela"><span class="n">01</span><div><h3>«¿Ya están mis fotos?»</h3><p>La misma pregunta, cada día, de cada cliente. Y el cliente no tiene dónde ver cómo va su pedido.</p></div></article>
+        <article class="dolor revela"><span class="n">02</span><div><h3>«La 14, la 23 y la 41»</h3><p>Elegir fotos por mensaje: números sueltos, capturas de pantalla, audios. Tarde o temprano alguien se equivoca.</p></div></article>
+        <article class="dolor revela"><span class="n">03</span><div><h3>La agenda en el cuaderno</h3><p>Dos familias piden el mismo sábado. Una se entera tarde, y eso se nota en la reseña.</p></div></article>
+        <article class="dolor revela"><span class="n">04</span><div><h3>Fotos por Drive o WeTransfer</h3><p>Los enlaces vencen y pesan. Y las fotos circulan antes de que paguen el saldo.</p></div></article>
+      </div>
+      <div class="chat">
+        <div class="burbujas" aria-label="Ejemplo de conversación">
+          <p class="burbuja revela">Buenas, ¿ya están las fotos de la boda?<small>9:14</small></p>
+          <p class="burbuja yo revela">Todavía, en edición 🙏<small>9:40</small></p>
+          <p class="burbuja revela">Ok. Le mando las que me gustaron: 3, 7, 12, 15, 22, 23, 31…<small>9:41</small></p>
+          <p class="burbuja revela">Ah no, la 22 no, mejor la 24<small>9:43</small></p>
+        </div>
+        <p class="remate revela">Cada mensaje de estos es tiempo lejos de la cámara. <b>Con el sistema, el cliente lo ve todo por su cuenta.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Sistemas -->
+  <section class="sec" id="sistemas" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">02</span> Tres sistemas</p>
+        <h2 class="enfoca">Tres formas de crecer. Ustedes escogen por dónde empezar.</h2>
+        <p class="lead">Los tres usan la misma base de datos. Si empiezan con la página y después quieren la tienda o el sistema completo, se suma encima: nada se pierde ni se vuelve a hacer.</p>
+      </header>
+      <div class="sistemas" id="sistemas-lista"></div>
+    </div>
+  </section>
+
+  <!-- 03 En vivo -->
+  <section class="sec vivo" id="vivo">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">03</span> Pruébenlo</p>
+        <h2 class="enfoca">Toque el celular. Mire la computadora.</h2>
+        <p class="lead">Esto es el tiempo real. Lo que el cliente hace en su teléfono le aparece al estudio en el mismo segundo, sin recargar nada. Y lo que el estudio cambia, el cliente lo ve al momento. <span class="pulso mono"><i></i>EN VIVO</span></p>
+      </header>
+
+      <div class="escena">
+        <!-- celular del cliente -->
+        <div class="cel" aria-label="Celular de la clienta">
+          <div class="pantalla">
+            <div class="isla"></div>
+            <div class="aviso-cel" id="aviso-cel" role="status" aria-live="polite"><span class="ico" data-i="bell"></span><span id="aviso-cel-txt"></span></div>
+            <div class="cab"><div><b>Foto Gonzáles</b><small>Hola, familia López</small></div><span class="pulso mono" style="font-size:.66rem"><i></i></span></div>
+
+            <div class="vista-cel" id="v-galeria" role="tabpanel" aria-labelledby="t-galeria">
+              <h4>Su sesión familiar</h4>
+              <p class="nota">Toquen el corazón en las que quieren. Su paquete incluye 8.</p>
+              <div class="contador"><span>Elegidas <b id="cel-cuenta">0</b> de 8</span><span class="mono">24 fotos</span></div>
+              <div class="barrita"><i id="cel-barra"></i></div>
+              <div class="galeria" id="galeria"></div>
+            </div>
+
+            <div class="vista-cel" id="v-reservar" role="tabpanel" aria-labelledby="t-reservar" hidden>
+              <h4>Apartar otra sesión</h4>
+              <p class="nota">Las fechas tachadas ya están ocupadas, y se actualizan solas.</p>
+              <div class="fechas" id="fechas"></div>
+              <div class="opciones" id="opciones"></div>
+              <button class="btn btn-acento" id="reservar">Reservar y pagar anticipo</button>
+              <p class="nota" style="margin-top:8px">Demo: el pago es simulado.</p>
+            </div>
+
+            <div class="vista-cel" id="v-pedido" role="tabpanel" aria-labelledby="t-pedido" hidden>
+              <h4>Álbum 30×30 · FGS-2187</h4>
+              <p class="nota">Cuando el estudio avanza su pedido, aquí cambia solo.</p>
+              <ol class="ruta" id="ruta"></ol>
+            </div>
+
+            <div class="pestanas" role="tablist">
+              <button role="tab" id="t-galeria" aria-selected="true" aria-controls="v-galeria"><span data-i="images"></span>Galería</button>
+              <button role="tab" id="t-reservar" aria-selected="false" aria-controls="v-reservar"><span data-i="calendar"></span>Reservar</button>
+              <button role="tab" id="t-pedido" aria-selected="false" aria-controls="v-pedido"><span data-i="package"></span>Mi pedido</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- panel del estudio -->
+        <div class="panel" aria-label="Panel del estudio">
+          <div class="top"><i></i><i></i><i></i><span class="url mono">panel.fotogonzalesstudio.com</span></div>
+          <div class="area">
+            <div class="col-a">
+              <div class="cifras">
+                <div class="cifra"><small>Fotos elegidas</small><b id="p-elegidas">0</b></div>
+                <div class="cifra"><small>Sesiones (7 días)</small><b id="p-sesiones">3</b></div>
+                <div class="cifra"><small>Caja de hoy</small><b id="p-caja">Q 1,250.00</b></div>
+              </div>
+              <div class="seleccion">
+                <div class="quien"><b>Selección · Familia López</b><span id="p-sel-txt">esperando…</span></div>
+                <div class="tiras-sel" id="p-tiras"></div>
+              </div>
+              <div>
+                <h4 style="margin-bottom:8px">Próximos 7 días <span class="mono" style="font-weight:400;color:var(--tinta3)">calendario</span></h4>
+                <div class="semana" id="semana"></div>
+              </div>
+              <div class="pedido-panel">
+                <div class="estado">Álbum FGS-2187 · López<b id="p-estado">Recibido</b></div>
+                <button class="btn btn-tinta" id="avanzar">Pasar a: En edición</button>
+              </div>
+            </div>
+            <div class="col-b">
+              <h4>Actividad <span class="pulso mono" style="font-size:.7rem;color:var(--vivo)"><i></i>EN VIVO</span></h4>
+              <div class="presencia" id="presencia"><span class="avs"><span style="background:#B23F29">FL</span></span><span>Familia López está viendo su galería</span></div>
+              <ul class="feed" id="feed" aria-live="polite"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vivo-explica">
+        <div class="revela"><b>Selección sin errores</b>Cada corazón llega al instante con la foto exacta. Se acabó «la 22 no, mejor la 24».</div>
+        <div class="revela"><b>Reservas sin choques</b>Al apartar una fecha se bloquea para todos los que tengan la página abierta en ese momento.</div>
+        <div class="revela"><b>Pedidos que se siguen solos</b>El estudio toca un botón y al cliente le llega el aviso. Nadie tiene que preguntar.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Tiempo real en todo -->
+  <section class="sec" id="tiempo-real">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">04</span> Tiempo real en todo</p>
+        <h2 class="enfoca">En vivo en todo, no solo en la demo.</h2>
+        <p class="lead">Todo lo que cambia se ve al instante, en cualquier aparato, sin recargar. Esto es lo que se actualiza solo en cada sistema.</p>
+      </header>
+      <div class="revela"><table class="rt-tabla" id="rt-tabla">
+        <thead><tr><th>Qué se actualiza al instante</th><th>Página</th><th>Tienda</th><th>Completo</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- 05 Base de datos -->
+  <section class="sec" id="base" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">05</span> La base de datos</p>
+        <h2 class="enfoca">Una base de datos de verdad: Supabase Pro.</h2>
+        <p class="lead">Supabase es el servicio en la nube donde viven los clientes, las fotos, las reservas y los pedidos. Es el que hace posible el tiempo real. Usamos el plan <b>Pro</b> en los tres sistemas: el gratuito se pausa cuando hay poca actividad y no guarda respaldos, y un estudio no puede quedarse sin página un lunes.</p>
+      </header>
+      <div class="bd-tabs" role="tablist" aria-label="Ver tablas por sistema" id="bd-tabs">
+        <button role="tab" aria-selected="false" data-plan="pagina">Página</button>
+        <button role="tab" aria-selected="false" data-plan="tienda">Tienda</button>
+        <button role="tab" aria-selected="true" data-plan="completo">Sistema completo</button>
+      </div>
+      <div class="bd">
+        <div>
+          <div class="bd-mapa" id="bd-mapa"></div>
+          <div class="leyenda"><span><i></i> Tabla en tiempo real</span><span><i style="background:var(--linea)"></i> No la usa este sistema</span></div>
+        </div>
+        <div class="bd-lado">
+          <div class="ficha revela">
+            <h3>Lo que incluye Supabase Pro</h3>
+            <dl>
+              <dt>Base de datos</dt><dd>8 GB</dd>
+              <dt>Fotos en la nube</dt><dd>100 GB</dd>
+              <dt>Descargas al mes</dt><dd>250 GB</dd>
+              <dt>Personas en vivo a la vez</dt><dd>500</dd>
+              <dt>Mensajes en vivo al mes</dt><dd>5 millones</dd>
+              <dt>Respaldo</dt><dd>Diario, 7 días</dd>
+              <dt>Se pausa por inactividad</dt><dd>Nunca</dd>
+            </dl>
+          </div>
+          <div class="ficha revela" id="bd-costo"></div>
+          <div class="ficha revela">
+            <h3>Seguridad</h3>
+            <p style="margin-top:0">Cada tabla tiene reglas: un cliente solo ve <b>su</b> galería, con un enlace privado y un PIN. El equipo entra con su usuario y ve lo que le toca según su puesto. Las fotos privadas se entregan con enlaces que vencen; nadie las encuentra buscando.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Dominio -->
+  <section class="sec" id="dominio">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">06</span> Dominio</p>
+        <h2 class="enfoca">Su nombre. Su dirección.</h2>
+        <p class="lead">Una dirección propia se recuerda, se imprime en la tarjeta y le da confianza al cliente antes de pagar el anticipo. Queda registrada <b>a nombre del estudio</b>, no del programador.</p>
+      </header>
+      <div class="dominio">
+        <div class="navegador revela">
+          <div class="top"><i></i><i></i><i></i><div class="url"><span data-i="lock"></span><span class="txt" id="url-txt"></span><span class="cursor"></span></div></div>
+          <div class="cuerpo"><div class="foto f-quince"></div><p class="nombre">Foto Gonzáles<br>Studio</p></div>
+        </div>
+        <div class="dom-opciones">
+          <div class="dom-op revela"><b>fotogonzalesstudio.com</b><span class="p" data-q="120">Q 120.00</span><span>Al año. El más fácil de recordar y el que la gente escribe por costumbre.</span></div>
+          <div class="dom-op revela"><b>fotogonzalesstudio.com.gt</b><span class="p" data-q="380">Q 380.00</span><span>Al año. Dice «Guatemala» en la dirección. Cuesta más porque lo maneja el registro nacional.</span></div>
+          <div class="dom-op revela"><b>Certificado de seguridad (https)</b><span class="p">Incluido</span><span>El candadito del navegador. Va con cualquiera de los dos, sin costo extra.</span></div>
+          <p class="nota revela" style="color:var(--tinta2);font-size:.92rem;margin:4px 0 0">Antes de comprarlo confirmamos que esté libre. La base de datos también puede llevar su propio dominio en Supabase (US$10 al mes), pero al inicio no hace falta y no lo cobramos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Precios -->
+  <section class="sec" id="precios" style="background: var(--papel2)">
+    <div class="envoltura">
+      <div class="precios-cab">
+        <header class="sec-cabeza" style="margin-bottom:0">
+          <p class="eyebrow mono"><span class="num">07</span> Precios</p>
+          <h2 class="enfoca">Precios claros, en quetzales.</h2>
+          <p class="lead">Un pago de arranque y una mensualidad que ya trae Supabase Pro adentro. Abajo se ve en qué se va cada quetzal.</p>
+        </header>
+        <label class="iva"><input type="checkbox" id="iva"> Mostrar con IVA (12%)</label>
+      </div>
+      <div class="planes" id="planes"></div>
+
+      <div class="extra-linea">
+        <div class="caja revela">
+          <h3>Extras</h3>
+          <div class="extras" id="extras"></div>
+        </div>
+        <div class="caja revela">
+          <h3>Arme su plan</h3>
+          <form class="armado" id="plan-form" onsubmit="return false">
+            <div class="elige" role="radiogroup" aria-label="Sistema">
+              <label><input type="radio" name="paq" value="pagina">Página</label>
+              <label><input type="radio" name="paq" value="tienda">Tienda</label>
+              <label><input type="radio" name="paq" value="completo" checked>Completo</label>
+            </div>
+            <dl class="resumen" id="resumen"></dl>
+            <a class="btn btn-acento wa" id="plan-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Mandar mi plan por WhatsApp</a>
+          </form>
+        </div>
+      </div>
+
+      <div class="compra-unica revela">
+        <p><b>¿Prefieren comprarlo?</b> El sistema completo con el código a nombre del estudio. Supabase Pro lo pagan ustedes directo (cerca de US$30 al mes) y nosotros damos soporte.</p>
+        <div><b class="p" id="cu-precio">Q 42,000.00</b> <span style="color:var(--tinta2)">+ <span id="cu-mes">Q 600.00</span>/mes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Comparativa -->
+  <section class="sec" id="comparativa">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">08</span> Comparativa</p>
+        <h2 class="enfoca">Contra lo que hay hoy.</h2>
+      </header>
+      <div class="revela"><table class="comp" id="comp"></table></div>
+    </div>
+  </section>
+
+  <!-- 09 Arranque -->
+  <section class="sec" id="arranque" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">09</span> Cómo arrancamos</p>
+        <h2 class="enfoca">De la propuesta a la primera reserva.</h2>
+      </header>
+      <div class="linea-tiempo">
+        <div class="paso revela"><span class="cuando mono">Semana 1</span><h3>Su material</h3><p>Tomamos fotos, paquetes y precios de su Facebook y los confirmamos con ustedes. Compramos el dominio.</p></div>
+        <div class="paso revela"><span class="cuando mono">Semana 1–2</span><h3>Diseño</h3><p>La página con su logo y sus colores. La ven en el celular antes de seguir.</p></div>
+        <div class="paso revela"><span class="cuando mono">Según el plan</span><h3>Construcción</h3><p>Base de datos Supabase Pro, reglas de seguridad, tiempo real y carga de su portafolio.</p></div>
+        <div class="paso revela"><span class="cuando mono">Entrega</span><h3>Capacitación</h3><p>Una sesión con el equipo y un primer mes de ajustes sin costo.</p></div>
+      </div>
+      <div class="plazos">
+        <div class="revela"><b>1 a 2 semanas</b><span>Página del estudio</span></div>
+        <div class="revela"><b>3 a 4 semanas</b><span>Tienda en línea</span></div>
+        <div class="revela"><b>5 a 7 semanas</b><span>Sistema completo · máximo 8</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Preguntas -->
+  <section class="sec" id="preguntas">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">10</span> Preguntas</p>
+        <h2 class="enfoca">Lo que suelen preguntar.</h2>
+      </header>
+      <div class="faq" id="faq"></div>
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="sec cierre" id="cierre">
+    <div class="envoltura">
+      <h2 class="enfoca">Empecemos.</h2>
+      <p class="lead" style="color:var(--tinta2);font-size:1.2rem;max-width:44ch;margin-top:18px">Con su Facebook y una llamada de media hora ya podemos enseñarles la página con sus fotos.</p>
+      <div class="fila">
+        <a class="btn btn-acento wa" id="cierre-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Escribirme por WhatsApp</a>
+        <div class="firma"><img src="img/firma-m.png" alt="M de Monterroso"><span><b>Antonio Monterroso</b>Monterroso Dev Studio · +502 3764 5139</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">Monterroso Dev Studio · Propuesta para Foto Gonzáles Studio · Válida por 15 días · Precios en quetzales, sin IVA salvo que se marque. Costos de Supabase calculados a US$1 = Q 7.70 (noviembre de 2026). Las fotos de esta propuesta son muestras; van las del estudio.</footer>
+
+<script src="js/propuesta.js"></script>
+</body>
+</html>
