@@ -16,7 +16,7 @@ const PALANCAS = {
   referidos: { t: "Referidos con premio", d: "Cada cliente tiene su código. La familia nueva recibe un descuento y quien la recomendó gana impresiones. El sistema lleva la cuenta.", e: "En Reu todos se conocen: los clientes contentos traen a los siguientes." },
   campanas: { t: "Campañas a quien sí le interesa", d: "Se escoge un grupo, por ejemplo familias con bebé fotografiado hace 6 a 12 meses, y una oferta. El mensaje le llega a cada uno con su nombre y los resultados entran en vivo. Así funcionó la sesión del Mundial.", e: "Llenar diciembre o una semana floja ya no depende de publicar y esperar." }
 };
-const VISTA_DE = { vivo: "hoy", ventas: "hoy", fechas: "hoy", cotizacion: "hoy", saldo: "hoy", resena: "hoy", embudo: "hoy", galeria: null, anticipo: "agenda", referidos: "clientes", campanas: "campanas" };
+const VISTA_DE = { web: "pagina", vivo: "hoy", ventas: "hoy", fechas: "hoy", cotizacion: "hoy", saldo: "hoy", resena: "hoy", embudo: "hoy", galeria: null, anticipo: "agenda", referidos: "clientes", campanas: "campanas" };
 
 /* ---------- Estado ---------- */
 const S = { ingresos: 38450, ventasN: 24, extra: 3115, consultas: 31, reservas: 13 };
@@ -570,6 +570,7 @@ function irVista(v) {
   const actual = $(".vistas [aria-selected='true']").dataset.v;
   $$(".vistas button").forEach(b => { const on = b.dataset.v === v; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; });
   $$(".vista").forEach(s => s.hidden = s.id !== "v-" + v);
+  if (v === "pagina") cargarWeb();
   if (actual !== v) {
     if (v === "agenda") pintarAgenda();
     if (!calma) $$("#v-" + v + " > *").forEach((el, i) => el.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 260, delay: i * 50, easing: EASE, fill: "backwards" }));
@@ -592,6 +593,95 @@ window.antesDePalanca = id => {
   if (modoHoja()) cerrarCliente();
   irVista(VISTA_DE[id]);
 };
+
+/* ---------- Su página: la landing dentro del sistema ---------- */
+function cargarWeb() {
+  const f = $("#web-frame");
+  if (!f.src) f.src = f.dataset.src;
+}
+const MESES_C = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+let webN = 0;
+function llegoDeLaWeb(html, ic) {
+  const ul = $("#llega"); $(".vacio", ul)?.remove();
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="ic">${ico(ic, 16)}</span><span>${html}</span><time>${hora()}</time>`;
+  ul.prepend(li);
+  webN++; const c = $("#cuenta-web"); c.textContent = webN; c.classList.remove("cero");
+}
+addEventListener("message", e => {
+  const m = e.data;
+  if (!m || typeof m !== "object" || !m.fgs) return;
+  if (e.source !== $("#web-frame")?.contentWindow) return;
+  if (m.fgs === "reserva") {
+    const d = new Date(m.iso + "T12:00:00"), l = lunes();
+    const dia = Math.round((d - l) / 864e5);
+    const txt = `${m.paquete} · ${m.fecha} a las ${m.hora}`;
+    if (dia >= 0 && dia <= 6) { AG.push({ d: dia, h: m.hora, dur: "1 h", n: "Reserva desde la página", t: m.paquete, f: "f-familia", a: 0, pend: true, debe: m.anticipo, nueva: true }); pintarAgenda(); }
+    EMB.push({ id: "w" + Date.now(), n: "Reserva desde la página", t: m.paquete, m: m.anticipo * 3, c: 1, nueva: true }); pintarEmbudo();
+    S.consultas++; S.reservas++; pintarCifras();
+    alFeed("calendar", `<b>Reserva desde su página</b> · ${txt} · falta anticipo ${Q(m.anticipo)}`);
+    llegoDeLaWeb(`<b>Apartó fecha:</b> ${txt}<br><small>La fecha queda guardada 24 h mientras paga el anticipo de ${Q(m.anticipo)}. ${dia >= 0 && dia <= 6 ? "Ya aparece en la Agenda de esta semana." : "Quedó en la agenda de ese día."}</small>`, "calendar");
+    aviso(`Llegó de su página · <b>reserva ${m.fecha}</b>`, { ic: "calendar", sub: `${m.paquete} · falta anticipo ${Q(m.anticipo)}` });
+  } else if (m.fgs === "contacto") {
+    S.consultas++; pintarCifras();
+    alFeed("users", `<b>Contacto nuevo</b> desde la página · ${m.que}`);
+    llegoDeLaWeb(`<b>Contacto nuevo:</b> ${m.que}<br><small>Queda en la lista para la próxima promoción.</small>`, "users");
+    aviso("Llegó de su página · <b>contacto nuevo</b>", { ic: "users", sub: m.que });
+  } else if (m.fgs === "consulta") {
+    S.consultas++; pintarCifras();
+    EMB.push({ id: "q" + Date.now(), n: "Consulta desde la página", t: m.que, m: m.monto || 850, c: 0, nueva: true }); pintarEmbudo();
+    alFeed("chat", `<b>Consulta nueva</b> desde la página · ${m.que}`);
+    llegoDeLaWeb(`<b>Consulta:</b> ${m.que}<br><small>Entró al embudo de ventas en «Consulta».</small>`, "chat");
+    aviso("Llegó de su página · <b>consulta nueva</b>", { ic: "chat", sub: m.que });
+  }
+});
+
+/* ---------- Recorrido «¿Cómo funciona?» ---------- */
+const PASOS = [
+  { v: "pagina", sel: ".web", t: "1. La familia lo encuentra", d: "Todo empieza en su página. La familia ve el portafolio, escoge paquete y aparta fecha desde su celular, sin escribir por chat." },
+  { v: "hoy", sel: "#oport", t: "2. El panel le dice a quién venderle", d: "Cada mañana el sistema revisa a todos los clientes y le muestra quién está listo para comprar, con el mensaje de WhatsApp ya escrito." },
+  { v: "agenda", sel: "#semana", t: "3. La fecha queda segura", d: "Una fecha se aparta cuando entra el anticipo. Si no paga, el sistema le recuerda. Si queda una tarde libre, se ofrece con un toque." },
+  { v: "galerias", sel: "#galerias", t: "4. Cada familia recibe su galería", d: "Después de la sesión, la familia ve sus fotos en una galería privada. El estudio ve aquí cuál está eligiendo, cuál vence y cuál debe saldo." },
+  { v: "cliente", sel: "#cliente", t: "5. La familia elige y compra más", d: "En su celular marca con un corazón las fotos que quiere. Si pasa de las que trae su paquete, el sistema le ofrece las extras y se cobran solas." },
+  { v: "campanas", sel: ".cam-grid", t: "6. Y vuelven", d: "Cumpleaños, aniversarios y temporadas: el sistema le arma el grupo y el mensaje para que la familia regrese a su próxima sesión." }
+];
+let pasoT = -1;
+function tour(i) {
+  const card = $("#tour");
+  $$(".foco-tour").forEach(e => e.classList.remove("foco-tour"));
+  if (i < 0 || i >= PASOS.length) { card.classList.remove("ver"); pasoT = -1; if (modoHoja()) cerrarCliente(); return; }
+  pasoT = i; const p = PASOS[i];
+  if (p.v === "cliente") { if (modoHoja()) abrirCliente(); }
+  else { if (modoHoja()) cerrarCliente(); irVista(p.v); }
+  setTimeout(() => {
+    const el = $(p.sel);
+    if (el) { el.classList.add("foco-tour"); if (p.v !== "cliente") el.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "center" }); }
+  }, 120);
+  card.innerHTML = `<div class="tour-puntos">${PASOS.map((_, k) => `<i${k === i ? ' class="on"' : ""}></i>`).join("")}</div>
+    <h3>${p.t}</h3><p>${p.d}</p>
+    <div class="tour-acc"><button type="button" class="btn btn-chico" data-t="-1"${i === 0 ? " disabled" : ""}>Anterior</button>
+    <button type="button" class="btn btn-chico btn-tinta" data-t="1">${i === PASOS.length - 1 ? "Listo" : "Siguiente"}</button></div>
+    <button type="button" class="tour-x" aria-label="Cerrar el recorrido">${ico("x", 16)}</button>`;
+  $$("[data-t]", card).forEach(b => b.onclick = () => tour(pasoT + Number(b.dataset.t)));
+  $(".tour-x", card).onclick = () => tour(-1);
+  card.classList.add("ver");
+}
+function iniciarTour() {
+  const card = document.createElement("div");
+  card.id = "tour"; card.className = "tour"; card.setAttribute("role", "dialog"); card.setAttribute("aria-label", "Cómo funciona el sistema");
+  document.body.append(card);
+  $("#como-funciona").addEventListener("click", () => tour(0));
+  addEventListener("keydown", e => { if (e.key === "Escape" && pasoT >= 0) tour(-1); });
+  let visto = false;
+  try { visto = sessionStorage.getItem("fgs.tour") === "1"; sessionStorage.setItem("fgs.tour", "1"); } catch (e) {}
+  if (!visto && location.hash !== "#vende") setTimeout(() => {
+    card.innerHTML = `<h3>¿Primera vez aquí?</h3><p>Le enseño cómo funciona el sistema completo en 6 pasos, de la página a la próxima venta.</p>
+      <div class="tour-acc"><button type="button" class="btn btn-chico" id="tour-no">Ahora no</button><button type="button" class="btn btn-chico btn-tinta" id="tour-si">Ver los 6 pasos</button></div>`;
+    $("#tour-si").onclick = () => tour(0);
+    $("#tour-no").onclick = () => card.classList.remove("ver");
+    card.classList.add("ver");
+  }, 1600);
+}
 
 /* ---------- Simulación: el estudio en vivo ---------- */
 const NOMBRES = ["Una familia de San Felipe", "Una quinceañera", "Una familia de Champerico", "Una pareja", "Una familia de Bella Aurora", "Una clienta nueva", "Una familia de Reu", "Un papá primerizo", "Una graduanda"];
@@ -633,6 +723,7 @@ pintarCifras();
 pintarOport();
 iniciarEmbudo();
 pintarAgenda();
+iniciarTour();
 pintarClientes();
 elegirCliente("valeria");
 pintarGaleria();

@@ -1,4 +1,4 @@
-/* Demos Foto Gonzáles Studio — utilidades compartidas (Monterroso Dev Studio)
+/* Demos Foto González Studio — utilidades compartidas (Monterroso Dev Studio)
    Todo lo «en vivo» se simula aquí; en el sistema real lo hace Supabase Realtime. */
 "use strict";
 
@@ -89,7 +89,7 @@ function simularWA({ texto, quien = "Usted", respuesta = "", nota = "En el siste
   let h = $("#hoja-wa");
   if (!h) {
     h = document.createElement("div"); h.id = "hoja-wa"; h.className = "hoja-wa"; h.setAttribute("role", "dialog"); h.setAttribute("aria-modal", "true"); h.setAttribute("aria-label", "Mensaje de WhatsApp de muestra");
-    h.innerHTML = `<div class="caja"><div class="cab"><span class="av">FG</span><div><b>Foto Gonzáles Studio</b><small>en línea</small></div></div><div class="chat"></div>
+    h.innerHTML = `<div class="caja"><div class="cab"><span class="av">FG</span><div><b>Foto González Studio</b><small>en línea</small></div></div><div class="chat"></div>
       <div class="pie-wa"><p></p><button class="btn btn-tinta" type="button">Listo</button></div></div>`;
     document.body.append(h);
     const cerrar = () => h.classList.remove("ver");

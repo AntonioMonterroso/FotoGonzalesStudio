@@ -1,4 +1,4 @@
-/* Demo 1 · Página del estudio — Foto Gonzáles Studio (marca de muestra) */
+/* Demo 1 · Página del estudio — Foto González Studio (marca de muestra) */
 body { padding-bottom: 84px; }
 h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; font-optical-sizing: auto; }
 h2 { font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.2rem); line-height: 1.06; }
@@ -369,3 +369,8 @@ h3 { font-family: "Jost", var(--sans); font-size: 1.15rem; font-weight: 700; let
 .guia-ok[hidden], .form-guia[hidden] { display: none; }
 .quiz-atras[hidden] { display: none; }
 .horas:disabled .chip { text-decoration: none; color: var(--tinta2); }
+
+/* Dentro del sistema completo (iframe): sin la cinta de la demo */
+body.incrustada { padding-bottom: 0; }
+.incrustada .wa-flota { bottom: 16px; }
+.incrustada .avisos { bottom: 16px; }

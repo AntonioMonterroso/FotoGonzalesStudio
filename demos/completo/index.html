@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="../comun.css?v=20261110e">
-<link rel="stylesheet" href="completo.css?v=20261110e">
+<link rel="stylesheet" href="../comun.css?v=20261111b">
+<link rel="stylesheet" href="completo.css?v=20261111b">
 </head>
 <body>
 <div class="app">
@@ -21,6 +21,7 @@
   <aside class="lado" aria-label="Menú del panel">
     <a class="marca-est" href="#principal"><span class="logo"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><span><b>Foto González</b><small>Studio · panel</small></span></a>
     <nav class="vistas" role="tablist" aria-label="Secciones del panel" aria-orientation="vertical">
+      <button role="tab" id="t-pagina" aria-controls="v-pagina" aria-selected="false" tabindex="-1" data-v="pagina"><span data-i="layout"></span><span class="et">Su página</span><span class="cuenta cero" id="cuenta-web">0</span></button>
       <button role="tab" id="t-hoy" aria-controls="v-hoy" aria-selected="true" data-v="hoy"><span data-i="home"></span><span class="et">Hoy</span><span class="cuenta" id="cuenta-op">6</span></button>
       <button role="tab" id="t-agenda" aria-controls="v-agenda" aria-selected="false" tabindex="-1" data-v="agenda"><span data-i="calendar"></span><span class="et">Agenda</span></button>
       <button role="tab" id="t-clientes" aria-controls="v-clientes" aria-selected="false" tabindex="-1" data-v="clientes"><span data-i="users"></span><span class="et">Clientes</span></button>
@@ -45,12 +46,27 @@
       </div>
       <div class="cabeza-acc">
         <span class="envivo mono"><i></i>EN VIVO</span>
+        <button class="btn btn-chico" id="como-funciona" type="button"><span data-i="info"></span>¿Cómo funciona?</button>
         <button class="btn btn-chico btn-tinta" id="ver-cliente" type="button" aria-controls="cliente" aria-expanded="false"><span data-i="eye"></span>Ver lo que ve el cliente</button>
       </div>
     </header>
 
+    <!-- SU PÁGINA (la landing, dentro del mismo sistema) -->
+    <section class="vista" id="v-pagina" role="tabpanel" aria-labelledby="t-pagina" hidden>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> esta es la página que ve cualquier persona en internet. Pruebe apartar una fecha o pedir la guía: le llega a este panel en el mismo segundo.</span></p>
+      <div class="web">
+        <div class="web-nav" aria-hidden="true"><i></i><i></i><i></i><span class="web-url"><span data-i="lock"></span>fotogonzalezstudio.com</span></div>
+        <iframe id="web-frame" title="Página pública de Foto González Studio" loading="lazy" data-src="../pagina/?embed=1"></iframe>
+      </div>
+      <section class="bloque web-llega" aria-labelledby="h-llega">
+        <div class="bloque-cab"><h2 id="h-llega">Lo que llegó de la página</h2><span class="tenue chico">En vivo</span></div>
+        <ul class="llega" id="llega"><li class="vacio">Todavía nada. Aparte una fecha en la página de arriba.</li></ul>
+      </section>
+    </section>
+
     <!-- HOY -->
     <section class="vista" id="v-hoy" role="tabpanel" aria-labelledby="t-hoy">
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> lo primero que ve el dueño al abrir. Cuánto lleva el mes y a quién venderle hoy, con el mensaje de WhatsApp ya escrito.</span></p>
       <div class="cifras" data-palanca="vivo">
         <div class="cifra"><small id="k-mes-lbl">Ingresos del mes</small><b id="k-ing"></b></div>
         <div class="cifra"><small>Ticket promedio</small><b id="k-ticket"></b></div>
@@ -87,6 +103,7 @@
 
     <!-- AGENDA -->
     <section class="vista" id="v-agenda" role="tabpanel" aria-labelledby="t-agenda" hidden>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> las sesiones de la semana. Una fecha queda segura cuando la familia paga el anticipo; si no, el sistema le recuerda y la tarde libre se ofrece a otros.</span></p>
       <section class="bloque" aria-labelledby="h-ag">
         <div class="bloque-cab ag-cab" data-palanca="anticipo">
           <div>
@@ -101,6 +118,7 @@
 
     <!-- CLIENTES -->
     <section class="vista" id="v-clientes" role="tabpanel" aria-labelledby="t-clientes" hidden>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> cada cliente con todo lo que ha hecho con el estudio, sus fechas importantes y su código para recomendar. Así vuelven y traen a otros.</span></p>
       <div class="crm">
         <section class="bloque" aria-labelledby="h-cli">
           <div class="bloque-cab"><h2 id="h-cli">Clientes</h2><span class="tenue chico" id="cli-n"></span></div>
@@ -129,6 +147,7 @@
 
     <!-- GALERÍAS -->
     <section class="vista" id="v-galerias" role="tabpanel" aria-labelledby="t-galerias" hidden>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> después de la sesión, cada familia recibe su galería privada en el celular. Ahí elige sus fotos, compra las que quiera de más y paga el saldo.</span></p>
       <section class="bloque" aria-labelledby="h-gal">
         <div class="bloque-cab gal-cab">
           <div><h2 id="h-gal">Galerías privadas</h2><p class="tenue chico" style="margin:4px 0 0">Cada familia entra con su enlace y su PIN. Aquí se ve qué está pasando en cada una.</p></div>
@@ -140,6 +159,7 @@
 
     <!-- CAMPAÑAS -->
     <section class="vista" id="v-campanas" role="tabpanel" aria-labelledby="t-campanas" hidden>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> mandar una oferta por WhatsApp solo a quien le interesa, por ejemplo mini sesiones navideñas a familias con bebé. Las respuestas se ven llegar aquí.</span></p>
       <section class="bloque campana" data-palanca="campanas" aria-labelledby="h-cam">
         <div class="bloque-cab"><h2 id="h-cam">Campaña por WhatsApp</h2><span class="tenue chico">A un grupo, con el nombre de cada uno</span></div>
         <div class="cam-grid">
@@ -224,7 +244,7 @@
 </div>
 <div class="velo" id="velo" hidden></div>
 
-<script src="../comun.js?v=20261110e"></script>
-<script src="completo.js?v=20261110e"></script>
+<script src="../comun.js?v=20261111b"></script>
+<script src="completo.js?v=20261111b"></script>
 </body>
 </html>

@@ -43,25 +43,25 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 /* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 1800, mes: 350, plazo: "1 a 2 semanas",
+    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 300, plazo: "1 a 2 semanas",
     para: "Para que los encuentren, vean su trabajo y aparten fecha.",
     vista: "land",
     x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 155]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 105]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 4500, mes: 600, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 3600, mes: 490, plazo: "3 a 4 semanas",
     para: "Para vender impresiones, álbumes y sesiones sin estar en el chat.",
     vista: "tienda",
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 370]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 260]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 8500, mes: 990, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 6800, mes: 790, plazo: "5 a 7 semanas", rec: true,
     para: "Para manejar todo el estudio, de la reserva a la entrega.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>: cumpleaños, aniversarios, galerías por vencer, cotizaciones sin respuesta", "<b>Galería que vende fotos extra</b>: al pasar del paquete, la oferta sale sola", "Entrega en alta resolución, <b>con marca de agua hasta pagar el saldo</b>", "Reservas con anticipo y embudo con lo que vale cada etapa", "<b>Campañas por WhatsApp</b> a un grupo de clientes, referidos con premio y reseña pedida al entregar", "Clientes con historial, contratos, caja y reportes; usuarios por puesto", "Se instala en el celular como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 690]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 490]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -101,7 +101,7 @@ const CALC = [
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
-const COMPRA_UNICA = { ini: 24000, mes: 400 };
+const COMPRA_UNICA = { ini: 19500, mes: 350 };
 
 const EXTRAS = [
   { id: "com", n: "Dominio .com", d: "fotogonzalezstudio.com", ini: 120, anual: true, on: true },

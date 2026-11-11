@@ -176,10 +176,10 @@ function pintarQuiz(dir = 1) {
       <p class="nota">Se aparta con ${Q(c.pq.a)} de anticipo. <button class="quiz-atras" type="button" id="quiz-otra" style="display:inline-flex;padding:0 6px;min-height:32px">Empezar de nuevo</button></p>
     </div>`, dir, el => {
       odometro($("#quiz-total", el), c.total); quiz.ultimo = c.total;
-      $("#quiz-wa", el).addEventListener("click", () => simularWA({
+      $("#quiz-wa", el).addEventListener("click", () => (alPanel({ tipo: "consulta", que: `${c.nombre} · ${Q(c.total)}`, monto: c.total }), simularWA({
         texto: `Hola, hice el cuestionario de su página. Me interesa: ${c.nombre}, para ${{ 1: "1 o 2 personas", 3: "3 a 5 personas", 6: "6 o más personas" }[quiz.r.gente]}. Total aproximado ${Q(c.total)}. ¿Qué fechas tienen libres?`,
         respuesta: `¡Hola! Qué gusto. Para ${c.pq.n.toLowerCase()} tenemos libre el próximo sábado. ¿Se lo aparto? Es un anticipo de ${Q(c.pq.a)}.`
-      }));
+      })));
       $("#quiz-fechas", el).addEventListener("click", () => { $("#res-paq").value = c.pq.id; pintarReserva(); });
       $("#quiz-otra", el).addEventListener("click", () => { quiz.paso = 0; quiz.r = {}; quiz.ultimo = 0; pintarQuiz(-1); });
       $("#quiz-sube", el)?.addEventListener("click", () => { quiz.r.llevar = "imp"; pintarQuiz(0); aviso("Se agregaron 4 impresiones 8×10", { ic: "frame", dur: 3000 }); });
@@ -400,6 +400,7 @@ function reservar() {
     texto: `Hola, quiero apartar el ${fechaTxt(d)} a las ${hr} para ${p.n} (${precioTxt(p)}). ¿Cómo hago el anticipo de ${Q(p.a)}?`,
     respuesta: `¡Hola! Se la guardamos 24 horas. El anticipo de ${Q(p.a)} puede ser por transferencia o con tarjeta; le mando el enlace.`
   });
+  alPanel({ tipo: "reserva", iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`, fecha: fechaCorta(d), hora: hr, paquete: p.n, anticipo: p.a });
   est[sel.k] = "suyo";
   sel.k = null; sel.hora = null;
   pintarCal(); pintarReserva(); pintarChip();
@@ -487,6 +488,7 @@ function guia() {
       const ok = $("#guia-ok");
       ok.innerHTML = `<span class="ic">${ico("check")}</span><div><b>Listo, ${nombre.split(" ")[0]}. La guía va en camino.</b><p>Se la mandamos al +502 ${tel.slice(0, 4)} ${tel.slice(4)} con consejos para ${f.tipo.value.toLowerCase()}. Si quiere, de una vez le apartamos fecha.</p><a class="btn btn-chico btn-tinta" href="#fechas" style="margin-top:12px">Ver fechas libres</a></div>`;
       ok.hidden = false; ok.focus();
+      alPanel({ tipo: "contacto", que: `Pidió la guía de vestuario · ${f.tipo.value}` });
       setTimeout(() => aviso("Contacto nuevo en el panel del estudio", { ic: "users", sub: `${nombre.split(" ")[0]} · ${f.tipo.value} · así lo ve el estudio` }), 900);
     });
   });
@@ -531,7 +533,10 @@ guia();
 pintarFAQ();
 whatsapp();
 pintarIconos();
-cintaDemo({ sistema: "Página del estudio", palancas: PALANCAS });
+const INCRUSTADA = new URLSearchParams(location.search).has("embed") && window.parent !== window;
+const alPanel = m => { if (INCRUSTADA) window.parent.postMessage({ fgs: m.tipo, ...m }, location.origin); };
+if (INCRUSTADA) document.body.classList.add("incrustada");
+else cintaDemo({ sistema: "Página del estudio", palancas: PALANCAS });
 revelar();
 entrarPortada();
 vida();
