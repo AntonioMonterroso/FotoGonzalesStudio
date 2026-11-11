@@ -21,6 +21,16 @@ const LETRAS = [
   { id: "bricolage", n: "Bricolage Grotesque", v: "Moderna con carácter, una sola letra", d: "Sin serifa pero con personalidad en los títulos; fresca y diferente.",
     serif: "Bricolage Grotesque", sans: "Bricolage Grotesque", q: "Bricolage+Grotesque:opsz,wght@12..96,300..800" }
 ];
+/* Colores para probar desde la propuesta (?color=<id>) */
+const COLORES = [
+  { id: "corinto", n: "Corinto", a: "#8E2234", o: "#741A2A", s: "#F2DDE0" },
+  { id: "azul", n: "Azul noche", a: "#1F3A5F", o: "#172C49", s: "#DDE5EF" },
+  { id: "olivo", n: "Verde olivo", a: "#4A6530", o: "#3A5025", s: "#E3EBD9" },
+  { id: "terracota", n: "Terracota", a: "#A24A24", o: "#843B1C", s: "#F5E2D8" },
+  { id: "ciruela", n: "Ciruela", a: "#6B3F7A", o: "#563163", s: "#ECE0F0" },
+  { id: "grafito", n: "Grafito", a: "#2B2A28", o: "#1A1918", s: "#E6E3DE" }
+];
+const varsColor = c => ({ "--acento": c.a, "--acento-osc": c.o, "--acento-suave": c.s });
 const urlLetras = lista => "https://fonts.googleapis.com/css2?family=" + lista.map(l => l.q).join("&family=") + "&display=swap";
 function cargarLetras(lista) {
   const l = document.createElement("link"); l.rel = "stylesheet"; l.href = urlLetras(lista); document.head.append(l);
@@ -29,19 +39,27 @@ function varsLetra(l) {
   return { "--serif": `"${l.serif}", Georgia, serif`, "--sans": `"${l.sans}", ui-sans-serif, sans-serif`, "--mono": `"${l.sans}", ui-sans-serif, sans-serif` };
 }
 
-/* En el sistema completo: ?letra=<id> lo pinta con esa tipografía y deja un aviso para volver al muestrario */
+/* En el sistema completo: ?letra=<id> y ?color=<id> lo pintan así y dejan un aviso para volver */
 (function () {
   if (!document.querySelector("script[data-letra-sistema]")) return;
-  const l = LETRAS.find(x => x.id === new URLSearchParams(location.search).get("letra"));
-  if (!l) return;
-  cargarLetras([l]);
+  const q = new URLSearchParams(location.search);
+  const l = LETRAS.find(x => x.id === q.get("letra"));
+  const c = COLORES.find(x => x.id === q.get("color"));
+  if (!l && !c) return;
   const r = document.documentElement;
-  Object.entries(varsLetra(l)).forEach(([k, v]) => r.style.setProperty(k, v));
-  if (l.uno) r.style.fontSynthesis = "none";
+  if (l) {
+    cargarLetras([l]);
+    Object.entries(varsLetra(l)).forEach(([k, v]) => r.style.setProperty(k, v));
+    if (l.uno) r.style.fontSynthesis = "none";
+  }
+  if (c) Object.entries(varsColor(c)).forEach(([k, v]) => r.style.setProperty(k, v));
+  const dePropuesta = q.get("de") === "propuesta";
   document.addEventListener("DOMContentLoaded", () => {
     const a = document.createElement("a");
-    a.className = "letra-viendo"; a.href = "letras.html#" + l.id;
-    a.innerHTML = `<small>Viendo con</small><b>${l.n}</b><span>Otras letras</span>`;
+    a.className = "letra-viendo";
+    a.href = dePropuesta ? "../../#medida" : "letras.html" + (l ? "#" + l.id : "");
+    const nombre = [l && l.n, c && c.n].filter(Boolean).join(" · ");
+    a.innerHTML = `<small>Viendo con</small><b>${nombre}</b><span>${dePropuesta ? "Volver a la propuesta" : "Otras letras"}</span>`;
     document.body.append(a);
   });
 })();

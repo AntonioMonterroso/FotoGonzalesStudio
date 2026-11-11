@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/estilos.css?v=20261111c">
+<link rel="stylesheet" href="css/estilos.css?v=20261111g">
 </head>
 <body>
 
@@ -54,6 +54,7 @@
     <a href="#base">Base de datos</a>
     <a href="#dominio">Dominio</a>
     <a href="#precios">Precios</a>
+    <a href="#arranque" class="nav-ancho">Cómo trabajamos</a>
   </nav>
   <a class="btn btn-tinta btn-barra" href="#precios">Ver precios</a>
   <button class="menu-btn" id="menu-btn" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu"><span data-i="menu"></span></button>
@@ -368,19 +369,62 @@
     </div>
   </section>
 
-  <!-- 09 Arranque -->
+  <!-- 10 Cómo trabajamos -->
   <section class="sec" id="arranque" style="background: var(--papel2)">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">10</span> Cómo arrancamos</p>
-        <h2 class="enfoca">De la propuesta a la primera reserva.</h2>
+        <p class="eyebrow mono"><span class="num">10</span> Cómo trabajamos</p>
+        <h2 class="enfoca">De la propuesta a la primera reserva, sin sorpresas.</h2>
+        <p class="lead">En cada paso queda claro qué hacemos nosotros, qué necesitamos de ustedes y qué reciben. No pasamos al siguiente sin su visto bueno.</p>
       </header>
-      <div class="linea-tiempo">
-        <div class="paso revela"><span class="cuando mono">Semana 1</span><h3>Su material</h3><p>Nos pasan sus mejores fotos en archivo, paquetes y precios, y los confirmamos con ustedes. Compramos el dominio.</p></div>
-        <div class="paso revela"><span class="cuando mono">Semana 1–2</span><h3>Diseño</h3><p>La página con su logo y sus colores. La ven en el celular antes de seguir.</p></div>
-        <div class="paso revela"><span class="cuando mono">Según el plan</span><h3>Construcción</h3><p>Base de datos Supabase Pro, reglas de seguridad, tiempo real y carga de su portafolio.</p></div>
-        <div class="paso revela"><span class="cuando mono">Entrega</span><h3>Capacitación</h3><p>Una sesión con el equipo y un primer mes de ajustes sin costo.</p></div>
+      <div class="principios">
+        <div class="revela"><span class="pr-ic" data-i="chat"></span><b>Un solo contacto</b><p>Antonio, por WhatsApp. Sin intermediarios ni tickets.</p></div>
+        <div class="revela"><span class="pr-ic" data-i="eye"></span><b>Avances cada semana</b><p>Un enlace de prueba que pueden abrir en su celular cuando quieran.</p></div>
+        <div class="revela"><span class="pr-ic" data-i="check"></span><b>Nada sale sin su visto bueno</b><p>Ustedes aprueban el diseño y cada pantalla antes de publicarla.</p></div>
+        <div class="revela"><span class="pr-ic" data-i="lock"></span><b>Lo del estudio es del estudio</b><p>El dominio, sus fotos y la información de sus clientes.</p></div>
       </div>
+      <ol class="etapas">
+        <li class="etapa revela">
+          <div class="et-cab"><span class="cuando mono">Semana 1</span><h3>Su material</h3><p>Una llamada de media hora para conocer el estudio.</p></div>
+          <div class="et-cols">
+            <div><small class="mono">Nosotros</small><p>Ordenamos sus paquetes y precios, compramos el dominio y armamos la lista de pantallas.</p></div>
+            <div><small class="mono">Ustedes</small><p>Nos pasan sus mejores fotos en archivo, el logo y los precios de hoy.</p></div>
+            <div><small class="mono">Reciben</small><p>La lista de lo que lleva cada pantalla, para que la aprueben.</p></div>
+          </div>
+        </li>
+        <li class="etapa revela">
+          <div class="et-cab"><span class="cuando mono">Semana 1–2</span><h3>Diseño</h3><p>Se ve como el estudio, no como una plantilla.</p></div>
+          <div class="et-cols">
+            <div><small class="mono">Nosotros</small><p>La página con su logo, sus colores, su letra y sus fotos reales.</p></div>
+            <div><small class="mono">Ustedes</small><p>La revisan en su celular y nos dicen qué cambiar.</p></div>
+            <div><small class="mono">Reciben</small><p>Un enlace de prueba para enseñárselo al equipo.</p></div>
+          </div>
+        </li>
+        <li class="etapa revela">
+          <div class="et-cab"><span class="cuando mono">Según el plan</span><h3>Construcción</h3><p>Lo que no se ve, pero hace que todo funcione.</p></div>
+          <div class="et-cols">
+            <div><small class="mono">Nosotros</small><p>Base de datos Supabase Pro, reglas de seguridad, tiempo real y carga de su portafolio.</p></div>
+            <div><small class="mono">Ustedes</small><p>Una revisión corta cada semana para probar lo nuevo.</p></div>
+            <div><small class="mono">Reciben</small><p>Avances que ya se pueden tocar, con datos de prueba.</p></div>
+          </div>
+        </li>
+        <li class="etapa revela">
+          <div class="et-cab"><span class="cuando mono">Entrega</span><h3>Capacitación</h3><p>El día que el sistema empieza a trabajar.</p></div>
+          <div class="et-cols">
+            <div><small class="mono">Nosotros</small><p>Lo publicamos en su dominio y damos una sesión con el equipo.</p></div>
+            <div><small class="mono">Ustedes</small><p>Hacen las primeras reservas y entregas reales, con nosotros pendientes.</p></div>
+            <div><small class="mono">Reciben</small><p>Un usuario por persona, con lo que le toca ver según su puesto.</p></div>
+          </div>
+        </li>
+        <li class="etapa revela">
+          <div class="et-cab"><span class="cuando mono">Después</span><h3>Acompañamiento</h3><p>La entrega no es el final.</p></div>
+          <div class="et-cols">
+            <div><small class="mono">Nosotros</small><p>Un primer mes de ajustes sin costo. Después, el soporte va dentro de la mensualidad.</p></div>
+            <div><small class="mono">Ustedes</small><p>Nos cuentan qué se traba y qué preguntan los clientes.</p></div>
+            <div><small class="mono">Reciben</small><p>A los tres meses vemos los números juntos y decidimos qué mejorar.</p></div>
+          </div>
+        </li>
+      </ol>
       <div class="plazos">
         <div class="revela"><b>1 a 2 semanas</b><span>Página del estudio</span></div>
         <div class="revela"><b>3 a 4 semanas</b><span>Tienda en línea</span></div>
@@ -389,11 +433,78 @@
     </div>
   </section>
 
-  <!-- 10 Preguntas -->
+  <!-- 11 A su medida -->
+  <section class="sec" id="medida">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">11</span> A su medida</p>
+        <h2 class="enfoca">El sistema se viste como el estudio.</h2>
+        <p class="lead">Pruébelo aquí. Cambie el color, la letra, lo que más quieren vender y la forma de hablarle al cliente, y mire cómo queda su panel al instante.</p>
+      </header>
+      <div class="medida revela">
+        <form class="m-ctrl" id="m-ctrl" aria-label="Personalizar el panel">
+          <fieldset><legend>Color del estudio</legend><div class="m-colores" id="m-colores"></div></fieldset>
+          <fieldset><legend>Letra</legend><div class="m-pildoras" id="m-letras"></div></fieldset>
+          <fieldset><legend>Lo que más quieren vender</legend><div class="m-pildoras" id="m-paquetes"></div></fieldset>
+          <fieldset><legend>Cómo le hablan al cliente</legend><div class="m-pildoras" id="m-tonos"></div></fieldset>
+          <a class="btn btn-tinta m-ver" id="m-ver" href="demos/completo/"><span data-i="play"></span>Ver el sistema completo así</a>
+        </form>
+        <div class="m-vista" id="m-vista">
+          <div class="top"><i></i><i></i><i></i><span class="url mono">panel.fotogonzalezstudio.com</span></div>
+          <div class="m-area">
+            <div class="mv-fecha">Miércoles, 11 de noviembre · Retalhuleu</div>
+            <div class="mv-h1">Buenos días.</div>
+            <p class="mv-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
+            <div class="mv-cifras"><div><small>Ingresos de noviembre</small><b>Q 38,450.00</b></div><div><small>Ticket promedio</small><b>Q 1,602.08</b></div></div>
+            <div class="mv-op">
+              <span class="mv-ic" data-i="gift"></span>
+              <div><small>Lo próximo que le puede vender</small><b id="mv-paq">Sesión de primer año</b><p id="mv-por"></p><span class="mv-btn" id="mv-btn">Mandar la oferta</span></div>
+            </div>
+            <div class="mv-wa" aria-live="polite"><small>Así le llega al cliente por WhatsApp</small><p id="mv-msg"></p></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-mas revela">
+        <h3>Y también se adapta</h3>
+        <ul>
+          <li><b>Su logo y su nombre</b>En la página, el panel, los mensajes y las facturas.</li>
+          <li><b>Sus paquetes y precios</b>Con lo que incluye cada uno. Los cambian ustedes cuando quieran.</li>
+          <li><b>Sus horarios</b>Días libres, horas de estudio y cuánto dura cada sesión.</li>
+          <li><b>Sus mensajes</b>Confirmación, recordatorio y entrega, escritos con sus palabras.</li>
+          <li><b>Quién ve qué</b>La recepción no ve la caja y cada fotógrafo ve su agenda.</li>
+          <li><b>Sus pantallas</b>Lo que más usan va primero. Lo que no usan, se quita.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 Cómo crece -->
+  <section class="sec" id="crece" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">12</span> Cómo crece</p>
+        <h2 class="enfoca">Hoy es el comienzo. El sistema crece con el estudio.</h2>
+        <p class="lead">Las mejoras no salen de una lista fija. Salen de lo que muestra el panel: qué se vende, qué preguntan los clientes y en qué paso se quedan.</p>
+      </header>
+      <ol class="ruta-crece">
+        <li class="revela"><span class="cuando mono">Al entregar</span><h3>Su plan, funcionando</h3><ul><li>El sistema publicado en su dominio</li><li>El equipo capacitado</li><li>Un mes de ajustes sin costo</li></ul></li>
+        <li class="revela"><span class="cuando mono">A los 3 meses</span><h3>Afinar con los números</h3><ul><li>Paquetes y precios ajustados a lo que más se vende</li><li>Respuestas listas para lo que más preguntan</li><li>Lo que más usan, más a la mano</li></ul></li>
+        <li class="revela"><span class="cuando mono">A los 6 meses</span><h3>Vender por más lados</h3><ul><li>Pedido directo al laboratorio de impresión</li><li>Fotos de eventos para los invitados: cada uno encuentra las suyas con un código QR</li><li>Un resumen del mes que les llega solo</li></ul></li>
+        <li class="revela"><span class="cuando mono">Cuando lo necesiten</span><h3>Crecer el estudio</h3><ul><li>Otro fotógrafo u otra sucursal, con su propia agenda</li><li>Mini sesiones, cursos o presets a la venta en línea</li><li>La factura FEL conectada a cada venta</li></ul></li>
+      </ol>
+      <div class="crece-reglas">
+        <div class="revela"><b>Ustedes deciden el orden</b>La ruta es una idea para empezar. Si algo urge, va primero.</div>
+        <div class="revela"><b>Cada mejora se cotiza aparte</b>Les decimos el precio antes de empezar. Nada se cobra sin su aprobación.</div>
+        <div class="revela"><b>No se pierde nada</b>Todo crece sobre la misma base de datos, con la información que ya tienen.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 Preguntas -->
   <section class="sec" id="preguntas">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">11</span> Preguntas</p>
+        <p class="eyebrow mono"><span class="num">13</span> Preguntas</p>
         <h2 class="enfoca">Lo que suelen preguntar.</h2>
       </header>
       <div class="faq" id="faq"></div>
@@ -416,5 +527,7 @@
 <footer class="pie">Monterroso Dev Studio · Propuesta para Foto González Studio · Válida por 15 días · Precios en quetzales, sin IVA salvo que se marque. Costos de Supabase calculados a US$1 = Q 7.70 (noviembre de 2026). Las fotos son del estudio, tomadas de su Facebook.</footer>
 
 <script src="js/propuesta.js?v=20261111c"></script>
+<script src="demos/completo/letras.js?v=20261111g"></script>
+<script src="js/medida.js?v=20261111g"></script>
 </body>
 </html>
