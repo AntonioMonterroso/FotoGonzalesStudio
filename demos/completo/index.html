@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="../comun.css?v=20261111b">
-<link rel="stylesheet" href="completo.css?v=20261111b">
+<link rel="stylesheet" href="../comun.css?v=20261111c">
+<link rel="stylesheet" href="completo.css?v=20261111c">
 </head>
 <body>
 <div class="app">
@@ -118,31 +118,45 @@
 
     <!-- CLIENTES -->
     <section class="vista" id="v-clientes" role="tabpanel" aria-labelledby="t-clientes" hidden>
-      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> cada cliente con todo lo que ha hecho con el estudio, sus fechas importantes y su código para recomendar. Así vuelven y traen a otros.</span></p>
-      <div class="crm">
-        <section class="bloque" aria-labelledby="h-cli">
-          <div class="bloque-cab"><h2 id="h-cli">Clientes</h2><span class="tenue chico" id="cli-n"></span></div>
-          <ul class="lista-cli" id="lista-cli"></ul>
-        </section>
-        <article class="bloque ficha-cli" id="ficha-cli" aria-live="polite">
-          <header class="fc-cab">
-            <span class="av" id="fc-av"></span>
-            <div><h3 id="fc-n"></h3><p class="tenue chico" id="fc-sub"></p></div>
-          </header>
-          <div class="fc-cifras" id="fc-cifras"></div>
-          <div class="fc-dos">
-            <div>
-              <h4>Fechas importantes</h4>
-              <ul class="fc-fechas" id="fc-fechas"></ul>
-            </div>
-            <div>
-              <h4>Historial</h4>
-              <ul class="fc-hist" id="fc-hist"></ul>
-            </div>
+      <p class="explica"><span data-i="info"></span><span><b>En simple:</b> cada cliente tiene su ficha con lo que ha hecho con el estudio, sus fechas importantes y <b>lo próximo que se le puede ofrecer</b>, con el mensaje ya escrito. Así vuelven y traen a otros.</span></p>
+      <section class="bloque cli-cab" aria-labelledby="h-cli">
+        <div class="bloque-cab gal-cab">
+          <div><h2 id="h-cli">Clientes</h2><p class="tenue chico" style="margin:4px 0 0">Todas las familias que han tomado fotos con el estudio. Toque una para ver su ficha.</p></div>
+          <div class="ag-resumen"><span><small>Clientes</small><b>418</b></span><span><small>Vuelven a comprar</small><b>38 %</b></span><span><small>Llegaron recomendados</small><b>23</b></span><span><small>Ventas posibles en fichas</small><b id="cl-pos">Q 0.00</b></span></div>
+        </div>
+        <div class="cli-herr">
+          <div class="buscar">
+            <label for="cli-q">Buscar por nombre, lugar o tipo de sesión</label>
+            <div class="buscar-in"><span data-i="search"></span><input id="cli-q" type="search" autocomplete="off" placeholder="Ej.: boda, Champerico, XV"></div>
           </div>
-          <div class="fc-ref" data-palanca="referidos"><div id="fc-ref-in"></div></div>
-        </article>
-      </div>
+          <div class="filtros" id="cli-filtros" role="group" aria-label="Filtrar clientes"></div>
+        </div>
+        <ul class="lista-cli" id="lista-cli"></ul>
+        <p class="cli-vacio tenue" id="cli-vacio" hidden></p>
+      </section>
+      <article class="bloque ficha-cli" id="ficha-cli" aria-live="polite" aria-labelledby="fc-n">
+        <header class="fc-cab">
+          <span class="foto fc-foto" id="fc-foto" role="img" aria-label="Foto de su última sesión"></span>
+          <div class="fc-nom"><h3 id="fc-n"></h3><p class="tenue chico" id="fc-sub"></p><span class="tag" id="fc-tag"></span></div>
+        </header>
+        <div class="fc-prox" id="fc-prox" data-palanca="proxima"></div>
+        <div class="fc-cifras" id="fc-cifras"></div>
+        <div class="fc-dos">
+          <section>
+            <h4>Fechas importantes</h4>
+            <ul class="fc-fechas" id="fc-fechas"></ul>
+          </section>
+          <section>
+            <h4>Lo que el estudio sabe</h4>
+            <p class="fc-nota" id="fc-nota"></p>
+          </section>
+        </div>
+        <section>
+          <h4>Historial con el estudio</h4>
+          <ol class="fc-hist" id="fc-hist"></ol>
+        </section>
+        <div class="fc-ref" data-palanca="referidos"><div id="fc-ref-in"></div></div>
+      </article>
     </section>
 
     <!-- GALERÍAS -->
@@ -244,7 +258,7 @@
 </div>
 <div class="velo" id="velo" hidden></div>
 
-<script src="../comun.js?v=20261111b"></script>
-<script src="completo.js?v=20261111b"></script>
+<script src="../comun.js?v=20261111c"></script>
+<script src="completo.js?v=20261111c"></script>
 </body>
 </html>

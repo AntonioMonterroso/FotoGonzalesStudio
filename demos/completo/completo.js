@@ -13,10 +13,11 @@ const PALANCAS = {
   embudo: { t: "El embudo con montos", d: "Cada cliente está en una columna, de la consulta a la entrega, y cada columna dice cuánto dinero hay en ella. Se ve de un vistazo qué está por cerrarse.", e: "Se atiende primero lo que está más cerca de convertirse en dinero." },
   galeria: { t: "La galería que vende fotos extra", d: "El paquete trae 10 fotos. Si la familia marca más, en su celular le aparece la oferta de llevarse las extra o la galería completa, y paga ahí mismo. Desde cada foto puede pedir el cuadro.", e: "Es la venta más natural del estudio: la familia ya está enamorada de esas fotos." },
   anticipo: { t: "La fecha se aparta con anticipo", d: "Quien reserva en línea paga el anticipo para apartar. Si no paga en 24 horas, la fecha se libera sola para otra familia.", e: "Menos sábados perdidos por quien no llega, y más fechas para quien sí paga." },
+  proxima: { t: "Cada cliente trae su siguiente venta", d: "La ficha dice qué ofrecerle según lo que ya hizo con el estudio: el recién nacido después de la maternidad, el álbum de la sesión que está eligiendo, el aniversario de la boda. El mensaje ya va escrito y sale con un toque.", e: "Venderle otra vez a quien ya confió en el estudio cuesta mucho menos que conseguir un cliente nuevo." },
   referidos: { t: "Referidos con premio", d: "Cada cliente tiene su código. La familia nueva recibe un descuento y quien la recomendó gana impresiones. El sistema lleva la cuenta.", e: "En Reu todos se conocen: los clientes contentos traen a los siguientes." },
   campanas: { t: "Campañas a quien sí le interesa", d: "Se escoge un grupo, por ejemplo familias con bebé fotografiado hace 6 a 12 meses, y una oferta. El mensaje le llega a cada uno con su nombre y los resultados entran en vivo. Así funcionó la sesión del Mundial.", e: "Llenar diciembre o una semana floja ya no depende de publicar y esperar." }
 };
-const VISTA_DE = { web: "pagina", vivo: "hoy", ventas: "hoy", fechas: "hoy", cotizacion: "hoy", saldo: "hoy", resena: "hoy", embudo: "hoy", galeria: null, anticipo: "agenda", referidos: "clientes", campanas: "campanas" };
+const VISTA_DE = { web: "pagina", vivo: "hoy", ventas: "hoy", fechas: "hoy", cotizacion: "hoy", saldo: "hoy", resena: "hoy", embudo: "hoy", galeria: null, anticipo: "agenda", proxima: "clientes", referidos: "clientes", campanas: "campanas" };
 
 /* ---------- Estado ---------- */
 const S = { ingresos: 38450, ventasN: 24, extra: 3115, consultas: 31, reservas: 13 };
@@ -264,46 +265,160 @@ function reservaEnVivo() {
 }
 
 /* ---------- Clientes ---------- */
+ICO.search = '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>';
+const MES_L = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const MES_C = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+// hist: [mes corto + año, sesión, monto, foto]; fechas: [ícono, qué, mes 1-12, día]
 const CLI = [
-  { id: "valeria", n: "Clienta frecuente", ini: "CF", col: "#7A5C8E", desde: "Clienta desde 2022 · Residenciales Bella Aurora", fechas: [["cake", "Su cumpleaños", "22 de enero"], ["heart", "Aniversario de bodas", "9 de marzo"]],
-    hist: [["Oct 2026", "Maternidad en estudio", 950], ["Mar 2025", "Aniversario · exterior", 850], ["Mar 2024", "Boda civil con video", 4200], ["Dic 2023", "Mini sesión navideña", 350]], cod: "REF-0142", refs: ["Familia del recién nacido", "Pareja de preboda"], tag: "Recomienda" },
-  { id: "lopez", n: "Familia del parque", ini: "FP", col: "#8E2234", desde: "Clientes desde 2023 · San Sebastián", fechas: [["cake", "Cumpleaños de la hija", "14 de febrero"], ["heart", "Aniversario de bodas", "2 de junio"]],
-    hist: [["Nov 2026", "Familia en exterior", 850], ["Jun 2026", "Sesión Mundial 2026", 350], ["Dic 2025", "Mini sesión navideña", 350], ["Feb 2024", "Primer año de la hija", 650]], cod: "REF-0217", refs: [], tag: "Eligiendo fotos" },
-  { id: "perez", n: "Familia del bebé", ini: "FB", col: "#2F7D4F", desde: "Clientes desde 2025 · Champerico", fechas: [["cake", "El bebé cumple 1 año", "1 de diciembre"]],
-    hist: [["Dic 2025", "Recién nacido", 950], ["Ago 2025", "Maternidad", 850]], cod: "REF-0388", refs: ["Familia nueva"], tag: "Cumple en 3 sem." },
-  { id: "ruiz", n: "Novios de diciembre", ini: "ND", col: "#B7893A", desde: "Clientes desde 2025 · Retalhuleu", fechas: [["heart", "Aniversario de bodas", "5 de diciembre"], ["cake", "Cumpleaños de la novia", "18 de abril"]],
-    hist: [["Dic 2025", "Boda con video", 7800], ["Oct 2025", "Preboda en Champerico", 1200]], cod: "REF-0451", refs: [], tag: "Aniversario" },
-  { id: "morales", n: "Familia de la quinceañera", ini: "FQ", col: "#5B6B8C", desde: "Clientes desde 2024 · San Felipe", fechas: [["cake", "Cumpleaños de la quinceañera", "3 de noviembre"]],
-    hist: [["Nov 2026", "XV en estudio con video", 2400], ["Nov 2025", "Retrato de cumpleaños", 450]], cod: "REF-0293", refs: [], tag: "Galería vence" },
-  { id: "castillo", n: "Novios de octubre", ini: "NO", col: "#6B4A44", desde: "Clientes desde 2026 · Nuevo San Carlos", fechas: [["heart", "Boda", "17 de octubre"]],
-    hist: [["Oct 2026", "Boda", 5800]], cod: "REF-0510", refs: [], tag: "Saldo pendiente" }
+  { id: "valeria", n: "Clienta frecuente", desde: "Clienta desde 2022 · Bella Aurora", tag: "Recomienda",
+    fechas: [["cake", "Su cumpleaños", 1, 22], ["heart", "Aniversario de bodas", 3, 9], ["sparkles", "Nace su bebé", 12, 15]],
+    hist: [["Oct 2026", "Maternidad en estudio", 950, "f-glam"], ["Mar 2025", "Aniversario en exterior", 850, "f-pareja"], ["Mar 2024", "Boda civil con video", 4200, "f-boda"], ["Dic 2023", "Mini sesión navideña", 350, "f-familia"]],
+    nota: "Prefiere las sesiones por la mañana y le encanta la luz suave de exterior. Pagó siempre a tiempo.",
+    prox: { ic: "sparkles", t: "Sesión de recién nacido", por: "Hizo su maternidad en octubre y el bebé nace a mediados de diciembre. Si no se le ofrece ahora, puede apartar con otro estudio.", m: 950,
+      wa: "Hola. ¡Ya falta poco para conocer a su bebé! Le apartamos la sesión de recién nacido para sus primeros 15 días, con 10 % por ser clienta frecuente. ¿Le guardo fecha?",
+      resp: "¡Sí! Nace a mediados de diciembre. Guárdeme la fecha, porfa." },
+    cod: "REF-0142", refs: ["Familia del recién nacido", "Pareja de preboda"] },
+  { id: "lopez", n: "Familia del parque", desde: "Clientes desde 2023 · San Sebastián", tag: "Eligiendo fotos",
+    fechas: [["cake", "Cumpleaños de la hija", 2, 14], ["heart", "Aniversario de bodas", 6, 2]],
+    hist: [["Nov 2026", "Familia en exterior", 850, "f-familia"], ["Jun 2026", "Sesión Mundial 2026", 350, "f-camisola"], ["Dic 2025", "Mini sesión navideña", 350, "f-maracas"], ["Feb 2024", "Primer año de la hija", 650, "f-primer"]],
+    nota: "Tienen una niña de 3 años: mejor sesiones cortas y antes de las 10 de la mañana. Siempre compran alguna impresión.",
+    prox: { ic: "book", t: "Álbum de la sesión que está eligiendo", por: "En este momento está marcando sus fotos en la galería. Es cuando más ganas tiene de llevárselas impresas.", m: 650,
+      wa: "Hola. Vimos que ya está eligiendo sus fotos. Con las que marcó le podemos armar un álbum 20×20 de tapa dura por Q 650.00. ¿Se lo preparamos?",
+      resp: "¡Qué buena idea! Sí, porfa, con las del parque." },
+    cod: "REF-0217", refs: [] },
+  { id: "perez", n: "Familia del bebé", desde: "Clientes desde 2025 · Champerico", tag: "Cumple en 3 sem.",
+    fechas: [["cake", "El bebé cumple 1 año", 12, 1]],
+    hist: [["Dic 2025", "Recién nacido", 950, "f-bebe"], ["Ago 2025", "Maternidad", 850, "f-retrato"]],
+    nota: "Viajan desde Champerico: darles horario después de las 10 de la mañana. Les gustó el set de circo.",
+    prox: { ic: "cake", t: "Sesión de primer año", por: "Le hicieron su recién nacido en diciembre del año pasado y cumple 1 año el 1 de diciembre.", m: 650,
+      wa: "Hola. ¡Su bebé ya va a cumplir su primer año! Tenemos el set de circo o el de pastel para su sesión, Q 650.00. ¿Le apartamos fecha antes del 1 de diciembre?",
+      resp: "¡Sí! El de circo. ¿Puede ser el sábado 28?" },
+    cod: "REF-0388", refs: ["Familia nueva"] },
+  { id: "ruiz", n: "Novios de diciembre", desde: "Clientes desde 2025 · Retalhuleu", tag: "Aniversario",
+    fechas: [["heart", "Primer aniversario de bodas", 12, 5], ["cake", "Cumpleaños de la novia", 4, 18]],
+    hist: [["Dic 2025", "Boda con video", 7800, "f-boda"], ["Oct 2025", "Preboda en Champerico", 1200, "f-pareja"]],
+    nota: "Les encantó la playa de Champerico en la preboda. Compraron el álbum 30×30 de la boda.",
+    prox: { ic: "heart", t: "Sesión de primer aniversario", por: "El 5 de diciembre cumplen un año de casados. El estudio hizo su preboda y su boda.", m: 850,
+      wa: "Hola. ¡El 5 de diciembre cumplen su primer año de casados! Les ofrecemos una sesión de aniversario en Champerico, donde hicimos su preboda, por Q 850.00. ¿Les guardamos la fecha?",
+      resp: "¡Nos encanta! Sí, el domingo antes del aniversario." },
+    cod: "REF-0451", refs: [] },
+  { id: "morales", n: "Familia de la quinceañera", desde: "Clientes desde 2024 · San Felipe", tag: "Galería vence",
+    fechas: [["cake", "Cumpleaños de la quinceañera", 11, 3]],
+    hist: [["Nov 2026", "XV en estudio con video", 2400, "f-xv"], ["Nov 2025", "Retrato de cumpleaños", 450, "f-quince"]],
+    nota: "La quinceañera quiere un cuadro grande para la sala. Eligieron 32 fotos y todavía no han pedido impresiones.",
+    prox: { ic: "book", t: "Álbum de los XV antes de que venza la galería", por: "La galería se cierra en 3 días y eligieron 32 fotos sin pedir nada impreso.", m: 1450,
+      wa: "Hola. La galería de los XV está abierta hasta el viernes. Con las 32 fotos que eligieron armamos el álbum 30×30 por Q 1,450.00. ¿Se lo preparamos?",
+      resp: "Sí, el álbum grande. ¿Lo puedo pagar en dos partes?" },
+    cod: "REF-0293", refs: [] },
+  { id: "castillo", n: "Novios de octubre", desde: "Clientes desde 2026 · Nuevo San Carlos", tag: "Saldo pendiente",
+    fechas: [["heart", "Primer aniversario de bodas", 10, 17]],
+    hist: [["Oct 2026", "Boda", 5800, "f-anillo"]],
+    nota: "Pidieron una foto grande de la ceremonia para la casa de los papás. Faltan Q 1,200.00 del saldo.",
+    prox: { ic: "unlock", t: "Pagar el saldo y liberar las fotos", por: "Su galería está lista pero con marca de agua. Al pagar el saldo pueden descargar todo en alta.", m: 1200,
+      wa: "Hola. ¡Su galería de boda ya está lista! Al completar el saldo de Q 1,200.00 se quita la marca de agua y pueden descargar todo en alta. ¿Le paso los datos para transferir?",
+      resp: "¡Sí! Hoy mismo transfiero." },
+    cod: "REF-0510", refs: [] }
 ];
+const CL = { sel: "valeria", filtro: "todos", q: "", enviadas: new Set() };
+
+const hoy0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+function diasA(mes, dia) {
+  const h = hoy0(); let d = new Date(h.getFullYear(), mes - 1, dia);
+  if (d < h) d = new Date(h.getFullYear() + 1, mes - 1, dia);
+  return Math.round((d - h) / 864e5);
+}
+const totalDe = c => c.hist.reduce((s, h) => s + h[2], 0);
+const mesesDesde = txt => { const [m, a] = txt.split(" "); const h = new Date(); return (h.getFullYear() - +a) * 12 + h.getMonth() - MES_C.indexOf(m); };
+const textoMeses = n => n <= 0 ? "Este mes" : n === 1 ? "Hace 1 mes" : n < 12 ? `Hace ${n} meses` : n < 24 ? "Hace 1 año" : `Hace ${Math.floor(n / 12)} años`;
+const cercana = c => Math.min(...c.fechas.map(f => diasA(f[2], f[3])));
+const normal = t => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+const FILTROS = [
+  ["todos", "Todos", () => true],
+  ["ofrecer", "Para ofrecer", c => !CL.enviadas.has(c.id)],
+  ["fechas", "Fecha en 60 días", c => cercana(c) <= 60],
+  ["recomiendan", "Recomiendan", c => c.refs.length > 0]
+];
+function visibles() {
+  const f = FILTROS.find(x => x[0] === CL.filtro)[2], q = normal(CL.q.trim());
+  return CLI.filter(c => f(c) && (!q || normal([c.n, c.desde, c.tag, c.nota, ...c.hist.map(h => h[1])].join(" ")).includes(q)));
+}
 function pintarClientes() {
-  $("#cli-n").textContent = "418 en total · " + CLI.length + " con algo hoy";
-  $("#lista-cli").innerHTML = CLI.map(c => {
-    const tot = c.hist.reduce((s, h) => s + h[2], 0);
-    return `<li><button type="button" data-cli="${c.id}"><span class="av" style="background:${c.col}">${c.ini}</span>
-      <span><b>${c.n}</b><small>${c.hist.length} ${c.hist.length === 1 ? "sesión" : "sesiones"} · ${Q(tot)}</small>${c.tag ? `<br><span class="tag">${c.tag}</span>` : ""}</span></button></li>`;
+  $("#cl-pos").textContent = Q(CLI.filter(c => !CL.enviadas.has(c.id)).reduce((s, c) => s + c.prox.m, 0));
+  $("#cli-filtros").innerHTML = FILTROS.map(([id, t, f]) => `<button type="button" aria-pressed="${CL.filtro === id}" data-f="${id}">${t}<span>${CLI.filter(f).length}</span></button>`).join("");
+  const vs = visibles();
+  $("#lista-cli").innerHTML = vs.map(c => {
+    const env = CL.enviadas.has(c.id);
+    return `<li><button type="button" data-cli="${c.id}" aria-current="${c.id === CL.sel}">
+      <span class="foto lc-foto ${c.hist[0][3]}" aria-hidden="true"></span>
+      <span class="lc-txt"><b>${c.n}</b><small>${c.hist.length} ${c.hist.length === 1 ? "sesión" : "sesiones"} · ${Q(totalDe(c))}</small>
+      <span class="lc-prox ${env ? "hecho" : ""}">${env ? ico("check", 13) + "Oferta enviada" : ico(c.prox.ic, 13) + c.prox.t}</span></span></button></li>`;
   }).join("");
-  $$("#lista-cli button").forEach(b => b.addEventListener("click", () => elegirCliente(b.dataset.cli, true)));
+  const vacio = $("#cli-vacio");
+  vacio.hidden = vs.length > 0;
+  if (!vs.length) vacio.textContent = CL.q.trim() ? `Nadie coincide con «${CL.q.trim()}». Pruebe con un lugar o un tipo de sesión.` : "Nadie en este filtro por ahora.";
 }
 function elegirCliente(id, anima) {
-  const c = CLI.find(x => x.id === id), tot = c.hist.reduce((s, h) => s + h[2], 0);
+  CL.sel = id;
+  const c = CLI.find(x => x.id === id), tot = totalDe(c), n = c.hist.length;
   $$("#lista-cli button").forEach(b => b.setAttribute("aria-current", b.dataset.cli === id));
-  const av = $("#fc-av"); av.textContent = c.ini; av.style.background = c.col;
-  $("#fc-n").textContent = c.n; $("#fc-sub").textContent = c.desde;
-  $("#fc-cifras").innerHTML = `<div><small>Total gastado</small><b>${Q(tot)}</b></div><div><small>Sesiones</small><b>${c.hist.length}</b></div><div><small>Ticket promedio</small><b>${Q(tot / c.hist.length)}</b></div>`;
-  $("#fc-fechas").innerHTML = c.fechas.map(([i, t, f]) => `<li><span class="i">${ico(i, 15)}</span><span>${t}<small>${f} · el sistema avisa 3 semanas antes</small></span></li>`).join("");
-  $("#fc-hist").innerHTML = c.hist.map(([f, t, m]) => `<li><span>${t}<small>${f}</small></span><span>${Q(m)}</span></li>`).join("");
+  $("#fc-foto").className = "foto fc-foto " + c.hist[0][3];
+  $("#fc-n").textContent = c.n; $("#fc-sub").textContent = c.desde; $("#fc-tag").textContent = c.tag;
+  pintarProx(c);
+  const meses = mesesDesde(c.hist[n - 1][0]) - mesesDesde(c.hist[0][0]);
+  const cada = n > 1 ? `Cada ${Math.max(1, Math.round(meses / (n - 1)))} meses` : "Primera vez";
+  $("#fc-cifras").innerHTML = `<div><small>Total con el estudio</small><b>${Q(tot)}</b></div><div><small>Sesiones</small><b>${n}</b></div>
+    <div><small>Última sesión</small><b>${textoMeses(mesesDesde(c.hist[0][0]))}</b></div><div><small>Vuelve</small><b>${cada}</b></div>`;
+  $("#fc-fechas").innerHTML = c.fechas.map(([i, t, m, d]) => {
+    const faltan = diasA(m, d);
+    const av = new Date(hoy0().getTime() + (faltan - 21) * 864e5);
+    const aviso = faltan <= 30 ? `<span class="chip vivo"><i></i>Ya está en Hoy</span>` : `<span class="fc-avisa">Avisa el ${av.getDate()} ${MES_C[av.getMonth()].toLowerCase()}</span>`;
+    return `<li><span class="i">${ico(i, 15)}</span><span>${t}<small>${d} de ${MES_L[m - 1]} · ${faltan === 0 ? "es hoy" : faltan === 1 ? "falta 1 día" : `faltan ${faltan} días`}</small></span>${aviso}</li>`;
+  }).join("");
+  $("#fc-nota").textContent = c.nota;
+  $("#fc-hist").innerHTML = c.hist.map(([f, t, m, foto]) => `<li><span class="foto ${foto}" aria-hidden="true"></span><span>${t}<small>${f.replace(" ", " de ")}</small></span><b>${Q(m)}</b></li>`).join("");
   $("#fc-ref-in").innerHTML = `<div class="ref-fila"><div><h4 style="margin:0 0 6px">Código para recomendar</h4><span class="ref-cod">${c.cod}</span></div>
       <button class="btn btn-chico" type="button" id="ref-wa">${ico("share", 16)}Mandar su código</button></div>
-    <p class="ref-txt">${c.refs.length ? `Esta clienta recomendó a <b>${c.refs.length} ${c.refs.length === 1 ? "familia" : "familias"}</b> y ganó <b>${Q(c.refs.length * 100)}</b> en impresiones.` : "Todavía no ha recomendado a nadie. Cada familia que llegue con su código le da Q 100.00 en impresiones."}</p>
+    <p class="ref-txt">${c.refs.length ? `Ya recomendó a <b>${c.refs.length} ${c.refs.length === 1 ? "familia" : "familias"}</b> y ganó <b>${Q(c.refs.length * 100)}</b> en impresiones.` : "Todavía no ha recomendado a nadie. Cada familia que llegue con su código le da Q 100.00 en impresiones."}</p>
     ${c.refs.length ? `<div class="ref-chips">${c.refs.map(r => `<span>${r}</span>`).join("")}</div>` : ""}`;
   $("#ref-wa").addEventListener("click", () => simularWA({
     texto: `Hola. Gracias por ser parte de Foto González Studio. Este es su código: ${c.cod}. Si una familia lo usa al reservar, ella recibe 10 % de descuento y usted gana Q 100.00 en impresiones.`,
     respuesta: "¡Qué bien! Se lo voy a pasar a mi hermana, que quiere fotos de los XV de su hija.",
     nota: "El sistema reconoce el código al reservar y le suma el premio a quien recomendó." }));
   if (anima && !calma) { const f = $("#ficha-cli"); f.classList.remove("cambia"); void f.offsetWidth; f.classList.add("cambia"); }
+}
+function pintarProx(c) {
+  const p = c.prox, env = CL.enviadas.has(c.id);
+  const caja = $("#fc-prox"), pin = $(".pin", caja);
+  caja.classList.toggle("enviada", env);
+  caja.innerHTML = `<span class="fp-ic">${ico(env ? "check" : p.ic, 20)}</span>
+    <div class="fp-txt"><small>${env ? "Oferta enviada · respondió" : "Lo próximo que le puede vender"}</small><b>${p.t}</b>
+      <p>${env ? `«${p.resp}»` : p.por}</p></div>
+    <div class="fp-acc"><span class="fp-m"><small>Venta posible</small>${Q(p.m)}</span>
+      ${env ? `<span class="hecho">${ico("check", 15)}Ya se le escribió</span>` : `<button class="btn btn-chico btn-tinta" type="button" id="fp-wa">${ico("send", 15)}Mandar la oferta</button>`}</div>`;
+  if (pin) caja.append(pin);
+  const b = $("#fp-wa");
+  if (b) b.addEventListener("click", () => {
+    simularWA({ texto: p.wa, respuesta: p.resp, nota: "En el sistema real sale por WhatsApp al número de esta familia, con el mensaje ya escrito." });
+    CL.enviadas.add(c.id);
+    alFeed("send", `Oferta enviada a <b>${c.n}</b>: ${p.t}`);
+    setTimeout(() => { pintarClientes(); if (CL.sel === c.id) pintarProx(c); }, 700);
+  });
+}
+function iniciarClientes() {
+  pintarIconos($("#v-clientes"));
+  pintarClientes(); elegirCliente(CL.sel);
+  $("#lista-cli").addEventListener("click", e => {
+    const b = e.target.closest("[data-cli]"); if (!b) return;
+    elegirCliente(b.dataset.cli, true);
+    const f = $("#ficha-cli"), r = f.getBoundingClientRect();
+    if (r.top > innerHeight * .6 || r.top < 72) f.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "start" });
+  });
+  $("#cli-filtros").addEventListener("click", e => {
+    const b = e.target.closest("[data-f]"); if (!b) return;
+    CL.filtro = b.dataset.f; pintarClientes();
+  });
+  $("#cli-q").addEventListener("input", e => { CL.q = e.target.value; pintarClientes(); });
 }
 
 /* ---------- Galerías ---------- */
@@ -643,7 +758,7 @@ const PASOS = [
   { v: "agenda", sel: "#semana", t: "3. La fecha queda segura", d: "Una fecha se aparta cuando entra el anticipo. Si no paga, el sistema le recuerda. Si queda una tarde libre, se ofrece con un toque." },
   { v: "galerias", sel: "#galerias", t: "4. Cada familia recibe su galería", d: "Después de la sesión, la familia ve sus fotos en una galería privada. El estudio ve aquí cuál está eligiendo, cuál vence y cuál debe saldo." },
   { v: "cliente", sel: "#cliente", t: "5. La familia elige y compra más", d: "En su celular marca con un corazón las fotos que quiere. Si pasa de las que trae su paquete, el sistema le ofrece las extras y se cobran solas." },
-  { v: "campanas", sel: ".cam-grid", t: "6. Y vuelven", d: "Cumpleaños, aniversarios y temporadas: el sistema le arma el grupo y el mensaje para que la familia regrese a su próxima sesión." }
+  { v: "clientes", sel: "#fc-prox", t: "6. Y vuelven", d: "Cada cliente tiene su ficha. Con sus fechas y lo que ya hizo, el sistema le dice qué ofrecerle la próxima vez, con el mensaje escrito. Las campañas hacen lo mismo con grupos enteros." }
 ];
 let pasoT = -1;
 function tour(i) {
@@ -724,8 +839,7 @@ pintarOport();
 iniciarEmbudo();
 pintarAgenda();
 iniciarTour();
-pintarClientes();
-elegirCliente("valeria");
+iniciarClientes();
 pintarGaleria();
 pintarGalerias();
 pintarCampana();

@@ -50,18 +50,18 @@ const PRECIOS = {
     desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 105]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 3600, mes: 490, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 3000, mes: 420, plazo: "3 a 4 semanas",
     para: "Para vender impresiones, álbumes y sesiones sin estar en el chat.",
     vista: "tienda",
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 260]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 190]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 6800, mes: 790, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 5800, mes: 690, plazo: "5 a 7 semanas", rec: true,
     para: "Para manejar todo el estudio, de la reserva a la entrega.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>: cumpleaños, aniversarios, galerías por vencer, cotizaciones sin respuesta", "<b>Galería que vende fotos extra</b>: al pasar del paquete, la oferta sale sola", "Entrega en alta resolución, <b>con marca de agua hasta pagar el saldo</b>", "Reservas con anticipo y embudo con lo que vale cada etapa", "<b>Campañas por WhatsApp</b> a un grupo de clientes, referidos con premio y reseña pedida al entregar", "Clientes con historial, contratos, caja y reportes; usuarios por puesto", "Se instala en el celular como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 490]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 390]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -101,7 +101,7 @@ const CALC = [
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
-const COMPRA_UNICA = { ini: 19500, mes: 350 };
+const COMPRA_UNICA = { ini: 15000, mes: 350 };
 
 const EXTRAS = [
   { id: "com", n: "Dominio .com", d: "fotogonzalezstudio.com", ini: 120, anual: true, on: true },
