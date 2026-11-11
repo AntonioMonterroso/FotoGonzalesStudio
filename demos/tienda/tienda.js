@@ -44,13 +44,13 @@ const OFERTAS = [
   { k: "regalo250", n: "Tarjeta de regalo", txt: "<b>Tarjeta de regalo de Q 250.00</b> para regalarle una sesión a otra familia.", p: 250, ic: "gift" }
 ];
 const OTROS = [
-  ["Familia Ruiz", "un álbum 30×30", 1450, "f-boda"],
-  ["Andrea M.", "2 cuadros 40×60", 1050, "f-quince"],
-  ["Familia Pérez", "el Pack Abuelos", 450, "f-familia"],
-  ["Carlos y Ana", "una tarjeta de regalo de Q 500.00", 500, "f-pareja"],
-  ["Familia Morales", "el Tríptico de pared", 890, "f-xv"],
-  ["Sofía R.", "10 impresiones 5×7", 250, "f-retrato"],
-  ["Familia Castillo", "un fotolibro", 650, "f-familia"]
+  ["Unos novios", "un álbum 30×30", 1450, "f-boda"],
+  ["Una quinceañera", "2 cuadros 40×60", 1050, "f-quince"],
+  ["Una familia de Reu", "el Pack Abuelos", 450, "f-familia"],
+  ["Una pareja", "una tarjeta de regalo de Q 500.00", 500, "f-pareja"],
+  ["Otra quinceañera", "el Tríptico de pared", 890, "f-xv"],
+  ["Una clienta de retrato", "10 impresiones 5×7", 250, "f-retrato"],
+  ["Una familia de Champerico", "un fotolibro", 650, "f-familia"]
 ];
 
 /* Galería del desfile (fotos reales del estudio; en el sistema real son cientos) */
@@ -411,7 +411,7 @@ function pagar() {
     const code = "FGS-" + (2200 + Math.floor(Math.random() * 700));
     pedido = { code, total: t.total, n: piezas(), lista: carrito.map(i => `${i.c > 1 ? i.c + " × " : ""}${i.n}`), estado: 0, metodo: METODOS[m], recoger: t.recoger };
     estudio.ventas += t.total; estudio.pedidos++;
-    alFeed(`<b>Daniela</b> pagó ${Q(t.total)} · ${METODOS[m]}`, "cash", true);
+    alFeed(`<b>La quinceañera</b> pagó ${Q(t.total)} · ${METODOS[m]}`, "cash", true);
     pintarEstudio();
     carrito.length = 0; cupon = null; boleta = false; clearTimeout(timerOlvido);
     $("#cupon-msg").textContent = ""; $("#cupon-txt").value = "";
@@ -494,7 +494,7 @@ function reiniciarOlvido() {
 }
 function mostrarRecordatorio() {
   const lista = carrito.length ? carrito.map(i => i.n.toLowerCase()).slice(0, 3).join(", ") : "un cuadro 40×60 cm";
-  const msg = `Hola, Daniela. Se le quedó en el carrito: ${lista}.\n\nSu galería sigue abierta 14 días más. Aquí termina su pedido, tal como lo dejó:\nfotogonzalezstudio.com/c/D4N1\n\nFoto González Studio`;
+  const msg = `Hola. Se le quedó en el carrito: ${lista}.\n\nSu galería sigue abierta 14 días más. Aquí termina su pedido, tal como lo dejó:\nfotogonzalezstudio.com/c/D4N1\n\nFoto González Studio`;
   simularWA({ texto: msg, nota: "Este mensaje sale solo, desde el WhatsApp del estudio, cuando alguien deja productos en el carrito. El enlace abre su carrito tal como lo dejó." });
   const chat = $("#hoja-wa .chat");
   if (chat) chat.innerHTML = `<p class="b">${msg}<small>${hora()}</small></p>`;
@@ -510,8 +510,8 @@ pintarCuadro();
 pintarCarrito();
 pintarSeguimiento();
 pintarEventos();
-alFeed("<b>Familia Ruiz</b> · un álbum 30×30 · Q 1,450.00", "bag");
-alFeed("<b>Andrea M.</b> abrió su galería", "eye");
+alFeed("<b>Unos novios</b> · un álbum 30×30 · Q 1,450.00", "bag");
+alFeed("<b>Una quinceañera</b> abrió su galería", "eye");
 $$("#e-feed li").forEach(li => li.style.animation = "none");
 $("#btn-carrito").addEventListener("click", () => abierto() ? cerrarCarrito() : abrirCarrito());
 $("#cerrar-carrito").addEventListener("click", () => cerrarCarrito());

@@ -61,23 +61,23 @@ function alFeed(ic, html, clave = "") {
 
 /* ---------- Ventas encontradas hoy ---------- */
 const OPORT = [
-  { id: "perez", pal: "fechas", ic: "cake", t: "Mateo Pérez cumple 1 año en 3 semanas", d: "Le hicieron su sesión de recién nacido en diciembre del año pasado. Es el momento de ofrecerle la sesión de primer año.", monto: 650,
-    wa: "Hola, familia Pérez. ¡Mateo ya va a cumplir su primer año! ¿Le hacemos su sesión con pastel aquí en el estudio? Tenemos sábados libres en diciembre. Sesión de primer año: Q 650.00, con 15 fotos editadas.",
+  { id: "perez", pal: "fechas", ic: "cake", t: "Un bebé de su clientela cumple 1 año en 3 semanas", d: "Le hicieron su sesión de recién nacido en diciembre del año pasado. Es el momento de ofrecerle la sesión de primer año.", monto: 650,
+    wa: "Hola. ¡Su bebé ya va a cumplir su primer año! ¿Le hacemos su sesión con pastel aquí en el estudio? Tenemos sábados libres en diciembre. Sesión de primer año: Q 650.00, con 15 fotos editadas.",
     resp: "¡Sí! Justo estábamos pensando en eso. ¿Tienen el sábado 13 en la mañana?", logro: "Respondió · apartó" },
-  { id: "ruiz", ic: "heart", t: "Primer aniversario de bodas de los Ruiz: 5 de diciembre", d: "El estudio hizo su boda en el Hotel Posada de Don José. Una sesión de aniversario con video corto es un buen regalo.", monto: 950,
-    wa: "Hola, Marisol y Andrés. ¡Ya casi cumplen un año de casados! Para celebrarlo tenemos la sesión de aniversario con un video corto de 1 minuto: Q 950.00. ¿Les apartamos una fecha?",
+  { id: "ruiz", ic: "heart", t: "Primer aniversario de unos novios: 5 de diciembre", d: "El estudio hizo su boda hace un año. Una sesión de aniversario con video corto es un buen regalo.", monto: 950,
+    wa: "Hola. ¡Ya casi cumplen un año de casados! Para celebrarlo tenemos la sesión de aniversario con un video corto de 1 minuto: Q 950.00. ¿Les apartamos una fecha?",
     resp: "Qué bonito detalle. Sí, el domingo 7 por la tarde nos queda bien.", logro: "Respondió · apartó" },
-  { id: "morales", ic: "images", t: "La galería de los XV de Andrea vence en 3 días", d: "La familia Morales eligió 32 fotos y todavía no ha pedido impresiones ni álbum.", monto: 1450,
-    wa: "Hola, familia Morales. La galería de los XV de Andrea está abierta hasta el viernes. Si quieren el álbum 30×30 con sus favoritas, este mes sale en Q 1,450.00 con la caja de regalo incluida.",
+  { id: "morales", ic: "images", t: "Una galería de XV vence en 3 días", d: "La familia eligió 32 fotos y todavía no ha pedido impresiones ni álbum.", monto: 1450,
+    wa: "Hola. La galería de los XV está abierta hasta el viernes. Si quieren el álbum 30×30 con sus favoritas, este mes sale en Q 1,450.00 con la caja de regalo incluida.",
     resp: "Sí lo queremos, con la foto del vestido en la portada. ¿Cómo pagamos?", logro: "Pidió el álbum" },
-  { id: "daniela", pal: "cotizacion", ic: "clock", t: "Daniela Ortiz no respondió la cotización de XV", d: "Se la mandaron hace 3 días: XV en estudio con video, Q 2,900.00. Quedan 2 sábados libres en marzo.", monto: 2900,
-    wa: "Hola, Daniela. ¿Pudo ver la cotización de los XV con video? Le cuento que de marzo solo nos quedan 2 sábados. Si le sirve, con Q 500.00 de anticipo se la apartamos hoy.",
+  { id: "daniela", pal: "cotizacion", ic: "clock", t: "Una cotización de XV sin respuesta", d: "Se la mandaron hace 3 días: XV en estudio con video, Q 2,900.00. Quedan 2 sábados libres en marzo.", monto: 2900,
+    wa: "Hola. ¿Pudo ver la cotización de los XV con video? Le cuento que de marzo solo nos quedan 2 sábados. Si le sirve, con Q 500.00 de anticipo se la apartamos hoy.",
     resp: "Perdón, se me pasó. Sí, apártenos el sábado 21. Ahorita le mando la boleta.", logro: "Respondió · apartó" },
-  { id: "castillo", pal: "saldo", ic: "lock", t: "Saldo pendiente de los Castillo: Q 1,200.00", d: "Su galería de boda ya está lista, con marca de agua hasta que paguen el saldo.", monto: 1200,
-    wa: "Hola, familia Castillo. ¡Su galería de boda ya está lista! Pueden verla con su PIN. Al cancelar el saldo de Q 1,200.00 se quita la marca de agua y se habilita la descarga en alta.",
+  { id: "castillo", pal: "saldo", ic: "lock", t: "Saldo pendiente de una boda: Q 1,200.00", d: "Su galería de boda ya está lista, con marca de agua hasta que paguen el saldo.", monto: 1200,
+    wa: "Hola. ¡Su galería de boda ya está lista! Pueden verla con su PIN. Al cancelar el saldo de Q 1,200.00 se quita la marca de agua y se habilita la descarga en alta.",
     resp: "¡Qué emoción! Ya hice la transferencia, le mando la boleta.", logro: "Pagó el saldo" },
-  { id: "resena", pal: "resena", ic: "star", t: "Aún sin reseñas en Google: pídalas al entregar", d: "Las familias Juárez, Orozco y Sandoval recibieron sus fotos ayer. Es el mejor momento para pedirles su opinión.", monto: 0,
-    wa: "Hola, familia Juárez. Gracias por confiar en Foto González Studio. Si les gustaron sus fotos, ¿nos ayudan con una reseña en Google? Les toma un minuto: g.page/fotogonzalez",
+  { id: "resena", pal: "resena", ic: "star", t: "Aún sin reseñas en Google: pídalas al entregar", d: "Tres familias recibieron sus fotos ayer. Es el mejor momento para pedirles su opinión.", monto: 0,
+    wa: "Hola. Gracias por confiar en Foto González Studio. Si les gustaron sus fotos, ¿nos ayudan con una reseña en Google? Les toma un minuto: g.page/fotogonzalez",
     resp: "¡Claro que sí! Ya la dejamos, quedamos encantados.", logro: "2 reseñas de 5 estrellas" }
 ];
 function pintarOport() {
@@ -127,17 +127,17 @@ function lograr(o, li) {
 /* ---------- Embudo ---------- */
 const COLS = ["Consulta", "Cotizada", "Anticipo", "Sesión", "Selección", "Entregada"];
 const EMB = [
-  { id: "e1", n: "Fam. Barrios", t: "Familia en el parque central", m: 850, c: 0 },
-  { id: "e2", n: "Karla y Diego", t: "Preboda en Champerico", m: 1200, c: 0 },
-  { id: "e3", n: "Daniela Ortiz", t: "XV con video", m: 2900, c: 1 },
-  { id: "e4", n: "Fam. Cifuentes", t: "Recién nacido", m: 950, c: 1 },
+  { id: "e1", n: "Familia nueva", t: "Familia en el parque central", m: 850, c: 0 },
+  { id: "e2", n: "Pareja de preboda", t: "Preboda en Champerico", m: 1200, c: 0 },
+  { id: "e3", n: "Quinceañera de marzo", t: "XV con video", m: 2900, c: 1 },
+  { id: "e4", n: "Familia del recién nacido", t: "Recién nacido", m: 950, c: 1 },
   { id: "e5", n: "Colegio La Asunción", t: "Graduación 2026", m: 4800, c: 2 },
-  { id: "e6", n: "Fam. Juárez", t: "Maternidad", m: 950, c: 2 },
-  { id: "e7", n: "Andrea Morales", t: "XV en estudio", m: 2400, c: 3 },
-  { id: "e8", n: "Familia López", t: "Familia en exterior", m: 850, c: 4 },
-  { id: "e9", n: "Ruiz Estrada", t: "Boda con video", m: 7800, c: 4 },
-  { id: "e10", n: "Fam. Castillo", t: "Boda", m: 5800, c: 5 },
-  { id: "e11", n: "Sofía Rivas", t: "Retrato en estudio", m: 450, c: 5 }
+  { id: "e6", n: "Mamá primeriza", t: "Maternidad", m: 950, c: 2 },
+  { id: "e7", n: "Quinceañera de noviembre", t: "XV en estudio", m: 2400, c: 3 },
+  { id: "e8", n: "Familia del parque", t: "Familia en exterior", m: 850, c: 4 },
+  { id: "e9", n: "Novios de diciembre", t: "Boda con video", m: 7800, c: 4 },
+  { id: "e10", n: "Novios de octubre", t: "Boda", m: 5800, c: 5 },
+  { id: "e11", n: "Clienta de retrato", t: "Retrato en estudio", m: 450, c: 5 }
 ];
 let nId = 20;
 const tarjeta = e => `<article class="tj${e.nueva ? " nueva" : ""}" draggable="true" data-id="${e.id}">
@@ -193,14 +193,14 @@ function iniciarEmbudo() {
 /* ---------- Agenda ---------- */
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const AG = [
-  { d: 0, h: "9:00", dur: "1 h", n: "Sofía Rivas", t: "Retrato en estudio", f: "f-retrato", a: 225 },
-  { d: 1, h: "16:00", dur: "2 h", n: "Fam. Cifuentes", t: "Recién nacido", f: "f-bebe", a: 475 },
-  { d: 2, h: "10:00", dur: "1 h", n: "Daniela Ortiz", t: "XV · prueba de vestido", f: "f-quince", a: 0, pend: true, debe: 600 },
-  { d: 3, h: "15:00", dur: "2 h", n: "Karla y Diego", t: "Sesión de pareja", f: "f-pareja", a: 600 },
+  { d: 0, h: "9:00", dur: "1 h", n: "Clienta de retrato", t: "Retrato en estudio", f: "f-retrato", a: 225 },
+  { d: 1, h: "16:00", dur: "2 h", n: "Familia del recién nacido", t: "Recién nacido", f: "f-bebe", a: 475 },
+  { d: 2, h: "10:00", dur: "1 h", n: "Quinceañera de marzo", t: "XV · prueba de vestido", f: "f-quince", a: 0, pend: true, debe: 600 },
+  { d: 3, h: "15:00", dur: "2 h", n: "Pareja de preboda", t: "Sesión de pareja", f: "f-pareja", a: 600 },
   { d: 4, h: "8:00", dur: "4 h", n: "Colegio La Asunción", t: "Desfile y graduación", f: "f-graduacion", a: 2400 },
-  { d: 5, h: "9:00", dur: "3 h", n: "Andrea Morales", t: "XV en estudio con video", f: "f-xv", a: 1200 },
-  { d: 5, h: "16:00", dur: "1 h", n: "Fam. Juárez", t: "Primer año · tema circo", f: "f-primer", a: 0, pend: true, debe: 325 },
-  { d: 6, h: "17:00", dur: "6 h", n: "Ruiz Estrada", t: "Boda · ceremonia y fiesta", f: "f-boda", a: 3900 }
+  { d: 5, h: "9:00", dur: "3 h", n: "Quinceañera de noviembre", t: "XV en estudio con video", f: "f-xv", a: 1200 },
+  { d: 5, h: "16:00", dur: "1 h", n: "Familia del primer año", t: "Primer año · tema circo", f: "f-primer", a: 0, pend: true, debe: 325 },
+  { d: 6, h: "17:00", dur: "6 h", n: "Novios de diciembre", t: "Boda · ceremonia y fiesta", f: "f-boda", a: 3900 }
 ];
 const AG_OFRECIDO = new Set(), AG_RECORDADO = new Set();
 function lunes() { const h = new Date(); const k = (h.getDay() + 6) % 7; h.setDate(h.getDate() - k); return h; }
@@ -245,7 +245,7 @@ function pintarAgenda() {
   }));
   $$("[data-recordar]").forEach(b => b.addEventListener("click", () => {
     const s = AG.find(x => x.n === b.dataset.recordar);
-    simularWA({ texto: `Hola, ${s.n.split(" ")[0]}. Le escribe Foto González Studio. Su fecha (${s.t.toLowerCase()}) sigue apartada hasta mañana. Para dejarla segura falta el anticipo de ${Q(s.debe)}. Aquí puede pagarlo: fotogonzalezstudio.com/pagar`, nota: "Si no entra el anticipo, la fecha se libera sola y vuelve a la página." });
+    simularWA({ texto: `Hola. Le escribe Foto González Studio. Su fecha (${s.t.toLowerCase()}) sigue apartada hasta mañana. Para dejarla segura falta el anticipo de ${Q(s.debe)}. Aquí puede pagarlo: fotogonzalezstudio.com/pagar`, nota: "Si no entra el anticipo, la fecha se libera sola y vuelve a la página." });
     AG_RECORDADO.add(s.n); pintarAgenda();
     setTimeout(() => {
       s.pend = false; s.a = s.debe; s.nueva = true; venta(s.debe); pintarAgenda();
@@ -255,35 +255,35 @@ function pintarAgenda() {
   }));
 }
 function reservaEnVivo() {
-  AG.push({ d: 6, h: "9:00", dur: "1 h", n: "Fam. Barrios", t: "Familia en el parque", f: "f-familia", a: 425, nueva: true });
+  AG.push({ d: 6, h: "9:00", dur: "1 h", n: "Familia nueva", t: "Familia en el parque", f: "f-familia", a: 425, nueva: true });
   const e = EMB.find(x => x.id === "e1"); if (e && e.c < 2) { e.c = 2; pintarEmbudo("e1"); }
   S.reservas++; venta(425);
   pintarAgenda();
-  alFeed("calendar", "<b>Reserva en línea</b> · Fam. Barrios apartó el domingo · anticipo Q 425.00");
-  aviso("Reserva nueva en línea · <b>Fam. Barrios</b>", { ic: "calendar", sub: "Pagó Q 425.00 de anticipo · domingo 9:00" });
+  alFeed("calendar", "<b>Reserva en línea</b> · una familia apartó el domingo · anticipo Q 425.00");
+  aviso("Reserva nueva en línea · <b>familia en el parque</b>", { ic: "calendar", sub: "Pagó Q 425.00 de anticipo · domingo 9:00" });
 }
 
 /* ---------- Clientes ---------- */
 const CLI = [
-  { id: "valeria", n: "Valeria Méndez", ini: "VM", col: "#7A5C8E", desde: "Clienta desde 2022 · Residenciales Bella Aurora", fechas: [["cake", "Cumpleaños de Valeria", "22 de enero"], ["heart", "Aniversario de bodas", "9 de marzo"]],
-    hist: [["Oct 2026", "Maternidad en estudio", 950], ["Mar 2025", "Aniversario · exterior", 850], ["Mar 2024", "Boda civil con video", 4200], ["Dic 2023", "Mini sesión navideña", 350]], cod: "VALERIA100", refs: ["Fam. Cifuentes", "Karla y Diego"], tag: "Recomienda" },
-  { id: "lopez", n: "Familia López", ini: "FL", col: "#8E2234", desde: "Clientes desde 2023 · San Sebastián", fechas: [["cake", "Cumpleaños de Sofía", "14 de febrero"], ["heart", "Aniversario de bodas", "2 de junio"]],
-    hist: [["Nov 2026", "Familia en exterior", 850], ["Jun 2026", "Sesión Mundial 2026", 350], ["Dic 2025", "Mini sesión navideña", 350], ["Feb 2024", "Primer año de Sofía", 650]], cod: "LOPEZ100", refs: [], tag: "Eligiendo fotos" },
-  { id: "perez", n: "Familia Pérez", ini: "FP", col: "#2F7D4F", desde: "Clientes desde 2025 · Champerico", fechas: [["cake", "Mateo cumple 1 año", "1 de diciembre"]],
-    hist: [["Dic 2025", "Recién nacido", 950], ["Ago 2025", "Maternidad", 850]], cod: "PEREZ100", refs: ["Fam. Barrios"], tag: "Cumple en 3 sem." },
-  { id: "ruiz", n: "Marisol y Andrés Ruiz", ini: "MR", col: "#B7893A", desde: "Clientes desde 2025 · Retalhuleu", fechas: [["heart", "Aniversario de bodas", "5 de diciembre"], ["cake", "Cumpleaños de Marisol", "18 de abril"]],
-    hist: [["Dic 2025", "Boda con video", 7800], ["Oct 2025", "Preboda en Champerico", 1200]], cod: "RUIZ100", refs: [], tag: "Aniversario" },
-  { id: "morales", n: "Familia Morales", ini: "AM", col: "#5B6B8C", desde: "Clientes desde 2024 · San Felipe", fechas: [["cake", "Cumpleaños de Andrea", "3 de noviembre"]],
-    hist: [["Nov 2026", "XV en estudio con video", 2400], ["Nov 2025", "Retrato de cumpleaños", 450]], cod: "MORALES100", refs: [], tag: "Galería vence" },
-  { id: "castillo", n: "Familia Castillo", ini: "FC", col: "#6B4A44", desde: "Clientes desde 2026 · Nuevo San Carlos", fechas: [["heart", "Boda", "17 de octubre"]],
-    hist: [["Oct 2026", "Boda", 5800]], cod: "CASTILLO100", refs: [], tag: "Saldo pendiente" }
+  { id: "valeria", n: "Clienta frecuente", ini: "CF", col: "#7A5C8E", desde: "Clienta desde 2022 · Residenciales Bella Aurora", fechas: [["cake", "Su cumpleaños", "22 de enero"], ["heart", "Aniversario de bodas", "9 de marzo"]],
+    hist: [["Oct 2026", "Maternidad en estudio", 950], ["Mar 2025", "Aniversario · exterior", 850], ["Mar 2024", "Boda civil con video", 4200], ["Dic 2023", "Mini sesión navideña", 350]], cod: "REF-0142", refs: ["Familia del recién nacido", "Pareja de preboda"], tag: "Recomienda" },
+  { id: "lopez", n: "Familia del parque", ini: "FP", col: "#8E2234", desde: "Clientes desde 2023 · San Sebastián", fechas: [["cake", "Cumpleaños de la hija", "14 de febrero"], ["heart", "Aniversario de bodas", "2 de junio"]],
+    hist: [["Nov 2026", "Familia en exterior", 850], ["Jun 2026", "Sesión Mundial 2026", 350], ["Dic 2025", "Mini sesión navideña", 350], ["Feb 2024", "Primer año de la hija", 650]], cod: "REF-0217", refs: [], tag: "Eligiendo fotos" },
+  { id: "perez", n: "Familia del bebé", ini: "FB", col: "#2F7D4F", desde: "Clientes desde 2025 · Champerico", fechas: [["cake", "El bebé cumple 1 año", "1 de diciembre"]],
+    hist: [["Dic 2025", "Recién nacido", 950], ["Ago 2025", "Maternidad", 850]], cod: "REF-0388", refs: ["Familia nueva"], tag: "Cumple en 3 sem." },
+  { id: "ruiz", n: "Novios de diciembre", ini: "ND", col: "#B7893A", desde: "Clientes desde 2025 · Retalhuleu", fechas: [["heart", "Aniversario de bodas", "5 de diciembre"], ["cake", "Cumpleaños de la novia", "18 de abril"]],
+    hist: [["Dic 2025", "Boda con video", 7800], ["Oct 2025", "Preboda en Champerico", 1200]], cod: "REF-0451", refs: [], tag: "Aniversario" },
+  { id: "morales", n: "Familia de la quinceañera", ini: "FQ", col: "#5B6B8C", desde: "Clientes desde 2024 · San Felipe", fechas: [["cake", "Cumpleaños de la quinceañera", "3 de noviembre"]],
+    hist: [["Nov 2026", "XV en estudio con video", 2400], ["Nov 2025", "Retrato de cumpleaños", 450]], cod: "REF-0293", refs: [], tag: "Galería vence" },
+  { id: "castillo", n: "Novios de octubre", ini: "NO", col: "#6B4A44", desde: "Clientes desde 2026 · Nuevo San Carlos", fechas: [["heart", "Boda", "17 de octubre"]],
+    hist: [["Oct 2026", "Boda", 5800]], cod: "REF-0510", refs: [], tag: "Saldo pendiente" }
 ];
 function pintarClientes() {
   $("#cli-n").textContent = "418 en total · " + CLI.length + " con algo hoy";
   $("#lista-cli").innerHTML = CLI.map(c => {
     const tot = c.hist.reduce((s, h) => s + h[2], 0);
     return `<li><button type="button" data-cli="${c.id}"><span class="av" style="background:${c.col}">${c.ini}</span>
-      <span><b>${c.n}</b><small>${c.hist.length} sesiones · ${Q(tot)}</small>${c.tag ? `<br><span class="tag">${c.tag}</span>` : ""}</span></button></li>`;
+      <span><b>${c.n}</b><small>${c.hist.length} ${c.hist.length === 1 ? "sesión" : "sesiones"} · ${Q(tot)}</small>${c.tag ? `<br><span class="tag">${c.tag}</span>` : ""}</span></button></li>`;
   }).join("");
   $$("#lista-cli button").forEach(b => b.addEventListener("click", () => elegirCliente(b.dataset.cli, true)));
 }
@@ -295,13 +295,12 @@ function elegirCliente(id, anima) {
   $("#fc-cifras").innerHTML = `<div><small>Total gastado</small><b>${Q(tot)}</b></div><div><small>Sesiones</small><b>${c.hist.length}</b></div><div><small>Ticket promedio</small><b>${Q(tot / c.hist.length)}</b></div>`;
   $("#fc-fechas").innerHTML = c.fechas.map(([i, t, f]) => `<li><span class="i">${ico(i, 15)}</span><span>${t}<small>${f} · el sistema avisa 3 semanas antes</small></span></li>`).join("");
   $("#fc-hist").innerHTML = c.hist.map(([f, t, m]) => `<li><span>${t}<small>${f}</small></span><span>${Q(m)}</span></li>`).join("");
-  const nombre = c.n.split(" ")[0] === "Familia" ? c.n.replace("Familia", "familia") : c.n.split(" ")[0];
   $("#fc-ref-in").innerHTML = `<div class="ref-fila"><div><h4 style="margin:0 0 6px">Código para recomendar</h4><span class="ref-cod">${c.cod}</span></div>
       <button class="btn btn-chico" type="button" id="ref-wa">${ico("share", 16)}Mandar su código</button></div>
-    <p class="ref-txt">${c.refs.length ? `${c.n.startsWith("Familia") ? c.n.replace("Familia", "La familia") : c.n.split(" ")[0]} recomendó a <b>${c.refs.length} ${c.refs.length === 1 ? "familia" : "familias"}</b> y ganó <b>${Q(c.refs.length * 100)}</b> en impresiones.` : "Todavía no ha recomendado a nadie. Cada familia que llegue con su código le da Q 100.00 en impresiones."}</p>
+    <p class="ref-txt">${c.refs.length ? `Esta clienta recomendó a <b>${c.refs.length} ${c.refs.length === 1 ? "familia" : "familias"}</b> y ganó <b>${Q(c.refs.length * 100)}</b> en impresiones.` : "Todavía no ha recomendado a nadie. Cada familia que llegue con su código le da Q 100.00 en impresiones."}</p>
     ${c.refs.length ? `<div class="ref-chips">${c.refs.map(r => `<span>${r}</span>`).join("")}</div>` : ""}`;
   $("#ref-wa").addEventListener("click", () => simularWA({
-    texto: `Hola, ${nombre}. Gracias por ser parte de Foto González Studio. Este es su código: ${c.cod}. Si una familia lo usa al reservar, ella recibe 10 % de descuento y usted gana Q 100.00 en impresiones.`,
+    texto: `Hola. Gracias por ser parte de Foto González Studio. Este es su código: ${c.cod}. Si una familia lo usa al reservar, ella recibe 10 % de descuento y usted gana Q 100.00 en impresiones.`,
     respuesta: "¡Qué bien! Se lo voy a pasar a mi hermana, que quiere fotos de los XV de su hija.",
     nota: "El sistema reconoce el código al reservar y le suma el premio a quien recomendó." }));
   if (anima && !calma) { const f = $("#ficha-cli"); f.classList.remove("cambia"); void f.offsetWidth; f.classList.add("cambia"); }
@@ -312,19 +311,19 @@ const GAL = { castilloPagada: false };
 function pintarGalerias() {
   const n = G.sel.length;
   const filas = [
-    { f: "f-familia", n: "Familia López", t: "Familia en exterior · 24 fotos",
+    { f: "f-familia", n: "Familia del parque", t: "Familia en exterior · 24 fotos",
       chips: `<span class="chip vivo"><i></i>Eligiendo ahora · ${n} de 10</span>${G.extraVendido ? `<span class="chip">${ico("cash", 12)}Compró extra</span>` : ""}`,
       der: `<small>Ventas extra <b>${Q(G.extraVendido)}</b></small>` },
-    { f: "f-xv", n: "Andrea Morales", t: "XV en estudio con video · 180 fotos",
+    { f: "f-xv", n: "Quinceañera de noviembre", t: "XV en estudio con video · 180 fotos",
       chips: `<span class="chip alerta">${ico("clock", 12)}Vence en 3 días</span><span class="chip">Sin pedido de impresiones</span>`,
       der: `<small>Ventas extra <b>Q 0.00</b></small>` },
-    { f: "f-boda", n: "Familia Castillo", t: "Boda · 420 fotos",
+    { f: "f-boda", n: "Novios de octubre", t: "Boda · 420 fotos",
       chips: GAL.castilloPagada ? `<span class="chip vivo">${ico("unlock", 12)}Saldo pagado · descarga en alta</span>` : `<span class="chip lock">${ico("lock", 12)}Marca de agua · saldo ${Q(1200)}</span>`,
       der: GAL.castilloPagada ? `<small>Saldo <b>${Q(0)}</b></small>` : `<button class="btn btn-chico btn-tinta" type="button" id="pagar-castillo">Registrar pago</button>` },
-    { f: "f-pareja", n: "Ruiz Estrada", t: "Boda con video · 610 fotos",
+    { f: "f-pareja", n: "Novios de diciembre", t: "Boda con video · 610 fotos",
       chips: `<span class="chip">${ico("check", 12)}Entregada</span><span class="chip">Álbum 30×30 pedido</span>`,
       der: `<small>Ventas extra <b>${Q(1975)}</b></small>` },
-    { f: "f-bebe", n: "Fam. Cifuentes", t: "Recién nacido · en edición",
+    { f: "f-bebe", n: "Familia del recién nacido", t: "Recién nacido · en edición",
       chips: `<span class="chip">El editor la está trabajando</span>`, der: `<small>Se publica <b>jueves</b></small>` }
   ];
   $("#galerias").innerHTML = filas.map(g => `<li class="gal"><span class="foto ${g.f}" aria-hidden="true"></span>
@@ -337,11 +336,11 @@ function pagarCastillo(desdeGaleria) {
   pintarGalerias();
   if (desdeGaleria) {
     venta(1200, { cuenta: false });
-    alFeed("unlock", "<b>Familia Castillo</b> pagó el saldo · se quitó la marca de agua");
+    alFeed("unlock", "<b>Los novios de octubre</b> pagaron el saldo · se quitó la marca de agua");
     const o = OPORT.find(x => x.id === "castillo");
     if (!o.hecha) { o.hecha = true; const li = $('.op[data-id="castillo"]'); li.classList.add("lograda"); $(".op-estado", li).insertAdjacentHTML("afterbegin", ico("check", 16)); $(".op-estado-txt", li).textContent = "Pagó en el estudio · " + Q(1200); o.monto && pintarPendientes(); }
   } else {
-    alFeed("unlock", "Se quitó la marca de agua de la galería de los Castillo");
+    alFeed("unlock", "Se quitó la marca de agua de la galería de la boda");
   }
 }
 
@@ -352,9 +351,9 @@ const SEG = [
   { id: "inactivos", n: "Clientes que no vuelven desde 2025", c: 64 }
 ];
 const OFR = [
-  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos en estudio · 8 fotos editadas", p: 350, msj: n => `Hola, ${n}. Le escribe Foto González Studio. Ya armamos el set navideño en el estudio: mini sesión de 20 minutos con 8 fotos editadas por Q 350.00. Quedan pocos espacios en diciembre. ¿Le apartamos uno?` },
-  { id: "anio", n: "Sesión de primer año", d: "Con pastel · 15 fotos y video corto", p: 650, msj: n => `Hola, ${n}. ¡Su bebé ya va por su primer año! Le ofrecemos la sesión con pastel en el estudio, 15 fotos y un video corto, por Q 650.00. ¿Le apartamos fecha?` },
-  { id: "cuadro", n: "Cuadro 40×60 de su foto favorita", d: "Listo en 5 días", p: 375, msj: n => `Hola, ${n}. ¿Ya tiene su foto favorita en la pared? Este mes el cuadro 40×60 con marco de madera sale en Q 375.00. Solo díganos cuál y lo mandamos a imprimir.` }
+  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos en estudio · 8 fotos editadas", p: 350, msj: () => `Hola. Le escribe Foto González Studio. Ya armamos el set navideño en el estudio: mini sesión de 20 minutos con 8 fotos editadas por Q 350.00. Quedan pocos espacios en diciembre. ¿Le apartamos uno?` },
+  { id: "anio", n: "Sesión de primer año", d: "Con pastel · 15 fotos y video corto", p: 650, msj: () => `Hola. ¡Su bebé ya va por su primer año! Le ofrecemos la sesión con pastel en el estudio, 15 fotos y un video corto, por Q 650.00. ¿Le apartamos fecha?` },
+  { id: "cuadro", n: "Cuadro 40×60 de su foto favorita", d: "Listo en 5 días", p: 375, msj: () => `Hola. ¿Ya tiene su foto favorita en la pared? Este mes el cuadro 40×60 con marco de madera sale en Q 375.00. Solo díganos cuál y lo mandamos a imprimir.` }
 ];
 const CAM = { seg: "bebes", ofr: "navidad", corriendo: false };
 function pintarCampana() {
@@ -366,7 +365,7 @@ function pintarCampana() {
 }
 function mensajeCampana() {
   const s = SEG.find(x => x.id === CAM.seg), o = OFR.find(x => x.id === CAM.ofr);
-  $("#cam-msj").textContent = o.msj("familia Pérez");
+  $("#cam-msj").textContent = o.msj();
   if (!CAM.corriendo) $("#cam-enviar-txt").textContent = `Enviar a ${s.c} por WhatsApp`;
 }
 function enviarCampana() {
@@ -455,9 +454,9 @@ function corazon(i, btn) {
   actualizarGaleria();
   red(() => {
     const n = G.sel.length;
-    alFeed("heart", `Familia López lleva <b>${n}</b> ${n === 1 ? "foto elegida" : "fotos elegidas"}${n > INCL ? ` · <b>${n - INCL} más</b> que su paquete` : ""}`, "sel-lopez");
+    alFeed("heart", `La familia del parque lleva <b>${n}</b> ${n === 1 ? "foto elegida" : "fotos elegidas"}${n > INCL ? ` · <b>${n - INCL} más</b> que su paquete` : ""}`, "sel-lopez");
     pintarGalerias();
-    if (n > INCL && !G.avisoMas) { G.avisoMas = true; aviso("La familia López quiere <b>más fotos</b> de las que trae su paquete", { ic: "sparkles", sub: "Ya le apareció la oferta en su celular" }); }
+    if (n > INCL && !G.avisoMas) { G.avisoMas = true; aviso("La familia del parque quiere <b>más fotos</b> de las que trae su paquete", { ic: "sparkles", sub: "Ya le apareció la oferta en su celular" }); }
   });
 }
 function toastCel(txt) {
@@ -477,8 +476,8 @@ function comprar(tipo) {
     red(() => {
       venta(monto, { extra: true });
       const que = tipo === "toda" ? "la galería completa" : `${ext.length} ${ext.length === 1 ? "foto extra" : "fotos extra"}`;
-      alFeed("cash", `Familia López compró <b>${que}</b> · ${Q(monto)}`);
-      aviso(`Venta extra en la galería · <b>${Q(monto)}</b>`, { ic: "cash", sub: `Familia López compró ${que}` });
+      alFeed("cash", `La familia del parque compró <b>${que}</b> · ${Q(monto)}`);
+      aviso(`Venta extra en la galería · <b>${Q(monto)}</b>`, { ic: "cash", sub: `La familia del parque compró ${que}` });
       pintarGalerias();
     });
   }, 700);
@@ -500,8 +499,8 @@ function pedirImp(k) {
   toastCel(`Pedido recibido: ${n}. Lo sigue en «Mi pedido».`);
   red(() => {
     venta(p);
-    alFeed("frame", `Familia López pidió <b>${n}</b> de la foto ${impFoto + 1} · ${Q(p)}`);
-    aviso(`Pedido de impresión · <b>${Q(p)}</b>`, { ic: "bag", sub: `Familia López · ${n} · foto ${impFoto + 1}` });
+    alFeed("frame", `La familia del parque pidió <b>${n}</b> de la foto ${impFoto + 1} · ${Q(p)}`);
+    aviso(`Pedido de impresión · <b>${Q(p)}</b>`, { ic: "bag", sub: `Familia del parque · ${n} · foto ${impFoto + 1}` });
   });
 }
 
@@ -549,9 +548,9 @@ window.antesDePalanca = id => {
 };
 
 /* ---------- Simulación: el estudio en vivo ---------- */
-const NOMBRES = ["Fam. Orozco", "Lucía Herrera", "Fam. Godoy", "Mónica y Raúl", "Fam. Sandoval", "Gabriela Paz", "Fam. Arévalo", "Fam. Monzón", "Jimena Castañeda"];
+const NOMBRES = ["Una familia de San Felipe", "Una quinceañera", "Una familia de Champerico", "Una pareja", "Una familia de Bella Aurora", "Una clienta nueva", "Una familia de Reu", "Un papá primerizo", "Una graduanda"];
 const TIPOS = [["XV con video", 2900], ["XV en estudio", 2400], ["Familia en exterior", 850], ["Recién nacido", 950], ["Preboda en Champerico", 1200], ["Graduación", 650], ["Bautizo con video", 1500]];
-const ORIGEN = ["vino de Google", "vino de Facebook", "con código VALERIA100", "vino de Instagram"];
+const ORIGEN = ["vino de Google", "vino de Facebook", "con un código de referido", "vino de Instagram"];
 const RESENAS = ["«Las fotos de los XV quedaron preciosas y nos llegaron antes de lo que dijeron.»", "«Muy pacientes con los niños. Ya apartamos la de Navidad.»", "«Elegimos las fotos desde el celular. Súper fácil.»", "«El video de la boda nos hizo llorar otra vez.»"];
 function evento() {
   if (document.hidden) return;
@@ -593,9 +592,9 @@ elegirCliente("valeria");
 pintarGaleria();
 pintarGalerias();
 pintarCampana();
-alFeed("calendar", "<b>Daniela Ortiz</b> vio la cotización de XV con video");
+alFeed("calendar", "<b>La quinceañera de marzo</b> vio la cotización de XV con video");
 alFeed("cash", "Anticipo de <b>Colegio La Asunción</b> · Q 2,400.00");
-alFeed("eye", "<b>Familia López</b> abrió su galería");
+alFeed("eye", "<b>La familia del parque</b> abrió su galería");
 $$("#feed li").forEach(li => li.classList.remove("nuevo"));
 pestanas();
 $("#ver-cliente").addEventListener("click", abrirCliente);

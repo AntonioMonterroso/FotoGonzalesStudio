@@ -486,7 +486,7 @@ function proximosDias() {
   const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
   return Array.from({ length: 7 }, (_, i) => { const d = new Date(hoy); d.setDate(hoy.getDate() + i + 1); return d; });
 }
-const FIJAS = { 1: "Boda · Ruiz", 3: "Estudio · Pérez", 5: "XV · Morales" };
+const FIJAS = { 1: "Boda", 3: "Retrato en estudio", 5: "XV años" };
 
 function pintarGaleria() {
   $("#galeria").innerHTML = FOTOS_DEMO.map((f, i) => `
@@ -500,7 +500,7 @@ function pintarGaleria() {
     $("#cel-barra").style.width = (demo.sel.length / 8 * 100) + "%";
     red(() => {
       pintarSeleccionPanel();
-      alFeed("heart", ya ? `Familia López quitó la foto <b>#${String(n + 1).padStart(2, "0")}</b>` : `Familia López eligió la foto <b>#${String(n + 1).padStart(2, "0")}</b>`);
+      alFeed("heart", ya ? `La familia quitó la foto <b>#${String(n + 1).padStart(2, "0")}</b>` : `La familia eligió la foto <b>#${String(n + 1).padStart(2, "0")}</b>`);
       if (demo.sel.length === 8 && !ya) alFeed("check", "<b>Selección completa</b> · lista para edición");
     });
   }));
@@ -531,7 +531,7 @@ function pintarSemana() {
   const dias = proximosDias();
   $("#semana").innerHTML = dias.map((d, i) => {
     const r = demo.reservas.find(x => x.i === i);
-    return `<div class="dia"><small>${DIAS[d.getDay()]}</small><b>${d.getDate()}</b>${FIJAS[i] ? `<span class="ses fija">${FIJAS[i]}</span>` : ""}${r ? `<span class="ses">${r.n} · López</span>` : ""}</div>`;
+    return `<div class="dia"><small>${DIAS[d.getDay()]}</small><b>${d.getDate()}</b>${FIJAS[i] ? `<span class="ses fija">${FIJAS[i]}</span>` : ""}${r ? `<span class="ses">${r.n} · reserva en línea</span>` : ""}</div>`;
   }).join("");
   $("#p-sesiones").textContent = 3 + demo.reservas.length;
 }
@@ -575,7 +575,7 @@ function pestanas() {
   tabs.forEach(t => t.addEventListener("click", () => {
     tabs.forEach(x => { x.setAttribute("aria-selected", x === t); $("#" + x.getAttribute("aria-controls")).hidden = x !== t; });
     const donde = { "t-galeria": "está viendo su galería", "t-reservar": "está viendo fechas libres", "t-pedido": "está revisando su pedido" }[t.id];
-    red(() => { $("#presencia span:last-child").textContent = "Familia López " + donde; });
+    red(() => { $("#presencia span:last-child").textContent = "La familia del parque " + donde; });
   }));
 }
 function iniciarDemo() {
@@ -583,7 +583,7 @@ function iniciarDemo() {
   $("#p-caja").dataset.v = demo.caja; $("#p-caja").textContent = Q(demo.caja);
   $("#reservar").addEventListener("click", reservar);
   $("#avanzar").addEventListener("click", avanzar);
-  alFeed("eye", "Familia López abrió su galería");
+  alFeed("eye", "La familia del parque abrió su galería");
   alFeed("bag", "Pedido en línea · <b>2 cuadros 40×60</b>");
   $$("#feed li").forEach(li => li.classList.remove("nuevo"));
 }

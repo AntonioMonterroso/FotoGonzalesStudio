@@ -39,20 +39,20 @@ const EVENTOS = [["bebe", "f-bebe", "Recién nacidos, embarazo y primer año"], 
 
 const CATS = { todo: "Todo", bodas: "Bodas", xv: "XV años", bebes: "Bebés", familia: "Familia", estudio: "Estudio", grad: "Desfiles y eventos" };
 const PORTA = [
-  ["f-xv", "xv", "Valeria · círculo de luz", "alto"], ["f-boda", "bodas", "Pedida de mano · Retalhuleu", ""], ["f-bebe", "bebes", "Recién nacido · 10 días", ""],
+  ["f-xv", "xv", "XV · círculo de luz", "alto"], ["f-boda", "bodas", "Pedida de mano · Retalhuleu", ""], ["f-bebe", "bebes", "Recién nacido · 10 días", ""],
   ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Retrato en estudio", ""], ["f-graduacion", "grad", "Desfile escolar · Retalhuleu", ""],
-  ["f-pareja", "bodas", "Sesión de pareja", ""], ["f-quince", "xv", "Sofía · vestido corinto", "alto"], ["f-pastel", "bebes", "Primer año · tema circo", ""],
+  ["f-pareja", "bodas", "Sesión de pareja", ""], ["f-quince", "xv", "XV · vestido corinto", "alto"], ["f-pastel", "bebes", "Primer año · tema circo", ""],
   ["f-paisaje", "grad", "Banda de marcha · desfile nocturno", "ancho2"], ["f-camisola", "familia", "Cada quien con su camisola", ""], ["f-cacao", "grad", "Baile folclórico", ""],
   ["f-fuerza", "estudio", "Retrato con actitud", ""], ["f-maracas", "grad", "Con sus maracas, en el desfile", ""], ["f-producto", "estudio", "Recuerdos de baby shower", ""],
   ["f-anillo", "bodas", "El anillo", "ancho2"], ["f-glam", "xv", "Golden Glam", ""], ["f-primer", "bebes", "Primer cumpleaños", "ancho2"]
 ];
 
 const RESENAS = [
-  ["f-familia", "Mariela Cifuentes", "Sesión familiar", "Mi mamá lloró cuando vio el álbum. Escogimos las fotos desde el celular, cada quien en su casa, y en una semana ya estaban listas."],
-  ["f-quince", "Andrea Rodas", "XV años", "Me avisaron por WhatsApp cuando estaban las fotos. Ni tuve que preguntar."],
-  ["f-bebe", "Karla y Diego", "Recién nacido", "Mucha paciencia con el bebé. Tres horas y ni un mal gesto."],
-  ["f-boda", "Luis Herrera", "Pedida y boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
-  ["f-graduacion", "Familia Pérez", "Desfile escolar", "Encontramos a nuestra hija en la galería del desfile y pedimos tres fotos esa misma noche."]
+  ["f-familia", "Familia de San Sebastián", "Sesión familiar", "Mi mamá lloró cuando vio el álbum. Escogimos las fotos desde el celular, cada quien en su casa, y en una semana ya estaban listas."],
+  ["f-quince", "Quinceañera de Reu", "XV años", "Me avisaron por WhatsApp cuando estaban las fotos. Ni tuve que preguntar."],
+  ["f-bebe", "Papás primerizos", "Recién nacido", "Mucha paciencia con el bebé. Tres horas y ni un mal gesto."],
+  ["f-boda", "Novios de Champerico", "Pedida y boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
+  ["f-graduacion", "Familia de Bella Aurora", "Desfile escolar", "Encontramos a nuestra hija en la galería del desfile y pedimos tres fotos esa misma noche."]
 ];
 
 const FAQ = [
@@ -425,11 +425,11 @@ function agregarReciente(quien, que, cuando, color) {
 }
 
 /* ---------- Actividad en vivo (simulada) ---------- */
-const NOMBRES = ["Andrea", "Familia Ruiz", "Gabriela", "Diego y Sofía", "Familia Morales", "Lucía", "Familia Castillo", "Paola"];
+const NOMBRES = ["Una quinceañera", "Una familia de Reu", "Una mamá", "Unos novios", "Una familia de San Felipe", "Una clienta nueva", "Una familia de Champerico", "Una graduanda"];
 const OTROS = [
-  ["Familia Cifuentes eligió sus 25 fotos", "images", "Desde su galería privada"],
-  ["Carlos pidió la guía de vestuario", "book", "Hace un momento"],
-  ["Mariela dejó 5 estrellas en Google", "star", "Sesión familiar"],
+  ["Una familia eligió sus 25 fotos", "images", "Desde su galería privada"],
+  ["Alguien pidió la guía de vestuario", "book", "Hace un momento"],
+  ["Una familia dejó 5 estrellas en Google", "star", "Sesión familiar"],
   ["Otra familia apartó su mini sesión navideña", "gift", "Quedan pocos cupos"]
 ];
 let turno = 0;
@@ -520,7 +520,7 @@ pintarMeses();
 pintarCal();
 pintarReserva();
 pintarChip();
-[["Andrea R.", "XV años", "hace 4 min"], ["Familia Ruiz", "Familia en exterior", "hace 22 min"], ["Diego y Sofía", "Boda", "hace 1 hora"]].reverse().forEach(([q, s, c]) => agregarReciente(q, s, c));
+[["Una quinceañera", "XV años", "hace 4 min"], ["Una familia", "Familia en exterior", "hace 22 min"], ["Unos novios", "Boda", "hace 1 hora"]].reverse().forEach(([q, s, c]) => agregarReciente(q, s, c));
 pintarQuiz(0);
 pintarPortafolio();
 visor();
