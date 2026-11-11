@@ -307,28 +307,74 @@ function elegirCliente(id, anima) {
 }
 
 /* ---------- Galerías ---------- */
-const GAL = { castilloPagada: false };
+const GAL = { castilloPagada: false, recordadoXV: false, resenaDic: false, publicadaBebe: false };
 function pintarGalerias() {
   const n = G.sel.length;
   const filas = [
-    { f: "f-familia", n: "Familia del parque", t: "Familia en exterior · 24 fotos",
-      chips: `<span class="chip vivo"><i></i>Eligiendo ahora · ${n} de 10</span>${G.extraVendido ? `<span class="chip">${ico("cash", 12)}Compró extra</span>` : ""}`,
-      der: `<small>Ventas extra <b>${Q(G.extraVendido)}</b></small>` },
-    { f: "f-xv", n: "Quinceañera de noviembre", t: "XV en estudio con video · 180 fotos",
-      chips: `<span class="chip alerta">${ico("clock", 12)}Vence en 3 días</span><span class="chip">Sin pedido de impresiones</span>`,
-      der: `<small>Ventas extra <b>Q 0.00</b></small>` },
-    { f: "f-boda", n: "Novios de octubre", t: "Boda · 420 fotos",
-      chips: GAL.castilloPagada ? `<span class="chip vivo">${ico("unlock", 12)}Saldo pagado · descarga en alta</span>` : `<span class="chip lock">${ico("lock", 12)}Marca de agua · saldo ${Q(1200)}</span>`,
-      der: GAL.castilloPagada ? `<small>Saldo <b>${Q(0)}</b></small>` : `<button class="btn btn-chico btn-tinta" type="button" id="pagar-castillo">Registrar pago</button>` },
-    { f: "f-pareja", n: "Novios de diciembre", t: "Boda con video · 610 fotos",
-      chips: `<span class="chip">${ico("check", 12)}Entregada</span><span class="chip">Álbum 30×30 pedido</span>`,
-      der: `<small>Ventas extra <b>${Q(1975)}</b></small>` },
-    { f: "f-bebe", n: "Familia del recién nacido", t: "Recién nacido · en edición",
-      chips: `<span class="chip">El editor la está trabajando</span>`, der: `<small>Se publica <b>jueves</b></small>` }
+    { id: "parque", fotos: ["f-familia", "f-camisola", "f-primer"], n: "Familia del parque", t: "Familia en exterior", total: 24,
+      estado: ["vivo", "Eligiendo ahora", "dot"], barra: Math.min(1, n / 10), barraTxt: `${n} de 10 incluidas${n > 10 ? ` · ${n - 10} extra` : ""}`,
+      datos: [["Elegidas", n], ["Ventas extra", Q(G.extraVendido)]],
+      acc: `<button class="btn btn-chico btn-tinta" type="button" data-gal="vivo">${ico("eye", 15)}Verla en vivo</button>` },
+    { id: "xv", fotos: ["f-xv", "f-quince", "f-glam"], n: "Quinceañera de noviembre", t: "XV en estudio con video", total: 180,
+      estado: ["alerta", "Vence en 3 días", "clock"], barra: .85, barraTxt: "Quedan 3 de 21 días",
+      datos: [["Elegidas", 32], ["Impresiones", "Ninguna"]],
+      acc: GAL.recordadoXV ? `<span class="hecho">${ico("check", 15)}Recordatorio enviado</span>` : `<button class="btn btn-chico btn-tinta" type="button" data-gal="xv">${ico("send", 15)}Ofrecer el álbum</button>` },
+    { id: "oct", fotos: ["f-boda", "f-anillo", "f-pareja"], n: "Novios de octubre", t: "Boda", total: 420, marca: !GAL.castilloPagada,
+      estado: GAL.castilloPagada ? ["vivo", "Saldo pagado", "unlock"] : ["lock", "Con marca de agua", "lock"], barra: GAL.castilloPagada ? 1 : .6, barraTxt: GAL.castilloPagada ? "Pagado completo · descarga en alta" : `Pagado ${Q(1800)} de ${Q(3000)}`,
+      datos: [["Saldo", Q(GAL.castilloPagada ? 0 : 1200)], ["Descargas", GAL.castilloPagada ? "En alta" : "Bloqueadas"]],
+      acc: GAL.castilloPagada ? `<span class="hecho">${ico("check", 15)}Fotos liberadas</span>` : `<button class="btn btn-chico btn-tinta" type="button" id="pagar-castillo">${ico("cash", 15)}Registrar pago</button>` },
+    { id: "dic", fotos: ["f-pareja", "f-boda", "f-anillo"], n: "Novios de diciembre", t: "Boda con video", total: 610,
+      estado: ["neutro", "Entregada", "check"], barra: 1, barraTxt: "Álbum 30×30 en impresión",
+      datos: [["Ventas extra", Q(1975)], ["Reseña", GAL.resenaDic ? "Pedida" : "Sin pedir"]],
+      acc: GAL.resenaDic ? `<span class="hecho">${ico("check", 15)}Reseña pedida</span>` : `<button class="btn btn-chico" type="button" data-gal="resena">${ico("star", 15)}Pedir reseña</button>` },
+    { id: "bebe", fotos: ["f-bebe", "f-pastel", "f-producto"], n: "Familia del recién nacido", t: "Recién nacido", total: 38,
+      estado: GAL.publicadaBebe ? ["vivo", "Publicada hoy", "check"] : ["neutro", "En edición", "clock"], barra: GAL.publicadaBebe ? 1 : .7, barraTxt: GAL.publicadaBebe ? "Enlace y PIN enviados" : "Editadas 27 de 38",
+      datos: [["Fotos", 38], ["Se publica", GAL.publicadaBebe ? "Hoy" : "Jueves"]],
+      acc: GAL.publicadaBebe ? `<span class="hecho">${ico("check", 15)}La familia ya la tiene</span>` : `<button class="btn btn-chico" type="button" data-gal="publicar">${ico("send", 15)}Publicar y avisar</button>` }
   ];
-  $("#galerias").innerHTML = filas.map(g => `<li class="gal"><span class="foto ${g.f}" aria-hidden="true"></span>
-    <div><b>${g.n}</b><small>${g.t}</small><div class="chips">${g.chips}</div></div><div class="der">${g.der}</div></li>`).join("");
+  $("#galerias").innerHTML = filas.map(g => `<li class="gal${g.marca ? " con-marca" : ""}" data-gal-id="${g.id}">
+    <div class="gal-portada">
+      <span class="foto ${g.fotos[0]} g1" aria-hidden="true"></span><span class="foto ${g.fotos[1]} g2" aria-hidden="true"></span><span class="foto ${g.fotos[2]} g3" aria-hidden="true"></span>
+      <span class="gal-marca" aria-hidden="true">FOTO GONZÁLEZ · FOTO GONZÁLEZ · FOTO GONZÁLEZ</span>
+      <span class="gal-estado ${g.estado[0]}">${g.estado[2] === "dot" ? "<i></i>" : ico(g.estado[2], 13)}${g.estado[1]}</span>
+      <span class="gal-total">${g.total} fotos</span>
+    </div>
+    <div class="gal-cuerpo">
+      <div><b>${g.n}</b><small>${g.t}</small></div>
+      <div class="gal-barra"><i style="transform:scaleX(${g.barra})"></i></div><small class="gal-barra-txt">${g.barraTxt}</small>
+      <dl class="gal-datos">${g.datos.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+      <div class="gal-acc">${g.acc}</div>
+    </div></li>`).join("");
+  $("#gl-viendo").textContent = 1;
+  $("#gl-extra").textContent = Q(1975 + G.extraVendido);
+  $("#gl-saldo").textContent = Q(GAL.castilloPagada ? 0 : 1200);
   $("#pagar-castillo")?.addEventListener("click", () => pagarCastillo(true));
+  $$("[data-gal]").forEach(b => b.addEventListener("click", () => accionGaleria(b.dataset.gal)));
+}
+function accionGaleria(k) {
+  if (k === "vivo") {
+    if (modoHoja()) abrirCliente();
+    else { const c = $("#cliente .cel") || $("#cliente"); c.animate([{ transform: "scale(1)" }, { transform: "scale(1.02)" }, { transform: "scale(1)" }], { duration: 600, easing: EASE }); }
+    aviso("La familia del parque está eligiendo sus fotos ahora", { ic: "eye", sub: "Toque los corazones en el celular para verlo llegar" });
+    return;
+  }
+  if (k === "xv") {
+    simularWA({ texto: "Hola. Su galería de XV cierra el viernes. Si quiere el álbum 30×30 con sus favoritas, este mes sale en Q 1,450.00 con la caja de regalo. Solo nos dice y lo armamos con las que ya eligió.", respuesta: "¡Sí lo queremos! ¿Le pagamos el anticipo por transferencia?", nota: "En el sistema real sale desde el +502 5016 8853 del estudio." });
+    GAL.recordadoXV = true; pintarGalerias();
+    setTimeout(() => { venta(1450); alFeed("book", "<b>Quinceañera de noviembre</b> pidió el álbum 30×30 · Q 1,450.00"); aviso("Álbum vendido desde la galería · <b>Q 1,450.00</b>", { ic: "book", sub: "Quinceañera de noviembre · respondió al mensaje" }); }, 4200);
+    return;
+  }
+  if (k === "resena") {
+    simularWA({ texto: "Hola. Gracias otra vez por dejarnos estar en su boda. Si les gustaron sus fotos, ¿nos ayudan con una reseña en Google? Les toma un minuto: g.page/fotogonzalez", respuesta: "¡Claro que sí! Ya se la dejamos.", nota: "Pedirla justo al entregar es cuando más contestan." });
+    GAL.resenaDic = true; pintarGalerias();
+    setTimeout(() => { alFeed("star", "<b>Novios de diciembre</b> dejaron 5 estrellas en Google"); aviso("Reseña nueva en Google · <b>5 estrellas</b>", { ic: "star", sub: "Novios de diciembre" }); }, 3800);
+    return;
+  }
+  if (k === "publicar") {
+    GAL.publicadaBebe = true; pintarGalerias();
+    alFeed("send", "Galería del <b>recién nacido</b> publicada · enlace y PIN enviados por WhatsApp");
+    aviso("Galería publicada · <b>la familia ya recibió su enlace</b>", { ic: "images", sub: "Recién nacido · 38 fotos" });
+  }
 }
 function pagarCastillo(desdeGaleria) {
   if (GAL.castilloPagada) return;
@@ -450,7 +496,7 @@ function actualizarGaleria() {
 function corazon(i, btn) {
   const k = G.sel.indexOf(i);
   if (k > -1) G.sel.splice(k, 1); else G.sel.push(i);
-  if (!calma) $("span", btn).animate([{ transform: "scale(1)" }, { transform: "scale(1.22)" }, { transform: "scale(1)" }], { duration: 240, easing: EASE });
+  if (!calma) $("span", btn).animate([{ transform: "scale(1)" }, { transform: "scale(1.12)" }, { transform: "scale(1)" }], { duration: 300, easing: EASE });
   actualizarGaleria();
   red(() => {
     const n = G.sel.length;
@@ -610,7 +656,7 @@ revelar();
 
 if (!calma) {
   $$(".cabeza, .cifras .cifra, #oport .op").forEach((el, i) => el.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 420, delay: 80 + i * 45, easing: EASE, fill: "backwards" }));
-  $(".cel").animate([{ opacity: 0, transform: "translateY(16px) scale(0.98)" }, { opacity: 1, transform: "none" }], { duration: 600, delay: 200, easing: EASE, fill: "backwards" });
+  $(".cel").animate([{ opacity: 0, transform: "translateY(10px) scale(0.99)" }, { opacity: 1, transform: "none" }], { duration: 600, delay: 200, easing: EASE, fill: "backwards" });
 }
 setTimeout(reservaEnVivo, 7000);
 setTimeout(ciclo, 12000);

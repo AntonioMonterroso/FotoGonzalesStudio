@@ -6,7 +6,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const Q = n => "Q " + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const calma = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
+const EASE = "cubic-bezier(0.25, 1, 0.5, 1)";
 const red = fn => setTimeout(fn, 180 + Math.random() * 220); // simula el viaje por internet
 const hora = () => new Date().toLocaleTimeString("es-GT", { hour: "2-digit", minute: "2-digit" });
 const azar = a => a[Math.floor(Math.random() * a.length)];

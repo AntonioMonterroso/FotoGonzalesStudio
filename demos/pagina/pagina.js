@@ -97,7 +97,7 @@ function entrarPortada() {
     [{ opacity: 0, transform: "scale(1.05)", filter: "blur(14px) saturate(.4)" }, { opacity: 1, transform: "scale(1)", filter: "blur(0px) saturate(1)" }],
     { duration: 900, delay: 60, easing: EASE, fill: "backwards" });
   $(".portada-fotos .chica").animate(
-    [{ opacity: 0, transform: "translateY(24px)" }, { opacity: 1, transform: "translateY(0)" }],
+    [{ opacity: 0, transform: "translateY(12px)" }, { opacity: 1, transform: "translateY(0)" }],
     { duration: 800, delay: 520, easing: EASE, fill: "backwards" });
 }
 

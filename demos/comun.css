@@ -15,7 +15,7 @@
   --vivo-suave: #E3F0E6;
   --oro: #B7893A;
   --oscuro: #161513;
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --radio: 14px;
   --gutter: clamp(16px, 4vw, 48px);
@@ -143,14 +143,14 @@ body.modo-venta [data-palanca] { outline: 2px dashed color-mix(in srgb, var(--ac
 /* ===== Aviso de prueba social / notificaciones ===== */
 .avisos { position: fixed; z-index: 85; left: 16px; bottom: 80px; display: flex; flex-direction: column; gap: 8px; pointer-events: none; max-width: min(340px, calc(100vw - 32px)); }
 .aviso { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; background: var(--carta); color: var(--tinta); border: 1px solid var(--linea); border-radius: 14px; padding: 10px 14px 10px 10px; box-shadow: 0 14px 34px rgba(0,0,0,.14); font-size: .88rem; line-height: 1.35; pointer-events: auto;
-  animation: aviso-entra 420ms var(--ease-out); }
-.aviso.sale { animation: aviso-sale 300ms var(--ease-out) forwards; }
+  animation: aviso-entra 560ms var(--ease-out); }
+.aviso.sale { animation: aviso-sale 420ms var(--ease-out) forwards; }
 .aviso .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: var(--acento); }
 .aviso .ic:not(.foto) { background: var(--acento-suave); }
 .aviso .ic.foto { border-radius: 10px; }
 .aviso .ic svg { width: 18px; height: 18px; }
 .aviso small { display: block; color: var(--tinta3); font-size: .74rem; }
-@keyframes aviso-entra { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes aviso-entra { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
 @keyframes aviso-sale { to { opacity: 0; transform: translateY(6px) scale(0.98); } }
 
 /* ===== Hoja de WhatsApp simulada ===== */
@@ -162,7 +162,7 @@ body.modo-venta [data-palanca] { outline: 2px dashed color-mix(in srgb, var(--ac
 .hoja-wa .cab .av { width: 36px; height: 36px; border-radius: 50%; background: #fff; color: #1F5E48; display: grid; place-items: center; font-weight: 700; font-size: .8rem; }
 .hoja-wa .cab small { display: block; opacity: .8; font-size: .74rem; }
 .hoja-wa .chat { padding: 18px 14px; display: flex; flex-direction: column; gap: 8px; min-height: 180px; }
-.hoja-wa .b { max-width: 88%; padding: 8px 12px; border-radius: 12px; font-size: .92rem; line-height: 1.4; background: #fff; align-self: flex-start; white-space: pre-line; animation: aviso-entra 360ms var(--ease-out) backwards; }
+.hoja-wa .b { max-width: 88%; padding: 8px 12px; border-radius: 12px; font-size: .92rem; line-height: 1.4; background: #fff; align-self: flex-start; white-space: pre-line; animation: aviso-entra 480ms var(--ease-out) backwards; }
 .hoja-wa .b.yo { align-self: flex-end; background: #D7F2C9; }
 .hoja-wa .b small { display: block; text-align: right; color: #7A8A80; font-size: .68rem; margin-top: 2px; }
 .hoja-wa .pie-wa { padding: 12px 14px 14px; background: #F7F2EB; display: flex; flex-direction: column; gap: 8px; }
@@ -170,14 +170,14 @@ body.modo-venta [data-palanca] { outline: 2px dashed color-mix(in srgb, var(--ac
 .hoja-wa .pie-wa .btn { width: 100%; }
 
 /* ===== Revelado al hacer scroll ===== */
-.revela { opacity: 0; transform: translateY(18px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+.revela { opacity: 0; transform: translateY(10px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
 .revela.visto { opacity: 1; transform: none; }
-.revelado { filter: blur(10px) grayscale(1) sepia(.5) brightness(.55); clip-path: inset(0 0 100% 0); transition: filter 1100ms var(--ease-out), clip-path 800ms var(--ease-out); }
+.revelado { filter: blur(10px) grayscale(1) sepia(.5) brightness(.55); clip-path: inset(0 0 100% 0); transition: filter 1400ms var(--ease-out), clip-path 1100ms var(--ease-out); }
 .revelado.visto { filter: none; clip-path: inset(0 0 0 0); }
 
 .salta { animation: salta 500ms var(--ease-out); }
-@keyframes salta { 0% { transform: translateY(6px); opacity: .3; } 100% { transform: none; opacity: 1; } }
-@keyframes entra { from { opacity: 0; transform: scale(0.95) translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes salta { 0% { transform: translateY(3px); opacity: .5; } 100% { transform: none; opacity: 1; } }
+@keyframes entra { from { opacity: 0; transform: scale(0.98) translateY(4px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

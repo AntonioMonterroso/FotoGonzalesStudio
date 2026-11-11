@@ -8,7 +8,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const Q = n => "Q " + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const calma = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
+const EASE = "cubic-bezier(0.25, 1, 0.5, 1)";
 
 /* ---------- Íconos (Lucide, ISC) ---------- */
 const ICO = {
@@ -43,25 +43,25 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 /* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 2500, mes: 450, plazo: "1 a 2 semanas",
+    n: "Página del estudio", tipo: "Landing page", ini: 1800, mes: 350, plazo: "1 a 2 semanas",
     para: "Para que los encuentren, vean su trabajo y aparten fecha.",
     vista: "land",
     x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 255]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 155]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 5900, mes: 790, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 4500, mes: 600, plazo: "3 a 4 semanas",
     para: "Para vender impresiones, álbumes y sesiones sin estar en el chat.",
     vista: "tienda",
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 560]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 370]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 11500, mes: 1350, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 8500, mes: 990, plazo: "5 a 7 semanas", rec: true,
     para: "Para manejar todo el estudio, de la reserva a la entrega.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>: cumpleaños, aniversarios, galerías por vencer, cotizaciones sin respuesta", "<b>Galería que vende fotos extra</b>: al pasar del paquete, la oferta sale sola", "Entrega en alta resolución, <b>con marca de agua hasta pagar el saldo</b>", "Reservas con anticipo y embudo con lo que vale cada etapa", "<b>Campañas por WhatsApp</b> a un grupo de clientes, referidos con premio y reseña pedida al entregar", "Clientes con historial, contratos, caja y reportes; usuarios por puesto", "Se instala en el celular como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 1050]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 690]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -101,7 +101,7 @@ const CALC = [
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
-const COMPRA_UNICA = { ini: 32000, mes: 500 };
+const COMPRA_UNICA = { ini: 24000, mes: 400 };
 
 const EXTRAS = [
   { id: "com", n: "Dominio .com", d: "fotogonzalezstudio.com", ini: 120, anual: true, on: true },
@@ -237,30 +237,51 @@ function entrarPortada(retraso) {
     { duration: 900, delay: retraso + 120, easing: EASE, fill: "backwards" });
 }
 
-/* ---------- Visor: el punto de enfoque busca y fija ---------- */
+/* ---------- Visor: el punto de enfoque busca, fija y dispara; al tocarlo, dispara al momento ---------- */
 function visor() {
-  const fotos = ["f-xv", "f-bebe", "f-boda", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato"];
-  const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100", "f/2.8 · 1/200 · ISO 100", "f/3.5 · 1/160 · ISO 200"];
-  const enf = $("#enfoque"), foto = $("#visor-foto");
-  let i = 0, cuadro = 1;
-  if (calma) return;
-  setInterval(() => {
-    if (document.hidden) return;
+  const fotos = ["f-xv", "f-bebe", "f-boda", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato", "f-camisola", "f-pareja", "f-graduacion", "f-fuerza"];
+  const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100"];
+  const v = $("#visor"), enf = $("#enfoque"), foto = $("#visor-foto");
+  const flash = document.createElement("div"); flash.className = "visor-flash"; flash.setAttribute("aria-hidden", "true"); v.append(flash);
+  let i = 0, cuadro = 1, ocupado = false, timer;
+
+  function disparar(x, y) {
+    if (ocupado) return; ocupado = true;
     enf.classList.remove("fijo");
-    enf.style.left = (30 + Math.random() * 40) + "%";
-    enf.style.top = (28 + Math.random() * 36) + "%";
+    enf.style.left = (x ?? 30 + Math.random() * 40) + "%";
+    enf.style.top = (y ?? 28 + Math.random() * 36) + "%";
     setTimeout(() => {
       enf.classList.add("fijo");
-      // disparo: destello corto dentro del visor y cambia la foto
       setTimeout(() => {
+        // flash suave dentro del visor
+        if (!calma) flash.animate([{ opacity: 0 }, { opacity: .9, offset: .18 }, { opacity: 0 }], { duration: 620, easing: EASE });
+        // la foto vieja se desvanece sobre la nueva
+        const vieja = foto.cloneNode(); vieja.removeAttribute("id"); vieja.classList.add("visor-vieja"); foto.after(vieja);
         i = (i + 1) % fotos.length; cuadro++;
-        foto.animate([{ filter: "brightness(2.2)" }, { filter: "brightness(1)" }], { duration: 380, easing: EASE });
         foto.className = "foto " + fotos[i];
-        $("#visor-exif").textContent = exif[i];
+        const fin = () => { vieja.remove(); ocupado = false; };
+        if (calma) fin();
+        else {
+          const a = vieja.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 700, delay: 90, easing: EASE, fill: "forwards" });
+          a.onfinish = fin; setTimeout(fin, 900);
+        }
+        $("#visor-exif").textContent = exif[i % exif.length];
         $("#visor-cuadro").textContent = "FGS · " + String(cuadro).padStart(4, "0");
-      }, 700);
-    }, 650);
-  }, 3200);
+      }, x == null ? 520 : 260);
+    }, x == null ? 520 : 200);
+  }
+  function programar() { clearInterval(timer); if (!calma) timer = setInterval(() => { if (!document.hidden) disparar(); }, 4200); }
+
+  v.setAttribute("role", "button"); v.tabIndex = 0;
+  v.setAttribute("aria-label", "Visor de cámara: toque para tomar otra foto");
+  v.addEventListener("click", e => {
+    const r = v.getBoundingClientRect();
+    const x = Math.min(82, Math.max(18, (e.clientX - r.left) / r.width * 100));
+    const y = Math.min(78, Math.max(18, (e.clientY - r.top) / r.height * 100));
+    disparar(e.clientX ? x : null, e.clientY ? y : null); programar();
+  });
+  v.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); disparar(50, 44); programar(); } });
+  programar();
 }
 
 /* ---------- Tres sistemas ---------- */
