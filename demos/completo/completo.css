@@ -1,7 +1,7 @@
 /* Demo · Sistema completo — panel del estudio + lo que ve el cliente */
 :root { --tenue: #6A655C; --lado-w: 236px; --cli-w: 392px;
-  /* Tipografía propia del sistema completo: Fraunces (títulos) + Manrope (texto y cifras) */
-  --serif: "Fraunces", Georgia, serif; --sans: "Manrope", ui-sans-serif, sans-serif; --mono: "Manrope", ui-sans-serif, sans-serif; }
+  /* Tipografía propia del sistema completo (elegida por Antonio, opción 7): Lora (títulos) + Work Sans (texto y cifras) */
+  --serif: "Lora", Georgia, serif; --sans: "Work Sans", ui-sans-serif, sans-serif; --mono: "Work Sans", ui-sans-serif, sans-serif; }
 .globo h4 { font-family: var(--sans); }
 body { background: var(--papel); }
 .tenue { color: var(--tenue); }
@@ -499,7 +499,7 @@ body { background: var(--papel); }
 }
 @media (prefers-reduced-motion: reduce) { .tour { transform: none; } .llega li { animation-name: suave; } }
 
-/* Manrope es más ancha: en celulares angostos el menú lleva la etiqueta un poco más chica para que no se peguen */
+/* Work Sans es ancha: en celulares angostos el menú lleva la etiqueta un poco más chica para que no se peguen */
 @media (max-width: 400px) { .vistas button { font-size: .66rem; letter-spacing: -.01em; } }
 
 /* Aviso al ver el sistema con otra letra (?letra=) */
@@ -509,3 +509,5 @@ body { background: var(--papel); }
 .letra-viendo span { flex: none; padding: 6px 12px; border-radius: 999px; background: var(--acento); color: #fff; font-weight: 600; }
 .letra-viendo:active { transform: scale(0.97); }
 @media (max-width: 480px) { .letra-viendo { border-radius: 16px; } .letra-viendo small { display: none; } .letra-viendo b { white-space: normal; line-height: 1.25; } }
+/* Si una etiqueta ocupa dos renglones, el monto queda alineado abajo con los demás */
+.cifra { display: flex; flex-direction: column; justify-content: space-between; }
