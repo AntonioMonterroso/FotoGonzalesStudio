@@ -43,25 +43,25 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 /* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 3500, mes: 650, plazo: "1 a 2 semanas",
+    n: "Página del estudio", tipo: "Landing page", ini: 2500, mes: 450, plazo: "1 a 2 semanas",
     para: "Para que los encuentren, vean su trabajo y aparten fecha.",
     vista: "land",
     x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 455]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 255]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 8500, mes: 1150, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 5900, mes: 790, plazo: "3 a 4 semanas",
     para: "Para vender impresiones, álbumes y sesiones sin estar en el chat.",
     vista: "tienda",
-    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 920]]
+    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
+    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 560]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 16500, mes: 1950, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 11500, mes: 1350, plazo: "5 a 7 semanas", rec: true,
     para: "Para manejar todo el estudio, de la reserva a la entrega.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>: cumpleaños, aniversarios, galerías por vencer, cotizaciones sin respuesta", "<b>Galería que vende fotos extra</b>: al pasar del paquete, la oferta sale sola", "Entrega en alta resolución, <b>con marca de agua hasta pagar el saldo</b>", "Reservas con anticipo y embudo con lo que vale cada etapa", "<b>Campañas por WhatsApp</b> a un grupo de clientes, referidos con premio y reseña pedida al entregar", "Clientes con historial, contratos, caja y reportes; usuarios por puesto", "Se instala en el celular como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 1650]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 1050]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -78,6 +78,7 @@ const DEMOS = {
     ["package", "Paquetes que ahorran", "Pack abuelos, tríptico de pared, regalo de Navidad: una compra se vuelve tres piezas."],
     ["cart", "Envío gratis desde Q 600 y venta cruzada", "«Le faltan Q 80 para el envío gratis» y el mini álbum se agrega con un toque."],
     ["clock", "La galería vence", "Con fecha de vencimiento, el pedido de impresiones no se queda para «después»."],
+    ["users", "Desfiles y eventos que se venden", "El estudio ya cubre desfiles, bandas y actos. Cada familia busca a su hijo en la galería del evento y compra la foto; desde 5, más baratas."],
     ["send", "Recordatorio de carrito olvidado", "Si dejó dos cuadros sin pagar, le llega un WhatsApp con el carrito listo para terminar."],
     ["gift", "Tarjetas de regalo", "Un cliente le regala una sesión a otra familia: el estudio cobra hoy y gana un cliente nuevo."]
   ] },
@@ -100,7 +101,7 @@ const CALC = [
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
-const COMPRA_UNICA = { ini: 42000, mes: 600 };
+const COMPRA_UNICA = { ini: 32000, mes: 500 };
 
 const EXTRAS = [
   { id: "com", n: "Dominio .com", d: "fotogonzalezstudio.com", ini: 120, anual: true, on: true },
@@ -238,7 +239,7 @@ function entrarPortada(retraso) {
 
 /* ---------- Visor: el punto de enfoque busca y fija ---------- */
 function visor() {
-  const fotos = ["f-xv", "f-quince", "f-familia", "f-retrato", "f-bebe", "f-boda"];
+  const fotos = ["f-xv", "f-quince", "f-familia", "f-graduacion", "f-cacao", "f-retrato"];
   const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100"];
   const enf = $("#enfoque"), foto = $("#visor-foto");
   let i = 0, cuadro = 1;

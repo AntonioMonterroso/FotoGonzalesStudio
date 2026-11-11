@@ -22,7 +22,7 @@ const PAQS = [
   { id: "familia", n: "Familia en exterior", p: 850, a: 250 },
   { id: "album", n: "Familia + álbum", p: 1650, a: 500 },
   { id: "bebe", n: "Bebé o embarazo", p: 950, a: 300 },
-  { id: "grad", n: "Graduación", p: 550, a: 150 },
+  { id: "grad", n: "Evento o desfile", p: 550, a: 150 },
   { id: "xv", n: "XV años · foto y video", p: 2400, a: 700 },
   { id: "boda", n: "Boda · foto y video", p: 6500, a: 2000, desde: true },
   { id: "navidad", n: "Mini sesión navideña", p: 350, a: 100 }
@@ -37,13 +37,13 @@ const NIVELES = [
 ];
 const EVENTOS = [["bebe", "f-bebe", "Recién nacidos, embarazo y primer año"], ["xv", "f-xv", "Estudio con círculo de luz, fiesta y video"], ["boda", "f-boda", "Preparación, ceremonia, fiesta y video"]];
 
-const CATS = { todo: "Todo", bodas: "Bodas", xv: "XV años", bebes: "Bebés", familia: "Familia", estudio: "Estudio", grad: "Graduaciones" };
+const CATS = { todo: "Todo", bodas: "Bodas", xv: "XV años", bebes: "Bebés", familia: "Familia", estudio: "Estudio", grad: "Desfiles y eventos" };
 const PORTA = [
   ["f-xv", "xv", "Valeria · círculo de luz", "alto"], ["f-boda", "bodas", "Ana y Luis · Retalhuleu", ""], ["f-bebe", "bebes", "Mateo · 10 días", ""],
-  ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Perfil profesional", ""], ["f-graduacion", "grad", "Promoción 2026", ""],
+  ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Golden Glam · sesión en estudio", ""], ["f-graduacion", "grad", "Desfile escolar · Retalhuleu", ""],
   ["f-pareja", "bodas", "Preboda en Champerico", ""], ["f-xv", "xv", "Sofía · vestido corinto", "alto"], ["f-bebe", "bebes", "Esperando a Lucía", ""],
-  ["f-paisaje", "bodas", "Ceremonia al atardecer", "ancho2"], ["f-familia", "familia", "Familia Ruiz · parque de Reu", ""], ["f-retrato", "estudio", "Retrato en blanco y negro", ""],
-  ["f-mascota", "familia", "Con Toby, el de la casa", ""], ["f-graduacion", "grad", "Licenciatura en Derecho", ""], ["f-producto", "estudio", "Producto para catálogo", ""],
+  ["f-paisaje", "grad", "Banda de marcha · desfile nocturno", "ancho2"], ["f-familia", "familia", "Familia Ruiz · parque de Reu", ""], ["f-cacao", "grad", "Baile folclórico", ""],
+  ["f-mascota", "familia", "Con Toby, el de la casa", ""], ["f-maestra", "grad", "Las maestras también desfilan", ""], ["f-producto", "estudio", "Producto para catálogo", ""],
   ["f-boda", "bodas", "El primer baile", ""], ["f-quince", "xv", "El vals, en video y en foto", ""], ["f-bebe", "bebes", "Primer cumpleaños", ""]
 ];
 
@@ -52,7 +52,7 @@ const RESENAS = [
   ["f-quince", "Andrea Rodas", "XV años", "Me avisaron por WhatsApp cuando estaban las fotos. Ni tuve que preguntar."],
   ["f-bebe", "Karla y Diego", "Recién nacido", "Mucha paciencia con la bebé. Tres horas y ni un mal gesto."],
   ["f-boda", "Luis Herrera", "Boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
-  ["f-graduacion", "Familia Pérez", "Graduación", "Rápidos y puntuales. Las fotos llegaron antes que el título."]
+  ["f-graduacion", "Familia Pérez", "Desfile escolar", "Encontramos a nuestra hija en la galería del desfile y pedimos tres fotos esa misma noche."]
 ];
 
 const FAQ = [
@@ -123,13 +123,13 @@ const BASE = {
   bebe: { p: "bebe", inc: ["1 hora en el estudio", "20 fotos editadas", "Accesorios incluidos"] },
   familia: { p: "familia", inc: ["1 hora en exterior", "25 fotos editadas", "Dos cambios de ropa"] },
   estudio: { p: "estudio", inc: ["30 minutos en el estudio", "10 fotos editadas", "Fondo a escoger"] },
-  grad: { p: "grad", inc: ["45 minutos con toga", "12 fotos editadas", "Una con la familia"] }
+  grad: { p: "grad", inc: ["Cobertura del acto o desfile", "Galería en línea para las familias", "Cada familia compra sus fotos"] }
 };
 const PASOS = [
   { k: "tipo", q: "¿Qué quiere fotografiar?", ops: [
     ["xv", "XV años", "Estudio, fiesta y video", "f-xv"], ["boda", "Una boda", "Del «sí» al último baile, con video", "f-boda"],
     ["bebe", "Bebé o embarazo", "Recién nacido, panza, primer año", "f-bebe"], ["familia", "En familia", "Exterior o en el estudio", "f-familia"],
-    ["estudio", "Retrato", "Perfil profesional o personal", "f-retrato"], ["grad", "Graduación", "Con toga y con la familia", "f-graduacion"]] },
+    ["estudio", "Retrato", "Perfil profesional o personal", "f-retrato"], ["grad", "Evento o desfile", "Colegios, bandas y actos", "f-graduacion"]] },
   { k: "gente", q: "¿Cuántas personas salen en las fotos?", ops: [
     ["1", "Una o dos", "Retrato o pareja", "users"], ["3", "De 3 a 5", "La familia de la casa", "users"], ["6", "6 o más", "Con abuelos, tíos y primos", "users"]] },
   { k: "llevar", q: "¿Qué se quiere llevar?", ops: [

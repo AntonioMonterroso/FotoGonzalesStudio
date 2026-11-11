@@ -627,3 +627,16 @@ p { margin: 0 0 1em; }
 @media (prefers-reduced-motion: reduce) {
   .vit-vista .mini, .barra-res i, .barra-res em { transition: none; }
 }
+
+/* ===== Fotos reales del estudio (de su Facebook). Bodas, bebés y producto siguen de muestra. ===== */
+.f-xv { background: #5E5A57 url("../img/fotos/xv-1.jpg") center 18% / cover no-repeat; }
+.f-quince { background: #5E5A57 url("../img/fotos/xv-2.jpg") center 18% / cover no-repeat; }
+.f-familia { background: #1E3B26 url("../img/fotos/familia.jpg") center 30% / cover no-repeat; }
+.f-retrato { background: #E9E6E1 url("../img/fotos/golden-glam.jpg") 72% 42% / cover no-repeat; }
+.f-graduacion { background: #1D2D6B url("../img/fotos/desfile-azul.jpg") center 30% / cover no-repeat; }
+.f-paisaje { background: #2A2440 url("../img/fotos/desfile-banda.jpg") center 45% / cover no-repeat; }
+.f-cacao { background: #C9C2E6 url("../img/fotos/desfile-cacao.jpg") center 25% / cover no-repeat; }
+.f-maestra { background: #7B8A6C url("../img/fotos/desfile-maestra.jpg") center 25% / cover no-repeat; }
+.f-mundial { background: #0E1A12 url("../img/fotos/mundial.jpg") center / cover no-repeat; }
+.f-glam { background: #E9E6E1 url("../img/fotos/golden-glam.jpg") center top / cover no-repeat; }
+:is(.f-xv, .f-quince, .f-familia, .f-retrato, .f-graduacion, .f-paisaje, .f-cacao, .f-maestra, .f-mundial, .f-glam)::after { opacity: 0; }

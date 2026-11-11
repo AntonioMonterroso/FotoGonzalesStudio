@@ -53,6 +53,16 @@ const OTROS = [
   ["Familia Castillo", "un fotolibro", 650, "f-familia"]
 ];
 
+/* Galería del desfile (fotos reales del estudio; en el sistema real son cientos) */
+const EV_GRUPOS = { todos: "Todos", banda: "Bandas", baile: "Bailes folclóricos", escolta: "Escoltas", maestros: "Maestros" };
+const EV_FOTOS = [
+  ["0412", "f-graduacion", "escolta", "center 30%"], ["0587", "f-paisaje", "banda", "center 45%"], ["0233", "f-cacao", "baile", "center 22%"],
+  ["0119", "f-maestra", "maestros", "center 25%"], ["0601", "f-paisaje", "banda", "20% 40%"], ["0248", "f-cacao", "baile", "center 60%"],
+  ["0430", "f-graduacion", "escolta", "75% 20%"], ["0122", "f-maestra", "maestros", "center 60%"]
+];
+const EV_PRECIO = 25, EV_PRECIO_5 = 20;
+let evFiltro = "todos";
+
 const esc = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const carrito = [];
 let cupon = null;
@@ -68,6 +78,7 @@ const PALANCAS = {
   precio: { t: "Precio y existencia a la vista", d: "El precio cambia al momento con cada tamaño y acabado. Los marcos de nogal muestran cuántos quedan, y el número baja en vivo cuando otra clienta compra uno.", e: "Nadie tiene que preguntar «¿y cuánto sale?» por chat. Y lo que se acabó deja de venderse solo, sin pedidos que después hay que cancelar." },
   packs: { t: "Paquetes que ahorran", d: "Combinaciones para lo que la familia ya pensaba hacer: regalar a los abuelos, llenar una pared, resolver Navidad. Se ve el precio de antes y cuánto se ahorra.", e: "Sube el valor de cada pedido: en vez de una pieza suelta, la familia se lleva tres." },
   regalo: { t: "Tarjeta de regalo que trae clientes", d: "La clienta le regala una sesión a otra familia. El estudio cobra hoy y la sesión se hace después, con alguien que llega recomendado.", e: "Cada tarjeta vendida es un cliente nuevo que ya viene pagado." },
+  eventos: { t: "Desfiles y eventos que se venden solos", d: "El estudio ya fotografía desfiles, bandas y actos escolares. En la galería del evento cada familia filtra por grupo, encuentra a su hijo y compra la foto sin escribirle a nadie. Desde 5 fotos baja el precio.", e: "Cada foto que hoy solo junta «me gusta» en Facebook se puede vender, y un desfile tiene cientos. El descuento por cantidad hace que pidan cinco en vez de una." },
   envio: { t: "Envío gratis desde Q 600.00", d: "La barra muestra cuánto le falta para que el envío en Retalhuleu le salga gratis. Recoger en el estudio siempre es gratis.", e: "Quien está a Q 80.00 del envío gratis tiene un buen motivo para agregar una impresión más." },
   cruzada: { t: "Venta cruzada de un toque", d: "El carrito sugiere una sola cosa que combina con lo que ya lleva, con su misma foto, y se agrega sin salir del carrito.", e: "La sugerencia llega cuando ya decidió comprar, que es cuando más fácil dice que sí. Sin presionar." },
   cupon: { t: "Cupón de temporada", d: "El estudio crea cupones para Navidad, Día de la Madre o graduaciones, con fecha de vencimiento. Se anuncian en Facebook y se usan aquí.", e: "Cada publicación en Facebook tiene un motivo concreto para entrar a comprar." },
@@ -224,6 +235,27 @@ function confirmar(btn, txt) {
   setTimeout(() => { span.textContent = antes; delete btn.dataset.ocupado; }, 1400);
 }
 
+/* ---------- Fotos de eventos ---------- */
+function pintarEventos() {
+  $("#ev-filtros").innerHTML = Object.entries(EV_GRUPOS).map(([k, n]) => `<button type="button" class="chip${k === evFiltro ? " activo" : ""}" aria-pressed="${k === evFiltro}" data-ev="${k}">${n}</button>`).join("");
+  $$("[data-ev]").forEach(b => b.addEventListener("click", () => { evFiltro = b.dataset.ev; pintarEventos(); }));
+  $("#ev-grid").innerHTML = EV_FOTOS.filter(f => evFiltro === "todos" || f[2] === evFiltro).map(([num, cls, g, pos]) => `
+    <article class="ev-foto">
+      <div class="ev-img foto ${cls}" style="background-position:${pos}"><span class="ev-marca">Foto González Studio</span><span class="ev-num mono">#${num}</span></div>
+      <div class="ev-pie"><small>${EV_GRUPOS[g]}</small>
+        <button type="button" class="btn btn-chico" data-evfoto="${num}">${ico("download", 16)} Digital ${Q(EV_PRECIO)}</button>
+      </div>
+    </article>`).join("");
+  $$("[data-evfoto]").forEach(b => b.addEventListener("click", () => {
+    const f = EV_FOTOS.find(x => x[0] === b.dataset.evfoto);
+    agregar({ k: "ev-" + f[0], n: `Foto del desfile #${f[0]}`, det: `Digital en alta, sin marca de agua · ${EV_GRUPOS[f[2]]}`, p: EV_PRECIO, foto: f[1], ev: true }, b.closest(".ev-foto").querySelector(".ev-img"));
+  }));
+}
+function precioEventos() {
+  const evs = carrito.filter(i => i.ev), n = evs.reduce((t, i) => t + i.c, 0);
+  evs.forEach(i => { i.p = n >= 5 ? EV_PRECIO_5 : EV_PRECIO; });
+}
+
 /* ---------- Carrito ---------- */
 function agregar(item, origen) {
   const ya = carrito.find(i => i.k === item.k);
@@ -257,6 +289,7 @@ function saltarCuenta() {
   c.classList.remove("salta"); void c.offsetWidth; c.classList.add("salta");
 }
 function pintarCarrito() {
+  precioEventos();
   const n = piezas(), t = totales(), c = $("#cuenta");
   c.textContent = n; c.classList.toggle("hay", n > 0);
   $("#btn-carrito").setAttribute("aria-label", `Abrir el carrito, ${n} producto${n === 1 ? "" : "s"}`);
@@ -476,6 +509,7 @@ pintarRegalo();
 pintarCuadro();
 pintarCarrito();
 pintarSeguimiento();
+pintarEventos();
 alFeed("<b>Familia Ruiz</b> · un álbum 30×30 · Q 1,450.00", "bag");
 alFeed("<b>Andrea M.</b> abrió su galería", "eye");
 $$("#e-feed li").forEach(li => li.style.animation = "none");

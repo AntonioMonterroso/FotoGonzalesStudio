@@ -353,3 +353,23 @@ h3 { font-size: clamp(1.3rem, 1.1rem + .6vw, 1.6rem); line-height: 1.15; }
 }
 .precio-caja .stock b { font: inherit; font-weight: 700; letter-spacing: 0; }
 .sugiere-vacia { margin: 0; padding: 12px 14px; border-radius: 12px; border: 1px dashed var(--linea); color: var(--tinta3); font-size: .86rem; }
+
+/* ===== Fotos de eventos (desfiles) ===== */
+.ev-caja { border-radius: 16px; }
+.ev-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+.ev-barra .chip { flex-direction: row; align-items: center; }
+.chip.activo { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+.ev-oferta { margin: 0; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--acento-suave); color: var(--acento); font-size: .9rem; }
+.ev-oferta svg { width: 16px; height: 16px; }
+.ev-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ev-foto { background: var(--carta); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; animation: entra 360ms var(--ease-out) backwards; }
+.ev-foto:nth-child(2) { animation-delay: 40ms; } .ev-foto:nth-child(3) { animation-delay: 80ms; } .ev-foto:nth-child(4) { animation-delay: 120ms; }
+.ev-img { aspect-ratio: 4 / 5; position: relative; }
+.ev-marca { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.55); font: 600 .78rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; transform: rotate(-24deg); text-shadow: 0 1px 2px rgba(0,0,0,.35); pointer-events: none; }
+.ev-num { position: absolute; left: 10px; bottom: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(22,21,19,.7); color: #fff; }
+.ev-pie { display: flex; flex-direction: column; gap: 10px; padding: 12px; }
+.ev-pie small { color: var(--tinta3); font-size: .8rem; }
+.ev-pie .btn { width: 100%; }
+@media (max-width: 960px) { .ev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .ev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .ev-pie .btn { padding: 8px 10px; font-size: .84rem; } }
+@media (prefers-reduced-motion: reduce) { .ev-foto { animation-name: suave; } }
