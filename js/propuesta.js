@@ -239,8 +239,8 @@ function entrarPortada(retraso) {
 
 /* ---------- Visor: el punto de enfoque busca y fija ---------- */
 function visor() {
-  const fotos = ["f-xv", "f-quince", "f-familia", "f-graduacion", "f-cacao", "f-retrato"];
-  const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100"];
+  const fotos = ["f-xv", "f-bebe", "f-boda", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato"];
+  const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100", "f/2.8 · 1/200 · ISO 100", "f/3.5 · 1/160 · ISO 200"];
   const enf = $("#enfoque"), foto = $("#visor-foto");
   let i = 0, cuadro = 1;
   if (calma) return;

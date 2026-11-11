@@ -367,7 +367,7 @@ function enviarCampana() {
 }
 
 /* ---------- Celular: la galería que vende ---------- */
-const FOTOS = ["f-familia", "f-bebe", "f-retrato", "f-paisaje", "f-familia", "f-pareja", "f-bebe", "f-retrato", "f-familia", "f-mascota", "f-paisaje", "f-bebe", "f-retrato", "f-familia", "f-graduacion", "f-paisaje", "f-bebe", "f-familia", "f-retrato", "f-pareja", "f-familia", "f-paisaje", "f-mascota", "f-familia"];
+const FOTOS = ["f-familia", "f-primer", "f-camisola", "f-pastel", "f-familia", "f-bebe", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia"];
 const INCL = 10, P_EXTRA = 35, P_TODA = 450;
 const G = { sel: [], pagadas: new Set(), completa: false, extraVendido: 0, avisoMas: false };
 const PRODS = [["Impresión 20×30", "Papel lustre profesional", 95], ["Cuadro 40×60", "Marco de madera natural", 375], ["Lienzo 60×90", "Listo para colgar", 650]];

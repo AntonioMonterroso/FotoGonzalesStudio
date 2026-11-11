@@ -39,19 +39,19 @@ const EVENTOS = [["bebe", "f-bebe", "Recién nacidos, embarazo y primer año"], 
 
 const CATS = { todo: "Todo", bodas: "Bodas", xv: "XV años", bebes: "Bebés", familia: "Familia", estudio: "Estudio", grad: "Desfiles y eventos" };
 const PORTA = [
-  ["f-xv", "xv", "Valeria · círculo de luz", "alto"], ["f-boda", "bodas", "Ana y Luis · Retalhuleu", ""], ["f-bebe", "bebes", "Mateo · 10 días", ""],
-  ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Golden Glam · sesión en estudio", ""], ["f-graduacion", "grad", "Desfile escolar · Retalhuleu", ""],
-  ["f-pareja", "bodas", "Preboda en Champerico", ""], ["f-xv", "xv", "Sofía · vestido corinto", "alto"], ["f-bebe", "bebes", "Esperando a Lucía", ""],
-  ["f-paisaje", "grad", "Banda de marcha · desfile nocturno", "ancho2"], ["f-familia", "familia", "Familia Ruiz · parque de Reu", ""], ["f-cacao", "grad", "Baile folclórico", ""],
-  ["f-mascota", "familia", "Con Toby, el de la casa", ""], ["f-maestra", "grad", "Las maestras también desfilan", ""], ["f-producto", "estudio", "Producto para catálogo", ""],
-  ["f-boda", "bodas", "El primer baile", ""], ["f-quince", "xv", "El vals, en video y en foto", ""], ["f-bebe", "bebes", "Primer cumpleaños", ""]
+  ["f-xv", "xv", "Valeria · círculo de luz", "alto"], ["f-boda", "bodas", "Pedida de mano · Retalhuleu", ""], ["f-bebe", "bebes", "Recién nacido · 10 días", ""],
+  ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Retrato en estudio", ""], ["f-graduacion", "grad", "Desfile escolar · Retalhuleu", ""],
+  ["f-pareja", "bodas", "Sesión de pareja", ""], ["f-quince", "xv", "Sofía · vestido corinto", "alto"], ["f-pastel", "bebes", "Primer año · tema circo", ""],
+  ["f-paisaje", "grad", "Banda de marcha · desfile nocturno", "ancho2"], ["f-camisola", "familia", "Cada quien con su camisola", ""], ["f-cacao", "grad", "Baile folclórico", ""],
+  ["f-fuerza", "estudio", "Retrato con actitud", ""], ["f-maracas", "grad", "Con sus maracas, en el desfile", ""], ["f-producto", "estudio", "Recuerdos de baby shower", ""],
+  ["f-anillo", "bodas", "El anillo", "ancho2"], ["f-glam", "xv", "Golden Glam", ""], ["f-primer", "bebes", "Primer cumpleaños", "ancho2"]
 ];
 
 const RESENAS = [
   ["f-familia", "Mariela Cifuentes", "Sesión familiar", "Mi mamá lloró cuando vio el álbum. Escogimos las fotos desde el celular, cada quien en su casa, y en una semana ya estaban listas."],
   ["f-quince", "Andrea Rodas", "XV años", "Me avisaron por WhatsApp cuando estaban las fotos. Ni tuve que preguntar."],
-  ["f-bebe", "Karla y Diego", "Recién nacido", "Mucha paciencia con la bebé. Tres horas y ni un mal gesto."],
-  ["f-boda", "Luis Herrera", "Boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
+  ["f-bebe", "Karla y Diego", "Recién nacido", "Mucha paciencia con el bebé. Tres horas y ni un mal gesto."],
+  ["f-boda", "Luis Herrera", "Pedida y boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
   ["f-graduacion", "Familia Pérez", "Desfile escolar", "Encontramos a nuestra hija en la galería del desfile y pedimos tres fotos esa misma noche."]
 ];
 

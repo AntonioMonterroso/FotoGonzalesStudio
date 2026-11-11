@@ -640,3 +640,18 @@ p { margin: 0 0 1em; }
 .f-mundial { background: #0E1A12 url("../img/fotos/mundial.jpg") center / cover no-repeat; }
 .f-glam { background: #E9E6E1 url("../img/fotos/golden-glam.jpg") center top / cover no-repeat; }
 :is(.f-xv, .f-quince, .f-familia, .f-retrato, .f-graduacion, .f-paisaje, .f-cacao, .f-maestra, .f-mundial, .f-glam)::after { opacity: 0; }
+
+/* ===== Segundo envío de fotos reales: bebés, pedida, primer año, retratos ===== */
+.f-bebe { background: #3C3B3E url("../img/fotos/bebe-recien-nacido.jpg") 40% 45% / cover no-repeat; }
+.f-boda { background: #B9B07A url("../img/fotos/pareja-sonrisa.jpg") center 30% / cover no-repeat; }
+.f-pareja { background: #EFE5D8 url("../img/fotos/pareja-acostados.jpg") center 40% / cover no-repeat; }
+.f-retrato { background: #BDBBB8 url("../img/fotos/retrato-corazon.jpg") center 25% / cover no-repeat; }
+.f-producto { background: #F4E9D6 url("../img/fotos/recuerdos-baby-shower.jpg") center / cover no-repeat; }
+.f-mascota { background: #161513 url("../img/fotos/mundial-camisola.jpg") center 30% / cover no-repeat; }
+.f-anillo { background: #A9A36A url("../img/fotos/pedida-anillo.jpg") center 45% / cover no-repeat; }
+.f-fuerza { background: #BDBBB8 url("../img/fotos/retrato-fuerza.jpg") center 25% / cover no-repeat; }
+.f-pastel { background: #E8D8CF url("../img/fotos/primer-ano-pastel.jpg") center 45% / cover no-repeat; }
+.f-primer { background: #E8D8CF url("../img/fotos/primer-ano-circo.jpg") 60% 35% / cover no-repeat; }
+.f-camisola { background: #161513 url("../img/fotos/mundial-camisola.jpg") center 30% / cover no-repeat; }
+.f-maracas { background: #D9D2C0 url("../img/fotos/desfile-maracas.jpg") center 20% / cover no-repeat; }
+:is(.f-bebe, .f-boda, .f-pareja, .f-producto, .f-mascota, .f-anillo, .f-fuerza, .f-pastel, .f-primer, .f-camisola, .f-maracas)::after { opacity: 0; }

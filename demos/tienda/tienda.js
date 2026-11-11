@@ -3,8 +3,8 @@
 "use strict";
 
 /* ---------- Datos de muestra ---------- */
-const FOTOS = ["f-xv", "f-quince", "f-retrato", "f-xv", "f-familia", "f-xv", "f-quince", "f-retrato", "f-xv", "f-familia", "f-paisaje", "f-xv",
-  "f-quince", "f-retrato", "f-xv", "f-familia", "f-quince", "f-xv", "f-pareja", "f-retrato", "f-xv", "f-paisaje", "f-quince", "f-familia"];
+const FOTOS = ["f-xv", "f-quince", "f-glam", "f-xv", "f-familia", "f-xv", "f-quince", "f-glam", "f-xv", "f-familia", "f-quince", "f-xv",
+  "f-quince", "f-glam", "f-xv", "f-familia", "f-quince", "f-xv", "f-glam", "f-quince", "f-xv", "f-familia", "f-quince", "f-glam"];
 const FAVS = new Set([0, 3, 5, 8, 11, 14, 17, 20]); // las 8 que eligió en su galería
 let fotoSel = 0;
 const fotoCls = () => FOTOS[fotoSel];
@@ -56,7 +56,7 @@ const OTROS = [
 /* Galería del desfile (fotos reales del estudio; en el sistema real son cientos) */
 const EV_GRUPOS = { todos: "Todos", banda: "Bandas", baile: "Bailes folclóricos", escolta: "Escoltas", maestros: "Maestros" };
 const EV_FOTOS = [
-  ["0412", "f-graduacion", "escolta", "center 30%"], ["0587", "f-paisaje", "banda", "center 45%"], ["0233", "f-cacao", "baile", "center 22%"],
+  ["0412", "f-graduacion", "escolta", "center 30%"], ["0587", "f-paisaje", "banda", "center 45%"], ["0233", "f-cacao", "baile", "center 22%"], ["0251", "f-maracas", "baile", "center 20%"],
   ["0119", "f-maestra", "maestros", "center 25%"], ["0601", "f-paisaje", "banda", "20% 40%"], ["0248", "f-cacao", "baile", "center 60%"],
   ["0430", "f-graduacion", "escolta", "75% 20%"], ["0122", "f-maestra", "maestros", "center 60%"]
 ];
