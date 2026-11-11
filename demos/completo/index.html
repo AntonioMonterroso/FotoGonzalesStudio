@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#161513">
+<title>Demo · Sistema completo · Foto González Studio</title>
+<meta name="description" content="Demo del sistema completo para Foto González Studio: el panel que le encuentra ventas al estudio cada día, la galería que vende fotos extra, campañas, referidos y reservas con anticipo, todo en tiempo real.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Fraunces:opsz,wght@9..144,300..700&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../comun.css">
+<link rel="stylesheet" href="completo.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Barra lateral del estudio -->
+  <aside class="lado" aria-label="Menú del panel">
+    <a class="marca-est" href="#principal"><span class="logo" data-i="aperture"></span><span><b>Foto González</b><small>Studio · panel</small></span></a>
+    <nav class="vistas" role="tablist" aria-label="Secciones del panel" aria-orientation="vertical">
+      <button role="tab" id="t-hoy" aria-controls="v-hoy" aria-selected="true" data-v="hoy"><span data-i="home"></span><span class="et">Hoy</span><span class="cuenta" id="cuenta-op">6</span></button>
+      <button role="tab" id="t-agenda" aria-controls="v-agenda" aria-selected="false" tabindex="-1" data-v="agenda"><span data-i="calendar"></span><span class="et">Agenda</span></button>
+      <button role="tab" id="t-clientes" aria-controls="v-clientes" aria-selected="false" tabindex="-1" data-v="clientes"><span data-i="users"></span><span class="et">Clientes</span></button>
+      <button role="tab" id="t-galerias" aria-controls="v-galerias" aria-selected="false" tabindex="-1" data-v="galerias"><span data-i="images"></span><span class="et">Galerías</span></button>
+      <button role="tab" id="t-campanas" aria-controls="v-campanas" aria-selected="false" tabindex="-1" data-v="campanas"><span data-i="send"></span><span class="et">Campañas</span></button>
+    </nav>
+    <div class="lado-pie">
+      <p class="mono">EQUIPO EN LÍNEA</p>
+      <div class="equipo"><span style="background:#B23F29">AG</span><span style="background:#2F7D4F">LM</span><span style="background:#7A5C8E">RC</span></div>
+      <p class="quien">Ana (dueña), Luis (editor) y Rocío (recepción) ven lo mismo, al mismo tiempo.</p>
+      <p class="lema">«El tiempo pasa, los momentos permanecen.»</p>
+    </div>
+  </aside>
+
+  <!-- Área de trabajo -->
+  <main class="principal" id="principal">
+    <header class="cabeza">
+      <div>
+        <p class="mono fecha" id="fecha"></p>
+        <h1>Hola, Ana.</h1>
+        <p class="sub">Hoy el sistema le encontró <b id="n-op">6</b> ventas posibles.</p>
+      </div>
+      <div class="cabeza-acc">
+        <span class="envivo mono"><i></i>EN VIVO</span>
+        <button class="btn btn-chico btn-tinta" id="ver-cliente" type="button" aria-controls="cliente" aria-expanded="false"><span data-i="eye"></span>Ver lo que ve el cliente</button>
+      </div>
+    </header>
+
+    <!-- HOY -->
+    <section class="vista" id="v-hoy" role="tabpanel" aria-labelledby="t-hoy">
+      <div class="cifras" data-palanca="vivo">
+        <div class="cifra"><small id="k-mes-lbl">Ingresos del mes</small><b id="k-ing"></b></div>
+        <div class="cifra"><small>Ticket promedio</small><b id="k-ticket"></b></div>
+        <div class="cifra"><small>Ventas extra de galerías</small><b id="k-extra"></b></div>
+        <div class="cifra"><small>Consultas que reservan</small><b id="k-conv"></b></div>
+      </div>
+
+      <div class="hoy-grid">
+        <section class="bloque" data-palanca="ventas" aria-labelledby="h-ventas">
+          <div class="bloque-cab">
+            <h2 id="h-ventas">Ventas que el sistema le encontró hoy</h2>
+            <span class="mono tenue" id="op-total"></span>
+          </div>
+          <ul class="oportunidades" id="oport"></ul>
+        </section>
+
+        <section class="bloque actividad" aria-labelledby="h-act">
+          <div class="bloque-cab">
+            <h2 id="h-act">Actividad</h2>
+            <span class="envivo mono"><i></i>EN VIVO</span>
+          </div>
+          <ul class="feed" id="feed" aria-live="polite"></ul>
+        </section>
+      </div>
+
+      <section class="bloque" data-palanca="embudo" aria-labelledby="h-emb">
+        <div class="bloque-cab">
+          <h2 id="h-emb">Embudo de ventas</h2>
+          <span class="tenue chico">Toque «Avanzar» o arrastre la tarjeta</span>
+        </div>
+        <div class="embudo" id="embudo"></div>
+      </section>
+    </section>
+
+    <!-- AGENDA -->
+    <section class="vista" id="v-agenda" role="tabpanel" aria-labelledby="t-agenda" hidden>
+      <section class="bloque" aria-labelledby="h-ag">
+        <div class="bloque-cab ag-cab" data-palanca="anticipo">
+          <div>
+            <h2 id="h-ag">Esta semana</h2>
+            <p class="tenue chico" style="margin:4px 0 0">La fecha solo queda apartada cuando entra el anticipo.</p>
+          </div>
+          <div class="ag-resumen"><span><small>Sesiones</small><b id="ag-n">0</b></span><span><small>Anticipos cobrados</small><b id="ag-q">Q 0.00</b></span></div>
+        </div>
+        <div class="semana" id="semana"></div>
+      </section>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="vista" id="v-clientes" role="tabpanel" aria-labelledby="t-clientes" hidden>
+      <div class="crm">
+        <section class="bloque" aria-labelledby="h-cli">
+          <div class="bloque-cab"><h2 id="h-cli">Clientes</h2><span class="tenue chico" id="cli-n"></span></div>
+          <ul class="lista-cli" id="lista-cli"></ul>
+        </section>
+        <article class="bloque ficha-cli" id="ficha-cli" aria-live="polite">
+          <header class="fc-cab">
+            <span class="av" id="fc-av"></span>
+            <div><h3 id="fc-n"></h3><p class="tenue chico" id="fc-sub"></p></div>
+          </header>
+          <div class="fc-cifras" id="fc-cifras"></div>
+          <div class="fc-dos">
+            <div>
+              <h4>Fechas importantes</h4>
+              <ul class="fc-fechas" id="fc-fechas"></ul>
+            </div>
+            <div>
+              <h4>Historial</h4>
+              <ul class="fc-hist" id="fc-hist"></ul>
+            </div>
+          </div>
+          <div class="fc-ref" data-palanca="referidos"><div id="fc-ref-in"></div></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALERÍAS -->
+    <section class="vista" id="v-galerias" role="tabpanel" aria-labelledby="t-galerias" hidden>
+      <section class="bloque" aria-labelledby="h-gal">
+        <div class="bloque-cab"><h2 id="h-gal">Galerías privadas</h2><span class="tenue chico">Enlace privado y PIN por familia</span></div>
+        <ul class="galerias" id="galerias"></ul>
+      </section>
+    </section>
+
+    <!-- CAMPAÑAS -->
+    <section class="vista" id="v-campanas" role="tabpanel" aria-labelledby="t-campanas" hidden>
+      <section class="bloque campana" data-palanca="campanas" aria-labelledby="h-cam">
+        <div class="bloque-cab"><h2 id="h-cam">Campaña por WhatsApp</h2><span class="tenue chico">A un grupo, con el nombre de cada uno</span></div>
+        <div class="cam-grid">
+          <div class="cam-form">
+            <fieldset>
+              <legend>1. ¿A quién?</legend>
+              <div class="opciones-cam" id="cam-seg"></div>
+            </fieldset>
+            <fieldset>
+              <legend>2. ¿Qué les ofrece?</legend>
+              <div class="opciones-cam" id="cam-ofr"></div>
+            </fieldset>
+          </div>
+          <div class="cam-lado">
+            <p class="mono tenue">ASÍ LE LLEGA A CADA UNO</p>
+            <p class="cam-msj" id="cam-msj"></p>
+            <button class="btn btn-acento" id="cam-enviar" type="button"><span data-i="send"></span><span id="cam-enviar-txt">Enviar</span></button>
+            <div class="cam-res" id="cam-res" hidden>
+              <p class="mono tenue">RESULTADOS EN VIVO</p>
+              <div class="res-fila"><span>Enviados</span><div class="pista"><i id="r-env"></i></div><b id="n-env">0</b></div>
+              <div class="res-fila"><span>Leídos</span><div class="pista"><i id="r-lei"></i></div><b id="n-lei">0</b></div>
+              <div class="res-fila"><span>Respondieron</span><div class="pista"><i id="r-res"></i></div><b id="n-res">0</b></div>
+              <div class="res-fila"><span>Apartaron</span><div class="pista"><i id="r-apa"></i></div><b id="n-apa">0</b></div>
+              <div class="res-total"><span>Generado en reservas</span><b id="n-q">Q 0.00</b></div>
+              <p class="tenue chico" style="margin:6px 0 0">Resultados simulados para la demo. En el sistema real salen de sus propios envíos.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cam-pasada">
+          <h3>Campañas anteriores</h3>
+          <div class="pasada">
+            <span class="foto f-familia" aria-hidden="true"></span>
+            <div>
+              <b>Sesión Mundial 2026 · familias en camisola</b>
+              <small class="tenue">Junio 2026 · a familias con niños fotografiadas en 2025 y 2026</small>
+              <div class="nums"><span><strong>112</strong> enviados</span><span><strong>27</strong> apartaron</span><span><strong>Q 9,450.00</strong> en sesiones</span><span><strong>Q 2,180.00</strong> en impresiones después</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <p class="nota-demo">Datos, nombres y fotos de muestra. Con la información del Facebook del estudio se cambian por los reales.</p>
+  </main>
+
+  <!-- Lo que ve la clienta -->
+  <aside class="cliente" id="cliente" aria-label="Lo que ve la clienta en su celular">
+    <div class="cliente-cab">
+      <p class="mono">LO QUE VE LA FAMILIA LÓPEZ</p>
+      <button class="cerrar-cli" id="cerrar-cliente" type="button" aria-label="Cerrar la vista del cliente"><span data-i="x"></span></button>
+    </div>
+    <div class="cel">
+      <div class="pantalla">
+        <div class="isla"></div>
+        <div class="toast-cel" id="toast-cel" role="status" aria-live="polite"><span class="ic" data-i="check"></span><span id="toast-cel-txt"></span></div>
+        <div class="cel-cab"><span class="logo-cel" data-i="aperture"></span><div><b>Foto González</b><small>Hola, familia López</small></div></div>
+        <div class="cel-scroll" id="cel-scroll">
+          <div class="cel-galeria" data-palanca="galeria">
+            <h2 class="cel-t">Su sesión familiar</h2>
+            <p class="nota">Toquen el corazón en sus favoritas. Su paquete trae <b>10</b>. Toquen la foto para pedirla impresa.</p>
+            <div class="contador"><span>Elegidas <b id="c-cuenta">0</b> de 10</span><span class="mono" id="c-extra"></span></div>
+            <div class="barrita"><i id="c-barra"></i></div>
+            <div class="galeria" id="galeria"></div>
+          </div>
+        </div>
+        <div class="oferta" id="oferta" inert>
+          <p class="of-t" id="of-t"></p>
+          <div class="of-bts">
+            <button class="btn btn-chico of-unas" id="of-unas" type="button"></button>
+            <button class="btn btn-chico btn-acento of-toda" id="of-toda" type="button"></button>
+          </div>
+          <p class="of-nota" id="of-nota">Galería completa: las 24, en alta y sin marca de agua.</p>
+        </div>
+        <div class="hoja-imp" id="hoja-imp" inert role="dialog" aria-label="Pedir impresión">
+          <div class="hi-cab"><span class="foto hi-foto" id="hi-foto"></span><div><b id="hi-t">Foto</b><small>Sale del laboratorio en 5 días</small></div></div>
+          <div class="hi-prods" id="hi-prods"></div>
+          <button class="btn btn-chico hi-cerrar" id="hi-cerrar" type="button">Ahora no</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+<div class="velo" id="velo" hidden></div>
+
+<script src="../comun.js"></script>
+<script src="completo.js"></script>
+</body>
+</html>

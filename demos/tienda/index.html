@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F5F2EC">
+<title>Tienda · Foto González Studio (demo)</title>
+<meta name="description" content="Demo de la tienda en línea de Foto González Studio: cuadros, álbumes e impresiones con las fotos de su sesión.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Fraunces:opsz,wght@9..144,300..700&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../comun.css">
+<link rel="stylesheet" href="tienda.css">
+</head>
+<body>
+
+<header class="barra-t" id="barra">
+  <a class="logo" href="#inicio" aria-label="Foto González Studio, inicio"><span class="marca" data-i="aperture"></span><span>Foto González <i>Studio</i></span></a>
+  <p class="vence" data-palanca="vence"><span data-i="clock"></span><span><span class="largo">Su galería vence</span><span class="corto">Vence</span> en <b>14 días</b></span></p>
+  <button class="btn-carrito" id="btn-carrito" type="button" aria-label="Abrir el carrito, 0 productos" aria-controls="carrito" aria-expanded="false">
+    <span data-i="cart"></span><span class="cuenta" id="cuenta">0</span>
+  </button>
+</header>
+
+<main>
+  <!-- Bienvenida -->
+  <section class="hola" id="inicio">
+    <div class="envoltura">
+      <div class="hola-texto">
+        <p class="eyebrow mono"><span class="punto"></span>Galería lista · XV años de Daniela · 24 fotos</p>
+        <h1>Sus fotos de XV ya están listas. <em>Ahora, llévelas a casa.</em></h1>
+        <p class="bajada">Las 24 fotos de la sesión de Daniela, ya editadas. Véalas colgadas en su sala antes de pedirlas, arme su álbum o mándele una a los abuelos.</p>
+        <div class="acciones">
+          <a class="btn btn-acento" href="#pared"><span data-i="frame"></span>Ver una en mi pared</a>
+          <a class="btn" href="#catalogo">Ver álbumes e impresiones</a>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">
+        <div class="foto f-xv revelado c1"></div>
+        <div class="foto f-quince revelado c2"></div>
+        <div class="foto f-familia revelado c3"></div>
+        <span class="sello mono">FGS · XV años · Nov 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sus fotos -->
+  <section class="sec" id="fotos">
+    <div class="envoltura">
+      <header class="sec-cab">
+        <h2>Sus 24 fotos</h2>
+        <p>Toque una y la verá en su pared y en cada producto. Las del corazón son las 8 que eligió en su galería.</p>
+      </header>
+      <div class="tira-caja" data-palanca="propias">
+        <div class="tira" id="tira" role="group" aria-label="Fotos de su sesión"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- En su pared -->
+  <section class="sec sec-pared" id="pared">
+    <div class="envoltura pared-grid">
+      <figure class="pared-caja" data-palanca="pared">
+        <div class="pared" id="pared-vista" data-pared="hueso">
+          <div class="cuadro" id="cuadro" data-acab="canvas">
+            <div class="capas-foto" id="capas-foto"><div class="capa-foto foto f-xv"></div></div>
+            <span class="capa capa-canvas"></span>
+            <span class="capa capa-papel"></span>
+            <span class="capa capa-marco"></span>
+          </div>
+          <div class="sillon" aria-hidden="true"><span class="respaldo"></span><span class="brazo izq"></span><span class="brazo der"></span><span class="asiento"></span><span class="cojin"></span><span class="pata p1"></span><span class="pata p2"></span></div>
+          <div class="piso"></div>
+          <span class="escala mono">Escala real</span>
+        </div>
+        <figcaption id="pie-pared">Cuadro de 40×60 cm en canvas, sobre un sillón de 2.10 m.</figcaption>
+      </figure>
+
+      <div class="config">
+        <p class="eyebrow mono">Foto <span id="foto-num">06</span> · de su sesión</p>
+        <h2>Véala en su pared</h2>
+        <p class="nota">Cambie el tamaño y mire cuánto ocupa de verdad sobre un sillón de dos plazas.</p>
+
+        <fieldset class="grupo">
+          <legend>Tamaño</legend>
+          <div class="chips" id="tamanos"></div>
+        </fieldset>
+        <fieldset class="grupo">
+          <legend>Acabado</legend>
+          <div class="chips" id="acabados"></div>
+        </fieldset>
+        <fieldset class="grupo">
+          <legend>Color de su pared</legend>
+          <div class="chips colores" id="colores"></div>
+        </fieldset>
+
+        <div class="precio-caja" data-palanca="precio">
+          <div><small>Precio</small><b id="precio">Q 525.00</b></div>
+          <p class="stock" id="stock" aria-live="polite"></p>
+        </div>
+        <button class="btn btn-acento btn-ancho" id="agregar-cuadro" type="button"><span data-i="cart"></span><span>Agregar al carrito</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paquetes -->
+  <section class="sec" id="packs" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cab">
+        <h2>Paquetes que ahorran</h2>
+        <p>Para lo que de todas formas iba a hacer: regalarle a los abuelos, llenar una pared, resolver Navidad.</p>
+      </header>
+      <div class="packs-caja" data-palanca="packs"><div class="packs" id="lista-packs"></div></div>
+    </div>
+  </section>
+
+  <!-- Catálogo -->
+  <section class="sec" id="catalogo">
+    <div class="envoltura">
+      <header class="sec-cab">
+        <p class="lema">«El tiempo pasa, los momentos permanecen»</p>
+        <h2>Álbumes e impresiones</h2>
+        <p>Todo sale con la foto que tenga elegida arriba. En el álbum escoge las demás después del pedido.</p>
+      </header>
+      <div class="catalogo" id="lista-productos"></div>
+
+      <article class="regalo" data-palanca="regalo">
+        <div class="regalo-vista" aria-hidden="true">
+          <div class="tarjeta-r"><span class="marca-r" data-i="aperture"></span><b>Foto González Studio</b><span class="mono">Tarjeta de regalo</span><span class="monto-r" id="regalo-monto">Q 500.00</span></div>
+        </div>
+        <div class="regalo-texto">
+          <p class="eyebrow mono"><span data-i="gift"></span>Tarjeta de regalo</p>
+          <h3>Regale una sesión a otra familia</h3>
+          <p class="nota">Sirve para cualquier sesión o producto del estudio. Le llega por WhatsApp a quien usted diga, con su nombre.</p>
+          <form id="form-regalo" class="form-regalo" onsubmit="return false">
+            <fieldset class="grupo">
+              <legend>Monto</legend>
+              <div class="chips" id="montos-regalo"></div>
+            </fieldset>
+            <label class="campo" for="regalo-para">Para quién es (opcional)
+              <input id="regalo-para" name="para" type="text" autocomplete="off" placeholder="Ej.: Familia Castillo">
+            </label>
+            <button class="btn btn-tinta" id="agregar-regalo" type="submit"><span data-i="gift"></span><span>Agregar tarjeta</span></button>
+          </form>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- En vivo -->
+  <section class="sec" id="vivo" style="background: var(--papel2)">
+    <div class="envoltura">
+      <header class="sec-cab">
+        <h2>Su pedido, en vivo</h2>
+        <p>Cuando pague, aquí lo ve avanzar sin preguntar. Al lado, lo que ve el estudio en ese mismo segundo.</p>
+      </header>
+      <div class="vivo-grid">
+        <article class="seguimiento" id="seguimiento" data-palanca="seguimiento">
+          <div id="seg-cuerpo"></div>
+        </article>
+        <article class="estudio" aria-label="Lo que ve el estudio">
+          <div class="estudio-cab"><h3>Lo que ve el estudio</h3><span class="en-vivo mono"><i></i>EN VIVO</span></div>
+          <div class="cifras-e">
+            <div><small>Ventas de hoy</small><b id="e-ventas">Q 2,340.00</b></div>
+            <div><small>Pedidos hoy</small><b id="e-pedidos">5</b></div>
+            <div><small>Ticket promedio</small><b id="e-ticket">Q 468.00</b></div>
+          </div>
+          <p class="presencia-e"><span class="av">FL</span>Familia López está viendo la tienda</p>
+          <ul class="feed-e" id="e-feed" aria-live="polite"></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <p><b>Foto González Studio</b> · Fotografía y video para eventos</p>
+  <p>Residenciales Bella Aurora, zona 6, Retalhuleu · WhatsApp +502 5016 8853 · <a href="mailto:premiumdesigngt@gmail.com">premiumdesigngt@gmail.com</a></p>
+  <p>Fotos y precios de muestra; van los del estudio.</p>
+  <p class="mono">Tienda de muestra por Monterroso Dev Studio</p>
+</footer>
+
+<!-- Carrito -->
+<div class="velo" id="velo"></div>
+<aside class="carrito" id="carrito" role="dialog" aria-modal="true" aria-labelledby="carrito-titulo" aria-hidden="true">
+  <header class="carrito-cab">
+    <h2 id="carrito-titulo">Su carrito</h2>
+    <button class="cerrar-c" id="cerrar-carrito" type="button" aria-label="Cerrar el carrito"><span data-i="x"></span></button>
+  </header>
+
+  <div class="vista-c" id="vista-carrito">
+    <div class="envio" data-palanca="envio">
+      <p id="envio-txt">Agregue Q 600.00 y el envío en Retalhuleu es gratis.</p>
+      <div class="barra-envio"><i id="envio-barra"></i></div>
+    </div>
+    <ul class="items" id="items"></ul>
+    <div class="cruzada" data-palanca="cruzada"><div id="cruzada-cuerpo"></div></div>
+    <form class="cupon" data-palanca="cupon" id="form-cupon" onsubmit="return false">
+      <label for="cupon-txt">Cupón</label>
+      <div class="cupon-fila">
+        <input id="cupon-txt" name="cupon" type="text" autocomplete="off" autocapitalize="characters" placeholder="Escriba su cupón">
+        <button class="btn btn-chico" type="submit">Aplicar</button>
+      </div>
+      <button class="temporada" id="usar-temporada" type="button"><span data-i="tag"></span><span>Temporada: <b>NAVIDAD10</b> · 10 % hasta el 24 de diciembre</span></button>
+      <p class="cupon-msg" id="cupon-msg" aria-live="polite"></p>
+    </form>
+    <dl class="totales" id="totales"></dl>
+    <button class="btn btn-acento btn-ancho" id="ir-pagar" type="button">Ir a pagar</button>
+    <div class="olvidado" data-palanca="olvidado">
+      <p>Si deja productos aquí y se va, le llega un recordatorio por WhatsApp.</p>
+      <button class="enlace" id="ver-recordatorio" type="button"><span data-i="chat"></span>Ver el recordatorio que le llega</button>
+    </div>
+  </div>
+
+  <div class="vista-c" id="vista-pago" hidden>
+    <button class="enlace" id="volver-carrito" type="button"><span data-i="back"></span>Volver al carrito</button>
+    <h3 class="pago-tit">¿Cómo quiere pagar?</h3>
+    <div class="metodos" role="radiogroup" aria-label="Forma de pago">
+      <label class="metodo"><input type="radio" name="metodo" value="tarjeta" checked><span data-i="cash"></span><span><b>Tarjeta</b><small>Débito o crédito</small></span></label>
+      <label class="metodo"><input type="radio" name="metodo" value="transferencia"><span data-i="send"></span><span><b>Transferencia</b><small>Con foto de la boleta</small></span></label>
+      <label class="metodo"><input type="radio" name="metodo" value="entrega"><span data-i="truck"></span><span><b>Contra entrega</b><small>Paga al recibir</small></span></label>
+    </div>
+    <h3 class="pago-tit">¿Cómo lo recibe?</h3>
+    <div class="metodos" role="radiogroup" aria-label="Entrega">
+      <label class="metodo"><input type="radio" name="entrega" value="envio" checked><span data-i="truck"></span><span><b>Envío a domicilio</b><small>En Retalhuleu · gratis desde Q 600.00</small></span></label>
+      <label class="metodo"><input type="radio" name="entrega" value="recoger"><span data-i="home"></span><span><b>Recoger en el estudio</b><small>Bella Aurora, zona 6 · gratis</small></span></label>
+    </div>
+    <div class="metodo-info" id="metodo-info" aria-live="polite"></div>
+    <dl class="totales" id="totales-pago"></dl>
+    <button class="btn btn-acento btn-ancho" id="pagar" type="button">Pagar</button>
+    <p class="nota-pago">Demo: el pago es simulado y no se pide ningún dato de tarjeta.</p>
+  </div>
+</aside>
+
+<script src="../comun.js"></script>
+<script src="tienda.js"></script>
+</body>
+</html>
