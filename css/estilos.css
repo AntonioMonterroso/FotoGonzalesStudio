@@ -655,3 +655,7 @@ p { margin: 0 0 1em; }
 .f-camisola { background: #161513 url("../img/fotos/mundial-camisola.jpg") center 30% / cover no-repeat; }
 .f-maracas { background: #D9D2C0 url("../img/fotos/desfile-maracas.jpg") center 20% / cover no-repeat; }
 :is(.f-bebe, .f-boda, .f-pareja, .f-producto, .f-mascota, .f-anillo, .f-fuerza, .f-pastel, .f-primer, .f-camisola, .f-maracas)::after { opacity: 0; }
+
+/* La base sin tablas: texto normal, no código */
+.tabla-bd .nom { font-family: "Hanken Grotesk", sans-serif; font-weight: 650; letter-spacing: 0; }
+.tabla-bd .campos { font-family: "Hanken Grotesk", sans-serif; letter-spacing: 0; font-size: .9rem; }

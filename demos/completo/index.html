@@ -10,9 +10,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Fraunces:opsz,wght@9..144,300..700&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../comun.css?v=20261110b">
-<link rel="stylesheet" href="completo.css?v=20261110b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&display=swap">
+<link rel="stylesheet" href="../comun.css?v=20261110c">
+<link rel="stylesheet" href="completo.css?v=20261110c">
 </head>
 <body>
 <div class="app">
@@ -29,8 +29,8 @@
     </nav>
     <div class="lado-pie">
       <p class="mono">EQUIPO EN LÍNEA</p>
-      <div class="equipo"><span style="background:#B23F29">AG</span><span style="background:#2F7D4F">LM</span><span style="background:#7A5C8E">RC</span></div>
-      <p class="quien">Ana (dueña), Luis (editor) y Rocío (recepción) ven lo mismo, al mismo tiempo.</p>
+      <div class="equipo"><span style="background:#8E2234" title="Dueño">D</span><span style="background:#2F7D4F" title="Editor">E</span><span style="background:#7A5C8E" title="Recepción">R</span></div>
+      <p class="quien">Dueño, editor y recepción ven lo mismo, al mismo tiempo.</p>
       <p class="lema">«El tiempo pasa, los momentos permanecen.»</p>
     </div>
   </aside>
@@ -40,7 +40,7 @@
     <header class="cabeza">
       <div>
         <p class="mono fecha" id="fecha"></p>
-        <h1>Hola, Ana.</h1>
+        <h1 id="saludo">Buenos días.</h1>
         <p class="sub">Hoy el sistema le encontró <b id="n-op">6</b> ventas posibles.</p>
       </div>
       <div class="cabeza-acc">
@@ -91,9 +91,9 @@
         <div class="bloque-cab ag-cab" data-palanca="anticipo">
           <div>
             <h2 id="h-ag">Esta semana</h2>
-            <p class="tenue chico" style="margin:4px 0 0">La fecha solo queda apartada cuando entra el anticipo.</p>
+            <p class="tenue chico" style="margin:4px 0 0">La fecha solo queda apartada cuando entra el anticipo. Las tardes libres se ofrecen con un toque.</p>
           </div>
-          <div class="ag-resumen"><span><small>Sesiones</small><b id="ag-n">0</b></span><span><small>Anticipos cobrados</small><b id="ag-q">Q 0.00</b></span></div>
+          <div class="ag-resumen"><span><small>Sesiones</small><b id="ag-n">0</b></span><span><small>Anticipos cobrados</small><b id="ag-q">Q 0.00</b></span><span><small>Por confirmar</small><b id="ag-p">0</b></span><span><small>Tardes libres</small><b id="ag-l">0</b></span></div>
         </div>
         <div class="semana" id="semana"></div>
       </section>
@@ -221,7 +221,7 @@
 </div>
 <div class="velo" id="velo" hidden></div>
 
-<script src="../comun.js?v=20261110b"></script>
-<script src="completo.js?v=20261110b"></script>
+<script src="../comun.js?v=20261110c"></script>
+<script src="completo.js?v=20261110c"></script>
 </body>
 </html>

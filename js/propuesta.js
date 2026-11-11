@@ -126,31 +126,31 @@ const TIEMPO_REAL = [
   ["Mensajes dentro de la galería", "«Esta sin el flash, por favor», junto a la foto.", "mensajes", 0, 0, 1]
 ];
 
-/* Tablas de Supabase; planes: p = página, t = tienda, c = completo */
+/* Lo que guarda la base, en palabras del estudio (sin nombres técnicos); planes: p = página, t = tienda, c = completo */
 const BD = [
   { g: "El estudio", t: [
-    ["estudio", "nombre, logo, colores, whatsapp, horario", "ptc", 0],
-    ["perfiles", "usuario, nombre, puesto (dueño · fotógrafo · editor · recepción)", "ptc", 0],
-    ["paquetes", "nombre, precio, fotos incluidas, duración", "ptc", 1],
-    ["portafolio", "foto, categoría, orden, destacada", "ptc", 1],
-    ["resenas", "cliente, estrellas, texto, aprobada", "ptc", 1],
-    ["reservas", "fecha, hora, paquete, anticipo, estado", "ptc", 1]
+    ["Datos del estudio", "Logo, colores, WhatsApp y horario.", "ptc", 0],
+    ["Paquetes y precios", "Lo que se ofrece y cuánto cuesta.", "ptc", 1],
+    ["Portafolio", "Las mejores fotos, por categoría.", "ptc", 1],
+    ["Reseñas", "Lo que dicen los clientes, ya aprobado.", "ptc", 1],
+    ["Fechas y reservas", "Qué día está libre y quién apartó.", "ptc", 1],
+    ["Equipo", "Quién entra y qué puede ver.", "ptc", 0]
   ] },
-  { g: "Tienda", t: [
-    ["clientes", "nombre, teléfono, correo, NIT, cumpleaños", "tc", 0],
-    ["productos", "tipo, tamaño, precio, existencia", "tc", 1],
-    ["pedidos", "código, cliente, estado, total, entrega", "tc", 1],
-    ["pedido_items", "pedido, producto, foto, cantidad", "tc", 0],
-    ["pagos", "monto, método, boleta, anticipo o saldo", "tc", 1],
-    ["cupones", "código, descuento, vigencia", "tc", 0]
+  { g: "Ventas", t: [
+    ["Clientes", "Nombre, teléfono, NIT y cumpleaños.", "tc", 0],
+    ["Productos", "Impresiones, cuadros, álbumes y cuántos quedan.", "tc", 1],
+    ["Pedidos", "Qué compró cada quien y cómo va.", "tc", 1],
+    ["Pagos", "Anticipos, saldos y boletas.", "tc", 1],
+    ["Cupones", "Descuentos de temporada.", "tc", 0],
+    ["Fotos de eventos", "Desfiles y actos, para que cada familia compre la suya.", "tc", 1]
   ] },
   { g: "Sesiones y entregas", t: [
-    ["contratos", "reserva, condiciones, firma, archivo", "c", 0],
-    ["galerias", "cliente, enlace privado, PIN, estado, vence", "c", 1],
-    ["fotos", "galería, archivo, versión web, marca de agua", "c", 0],
-    ["selecciones", "galería, foto, nota del cliente", "c", 1],
-    ["mensajes", "galería, quién, texto", "c", 1],
-    ["bitacora", "quién hizo qué y cuándo", "c", 0]
+    ["Contratos", "Condiciones y firma en el celular.", "c", 0],
+    ["Galerías privadas", "Una por cliente, con enlace y PIN.", "c", 1],
+    ["Fotos de cada sesión", "Versión liviana y en alta, con marca de agua.", "c", 0],
+    ["Favoritas del cliente", "Cada corazón, con su nota.", "c", 1],
+    ["Mensajes", "Comentarios junto a cada foto.", "c", 1],
+    ["Historial", "Quién hizo qué y cuándo.", "c", 0]
   ] }
 ];
 const BD_COSTO = {
@@ -344,7 +344,7 @@ function calcular() {
 function pintarTiempoReal() {
   const cel = v => v ? `<span class="si" aria-label="Sí">${ico("check")}</span>` : `<span class="no" aria-label="No">—</span>`;
   $("#rt-tabla tbody").innerHTML = TIEMPO_REAL.map(([q, d, canal, a, b, c]) => `
-    <tr><td><b>${q}</b><span>${d}</span><br><span class="rt-canal mono">${canal}</span></td>
+    <tr><td><b>${q}</b><span>${d}</span></td>
     <td data-p="Página">${cel(a)}</td><td data-p="Tienda">${cel(b)}</td><td data-p="Completo">${cel(c)}</td></tr>`).join("");
 }
 
@@ -355,7 +355,7 @@ function pintarBD(plan) {
     <div class="grupo revela visto"><small class="mono">${gr.g}</small>
       ${gr.t.map(([n, campos, planes, rt]) => `
         <div class="tabla-bd${planes.includes(letra) ? "" : " apagada"}">
-          <div class="nom"><span>${n}</span>${rt ? '<span class="rt" title="En tiempo real"></span>' : ""}</div>
+          <div class="nom"><span>${n}</span>${rt ? '<span class="rt" title="Se actualiza al instante"></span>' : ""}</div>
           <div class="campos">${campos}</div>
         </div>`).join("")}
     </div>`).join("");

@@ -2,7 +2,7 @@
 body { padding-bottom: 84px; }
 h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; font-optical-sizing: auto; }
 h2 { font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.2rem); line-height: 1.06; }
-h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+h3 { font-family: "Jost", var(--sans); font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
 .sec { padding: clamp(72px, 10vw, 128px) 0; }
 .fondo2 { background: var(--papel2); }
 .cab-sec { max-width: 720px; margin-bottom: clamp(32px, 5vw, 52px); }
@@ -87,7 +87,7 @@ h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; 
 @media (hover: hover) and (pointer: fine) { .quiz-op:hover { border-color: var(--tinta); background: var(--carta); } }
 .quiz-res .paq { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px dashed var(--linea); }
 .quiz-res .paq h3 { margin: 4px 0 0; }
-.quiz-res .total { font-family: "Archivo"; font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.3rem); font-weight: 750; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.quiz-res .total { font-family: "Jost"; font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.3rem); font-weight: 750; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .quiz-res ul { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; }
 .quiz-res li { display: flex; justify-content: space-between; gap: 12px; font-size: .95rem; color: var(--tinta2); }
 .quiz-res li b { color: var(--tinta); font-weight: 600; white-space: nowrap; }
@@ -138,7 +138,7 @@ h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; 
 .nivel.estrella { background: var(--tinta); color: var(--papel); border-color: var(--tinta); box-shadow: 0 24px 50px rgba(28,27,25,.22); }
 .nivel.estrella .tinta2, .nivel.estrella li { color: #CFC8BB; }
 .nivel .cinta { position: absolute; top: -13px; left: 24px; background: var(--acento); color: #fff; font-size: .76rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; }
-.nivel .precio { font-family: "Archivo"; font-size: clamp(2rem, 1.6rem + 1.2vw, 2.6rem); font-weight: 750; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.nivel .precio { font-family: "Jost"; font-size: clamp(2rem, 1.6rem + 1.2vw, 2.6rem); font-weight: 750; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .nivel .precio small { font-family: var(--sans); font-size: .9rem; font-weight: 500; color: var(--tinta2); margin-left: 4px; }
 .nivel.estrella .precio small { color: #CFC8BB; }
 .nivel ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: .95rem; color: var(--tinta2); }
@@ -156,7 +156,7 @@ h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; 
 .evento { display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: center; background: var(--carta); border: 1px solid var(--linea); border-radius: 14px; padding: 10px; }
 .evento .foto { width: 72px; height: 72px; border-radius: 10px; }
 .evento b { display: block; }
-.evento .p { font-family: "Archivo"; font-weight: 700; font-variant-numeric: tabular-nums; }
+.evento .p { font-family: "Jost"; font-weight: 700; font-variant-numeric: tabular-nums; }
 .evento button { margin-top: 6px; min-height: 44px; padding: 6px 0; border: 0; background: transparent; color: var(--acento); font-weight: 600; font-size: .9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: transform 140ms var(--ease-out); }
 .evento button:active { transform: scale(0.97); }
 .evento button svg { width: 15px; height: 15px; }
@@ -170,7 +170,7 @@ h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; 
 .promo-txt b { color: #fff; }
 .reloj { display: grid; grid-template-columns: repeat(4, minmax(0, 76px)); gap: 8px; margin-bottom: 20px; }
 .reloj div { background: #24221F; border: 1px solid #3A3733; border-radius: 12px; padding: 10px 6px; text-align: center; }
-.reloj b { display: block; font-family: "Archivo"; font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.reloj b { display: block; font-family: "Jost"; font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .reloj small { color: #A8A094; font-size: .74rem; }
 .reloj b.tic { animation: tic 300ms var(--ease-out); }
 @keyframes tic { from { opacity: .4; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
@@ -250,7 +250,7 @@ h3 { font-family: "Archivo", var(--sans); font-size: 1.15rem; font-weight: 700; 
 /* ===== Reseñas ===== */
 .resenas-cab { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; max-width: none; }
 .nota-google { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--carta); border: 1px solid var(--linea); border-radius: 999px; padding: 8px 18px 8px 12px; font-size: .92rem; color: var(--tinta2); }
-.nota-google b { font-family: "Archivo"; font-size: 1.5rem; color: var(--tinta); }
+.nota-google b { font-family: "Jost"; font-size: 1.5rem; color: var(--tinta); }
 .resenas { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; }
 .resena { background: var(--carta); border: 1px solid var(--linea); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 14px; margin: 0; }
 .resena:first-child { grid-row: span 2; }

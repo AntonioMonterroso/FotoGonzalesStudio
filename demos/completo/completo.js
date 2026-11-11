@@ -4,7 +4,7 @@
 
 /* ---------- Palancas de venta ---------- */
 const PALANCAS = {
-  vivo: { t: "El panel se mueve solo", d: "Cada anticipo, cada foto extra y cada consulta suma aquí en el mismo segundo, venga de la página, de la galería o de la tienda. Ana ve cómo va el mes sin pedir cuentas ni abrir un Excel.", e: "Si a mediados de mes las cifras van bajas, se nota ese mismo día y se lanza una campaña." },
+  vivo: { t: "El panel se mueve solo", d: "Cada anticipo, cada foto extra y cada consulta suma aquí en el mismo segundo, venga de la página, de la galería o de la tienda. el dueño ve cómo va el mes sin pedir cuentas ni abrir un Excel.", e: "Si a mediados de mes las cifras van bajas, se nota ese mismo día y se lanza una campaña." },
   ventas: { t: "Ventas que el sistema encuentra cada día", d: "Cada mañana el sistema revisa clientes, fechas, galerías y saldos, y arma la lista de a quién escribir y qué ofrecerle. Cada tarjeta trae el mensaje escrito: un toque y sale por WhatsApp.", e: "Los clientes que ya tiene el estudio vuelven a comprar sin que nadie tenga que acordarse de ellos." },
   fechas: { t: "Una fecha importante trae la siguiente sesión", d: "El sistema guarda cumpleaños, aniversarios y la edad de los bebés que el estudio fotografió. Avisa con semanas de anticipación para ofrecer el primer año, el aniversario o la foto de diciembre.", e: "Una familia que ya confió en el estudio es la más fácil de volver a atender." },
   cotizacion: { t: "Ninguna cotización se queda en visto", d: "Si alguien pidió precio y no respondió, a los 3 días aparece aquí con un recordatorio amable y las fechas que quedan libres.", e: "Recupera reservas que hoy se pierden solo porque nadie volvió a escribir." },
@@ -191,35 +191,71 @@ function iniciarEmbudo() {
 }
 
 /* ---------- Agenda ---------- */
-const DIAS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
+const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const AG = [
-  { d: 0, h: "9:00", n: "Sofía Rivas", t: "Retrato en estudio", a: 225 },
-  { d: 1, h: "16:00", n: "Fam. Cifuentes", t: "Recién nacido", a: 475 },
-  { d: 2, h: "10:00", n: "Daniela Ortiz", t: "Prueba de vestido · XV", a: 0, pend: true },
-  { d: 3, h: "15:00", n: "Karla y Diego", t: "Preboda en Champerico", a: 600 },
-  { d: 4, h: "8:00", n: "Colegio La Asunción", t: "Graduación · 42 alumnos", a: 2400 },
-  { d: 5, h: "9:00", n: "Andrea Morales", t: "XV en estudio con video", a: 1200 },
-  { d: 5, h: "16:00", n: "Fam. Juárez", t: "Maternidad en Bella Aurora", a: 0, pend: true },
-  { d: 6, h: "17:00", n: "Ruiz Estrada", t: "Boda · ceremonia y fiesta", a: 3900 }
+  { d: 0, h: "9:00", dur: "1 h", n: "Sofía Rivas", t: "Retrato en estudio", f: "f-retrato", a: 225 },
+  { d: 1, h: "16:00", dur: "2 h", n: "Fam. Cifuentes", t: "Recién nacido", f: "f-bebe", a: 475 },
+  { d: 2, h: "10:00", dur: "1 h", n: "Daniela Ortiz", t: "XV · prueba de vestido", f: "f-quince", a: 0, pend: true, debe: 600 },
+  { d: 3, h: "15:00", dur: "2 h", n: "Karla y Diego", t: "Sesión de pareja", f: "f-pareja", a: 600 },
+  { d: 4, h: "8:00", dur: "4 h", n: "Colegio La Asunción", t: "Desfile y graduación", f: "f-graduacion", a: 2400 },
+  { d: 5, h: "9:00", dur: "3 h", n: "Andrea Morales", t: "XV en estudio con video", f: "f-xv", a: 1200 },
+  { d: 5, h: "16:00", dur: "1 h", n: "Fam. Juárez", t: "Primer año · tema circo", f: "f-primer", a: 0, pend: true, debe: 325 },
+  { d: 6, h: "17:00", dur: "6 h", n: "Ruiz Estrada", t: "Boda · ceremonia y fiesta", f: "f-boda", a: 3900 }
 ];
+const AG_OFRECIDO = new Set(), AG_RECORDADO = new Set();
 function lunes() { const h = new Date(); const k = (h.getDay() + 6) % 7; h.setDate(h.getDate() - k); return h; }
 function pintarAgenda() {
   const l = lunes(), hoy = (new Date().getDay() + 6) % 7;
+  let libres = 0;
   $("#semana").innerHTML = DIAS.map((d, i) => {
     const f = new Date(l); f.setDate(l.getDate() + i);
-    const ses = AG.filter(s => s.d === i);
-    return `<div class="dia${i === hoy ? " hoy" : ""}"><div class="dia-cab"><small>${d}</small><b>${f.getDate()}</b></div>
-      <div class="lista">${ses.length ? ses.map(s => `<div class="ses${s.pend ? " pend" : ""}${s.nueva ? " nueva" : ""}">
-        <span class="h">${s.h}</span><b>${s.n}</b><span>${s.t}</span>
-        <span class="an">${s.pend ? "Esperando anticipo · se libera en 18 h" : "Anticipo " + Q(s.a) + " ✓"}</span></div>`).join("") : '<span class="vacio">Libre</span>'}</div></div>`;
+    const ses = AG.filter(s => s.d === i).sort((x, y) => parseInt(x.h) - parseInt(y.h));
+    const tardeLibre = !ses.some(s => parseInt(s.h) >= 13) && i >= hoy;
+    if (tardeLibre && !AG_OFRECIDO.has(i)) libres++;
+    const pasado = i < hoy;
+    return `<div class="dia${i === hoy ? " hoy" : ""}${pasado ? " pasado" : ""}">
+      <div class="dia-cab"><small>${d}</small><b>${f.getDate()}</b>${i === hoy ? '<span class="hoy-et">Hoy</span>' : ""}</div>
+      <div class="lista">${ses.map((s, k) => {
+        const id = i + "-" + k;
+        const estado = s.pend
+          ? (AG_RECORDADO.has(s.n) ? `<span class="est pend">${ico("clock", 13)}Recordatorio enviado</span>` : `<span class="est pend">${ico("clock", 13)}Falta anticipo · ${Q(s.debe)}</span><button type="button" class="mini-btn" data-recordar="${s.n}">${ico("send", 13)}Recordar</button>`)
+          : `<span class="est ok">${ico("check", 13)}Anticipo ${Q(s.a)}</span>`;
+        return `<article class="ses${s.pend ? " pend" : ""}${s.nueva ? " nueva" : ""}">
+          <span class="ses-foto foto ${s.f}" aria-hidden="true"></span>
+          <div class="ses-txt"><span class="h">${s.h} · ${s.dur}</span><b>${s.t}</b><small>${s.n}</small><div class="ses-est">${estado}</div></div>
+        </article>`;
+      }).join("")}${tardeLibre ? (AG_OFRECIDO.has(i)
+        ? `<div class="libre ofrecido">${ico("check", 14)}<span>Tarde ofrecida a la lista de espera</span></div>`
+        : `<div class="libre"><span>${ses.length ? "Tarde libre" : "Día libre"}</span><button type="button" class="mini-btn" data-ofrecer="${i}">${ico("sparkles", 13)}Ofrecer</button></div>`)
+        : (!ses.length ? `<div class="libre pasado-txt"><span>Sin sesiones</span></div>` : "")}</div>
+    </div>`;
   }).join("");
   AG.forEach(s => delete s.nueva);
   const ok = AG.filter(s => !s.pend);
   $("#ag-n").textContent = AG.length;
+  $("#ag-p").textContent = AG.filter(s => s.pend && !AG_RECORDADO.has(s.n)).length;
+  $("#ag-l").textContent = libres;
   odometro($("#ag-q"), ok.reduce((s, x) => s + x.a, 0));
+  $$("[data-ofrecer]").forEach(b => b.addEventListener("click", () => {
+    const i = Number(b.dataset.ofrecer), f = new Date(lunes()); f.setDate(f.getDate() + i);
+    const dia = DIAS[i].toLowerCase() + " " + f.getDate();
+    simularWA({ texto: `Hola, le escribe Foto González Studio. Se nos liberó la tarde del ${dia}. Si quiere su sesión ese día, se la apartamos con el anticipo. ¿Le interesa?`, respuesta: "¡Sí! ¿A las 4 puede ser?", nota: "Se manda a las familias en lista de espera. En el sistema real sale desde el +502 5016 8853 del estudio." });
+    AG_OFRECIDO.add(i); pintarAgenda();
+    alFeed("send", `Tarde del <b>${dia}</b> ofrecida a 6 familias en lista de espera`);
+  }));
+  $$("[data-recordar]").forEach(b => b.addEventListener("click", () => {
+    const s = AG.find(x => x.n === b.dataset.recordar);
+    simularWA({ texto: `Hola, ${s.n.split(" ")[0]}. Le escribe Foto González Studio. Su fecha (${s.t.toLowerCase()}) sigue apartada hasta mañana. Para dejarla segura falta el anticipo de ${Q(s.debe)}. Aquí puede pagarlo: fotogonzalezstudio.com/pagar`, nota: "Si no entra el anticipo, la fecha se libera sola y vuelve a la página." });
+    AG_RECORDADO.add(s.n); pintarAgenda();
+    setTimeout(() => {
+      s.pend = false; s.a = s.debe; s.nueva = true; venta(s.debe); pintarAgenda();
+      alFeed("cash", `<b>${s.n}</b> pagó el anticipo · ${Q(s.debe)}`);
+      aviso(`Anticipo recibido · <b>${s.n}</b>`, { ic: "cash", sub: `${Q(s.debe)} · la fecha ya quedó segura` });
+    }, 5200);
+  }));
 }
 function reservaEnVivo() {
-  AG.push({ d: 6, h: "9:00", n: "Fam. Barrios", t: "Familia en el parque central", a: 425, nueva: true });
+  AG.push({ d: 6, h: "9:00", dur: "1 h", n: "Fam. Barrios", t: "Familia en el parque", f: "f-familia", a: 425, nueva: true });
   const e = EMB.find(x => x.id === "e1"); if (e && e.c < 2) { e.c = 2; pintarEmbudo("e1"); }
   S.reservas++; venta(425);
   pintarAgenda();
@@ -289,7 +325,7 @@ function pintarGalerias() {
       chips: `<span class="chip">${ico("check", 12)}Entregada</span><span class="chip">Álbum 30×30 pedido</span>`,
       der: `<small>Ventas extra <b>${Q(1975)}</b></small>` },
     { f: "f-bebe", n: "Fam. Cifuentes", t: "Recién nacido · en edición",
-      chips: `<span class="chip">Luis la está editando</span>`, der: `<small>Se publica <b>jueves</b></small>` }
+      chips: `<span class="chip">El editor la está trabajando</span>`, der: `<small>Se publica <b>jueves</b></small>` }
   ];
   $("#galerias").innerHTML = filas.map(g => `<li class="gal"><span class="foto ${g.f}" aria-hidden="true"></span>
     <div><b>${g.n}</b><small>${g.t}</small><div class="chips">${g.chips}</div></div><div class="der">${g.der}</div></li>`).join("");
@@ -546,6 +582,7 @@ function ciclo() { evento(); setTimeout(ciclo, 8000 + Math.random() * 4000); }
 
 /* ---------- Arranque ---------- */
 $("#fecha").textContent = new Date().toLocaleDateString("es-GT", { weekday: "long", day: "numeric", month: "long" }) + " · Retalhuleu";
+{ const hh = new Date().getHours(); $("#saludo").textContent = hh < 12 ? "Buenos días." : hh < 19 ? "Buenas tardes." : "Buenas noches."; }
 $("#k-mes-lbl").textContent = "Ingresos de " + MES;
 pintarCifras();
 pintarOport();
