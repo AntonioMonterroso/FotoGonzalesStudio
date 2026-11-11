@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tipografías · Sistema completo · Foto González Studio</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../comun.css?v=20261111e">
+<style>
+  body { background: var(--papel); font-family: "Jost", ui-sans-serif, sans-serif; }
+  .envuelve { max-width: 1240px; margin: 0 auto; padding: 32px 16px 64px; }
+  .cab { max-width: 720px; margin-bottom: 28px; }
+  .cab small { display: block; letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; color: var(--tinta3); margin-bottom: 8px; }
+  .cab h1 { font-family: "Bodoni Moda", Georgia, serif; font-weight: 600; font-size: clamp(1.9rem, 1.4rem + 2vw, 2.8rem); line-height: 1.1; }
+  .cab p { margin: 12px 0 0; color: var(--tinta2); }
+  .rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 18px; }
+  .letra { display: flex; flex-direction: column; background: var(--carta); border: 1px solid var(--linea); border-radius: 16px; overflow: hidden; font-family: var(--sans); scroll-margin-top: 16px; }
+  .letra:target { border-color: var(--acento); box-shadow: 0 0 0 2px var(--acento); }
+  .ficha { padding: 14px 18px; border-bottom: 1px solid var(--linea); background: var(--papel); font-family: "Jost", ui-sans-serif, sans-serif; }
+  .ficha .num { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--acento); font-weight: 600; }
+  .ficha h2 { font-family: inherit; font-size: 1.05rem; font-weight: 600; margin: 4px 0 2px; line-height: 1.3; }
+  .ficha p { margin: 0; font-size: .86rem; color: var(--tinta2); line-height: 1.45; }
+  .muestra { padding: 18px; flex: 1; }
+  .m-fecha { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta3); }
+  .m-h1 { font-family: var(--serif); font-weight: 600; font-size: 2.3rem; line-height: 1.05; margin: 4px 0 6px; }
+  .m-sub { color: var(--tinta2); font-size: .98rem; margin: 0 0 14px; }
+  .m-sub b { color: var(--acento); }
+  .m-cifras { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .m-cifras div { border: 1px solid var(--linea); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+  .m-cifras small { display: block; font-size: .76rem; color: var(--tinta3); }
+  .m-cifras b { font-weight: 750; font-size: 1.3rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .m-op { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 12px; border-radius: 12px; background: var(--acento-suave); margin-bottom: 12px; }
+  .m-op .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--acento); color: #fff; display: grid; place-items: center; }
+  .m-op small { display: block; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); font-weight: 700; }
+  .m-op b { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.25rem; line-height: 1.2; }
+  .m-op p { margin: 4px 0 8px; font-size: .88rem; color: var(--tinta2); line-height: 1.45; }
+  .m-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; background: var(--tinta); color: #fff; font-weight: 600; font-size: .9rem; }
+  .m-cli { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-top: 1px dashed var(--linea); padding-top: 10px; font-size: .92rem; }
+  .m-cli span { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; }
+  .m-cli b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .m-abc { margin: 12px 0 0; font-size: .82rem; color: var(--tinta3); }
+  .ver { display: flex; justify-content: center; align-items: center; gap: 8px; min-height: 48px; margin: 0 18px 18px; border-radius: 12px; border: 1px solid var(--tinta); text-decoration: none; font-family: "Jost", ui-sans-serif, sans-serif; font-weight: 600; transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out), transform 140ms var(--ease-out); }
+  .ver:active { transform: scale(0.97); }
+  .ver:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+  @media (hover: hover) and (pointer: fine) { .ver:hover { background: var(--tinta); color: #fff; } }
+  .volver { display: inline-flex; gap: 6px; align-items: center; margin-bottom: 18px; font-size: .9rem; color: var(--tinta2); }
+</style>
+</head>
+<body>
+<main class="envuelve">
+  <a class="volver" href="./">← Volver al sistema completo</a>
+  <header class="cab">
+    <small>Sistema completo · Foto González Studio</small>
+    <h1>Elija la letra del sistema</h1>
+    <p>Cada tarjeta muestra el panel con su tipografía: el saludo, los montos y una venta del día. Toque «Ver el sistema con esta letra» para verlo completo, con todas sus pantallas.</p>
+  </header>
+  <div class="rejilla" id="rejilla"></div>
+</main>
+<script src="letras.js?v=20261111e"></script>
+<script>
+  cargarLetras(LETRAS);
+  const svg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 4-4h4"/><circle cx="9" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+  document.getElementById("rejilla").innerHTML = LETRAS.map((l, i) => {
+    const st = Object.entries(varsLetra(l)).map(([k, v]) => `${k}:${v.replace(/"/g, "'")}`).join(";") + (l.uno ? ";font-synthesis:none" : "");
+    return `<article class="letra" id="${l.id}" style="${st}" aria-labelledby="t-${l.id}">
+      <div class="ficha"><span class="num">Opción ${i + 1} · ${l.v}</span><h2 id="t-${l.id}">${l.n}</h2><p>${l.d}</p></div>
+      <div class="muestra">
+        <div class="m-fecha">Miércoles, 11 de noviembre · Retalhuleu</div>
+        <div class="m-h1">Buenos días.</div>
+        <p class="m-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
+        <div class="m-cifras"><div><small>Ingresos de noviembre</small><b>Q 38,450.00</b></div><div><small>Ticket promedio</small><b>Q 1,602.08</b></div></div>
+        <div class="m-op"><span class="ic">${svg}</span><div><small>Lo próximo que le puede vender</small><b>Sesión de primer año</b>
+          <p>Le hicieron su recién nacido en diciembre y cumple 1 año el 1 de diciembre.</p><span class="m-btn">Mandar la oferta · Q 650.00</span></div></div>
+        <div class="m-cli"><span>Familia del parque</span><b>4 sesiones · Q 2,200.00</b></div>
+        <p class="m-abc">Aa Bb Cc Ññ · 0123456789 · ¿Qué fecha le aparto?</p>
+      </div>
+      <a class="ver" href="./?letra=${l.id}">Ver el sistema con esta letra →</a>
+    </article>`;
+  }).join("");
+  if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
+</script>
+</body>
+</html>
