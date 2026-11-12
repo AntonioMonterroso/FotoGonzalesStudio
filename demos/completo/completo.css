@@ -350,7 +350,7 @@ html.con-hoja .cinta-demo, html.con-hoja .letra-viendo { opacity: 0; pointer-eve
 .fc-hero h3 { font-family: var(--serif); font-weight: 600; font-size: 1.65rem; line-height: 1.15; margin: 12px 0 2px; }
 .fc-hero p { margin: 0 0 8px; font-size: .9rem; }
 .tag { display: inline-block; padding: 3px 11px; border-radius: 999px; background: var(--acento-suave); color: var(--acento); font-size: .76rem; font-weight: 700; }
-.fc-acc { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 16px 0 12px; }
+.fc-acc { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 16px 0 12px; }
 .fc-a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-height: 66px; border: 0; border-radius: 14px; background: var(--carta); color: var(--acento); font: 600 .76rem var(--sans); cursor: pointer; box-shadow: 0 0 0 1px var(--linea) inset; transition: transform 140ms var(--ease-out), background-color 160ms var(--ease-out); }
 .fc-a svg { width: 22px; height: 22px; }
 .fc-a:active { transform: scale(0.95); background: var(--acento-suave); }
@@ -1414,7 +1414,7 @@ html.embed .lupa, html.embed .cinta-demo { display: none; }
 .wa-atras { width: 44px; height: 44px; border: 0; background: none; color: #0A7CFF; display: grid; place-items: center; cursor: pointer; transition: transform 140ms var(--ease-out); }
 .wa-atras:active { transform: scale(0.92); }
 .wa-atras svg { width: 26px; height: 26px; stroke-width: 2.4; }
-.wa-av { flex: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #D1D7DB; color: #54656F; display: grid; place-items: center; font: 700 .9rem var(--sans); }
+.wa-av { flex: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background-color: #D1D7DB; color: #54656F; display: grid; place-items: center; font: 700 .9rem var(--sans); }
 .wa-quien { flex: 1; min-width: 0; }
 .wa-quien b { display: block; font-size: 1.02rem; color: #111B21; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wa-quien small { display: block; font-size: .78rem; color: #667781; }
@@ -1517,3 +1517,15 @@ html.embed .lupa, html.embed .cinta-demo { display: none; }
 }
 .dos-tel { grid-template-columns: minmax(0, 1fr); }
 .dt-tels { min-width: 0; overflow: hidden; }
+
+/* Mensaje de texto (como Mensajes del iPhone) */
+.wa.sms .wa-chat { background: #fff; background-image: none; }
+.wa.sms .wa-b { background: #E9E9EB; box-shadow: none; border-radius: 18px 18px 18px 4px; }
+.wa.sms .wa-b.yo { background: #0A7CFF; color: #fff; border-radius: 18px 18px 4px 18px; }
+.wa.sms .wa-b.yo small, .wa.sms .wa-b.yo .tk { color: rgba(255,255,255,.75); }
+.wa.sms .wa-b .tk.leido { color: #fff; }
+.wa.sms .wa-dia::before { content: "Mensaje de texto · "; }
+.wa.sms .wa-dia { background: none; box-shadow: none; color: #8A8A8E; }
+.wa.sms .wa-ics .wa-mic, .wa.sms .wa-pie .wa-mic { color: #0A7CFF; }
+.fc-a { font-size: .7rem; min-height: 64px; padding: 0 2px; }
+.fc-a svg { width: 21px; height: 21px; }

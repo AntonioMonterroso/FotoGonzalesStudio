@@ -661,7 +661,7 @@ function visibles() {
   return CLI.filter(c => f(c) && (!q || normal([c.n, c.desde, c.tag, c.nota, ...c.hist.map(h => h[1])].join(" ")).includes(q)))
     .sort((a, b) => a.n.localeCompare(b.n, "es"));
 }
-const fichaEnHoja = () => $("#principal").clientWidth < 820;
+const fichaEnHoja = () => { const p = $("#principal"), cs = getComputedStyle(p); return p.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) < 820; };
 function pintarClientes() {
   $("#cli-filtros").innerHTML = FILTROS.map(([id, t, f]) => `<button type="button" aria-pressed="${CL.filtro === id}" data-f="${id}">${t}<span>${CLI.filter(f).length}</span></button>`).join("");
   const vs = visibles(), grupos = {};
@@ -685,7 +685,7 @@ function elegirCliente(id) {
   $$("#lista-cli .cli-row").forEach(b => b.setAttribute("aria-current", b.dataset.cli === id && !fichaEnHoja()));
   $("#fc-av").className = "foto fc-av " + c.hist[0][3];
   $("#fc-n").textContent = c.n; $("#fc-sub").textContent = c.desde; $("#fc-tag").textContent = c.tag;
-  $("#fc-acc").innerHTML = [["llamar", "phone", "Llamar"], ["wa", "wa", "WhatsApp"], ["porta", "images", "Portafolio"], ["ofrecer", "gift", "Ofrecer"]]
+  $("#fc-acc").innerHTML = [["sms", "chat", "Mensaje"], ["llamar", "phone", "Llamar"], ["wa", "wa", "WhatsApp"], ["porta", "images", "Portafolio"], ["ofrecer", "gift", "Ofrecer"]]
     .map(([k, ic, t]) => `<button type="button" class="fc-a" data-fa="${k}">${ico(ic, 22)}<span>${t}</span></button>`).join("");
   $("#fc-cifras").innerHTML = `<div><small>Ha gastado</small><b>${Q(tot)}</b></div><div><small>Sesiones</small><b>${n}</b></div><div><small>Última vez</small><b>${textoMeses(mesesDesde(c.hist[0][0]))}</b></div>`;
   pintarProx(c);
@@ -758,7 +758,8 @@ function iniciarClientes() {
     }
     const a = e.target.closest("[data-fa]"); if (!a) return;
     if (!calma) a.animate([{ transform: "scale(0.94)" }, { transform: "scale(1)" }], { duration: 220, easing: EASE });
-    if (a.dataset.fa === "llamar") llamar(c.n, c.hist[0][3]);
+    if (a.dataset.fa === "sms") simularWA({ sms: true, para: c.n, f: c.hist[0][3], texto: "Hola, le saluda Foto González Studio. Le escribimos para saludarle y saber cómo están. Aquí estamos para lo que necesiten.", respuesta: "¡Hola! Muy bien, gracias por acordarse de nosotros." });
+    else if (a.dataset.fa === "llamar") llamar(c.n, c.hist[0][3]);
     else if (a.dataset.fa === "wa") simularWA({ texto: `Hola, le saluda Foto González Studio. ¿Cómo están? Queríamos saber cómo les fue con sus fotos.`, respuesta: "¡Muy bien! Ya las tenemos en la sala.", nota: "" });
     else if (a.dataset.fa === "porta") simularWA({ texto: `Hola. Le comparto nuestro portafolio de ${c.prox.album.toLowerCase()} para que vea ideas: ${urlPorta([c.prox.album])}`, respuesta: "¡Qué bonitas! Me gustan las de luz natural.", nota: "" });
     else if (a.dataset.fa === "ofrecer") { const b = $("#fp-wa"); if (b) { b.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "center" }); ofrecer(c, b); } }
@@ -2322,8 +2323,9 @@ function iniciarEnlace() {
 
 /* ---------- WhatsApp como en el iPhone ---------- */
 let WA_T = [];
-simularWA = function ({ texto, respuesta = "", para = "Cliente", f = "" } = {}) {
+simularWA = function ({ texto, respuesta = "", para = "Cliente", f = "", sms = false } = {}) {
   const w = $("#wa"); WA_T.forEach(clearTimeout); WA_T = [];
+  w.classList.toggle("sms", sms); $("#wa-dia-t") && ($("#wa-dia-t").textContent = "");
   $("#wa-n").textContent = para; $("#wa-est").textContent = "en línea";
   const av = $("#wa-av");
   av.className = "wa-av" + (f ? " foto " + f : "");
