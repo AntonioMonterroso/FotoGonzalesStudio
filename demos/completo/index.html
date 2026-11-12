@@ -16,18 +16,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="../comun.css?v=20261112a">
-<link rel="stylesheet" href="completo.css?v=20261112a">
-<script src="letras.js?v=20261112a" data-letra-sistema></script>
+<link rel="stylesheet" href="../comun.css?v=20261112c">
+<link rel="stylesheet" href="completo.css?v=20261112c">
+<script src="letras.js?v=20261112c" data-letra-sistema></script>
 </head>
 <body>
 <div class="barra-sup" id="barra-sup" aria-hidden="true"><b id="barra-sup-t">Hoy</b></div>
+<button class="lupa" id="lupa" type="button" data-buscar aria-label="Buscar en todo el sistema"><span data-i="search"></span></button>
 
 <div class="app">
 
   <!-- Menú: barra lateral en computadora, barra de abajo en el iPhone -->
   <aside class="lado" aria-label="Menú del panel">
     <a class="marca-est" href="#principal"><span class="logo"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><span><b>Foto González</b><small>Studio</small></span></a>
+    <button class="lupa-lado" type="button" data-buscar><span data-i="search"></span><span>Buscar</span><kbd>⌘K</kbd></button>
     <nav class="vistas" role="tablist" aria-label="Secciones del panel" aria-orientation="vertical">
       <button role="tab" id="t-hoy" aria-controls="v-hoy" aria-selected="true" data-v="hoy"><span class="ti"><span data-i="home"></span><span class="cuenta" id="cuenta-op">7</span></span><span class="et">Hoy</span></button>
       <button role="tab" id="t-agenda" aria-controls="v-agenda" aria-selected="false" tabindex="-1" data-v="agenda"><span class="ti"><span data-i="camara"></span></span><span class="et">Sesiones</span></button>
@@ -43,7 +45,7 @@
       <button role="tab" id="t-respaldo" aria-controls="v-respaldo" aria-selected="false" tabindex="-1" data-v="respaldo" class="en-mas"><span class="ti"><span data-i="sd"></span><span class="cuenta" id="cuenta-resp">2</span></span><span class="et">Respaldo</span></button>
     </nav>
     <div class="lado-pie">
-      <div class="equipo"><span style="background:#8E2234" title="Dueño">D</span><span style="background:#2F7D4F" title="Editor">E</span><span style="background:#7A5C8E" title="Recepción">R</span></div>
+      <div class="equipo-lado" id="equipo-lado"></div>
       <p class="lema">«El tiempo pasa, los momentos permanecen.»</p>
     </div>
   </aside>
@@ -56,6 +58,8 @@
         <p class="fecha" id="fecha"></p>
         <h1 id="saludo">Buenos días.</h1>
       </header>
+      <div class="equipo-vivo" id="equipo-vivo" aria-live="polite"></div>
+      <section class="pendientes" id="pendientes" aria-labelledby="h-pend"></section>
       <div class="cifras" data-palanca="vivo">
         <div class="cifra grande"><small id="k-mes-lbl">Ganado este mes</small><b id="k-ing"></b></div>
         <button type="button" class="cifra ir" data-ir="cobrar"><small>Por cobrar</small><b id="k-cobrar"></b><span class="cifra-ir" data-i="chev"></span></button>
@@ -72,8 +76,16 @@
           </section>
         </div>
         <div class="hoy-col">
-          <section class="bloque aviso-resp aviso-res" id="hoy-res" aria-label="Reservas nuevas" hidden></section>
-          <section class="bloque aviso-resp" id="hoy-resp" aria-label="Respaldo de tarjetas"></section>
+          
+          
+          <section class="bloque" id="tareas-b" aria-labelledby="h-tar">
+            <div class="bloque-cab"><h2 id="h-tar">Tareas del equipo</h2><span class="tenue chico" id="tar-n"></span></div>
+            <ul class="tareas" id="tareas"></ul>
+            <form class="tar-nueva" id="tar-form" autocomplete="off">
+              <label for="tar-in">Nueva tarea</label>
+              <div><input id="tar-in" type="text" maxlength="80" placeholder="Ej.: Llevar el set navideño al estudio" enterkeyhint="done"><button class="bt bt-2 bt-chico" type="submit"><span class="bt-in"><span data-i="plus"></span><span>Agregar</span></span></button></div>
+            </form>
+          </section>
           <section class="bloque" aria-labelledby="h-act">
             <div class="bloque-cab"><h2 id="h-act">Lo último</h2><span class="punto-vivo" aria-hidden="true"></span></div>
             <ul class="feed" id="feed" aria-live="polite"></ul>
@@ -171,10 +183,16 @@
         <div class="bloque-cab"><h2 id="h-cob">Pendientes</h2><span class="tenue chico" id="cob-n"></span></div>
         <ul class="cobrar" id="cobrar"></ul>
       </section>
-      <section class="bloque" aria-labelledby="h-cobrado">
-        <div class="bloque-cab"><h2 id="h-cobrado">Cobrado hoy</h2></div>
-        <ul class="cobrado" id="cobrado"><li class="vacio">Todavía nada hoy.</li></ul>
+      <section class="bloque" data-palanca="recibos" aria-labelledby="h-recibos">
+        <div class="bloque-cab"><h2 id="h-recibos">Recibos</h2><span class="tenue chico" id="rec-n"></span></div>
+        <div class="buscar rec-buscar">
+          <label for="rec-q">Buscar recibo</label>
+          <div class="buscar-in"><span data-i="search"></span><input id="rec-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Número, cliente o concepto"></div>
+        </div>
+        <div class="seg rec-seg" id="rec-seg" role="tablist" aria-label="Qué recibos ver" style="--n:3;--i:0"><span class="pastilla" aria-hidden="true"></span><button type="button" role="tab" data-rf="hoy" aria-selected="true">Hoy</button><button type="button" role="tab" data-rf="mes" aria-selected="false">Este mes</button><button type="button" role="tab" data-rf="todos" aria-selected="false">Todos</button></div>
+        <ul class="recibos" id="recibos"></ul>
       </section>
+      
     </section>
 
     <!-- FOTOS (galerías) -->
@@ -187,61 +205,39 @@
         <span><small>Extra vendido</small><b id="gl-extra">Q 0.00</b></span>
         <span><small>Por cobrar</small><b id="gl-saldo">Q 1,200.00</b></span>
       </div>
-      <button class="bt bt-2 bt-full ver-cel" id="ver-cliente" type="button" aria-controls="cliente" aria-expanded="false"><span class="bt-in"><span data-i="eye"></span><span>Ver el celular de la familia</span></span></button>
+      <div class="gal-bts">
+      <button class="bt bt-1" id="subir-fotos" type="button"><span class="bt-in"><span data-i="subir"></span><span>Subir fotos a una galería</span></span></button>
+      <button class="bt bt-2 ver-cel" id="ver-cliente" type="button" aria-controls="cliente" aria-expanded="false"><span class="bt-in"><span data-i="eye"></span><span>Ver el celular de la familia</span></span></button>
+      </div>
       <ul class="galerias" id="galerias"></ul>
     </section>
 
     <!-- MÁS (solo en el iPhone) -->
     <section class="vista" id="v-mas" role="tabpanel" aria-labelledby="t-mas" data-titulo="Más" hidden>
       <header class="titulo-v"><h1>Más</h1></header>
-      <h2 class="grupo-t">Vender</h2>
-      <ul class="lista-ios" id="lista-mas">
-        <li><button type="button" data-ir="ofertas"><span class="li-ic" style="background:#8E2234"><span data-i="send"></span></span><span class="li-t">Ofertas por WhatsApp<small>A un grupo de clientes</small></span><span data-i="chev"></span></button></li>
-        <li><button type="button" data-ir="compartir"><span class="li-ic" style="background:#1F3A5F"><span data-i="contacto"></span></span><span class="li-t">Contacto y portafolio<small>Compartir con un toque</small></span><span data-i="chev"></span></button></li>
-        <li><button type="button" data-ir="pagina"><span class="li-ic" style="background:#A24A24"><span data-i="layout"></span></span><span class="li-t">Su página<small id="mas-web">Lo que ven en internet</small></span><span data-i="chev"></span></button></li>
-      </ul>
-      <h2 class="grupo-t">Entregar</h2>
-      <ul class="lista-ios">
-        <li><button type="button" data-ir="fotos"><span class="li-ic" style="background:#6B3F7A"><span data-i="images"></span></span><span class="li-t">Galerías<small>Fotos de cada familia</small></span><span data-i="chev"></span></button></li>
-        <li><button type="button" data-ir="respaldo"><span class="li-ic" style="background:#4A6530"><span data-i="sd"></span></span><span class="li-t">Tarjetas y respaldo<small id="mas-resp">2 sin copia completa</small></span><span data-i="chev"></span></button></li>
-      </ul>
+      <div class="mosaico" id="mosaico"></div>
     </section>
 
     <!-- OFERTAS -->
     <section class="vista" id="v-ofertas" role="tabpanel" aria-labelledby="t-ofertas" data-titulo="Ofertas" hidden>
       <button class="atras-mas" type="button" data-ir="mas"><span data-i="back"></span>Más</button>
       <header class="titulo-v"><h1>Ofertas</h1></header>
-      <section class="bloque campana" data-palanca="campanas" aria-label="Mandar una oferta">
-        <div class="cam-grid">
-          <div class="cam-form">
-            <fieldset><legend>1. ¿A quién?</legend><div class="opciones-cam" id="cam-seg"></div></fieldset>
-            <fieldset><legend>2. ¿Qué les ofrece?</legend><div class="opciones-cam" id="cam-ofr"></div></fieldset>
+      <div class="ofe" id="ofe" data-palanca="campanas">
+        <section class="bloque" id="ofe-ofr" aria-label="Qué les ofrece"></section>
+        <section class="bloque" id="ofe-seg" aria-label="A quién"></section>
+        <section class="bloque" id="ofe-prev" aria-label="Así les llega"></section>
+        <section class="bloque ofe-env" aria-label="Mandar">
+          <button class="bt bt-1 bt-full" id="cam-enviar" type="button"><span class="bt-in"><span data-i="wa"></span><span id="cam-enviar-txt">Mandar</span></span></button>
+          <div class="cam-res" id="cam-res" hidden>
+            <div class="res-fila"><span>Lo recibieron</span><div class="pista"><i id="r-env"></i></div><b id="n-env">0</b></div>
+            <div class="res-fila"><span>Lo leyeron</span><div class="pista"><i id="r-lei"></i></div><b id="n-lei">0</b></div>
+            <div class="res-fila"><span>Contestaron</span><div class="pista"><i id="r-res"></i></div><b id="n-res">0</b></div>
+            <div class="res-fila"><span>Apartaron</span><div class="pista"><i id="r-apa"></i></div><b id="n-apa">0</b></div>
+            <div class="res-total"><span>Ganado</span><b id="n-q">Q 0.00</b></div>
           </div>
-          <div class="cam-lado">
-            <p class="cam-et">Así les llega</p>
-            <p class="cam-msj" id="cam-msj"></p>
-            <button class="bt bt-1 bt-full" id="cam-enviar" type="button"><span class="bt-in"><span data-i="send"></span><span id="cam-enviar-txt">Mandar</span></span></button>
-            <div class="cam-res" id="cam-res" hidden>
-              <div class="res-fila"><span>Lo recibieron</span><div class="pista"><i id="r-env"></i></div><b id="n-env">0</b></div>
-              <div class="res-fila"><span>Lo leyeron</span><div class="pista"><i id="r-lei"></i></div><b id="n-lei">0</b></div>
-              <div class="res-fila"><span>Contestaron</span><div class="pista"><i id="r-res"></i></div><b id="n-res">0</b></div>
-              <div class="res-fila"><span>Apartaron</span><div class="pista"><i id="r-apa"></i></div><b id="n-apa">0</b></div>
-              <div class="res-total"><span>Ganado</span><b id="n-q">Q 0.00</b></div>
-            </div>
-          </div>
-        </div>
-        <div class="cam-pasada">
-          <h3>Ofertas que ya mandó</h3>
-          <div class="pasada">
-            <span class="foto f-camisola" aria-hidden="true"></span>
-            <div>
-              <b>Sesión Mundial 2026</b>
-              <small class="tenue">Junio 2026 · familias con niños</small>
-              <div class="nums"><span><strong>112</strong> la recibieron</span><span><strong>27</strong> apartaron</span><span><strong>Q 11,630.00</strong> ganado</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+        <section class="bloque cam-pasada" id="ofe-hist" aria-label="Ofertas que ya mandó"></section>
+      </div>
     </section>
 
     <!-- MI CONTACTO Y PORTAFOLIO -->
@@ -307,15 +303,38 @@
       <div class="pantalla">
         <div class="isla"></div>
         <div class="toast-cel" id="toast-cel" role="status" aria-live="polite"><span class="ic" data-i="check"></span><span id="toast-cel-txt"></span></div>
-        <div class="cel-cab"><span class="logo-cel"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><div><b>Foto González</b><small>Su galería privada</small></div></div>
-        <div class="cel-scroll" id="cel-scroll">
-          <div class="cel-galeria" data-palanca="galeria">
-            <h2 class="cel-t">Su sesión familiar</h2>
-            <p class="nota">Toquen el corazón en sus favoritas. Su paquete trae <b>10</b>.</p>
-            <div class="contador"><span>Elegidas <b id="c-cuenta">0</b> de 10</span><span class="mono" id="c-extra"></span></div>
+        <div class="cel-cab"><span class="logo-cel"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><div><b>Foto González</b><small id="cel-sub">Su portal privado</small></div></div>
+        <div class="pt-zona">
+        <div class="pt-pant pt-pin" id="pt-pin">
+          <span class="pin-logo"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span>
+          <small class="pin-de">Foto González Studio</small>
+          <h2 class="cel-t">Familia del parque</h2>
+          <p class="pin-pide">Escriba su PIN para entrar</p>
+          <div class="pin-puntos" id="pin-puntos" aria-live="polite"></div>
+          <p class="pin-msj" id="pin-msj"></p>
+          <div class="pin-teclas" id="pin-teclas"></div>
+          <button type="button" class="pin-muestra" id="pin-muestra">Usar el PIN de muestra</button>
+        </div>
+        <div class="pt-pant pt-ini" id="pt-ini"></div>
+        <div class="pt-pant pt-ses" id="pt-ses"></div>
+        <div class="cel-scroll pt-pant" id="cel-scroll">
+          <div class="fam-portada"><span class="foto f-familia" aria-hidden="true"></span><button type="button" class="pt-atras" data-pt="ini" aria-label="Volver a mis sesiones"><span data-i="back"></span></button>
+            <div class="fpo-txt"><small>Foto González Studio</small><h2 class="cel-t">Su sesión familiar</h2><p>Parque central · 24 fotos</p></div></div>
+          <div class="seg fam-seg" id="fam-seg" role="tablist" aria-label="Ver" style="--n:3;--i:0"><span class="pastilla" aria-hidden="true"></span>
+            <button type="button" role="tab" data-fv="fotos" aria-selected="true">Fotos</button><button type="button" role="tab" data-fv="fav" aria-selected="false">Favoritas <em id="fav-n"></em></button><button type="button" role="tab" data-fv="pagos" aria-selected="false">Mis pagos</button></div>
+          <div class="cel-galeria" id="cel-galeria" data-palanca="galeria">
+            <div class="contador"><span>Elegidas <b id="c-cuenta">0</b> de 10</span><span id="c-extra"></span></div>
             <div class="barrita"><i id="c-barra"></i></div>
             <div class="galeria" id="galeria"></div>
           </div>
+          <div class="fam-pagos" id="fam-pagos" hidden></div>
+        </div>
+        </div>
+        <div class="visor" id="visor" role="dialog" aria-label="Foto en grande" inert>
+          <div class="vs-cab"><button type="button" class="vs-x" id="vs-x" aria-label="Cerrar"><span data-i="x"></span></button><span id="vs-n">1 de 24</span><button type="button" class="vs-amo" id="vs-amo" aria-pressed="false" aria-label="Elegir esta foto"><span data-i="heart"></span></button></div>
+          <div class="vs-foto" id="vs-foto"><span class="foto vs-capa" id="vs-a"></span><span class="vs-wm" id="vs-wm" aria-hidden="true">FOTO GONZÁLEZ</span>
+            <button type="button" class="vs-flecha izq" id="vs-izq" aria-label="Foto anterior"><span data-i="back"></span></button><button type="button" class="vs-flecha der" id="vs-der" aria-label="Foto siguiente"><span data-i="chev"></span></button></div>
+          <div class="vs-bts"><button type="button" class="btn btn-chico vs-imp" id="vs-imp"><span data-i="frame"></span>Pedirla impresa</button><button type="button" class="btn btn-chico btn-acento vs-desc" id="vs-desc"><span data-i="download"></span><span id="vs-desc-t">Descargar</span></button></div>
         </div>
         <div class="oferta" id="oferta" inert>
           <p class="of-t" id="of-t"></p>
@@ -358,12 +377,50 @@
   <div class="pf-tira" id="pf-tira"></div>
 </div>
 <div class="deshacer" id="deshacer" role="status" aria-live="polite"><span id="deshacer-t">Foto borrada</span><button type="button" id="deshacer-b">Deshacer</button></div>
+<div class="hoja" id="hoja-pago" role="dialog" aria-modal="true" aria-labelledby="pago-t" inert>
+  <div class="hoja-panel"><div class="hoja-top"><span class="agarre" aria-hidden="true"></span><b class="hoja-t" id="pago-t">Registrar pago</b><button class="hoja-listo" type="button">Cerrar</button></div><div class="hoja-cuerpo" id="pago-cuerpo"></div></div>
+</div>
+<div class="hoja hoja-recibo" id="hoja-recibo" role="dialog" aria-modal="true" aria-labelledby="recibo-t" inert>
+  <div class="hoja-panel"><div class="hoja-top"><span class="agarre" aria-hidden="true"></span><b class="hoja-t" id="recibo-t">Recibo</b><button class="hoja-listo" type="button">Listo</button></div><div class="hoja-cuerpo" id="recibo-cuerpo"></div></div>
+</div>
+<div class="hoja hoja-sub" id="hoja-sub" role="dialog" aria-modal="true" aria-labelledby="sub-t" inert>
+  <div class="hoja-panel"><div class="hoja-top"><span class="agarre" aria-hidden="true"></span><b class="hoja-t" id="sub-t">Subir fotos</b><button class="hoja-listo" type="button">Cerrar</button></div><div class="hoja-cuerpo" id="sub-cuerpo"></div></div>
+</div>
+<div class="hoja" id="hoja-enlace" role="dialog" aria-modal="true" aria-labelledby="enl-t" inert>
+  <div class="hoja-panel"><div class="hoja-top"><span class="agarre" aria-hidden="true"></span><b class="hoja-t" id="enl-t">Enlace de la familia</b><button class="hoja-listo" type="button">Listo</button></div><div class="hoja-cuerpo" id="enl-cuerpo"></div></div>
+</div>
+<div class="hoja" id="hoja-ofr" role="dialog" aria-modal="true" aria-labelledby="ofr-t" inert>
+  <div class="hoja-panel"><div class="hoja-top"><span class="agarre" aria-hidden="true"></span><b class="hoja-t" id="ofr-t">Nueva oferta</b><button class="hoja-listo" type="button">Cerrar</button></div><div class="hoja-cuerpo" id="ofr-cuerpo"></div></div>
+</div>
+<div class="busca" id="busca" role="dialog" aria-modal="true" aria-label="Buscar en todo el sistema" hidden>
+  <div class="bu-panel">
+    <div class="bu-cab"><label class="bu-campo" for="bu-q"><span class="sr">Buscar en todo el sistema</span><span data-i="search"></span><input id="bu-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Clientes, sesiones, recibos, galerías…"></label><button type="button" class="bu-cancel" id="bu-cancel">Cancelar</button></div>
+    <div class="bu-cuerpo" id="bu-cuerpo"></div>
+  </div>
+</div>
+<div class="dos-tel" id="dos-tel" role="dialog" aria-modal="true" aria-labelledby="dt-t" hidden>
+  <div class="dt-cab"><div><b id="dt-t">Dos teléfonos, el mismo estudio</b><small>Toque algo en uno y véalo llegar al otro al instante.</small></div><button type="button" class="pf-salir" id="dt-x">Listo</button></div>
+  <div class="dt-tels" id="dt-tels"></div>
+</div>
+<div id="imprimir" aria-hidden="true"></div>
+<div class="wa" id="wa" role="dialog" aria-modal="true" aria-labelledby="wa-n" hidden>
+  <div class="wa-panel">
+    <div class="wa-top"><span class="agarre" aria-hidden="true"></span>
+      <button type="button" class="wa-atras" id="wa-atras" aria-label="Volver"><span data-i="back"></span></button>
+      <span class="wa-av" id="wa-av" aria-hidden="true"></span>
+      <div class="wa-quien"><b id="wa-n">Cliente</b><small id="wa-est">en línea</small></div>
+      <span class="wa-ics" aria-hidden="true"><span data-i="camara"></span><span data-i="phone"></span></span>
+    </div>
+    <div class="wa-chat" id="wa-chat" aria-live="polite"></div>
+    <div class="wa-pie" aria-hidden="true"><span class="wa-mas"><span data-i="plus"></span></span><span class="wa-campo">Mensaje</span><span class="wa-mic"><span data-i="camara"></span></span></div>
+  </div>
+</div>
 <div class="llamada" id="llamada" role="dialog" aria-modal="true" aria-label="Llamada" hidden>
   <span class="foto ll-av" id="ll-av"></span><b id="ll-n"></b><small id="ll-t">llamando…</small>
   <button class="ll-colgar" id="ll-colgar" type="button" aria-label="Colgar"><span data-i="phone"></span></button>
 </div>
 
-<script src="../comun.js?v=20261112a"></script>
-<script src="completo.js?v=20261112a"></script>
+<script src="../comun.js?v=20261112c"></script>
+<script src="completo.js?v=20261112c"></script>
 </body>
 </html>

@@ -60,7 +60,7 @@ const PRECIOS = {
     n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 5800, mes: 690, plazo: "5 a 7 semanas", rec: true,
     para: "Para manejar todo el estudio, de la reserva a la entrega.",
     vista: "sis",
-    x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
+    x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
     desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 390]]
   }
 };
@@ -87,8 +87,9 @@ const DEMOS = {
     ["heart", "Galería que vende fotos extra", "El paquete trae 10 y la familia quiere 14. La oferta de las extras sale sola, sin que nadie la ofrezca por chat."],
     ["lock", "Marca de agua hasta pagar", "El saldo se cobra sin perseguir: al pagar, las fotos se liberan solas."],
     ["send", "Campañas a quien sí le interesa", "Mini sesiones navideñas solo a las familias con bebé fotografiado este año. Las respuestas se ven en vivo."],
-    ["users", "Referidos y reseñas", "Cada cliente trae su código para recomendar, y la reseña se pide justo al entregar, cuando está más contento."]
-  ] }
+    ["users", "Referidos y reseñas", "Cada cliente trae su código para recomendar, y la reseña se pide justo al entregar, cuando está más contento."],
+    ["lock", "Portal de cada familia", "Entra con su enlace y su PIN y ve todas sus sesiones con el estudio: elige fotos, paga el anticipo y guarda sus recibos."]
+  ], extra: ["?portal=1", "users", "Abrir el portal de la familia"] }
 };
 /* Calculadora: supuestos editables (no son promesas) */
 const CALC = [
@@ -320,6 +321,7 @@ function pintarVitrinas() {
         <div class="vit-acciones">
           <a class="btn btn-tinta" href="${d.url}">${ico("play", 16)} Abrir la demo</a>
           <a class="btn" href="${d.url}#vende">${ico("trend", 16)} Abrirla con lo que vende marcado</a>
+          ${d.extra ? `<a class="btn" href="${d.url}${d.extra[0]}">${ico(d.extra[1], 16)} ${d.extra[2]}</a>` : ""}
         </div>
       </div>
     </article>`;

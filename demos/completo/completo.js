@@ -31,6 +31,16 @@ Object.assign(ICO, {
   paleta: '<circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/>',
   play: '<path d="M6 3l14 9-14 9z"/>',
   pausa: '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>',
+  tarjeta: '<rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/>',
+  banco: '<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="m12 2 8 5H4z"/>',
+  printer: '<path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/>',
+  recibo: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>',
+  subir: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/>',
+  celu: '<rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/>',
+  tableta: '<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M12 18h.01"/>',
+  compu: '<path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>',
+  link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  copiar: '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
   huella: '<circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.05Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/>'
 });
 
@@ -84,7 +94,7 @@ const VISTA_DE = { vivo: "hoy", maleta: "hoy", ventas: "hoy", fechas: "hoy", cot
 /* ---------- Estado general ---------- */
 const S = { ingresos: 38450, extra: 3115, cobradoHoy: 0 };
 const modoHoja = () => matchMedia("(max-width: 1279px)").matches;
-const enCel = () => matchMedia("(max-width: 860px)").matches;
+const enCel = () => matchMedia("(max-width: 743px)").matches;
 const MES = new Date().toLocaleDateString("es-GT", { month: "long" });
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const DIAS_C = ["L", "M", "M", "J", "V", "S", "D"];
@@ -97,6 +107,7 @@ function pintarCifras() {
   const debeT = COBRAR.filter(c => !c.pagado && !c.cancelada).reduce((t, c) => t + c.m, 0);
   odometro($("#k-cobrar"), debeT); odometro($("#cob-pend-q"), debeT);
   odometro($("#k-extra"), S.extra);
+  odometro($("#cobrado-q"), S.cobradoHoy);
 }
 function flotar(sel, monto) {
   if (calma) return;
@@ -111,8 +122,8 @@ function venta(m, { extra = false } = {}) {
 }
 
 /* ---------- Lo último ---------- */
-function alFeed(ic, html, clave = "") {
-  const feed = $("#feed"), prev = feed.firstElementChild;
+function feedLocal(ic, html, clave = "", rol = "") {
+  const feed = $("#feed"), prev = feed.firstElementChild, quien = rol ? feedLocalDe(rol) : "";
   if (clave && prev && prev.dataset.clave === clave) {
     $(".txt", prev).innerHTML = html; $("time", prev).textContent = hora();
     prev.classList.add("nuevo"); clearTimeout(prev._t); prev._t = setTimeout(() => prev.classList.remove("nuevo"), 1600);
@@ -120,7 +131,7 @@ function alFeed(ic, html, clave = "") {
   }
   const li = document.createElement("li");
   li.className = "nuevo"; if (clave) li.dataset.clave = clave;
-  li.innerHTML = `<span class="ico">${ico(ic, 15)}</span><span class="txt">${html}</span><time>${hora()}</time>`;
+  li.innerHTML = `<span class="ico">${ico(ic, 15)}</span><span class="txt">${html}</span><span class="f-pie">${quien}<time>${hora()}</time></span>`;
   feed.prepend(li);
   li._t = setTimeout(() => li.classList.remove("nuevo"), 1800);
   while (feed.children.length > 6) feed.lastElementChild.remove();
@@ -186,7 +197,7 @@ function pintarPendientes() {
   const pend = OPORT.filter(o => !o.estado);
   const c = $("#cuenta-op"); c.textContent = pend.length; c.classList.toggle("cero", !pend.length);
   const total = pend.reduce((t, o) => t + o.monto, 0);
-  $("#op-total").textContent = pend.length ? `${pend.length} · ${Q(total)}` : "Todo enviado";
+  $("#op-total").textContent = pend.length ? `${pend.length} · ${Q(total)}` : "Todo enviado"; pendHoy();
   $$("#motivos [data-mot]").forEach(b => { const n = pend.filter(o => o.mot === b.dataset.mot).length; const em = $("em", b); em.textContent = n || ""; em.classList.toggle("cero", !n); });
   const vac = $("#op-vacio"), pendAqui = OPORT.some(o => o.mot === MOT && o.estado !== "lograda");
   vac.hidden = pendAqui;
@@ -206,7 +217,7 @@ async function mandarOport(id, b) {
   const o = OPORT.find(x => x.id === id);
   if (o.estado || !(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Enviado" }))) return;
   o.estado = "enviada"; pintarPendientes();
-  simularWA({ texto: o.wa, respuesta: o.resp, nota: "" });
+  simularWA({ para: o.q, texto: o.wa, respuesta: o.resp, nota: "" });
   alFeed("send", `Mensaje enviado a <b>${o.q}</b>`);
   setTimeout(() => pieCambia(o), 900);
   setTimeout(() => lograr(o), 4200 + Math.random() * 2400);
@@ -222,9 +233,9 @@ function lograr(o) {
 
 /* ---------- Por cobrar ---------- */
 const COBRAR = [
-  { id: "c-qmarzo", n: "Quinceañera de marzo", t: "XV con video", que: "Anticipo", m: 600, f: "f-quince" },
+  { id: "c-qmarzo", n: "Quinceañera de marzo", t: "XV con video", que: "Anticipo", m: 600, total: 2900, f: "f-quince" },
   { id: "c-castillo", n: "Novios de octubre", t: "Boda", que: "Saldo", m: 1200, f: "f-anillo" },
-  { id: "c-primer", n: "Familia del primer año", t: "Primer año", que: "Anticipo", m: 325, f: "f-primer" },
+  { id: "c-primer", n: "Familia del primer año", t: "Primer año", que: "Anticipo", m: 325, total: 650, f: "f-primer" },
   { id: "c-grad", n: "Colegio La Asunción", t: "Graduación", que: "Saldo", m: 2400, f: "f-graduacion" }
 ];
 const filaCobro = c => `<li class="cob" data-id="${c.id}">
@@ -233,7 +244,7 @@ const filaCobro = c => `<li class="cob" data-id="${c.id}">
   <div class="cob-bts">${c.recordado ? `<span class="cob-esp"><i></i>Recordado · esperando el pago</span>` : btn("Recordar", "send", "bt-0 bt-chico", 'data-cob="rec"')}${btn("Ya pagó", "check", "bt-2 bt-chico", 'data-cob="pago"')}</div></li>`;
 function pintarCobrar() {
   const pend = COBRAR.filter(c => !c.pagado && !c.cancelada);
-  const cc = $("#cuenta-cob"); cc.textContent = pend.length; cc.classList.toggle("cero", !pend.length);
+  const cc = $("#cuenta-cob"); cc.textContent = pend.length; cc.classList.toggle("cero", !pend.length); pendHoy();
   $("#cobrar").innerHTML = pend.length ? pend.map(filaCobro).join("") : `<li class="cob-vacio">${ico("check", 18)}Nadie le debe nada</li>`;
   $("#cob-n").textContent = pend.length ? `${pend.length} · ${Q(pend.reduce((s, c) => s + c.m, 0))}` : "";
 }
@@ -243,32 +254,28 @@ function iniciarCobrar() {
     const b = e.target.closest("[data-cob]"); if (!b) return;
     const c = COBRAR.find(x => x.id === b.closest(".cob").dataset.id);
     if (b.dataset.cob === "rec") recordarPago(c, b);
-    else { if (await accion(b, { espera: "Guardando…", listo: "Pagado", ms: 420 })) setTimeout(() => pagar(c.id), 380); }
+    else abrirPago(c.id);
   });
 }
 async function recordarPago(c, b) {
   if (!(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Recordado" }))) return;
   c.recordado = true;
-  simularWA({ texto: `Hola. Le escribe Foto González Studio. Le recordamos ${c.que === "Anticipo" ? "el anticipo para dejar segura su fecha" : "el saldo de su sesión"} (${c.t.toLowerCase()}): ${Q(c.m)}. Puede pagarlo aquí: fotogonzalezstudio.com/pagar`, nota: "" });
+  simularWA({ para: c.n, f: c.f, texto: `Hola. Le escribe Foto González Studio. Le recordamos ${c.que === "Anticipo" ? "el anticipo para dejar segura su fecha" : "el saldo de su sesión"} (${c.t.toLowerCase()}): ${Q(c.m)}. Puede pagarlo aquí: fotogonzalezstudio.com/pagar`, nota: "" });
   alFeed("send", `Recordatorio de pago a <b>${c.n}</b>`);
   setTimeout(() => { const li = $(`.cob[data-id="${c.id}"]`); if (li && !c.pagado) { const v = document.createElement("div"); v.innerHTML = filaCobro(c); li.querySelector(".cob-bts").replaceWith(v.firstElementChild.querySelector(".cob-bts")); } }, 900);
   setTimeout(() => pagar(c.id, { auto: true }), 5200 + Math.random() * 1800);
 }
-function pagar(id, { auto = false, silencio = false } = {}) {
-  const c = COBRAR.find(x => x.id === id); if (!c || c.pagado) return;
+function pagar(id, { auto = false, silencio = false, forma = "Transferencia", boleta = "" } = {}) {
+  const c = COBRAR.find(x => x.id === id); if (!c || c.pagado) return null;
   c.pagado = true;
   S.cobradoHoy += c.m; venta(c.m);
-  odometro($("#cobrado-q"), S.cobradoHoy);
+  const rec = nuevoRecibo({ n: c.n, concepto: `${c.que} · ${c.t}`, m: c.m, forma, boleta, saldo: c.total ? Math.max(0, c.total - c.m) : 0, f: c.f });
   const li = $(`.cob[data-id="${id}"]`);
   const fin = () => { pintarCobrar(); pintarCifras(); };
   if (li && !calma) {
     li.style.height = li.offsetHeight + "px";
     li.animate([{ opacity: 1, transform: "none", height: li.offsetHeight + "px" }, { opacity: 0, transform: "translateX(24px)", height: "0px", marginBottom: "-10px" }], { duration: 380, easing: EASE, fill: "forwards" }).onfinish = fin;
   } else fin();
-  const ul = $("#cobrado"); $(".vacio", ul)?.remove();
-  const nuevo = document.createElement("li");
-  nuevo.innerHTML = `<span class="foto cob-f ${c.f}" aria-hidden="true"></span><span class="cob-t"><b>${c.n}</b><small>${c.que} · ${c.t} · ${hora()}</small></span><b class="cob-m">${Q(c.m)}</b>`;
-  ul.prepend(nuevo); entra(nuevo, 200);
   if (id.startsWith("res-")) reservaPagada(id.slice(4));
   // lo que depende del pago
   const s = AG.find(x => x.cob === id); if (s) pintarAgenda();
@@ -278,8 +285,9 @@ function pagar(id, { auto = false, silencio = false } = {}) {
   if (id === "c-castillo" && !o.estado) { o.estado = "lograda"; o.logro = "Ya pagó"; pieCambia(o); pintarPendientes(); }
   if (!silencio) {
     alFeed("cash", `<b>${c.n}</b> pagó ${c.que.toLowerCase()} · ${Q(c.m)}`);
-    aviso(`${c.que} recibido · <b>${Q(c.m)}</b>`, { ic: "cash", sub: auto ? `${c.n} pagó después del recordatorio` : c.n });
+    aviso(`${c.que} recibido · <b>${Q(c.m)}</b>`, { ic: "cash", sub: `${auto ? `${c.n} pagó después del recordatorio` : c.n} · recibo No. ${numRec(rec.num)}` });
   }
+  return rec;
 }
 
 /* ---------- Agenda: sesiones con maleta, tomas y luz ---------- */
@@ -370,7 +378,7 @@ function iniciarAgenda() {
     const i = Number(b.dataset.ofrecer), f = new Date(lunes()); f.setDate(f.getDate() + i);
     const dia = DIAS[i].toLowerCase() + " " + f.getDate();
     if (!(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Ofrecida" }))) return;
-    simularWA({ texto: `Hola, le escribe Foto González Studio. Se nos liberó la tarde del ${dia}. Si quiere su sesión ese día, se la apartamos con el anticipo. ¿Le interesa?`, respuesta: "¡Sí! ¿A las 4 puede ser?", nota: "" });
+    simularWA({ para: "Lista de espera", texto: `Hola, le escribe Foto González Studio. Se nos liberó la tarde del ${dia}. Si quiere su sesión ese día, se la apartamos con el anticipo. ¿Le interesa?`, respuesta: "¡Sí! ¿A las 4 puede ser?", nota: "" });
     AG_OFRECIDO.add(i);
     alFeed("send", `Tarde del <b>${dia}</b> ofrecida a 6 familias en lista de espera`);
     setTimeout(pintarAgenda, 1100);
@@ -403,7 +411,7 @@ function pintarProxSesion() {
     </div>
     <div class="ps-bts">${btn(listo ? "Maleta lista" : "Preparar maleta", listo ? "check" : "maleta", listo ? "bt-ok" : "bt-1", `data-abrir="maleta"`)}
       <div class="ps-bts2">${btn("Tomas", "tomas", "bt-0", `data-abrir="tomas"`)}${btn("Cámara en vivo", "camara", "bt-0", `data-envivo="1"`)}</div></div>`);
-  $("#prox-ses").dataset.sid = s.id;
+  $("#prox-ses").dataset.sid = s.id; pendHoy();
 }
 
 /* Hoja de una sesión */
@@ -533,6 +541,7 @@ function iniciarSesionHoja() {
       if (ya && tl.hidden) { tl.hidden = false; entra(tl); aviso(SES_TAB === "maleta" ? "Maleta lista · <b>todo empacado</b>" : "Lista de tomas · <b>completa</b>", { ic: "check", sub: SES.t }); }
       else if (!ya) tl.hidden = true;
       if (SES_TAB === "maleta") pintarProxSesion();
+      sync();
       return;
     }
     const rec = e.target.closest("#ses-rec");
@@ -712,7 +721,7 @@ function pintarProx(c) {
 async function ofrecer(c, b) {
   if (CL.enviadas.has(c.id)) return;
   if (b && !(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Enviada" }))) return;
-  simularWA({ texto: c.prox.wa, respuesta: c.prox.resp, nota: "" });
+  simularWA({ para: c.n, f: c.hist[0][3], texto: c.prox.wa, respuesta: c.prox.resp, nota: "" });
   CL.enviadas.add(c.id);
   alFeed("send", `Oferta enviada a <b>${c.n}</b>: ${c.prox.t}`);
   setTimeout(() => { pintarClientes(); if (CL.sel === c.id) { pintarProx(c); entra($("#fc-prox")); } }, 900);
@@ -793,7 +802,7 @@ function pintarGalerias() {
     { id: "bebe", fotos: ["f-bebe", "f-pastel", "f-producto"], n: "Familia del recién nacido", t: "Recién nacido", total: 38,
       estado: GAL.publicadaBebe ? ["vivo", "Ya la tienen", "check"] : ["neutro", "Editando", "clock"], barra: GAL.publicadaBebe ? 1 : .7, barraTxt: GAL.publicadaBebe ? "Enlace y PIN enviados" : "Editadas 27 de 38",
       datos: [["Fotos", 38], ["Se manda", GAL.publicadaBebe ? "Hoy" : "El jueves"]],
-      acc: GAL.publicadaBebe ? `<span class="hecho">${icoListo()}La familia ya la tiene</span>` : btn("Mandarle sus fotos", "send", "bt-0 bt-full", 'data-gal="publicar"') }
+      acc: GAL.publicadaBebe ? `<span class="hecho">${icoListo()}La familia ya la tiene</span>` : btn("Subir y mandar sus fotos", "subir", "bt-1 bt-full", 'data-gal="publicar"') }
   ];
   $("#galerias").innerHTML = filas.map(g => `<li class="gal${g.marca ? " con-marca" : ""}" data-gal-id="${g.id}">
     <div class="gal-portada">
@@ -803,7 +812,7 @@ function pintarGalerias() {
       <span class="gal-total">${g.total} fotos</span>
     </div>
     <div class="gal-cuerpo">
-      <div><b>${g.n}</b><small>${g.t}</small></div>
+      <div class="gal-nom"><div><b>${g.n}</b><small>${g.t}</small></div><button type="button" class="gal-enl${enlaceDe(g.id).activo ? " on" : ""}" data-enl-g="${g.id}" aria-label="Enlace de ${g.n}">${ico("link", 16)}<span>Enlace</span></button></div>
       <div class="gal-barra"><i style="transform:scaleX(${g.barra})"></i></div><small class="gal-barra-txt">${g.barraTxt}</small>
       <dl class="gal-datos">${g.datos.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
       <div class="gal-acc">${g.acc}</div>
@@ -814,23 +823,26 @@ function pintarGalerias() {
 function iniciarGalerias() {
   pintarGalerias();
   $("#galerias").addEventListener("click", async e => {
+    const en = e.target.closest("[data-enl-g]"); if (en) return abrirEnlace(en.dataset.enlG);
     const b = e.target.closest("[data-gal]"); if (!b) return;
     const k = b.dataset.gal;
     if (k === "vivo") {
+      irPortal("cel-scroll");
       if (modoHoja()) abrirCliente();
       else if (!calma) $("#cliente .cel").animate([{ transform: "scale(1)" }, { transform: "scale(1.02)" }, { transform: "scale(1)" }], { duration: 600, easing: EASE });
       aviso("La familia del parque está eligiendo sus fotos", { ic: "eye", sub: "Toque los corazones en el celular" });
       return;
     }
-    if (k === "pago") { if (await accion(b, { espera: "Guardando…", listo: "Pagado", ms: 420 })) setTimeout(() => pagar("c-castillo"), 500); return; }
+    if (k === "pago") return abrirPago("c-castillo");
+    if (k === "publicar") return abrirSubida("bebe");
     const txt = { xv: ["Abriendo WhatsApp…", "Ofrecido"], resena: ["Abriendo WhatsApp…", "Pedida"], publicar: ["Mandando…", "Mandadas"] }[k];
     if (!(await accion(b, { espera: txt[0], listo: txt[1] }))) return;
     if (k === "xv") {
-      simularWA({ texto: "Hola. Su galería de XV cierra el viernes. Si quiere el álbum 30×30 con sus favoritas, este mes sale en Q 1,450.00 con la caja de regalo.", respuesta: "¡Sí lo queremos! ¿Le pagamos el anticipo por transferencia?", nota: "" });
+      simularWA({ para: "Quinceañera de noviembre", f: "f-xv", texto: "Hola. Su galería de XV cierra el viernes. Si quiere el álbum 30×30 con sus favoritas, este mes sale en Q 1,450.00 con la caja de regalo.", respuesta: "¡Sí lo queremos! ¿Le pagamos el anticipo por transferencia?", nota: "" });
       GAL.recordadoXV = true;
       setTimeout(() => { venta(1450); alFeed("book", "<b>Quinceañera de noviembre</b> pidió el álbum 30×30 · Q 1,450.00"); aviso("Álbum vendido · <b>Q 1,450.00</b>", { ic: "book", sub: "Quinceañera de noviembre" }); }, 4200);
     } else if (k === "resena") {
-      simularWA({ texto: "Hola. Gracias otra vez por dejarnos estar en su boda. Si les gustaron sus fotos, ¿nos ayudan con una reseña en Google? Les toma un minuto: g.page/fotogonzalez", respuesta: "¡Claro que sí! Ya se la dejamos.", nota: "" });
+      simularWA({ para: "Novios de diciembre", f: "f-pareja", texto: "Hola. Gracias otra vez por dejarnos estar en su boda. Si les gustaron sus fotos, ¿nos ayudan con una reseña en Google? Les toma un minuto: g.page/fotogonzalez", respuesta: "¡Claro que sí! Ya se la dejamos.", nota: "" });
       GAL.resenaDic = true;
       setTimeout(() => { alFeed("star", "<b>Novios de diciembre</b> dejaron 5 estrellas en Google"); aviso("Opinión nueva · <b>5 estrellas</b>", { ic: "star", sub: "Novios de diciembre" }); }, 3800);
     } else if (k === "publicar") {
@@ -843,37 +855,117 @@ function iniciarGalerias() {
 }
 function pagarCastillo() { if (GAL.castilloPagada) return; GAL.castilloPagada = true; pintarGalerias(); alFeed("unlock", "Se quitó la marca de agua de la boda de <b>los novios de octubre</b>"); }
 
-/* ---------- Ofertas ---------- */
+/* ---------- Ofertas por WhatsApp ---------- */
 const SEG = [
-  { id: "bebes", n: "Familias con bebé de 6 a 12 meses", c: 38 },
-  { id: "mundial", n: "Las que vinieron a la sesión del Mundial", c: 27 },
-  { id: "inactivos", n: "Clientes que no vuelven desde 2025", c: 64 }
+  { id: "bebes", n: "Familias con bebé de 6 a 12 meses", c: 38, f: ["f-bebe", "f-pastel", "f-primer"] },
+  { id: "mundial", n: "Las que vinieron a la sesión del Mundial", c: 27, f: ["f-camisola", "f-familia", "f-mundial"] },
+  { id: "xv", n: "Quinceañeras de 2025 y 2026", c: 22, f: ["f-xv", "f-quince", "f-glam"] },
+  { id: "inactivos", n: "Clientes que no vuelven desde 2025", c: 64, f: ["f-familia", "f-retrato", "f-pareja"] }
 ];
 const OFR = [
-  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos · 8 fotos", p: 350, msj: "Hola. Le escribe Foto González Studio. Ya armamos el set navideño: mini sesión de 20 minutos con 8 fotos editadas por Q 350.00. Quedan pocos espacios en diciembre. ¿Le apartamos uno?" },
-  { id: "anio", n: "Sesión de primer año", d: "Con pastel · 15 fotos y video", p: 650, msj: "Hola. ¡Su bebé ya va por su primer año! Le ofrecemos la sesión con pastel en el estudio, 15 fotos y un video corto, por Q 650.00. ¿Le apartamos fecha?" },
-  { id: "cuadro", n: "Cuadro 40×60 de su foto favorita", d: "Listo en 5 días", p: 375, msj: "Hola. ¿Ya tiene su foto favorita en la pared? Este mes el cuadro 40×60 con marco de madera sale en Q 375.00. Solo díganos cuál y lo mandamos a imprimir." }
+  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos · 8 fotos", p: 350, f: "f-maracas", vence: 15, msj: "Ya armamos el set navideño en el estudio: mini sesión de 20 minutos con 8 fotos editadas por {precio}. Quedan pocos espacios en diciembre. ¿Le apartamos uno?" },
+  { id: "anio", n: "Sesión de primer año", d: "Con pastel · 15 fotos y video", p: 650, f: "f-primer", vence: 30, msj: "¡Su bebé ya va por su primer año! Le ofrecemos la sesión con pastel en el estudio, 15 fotos y un video corto, por {precio}. ¿Le apartamos fecha?" },
+  { id: "cuadro", n: "Cuadro 40×60", d: "Su foto favorita · listo en 5 días", p: 375, f: "f-fuerza", vence: 7, msj: "¿Ya tiene su foto favorita en la pared? Este mes el cuadro 40×60 con marco de madera sale en {precio}. Solo díganos cuál y lo mandamos a imprimir." }
 ];
-const CAM = { seg: "bebes", ofr: "navidad", corriendo: false };
-function pintarCampana() {
-  $("#cam-seg").innerHTML = SEG.map(s => `<label><input type="radio" name="seg" value="${s.id}"${s.id === CAM.seg ? " checked" : ""}><span>${s.n}</span><span class="n">${s.c}</span></label>`).join("");
-  $("#cam-ofr").innerHTML = OFR.map(o => `<label><input type="radio" name="ofr" value="${o.id}"${o.id === CAM.ofr ? " checked" : ""}><span>${o.n}<small>${o.d}</small></span><span class="n">${Q(o.p)}</span></label>`).join("");
-  $$("#cam-seg input, #cam-ofr input").forEach(i => i.addEventListener("change", () => { CAM[i.name] = i.value; mensajeCampana(); }));
-  $("#cam-enviar").addEventListener("click", enviarCampana);
-  mensajeCampana();
+const HIST_OFR = [{ n: "Sesión Mundial 2026", f: "f-camisola", cuando: "Junio 2026", env: 112, apa: 27, q: 11630 }];
+const CAM = { seg: "bebes", ofr: "navidad", corriendo: false, editando: false };
+const FOTOS_OFR = ["f-maracas", "f-primer", "f-fuerza", "f-xv", "f-familia", "f-pareja", "f-bebe", "f-boda"];
+const msjDe = (o, nombre = "familia") => `Hola, ${nombre}. Le escribe Foto González Studio. ` + o.msj.replace("{precio}", Q(o.p));
+function pintarOfertas() {
+  pinta($("#ofe-ofr"), `<div class="ofe-cab"><h2>1. ¿Qué les ofrece?</h2>${btn("Nueva oferta", "plus", "bt-0 bt-chico", 'data-ofe="nueva"')}</div>
+    <div class="ofe-grid" role="radiogroup" aria-label="Oferta">${OFR.map(o => `<button type="button" class="ofe-card" role="radio" aria-checked="${o.id === CAM.ofr}" data-ofr="${o.id}">
+      <span class="foto ${o.f}" aria-hidden="true"></span><span class="ofe-ok">${o.id === CAM.ofr ? icoListo() : ""}</span>
+      <span class="ofe-precio">${Q(o.p)}</span>
+      <span class="ofe-txt"><b>${esc(o.n)}</b><small>${esc(o.d)}</small></span></button>`).join("")}
+      <button type="button" class="ofe-card nueva" data-ofe="nueva"><span class="ofe-mas">${ico("plus", 26)}</span><b>Crear oferta</b><small>Con su foto, precio y mensaje</small></button></div>`);
+  pinta($("#ofe-seg"), `<h2>2. ¿A quién?</h2>
+    <div class="seg-lista" role="radiogroup" aria-label="Grupo">${SEG.map(s => `<button type="button" class="seg-card" role="radio" aria-checked="${s.id === CAM.seg}" data-seg="${s.id}">
+      <span class="seg-avs">${s.f.map(f => `<span class="foto ${f}" aria-hidden="true"></span>`).join("")}</span>
+      <span class="seg-t"><b>${s.n}</b><small>${s.c} familias</small></span><span class="seg-radio" aria-hidden="true"></span></button>`).join("")}</div>`);
+  pintarVistaPrevia(); pintarHistOfr();
+  if (!CAM.corriendo) $("#cam-enviar-txt").textContent = `Mandar a ${SEG.find(x => x.id === CAM.seg).c} familias`;
 }
-function mensajeCampana() {
-  const s = SEG.find(x => x.id === CAM.seg), o = OFR.find(x => x.id === CAM.ofr), m = $("#cam-msj");
-  m.textContent = o.msj;
-  if (!calma) m.animate([{ opacity: .3 }, { opacity: 1 }], { duration: 260, easing: EASE });
-  if (!CAM.corriendo) $("#cam-enviar-txt").textContent = `Mandar a ${s.c} familias`;
+function pintarVistaPrevia() {
+  const o = OFR.find(x => x.id === CAM.ofr);
+  $("#ofe-prev").innerHTML = `<div class="ofe-cab"><h2>3. Así les llega</h2>${btn(CAM.editando ? "Listo" : "Editar mensaje", CAM.editando ? "check" : "tomas", "bt-0 bt-chico", 'data-ofe="editar"')}</div>
+    <div class="wa-prev">
+      <div class="wa-cab"><span class="av">FG</span><div><b>Foto González Studio</b><small>en línea</small></div></div>
+      <div class="wa-chat"><div class="wa-burbuja"><span class="foto ${o.f}" aria-hidden="true"><em>${esc(o.n)} · ${Q(o.p)}</em></span>
+        ${CAM.editando ? `<label class="wa-edit"><span class="sr">Mensaje de la oferta</span><textarea id="ofe-msj" rows="5" maxlength="400">${esc(o.msj)}</textarea><small>Escriba {precio} donde quiera que salga el precio. El nombre de cada familia se pone solo.</small></label>`
+          : `<p>${esc(msjDe(o, "familia del parque"))}</p>`}<small class="wa-hora">${hora()} ✓✓</small></div></div>
+    </div>`;
+}
+function pintarHistOfr() {
+  $("#ofe-hist").innerHTML = `<h3>Ofertas que ya mandó</h3><div class="ofe-hist">${HIST_OFR.map(h => `<div class="pasada"><span class="foto ${h.f}" aria-hidden="true"></span><div><b>${esc(h.n)}</b><small class="tenue">${h.cuando}</small>
+    <div class="nums"><span><strong>${h.env}</strong> la recibieron</span><span><strong>${h.apa}</strong> apartaron</span><span><strong>${Q(h.q)}</strong> ganado</span></div></div></div>`).join("")}</div>`;
+}
+function pintarCampana() {
+  pintarOfertas();
+  const caja = $("#ofe");
+  caja.addEventListener("click", e => {
+    const o = e.target.closest("[data-ofr]"), s = e.target.closest("[data-seg]"), a = e.target.closest("[data-ofe]");
+    if (CAM.corriendo && (o || s)) return;
+    if (o) { CAM.ofr = o.dataset.ofr; CAM.editando = false; $$("[data-ofr]", caja).forEach(b => { const on = b === o; b.setAttribute("aria-checked", on); $(".ofe-ok", b).innerHTML = on ? icoListo() : ""; }); pintarVistaPrevia(); entra($(".wa-burbuja")); return; }
+    if (s) { CAM.seg = s.dataset.seg; $$("[data-seg]", caja).forEach(b => b.setAttribute("aria-checked", b === s)); if (!CAM.corriendo) $("#cam-enviar-txt").textContent = `Mandar a ${SEG.find(x => x.id === CAM.seg).c} familias`; return; }
+    if (!a) return;
+    if (a.dataset.ofe === "nueva") return abrirNuevaOferta();
+    if (a.dataset.ofe === "editar") {
+      if (CAM.editando) { const t = $("#ofe-msj").value.trim(); if (t) OFR.find(x => x.id === CAM.ofr).msj = t; }
+      CAM.editando = !CAM.editando; pintarVistaPrevia(); if (CAM.editando) $("#ofe-msj").focus();
+    }
+  });
+  $("#cam-enviar").addEventListener("click", enviarCampana);
+  $("#ofr-cuerpo").addEventListener("input", previaNuevaOferta);
+  $("#ofr-cuerpo").addEventListener("click", e => {
+    const f = e.target.closest("[data-of-f]"), v = e.target.closest("[data-of-v]");
+    if (f) { NOF.f = f.dataset.ofF; $$("[data-of-f]").forEach(b => b.setAttribute("aria-pressed", b === f)); previaNuevaOferta(); return; }
+    if (v) { NOF.vence = Number(v.dataset.ofV); $$("[data-of-v]").forEach(b => b.setAttribute("aria-pressed", b === v)); return; }
+    if (e.target.closest("#of-guardar")) guardarOferta(e.target.closest("#of-guardar"));
+  });
+}
+/* Crear una oferta nueva */
+const NOF = {};
+function abrirNuevaOferta() {
+  Object.assign(NOF, { f: "f-xv", vence: 15 });
+  $("#ofr-cuerpo").innerHTML = `
+    <div class="of-prev" id="of-prev"></div>
+    <label class="nr-campo"><span>Nombre de la oferta</span><input id="of-n" type="text" maxlength="40" autocomplete="off" placeholder="Ej.: Sesión de San Valentín"></label>
+    <div class="of-dos">
+      <label class="nr-campo"><span>Precio</span><span class="of-q"><b>Q</b><input id="of-p" type="number" inputmode="decimal" min="0" step="25" placeholder="450"></span></label>
+      <label class="nr-campo"><span>Qué incluye</span><input id="of-d" type="text" maxlength="50" autocomplete="off" placeholder="Ej.: 30 min · 10 fotos"></label>
+    </div>
+    <p class="nr-campo-t">Foto de la oferta</p>
+    <div class="of-fotos">${FOTOS_OFR.map(f => `<button type="button" class="foto ${f}" data-of-f="${f}" aria-pressed="${f === NOF.f}" aria-label="Usar esta foto"></button>`).join("")}</div>
+    <p class="nr-campo-t">Vale por</p>
+    <div class="of-vence">${[7, 15, 30].map(d => `<button type="button" class="chip-b" data-of-v="${d}" aria-pressed="${d === NOF.vence}">${d} días</button>`).join("")}</div>
+    ${btn("Guardar oferta", "check", "bt-1 bt-full", 'id="of-guardar" disabled')}`;
+  previaNuevaOferta();
+  abrirHoja($("#hoja-ofr")); $("#ofr-cuerpo").scrollTop = 0;
+  setTimeout(() => $("#of-n").focus({ preventScroll: true }), 350);
+}
+function previaNuevaOferta() {
+  const n = ($("#of-n")?.value || "").trim(), p = Number($("#of-p")?.value || 0), d = ($("#of-d")?.value || "").trim();
+  $("#of-prev").innerHTML = `<span class="foto ${NOF.f}" aria-hidden="true"></span><span class="ofe-precio">${p ? Q(p) : "Q 0.00"}</span><span class="ofe-txt"><b>${esc(n || "Nombre de la oferta")}</b><small>${esc(d || "Qué incluye")}</small></span>`;
+  const ok = $("#of-guardar"); if (ok) ok.disabled = !(n.length > 2 && p > 0);
+}
+async function guardarOferta(b) {
+  const n = $("#of-n").value.trim(), p = Number($("#of-p").value), d = $("#of-d").value.trim() || "Oferta del estudio";
+  if (!(await accion(b, { espera: "Guardando…", listo: "Guardada", ms: 360 }))) return;
+  const o = { id: "o" + Date.now(), n, d, p, f: NOF.f, vence: NOF.vence, msj: `Tenemos algo especial para usted: ${n.toLowerCase()} (${d.toLowerCase()}) por {precio}. Vale por ${NOF.vence} días. ¿Le apartamos un espacio?` };
+  OFR.unshift(o); CAM.ofr = o.id; CAM.editando = false;
+  alFeed("sparkles", `Oferta nueva: <b>${esc(n)}</b> · ${Q(p)}`);
+  setTimeout(() => {
+    cerrarHoja($("#hoja-ofr"), true); pintarOfertas();
+    const c = $(`[data-ofr="${o.id}"]`); if (c && !calma) c.animate([{ opacity: 0, transform: "scale(0.95)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: EASE });
+  }, 420);
 }
 function enviarCampana() {
   if (CAM.corriendo) return;
   const s = SEG.find(x => x.id === CAM.seg), o = OFR.find(x => x.id === CAM.ofr), b = $("#cam-enviar");
   CAM.corriendo = true; b.disabled = true; b.classList.add("cargando"); $("#cam-enviar-txt").textContent = "Mandando…";
-  $$("#cam-seg input, #cam-ofr input").forEach(i => i.disabled = true);
+  $("#ofe").classList.add("corriendo");
   const res = $("#cam-res"); res.hidden = false; entra(res);
+  res.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "nearest" });
   const meta = { env: s.c, lei: Math.round(s.c * .84), res: Math.round(s.c * .29), apa: Math.max(1, Math.round(s.c * .11)) };
   const val = { env: 0, lei: 0, res: 0, apa: 0 };
   ["env", "lei", "res", "apa"].forEach(k => { $("#n-" + k).dataset.v = 0; $("#n-" + k).textContent = "0"; $("#r-" + k).style.transform = "scaleX(0)"; });
@@ -888,14 +980,16 @@ function enviarCampana() {
       $("#r-" + m).style.transform = `scaleX(${v / s.c})`;
     });
     odometro($("#n-q"), val.apa * o.p);
-    if (k === 6) alFeed("chat", `Oferta «${o.n}»: <b>${val.res}</b> ya contestaron`, "cam");
+    if (k === 6) alFeed("chat", `Oferta «${esc(o.n)}»: <b>${val.res}</b> ya contestaron`, "cam");
     if (k < 12) return setTimeout(tic, 750);
     const total = meta.apa * o.p;
     venta(total);
-    alFeed("cash", `Oferta «${o.n}»: <b>${meta.apa} apartaron</b> · ${Q(total)}`, "cam");
-    aviso(`Oferta «${o.n}» · <b>${meta.apa} apartaron</b>`, { ic: "send", sub: `${Q(total)} ganados` });
+    HIST_OFR.unshift({ n: o.n, f: o.f, cuando: "Hoy", env: meta.env, apa: meta.apa, q: total });
+    pintarHistOfr(); entra($(".ofe-hist .pasada"));
+    alFeed("cash", `Oferta «${esc(o.n)}»: <b>${meta.apa} apartaron</b> · ${Q(total)}`, "cam");
+    aviso(`Oferta «${esc(o.n)}» · <b>${meta.apa} apartaron</b>`, { ic: "send", sub: `${Q(total)} ganados` });
     CAM.corriendo = false; b.disabled = false; b.classList.remove("cargando"); $("#cam-enviar-txt").textContent = "Mandar otra oferta";
-    $$("#cam-seg input, #cam-ofr input").forEach(i => i.disabled = false);
+    $("#ofe").classList.remove("corriendo");
   };
   setTimeout(tic, 500);
 }
@@ -999,12 +1093,13 @@ function pintarRespaldo() {
       <div class="grupo-ios">${filaResp(t, "disco", "hdd", "Disco del estudio")}${filaResp(t, "nube", "cloud", "Nube")}</div>
       <div class="tarj-pie">${t.disco && t.nube ? `<span class="chip vivo">${ico("escudo", 13)}Segura en 2 lugares</span>${btn("Borrar la tarjeta", "borrar", "bt-0 bt-chico", 'data-borrar="1"')}` : `<span class="chip alerta">${ico("alerta", 13)}No la borre todavía</span>`}</div></li>`).join("");
   const c = $("#cuenta-resp"); c.textContent = n; c.classList.toggle("cero", !n);
-  $("#mas-resp").textContent = n ? `${n} sin copia completa` : "Todo respaldado";
+  pintarMas();
   pintarMasCuenta();
   pintarAvisoResp();
 }
 function pintarAvisoResp() {
-  const n = sinCopia(), el = $("#hoy-resp");
+  pendHoy();
+  const n = sinCopia(), el = $("#hoy-resp"); if (!el) return;
   el.hidden = !n;
   if (n) el.innerHTML = `<span class="ar-ic">${ico("sd", 20)}</span><span><b>${n} ${n === 1 ? "tarjeta" : "tarjetas"} sin respaldo completo</b><small>Copie las fotos antes de borrarlas.</small></span>${btn("Ver", "chev", "bt-0 bt-chico", 'data-ir="respaldo"')}`;
 }
@@ -1037,30 +1132,69 @@ function iniciarRespaldo() {
   });
 }
 
-/* ---------- Celular de la familia: la galería que vende ---------- */
+/* ---------- Celular de la familia: su galería privada ---------- */
 const FOTOS = ["f-familia", "f-primer", "f-camisola", "f-pastel", "f-familia", "f-bebe", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia"];
+const POSF = ["50% 30%", "35% 45%", "60% 35%", "45% 60%", "70% 40%", "30% 30%", "55% 55%", "40% 25%", "65% 60%", "50% 45%", "25% 50%", "75% 30%"];
+const posF = i => POSF[(i * 5) % POSF.length];
 const INCL = 10, P_EXTRA = 35, P_TODA = 450;
-const G = { sel: [], pagadas: new Set(), completa: false, extraVendido: 0, avisoMas: false };
+const G = { sel: [], pagadas: new Set(), completa: false, extraVendido: 0, avisoMas: false, vista: "fotos", visor: 0 };
 const PRODS = [["Impresión 20×30", "Papel lustre profesional", 95], ["Cuadro 40×60", "Marco de madera natural", 375], ["Lienzo 60×90", "Listo para colgar", 650]];
 const libre = i => { if (G.completa || G.pagadas.has(i)) return true; const k = G.sel.indexOf(i); return k > -1 && k < INCL; };
 const extrasPend = () => G.completa ? [] : G.sel.slice(INCL).filter(i => !G.pagadas.has(i));
-function pintarGaleria() {
-  $("#galeria").innerHTML = FOTOS.map((f, i) => `<div class="ft" data-n="${i}">
-    <span class="foto ${f}" aria-hidden="true"></span>
+function tileFam(f, i) {
+  return `<div class="ft" data-n="${i}">
+    <span class="foto ${f}" style="background-position:${posF(i)}" aria-hidden="true"></span>
     <span class="wm" aria-hidden="true"><span>FOTO GONZÁLEZ</span><span>FOTO GONZÁLEZ</span><span>FOTO GONZÁLEZ</span></span>
-    <span class="num mono">${i + 1}</span><span class="extra-tag">EXTRA</span>
-    <button class="abrir" type="button" aria-label="Pedir impresión de la foto ${i + 1}"></button>
-    <button class="corazon" type="button" aria-pressed="false" aria-label="Elegir la foto ${i + 1}"><span>${ico("heart", 15)}</span></button></div>`).join("");
+    <span class="extra-tag">EXTRA</span>
+    <button class="abrir" type="button" aria-label="Ver en grande la foto ${i + 1}"></button>
+    <button class="corazon" type="button" aria-pressed="false" aria-label="Elegir la foto ${i + 1}"><span>${ico("heart", 15)}</span></button></div>`;
+}
+function pintarGaleria() {
+  $("#galeria").innerHTML = FOTOS.map(tileFam).join("");
   $("#galeria").addEventListener("click", ev => {
     const t = ev.target.closest(".ft"); if (!t) return;
     const i = Number(t.dataset.n);
     if (ev.target.closest(".corazon")) corazon(i, ev.target.closest(".corazon"));
-    else if (ev.target.closest(".abrir")) abrirImp(i);
+    else if (ev.target.closest(".abrir")) abrirVisor(i);
   });
+  $("#fam-seg").addEventListener("click", e => { const b = e.target.closest("[data-fv]"); if (b) vistaFam(b.dataset.fv); });
+  $("#fam-pagos").addEventListener("click", e => { const b = e.target.closest("[data-rnum]"); if (b) abrirRecibo(Number(b.dataset.rnum)); });
   $("#of-unas").addEventListener("click", () => comprar("unas"));
   $("#of-toda").addEventListener("click", () => comprar("toda"));
   $("#hi-cerrar").addEventListener("click", cerrarImp);
-  actualizarGaleria();
+  // visor: deslizar con el dedo o con las flechas
+  $("#vs-x").addEventListener("click", cerrarVisor);
+  $("#vs-izq").addEventListener("click", () => moverVisor(-1));
+  $("#vs-der").addEventListener("click", () => moverVisor(1));
+  $("#vs-amo").addEventListener("click", () => corazon(G.visor, $(`#galeria .ft[data-n="${G.visor}"] .corazon`)));
+  $("#vs-imp").addEventListener("click", () => abrirImp(G.visor));
+  $("#vs-desc").addEventListener("click", () => {
+    if (!libre(G.visor)) { toastCel("Esta foto se libera al pagar. Márquela con el corazón."); return; }
+    toastCel(`Foto ${G.visor + 1} descargada en alta resolución.`);
+  });
+  const foto = $("#vs-foto"); let x0 = null, dx = 0;
+  foto.addEventListener("pointerdown", e => { if (e.target.closest("button")) return; x0 = e.clientX; dx = 0; foto.setPointerCapture(e.pointerId); $("#vs-a").style.transition = "none"; });
+  foto.addEventListener("pointermove", e => { if (x0 === null) return; dx = e.clientX - x0; $("#vs-a").style.transform = `translateX(${dx}px)`; });
+  const fin = () => { if (x0 === null) return; x0 = null; const a = $("#vs-a"); a.style.transition = ""; a.style.transform = ""; if (Math.abs(dx) > 50) moverVisor(dx < 0 ? 1 : -1, dx); };
+  foto.addEventListener("pointerup", fin); foto.addEventListener("pointercancel", fin);
+  actualizarGaleria(); pintarFamPagos();
+}
+function vistaFam(v) {
+  G.vista = v;
+  const seg = $("#fam-seg"), bs = $$("[data-fv]", seg);
+  bs.forEach(b => b.setAttribute("aria-selected", b.dataset.fv === v));
+  seg.style.setProperty("--i", ["fotos", "fav", "pagos"].indexOf(v));
+  $("#cel-galeria").hidden = v === "pagos"; $("#fam-pagos").hidden = v !== "pagos";
+  $$("#galeria .ft").forEach(t => { t.hidden = v === "fav" && !G.sel.includes(Number(t.dataset.n)); });
+  if (v === "pagos") pintarFamPagos();
+  const cu = v === "pagos" ? $("#fam-pagos") : $("#galeria");
+  if (!calma) cu.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 260, easing: EASE });
+}
+function pintarFamPagos() {
+  const mios = RECIBOS.filter(r => r.n === "Familia del parque");
+  const tot = mios.reduce((t, r) => t + r.m, 0);
+  $("#fam-pagos").innerHTML = `<div class="fpg-total"><small>Pagado al estudio</small><b>${Q(tot)}</b></div>
+    <ul class="fpg-lista">${mios.map(r => `<li><button type="button" data-rnum="${r.num}"><span class="fpg-ic">${ico("recibo", 16)}</span><span><b>${r.concepto}</b><small>No. ${String(r.num).padStart(6, "0")} · ${fechaCorta(r.fecha)}</small></span><b>${Q(r.m)}</b></button></li>`).join("")}</ul>`;
 }
 function actualizarGaleria() {
   $$("#galeria .ft").forEach(t => {
@@ -1068,12 +1202,14 @@ function actualizarGaleria() {
     t.classList.toggle("libre", libre(i));
     t.classList.toggle("extra", k >= INCL && !libre(i));
     $(".corazon", t).setAttribute("aria-pressed", k > -1);
+    if (G.vista === "fav") t.hidden = k < 0;
   });
   const n = G.sel.length, ext = extrasPend();
   $("#c-cuenta").textContent = Math.min(n, INCL);
   $("#c-extra").textContent = G.completa ? "Galería completa" : n > INCL ? `+${n - INCL} extra` : "";
   $("#c-barra").style.transform = `scaleX(${Math.min(1, n / INCL)})`;
-  const of = $("#oferta"), ver = ext.length > 0;
+  const fn = $("#fav-n"); fn.textContent = n || "";
+  const of = $("#oferta"), ver = ext.length > 0 && PORTAL.pant === "cel-scroll";
   if (ver) {
     const m = ext.length * P_EXTRA;
     $("#of-t").innerHTML = `Eligió <b>${ext.length} ${ext.length === 1 ? "foto" : "fotos"} más</b> de las que trae su paquete.`;
@@ -1082,11 +1218,13 @@ function actualizarGaleria() {
     $("#of-toda").classList.toggle("conviene", ext.length >= 6);
   }
   of.classList.toggle("ver", ver); of.inert = !ver;
+  if ($("#visor").classList.contains("ver")) pintarVisor();
 }
 function corazon(i, b) {
   const k = G.sel.indexOf(i);
   if (k > -1) G.sel.splice(k, 1); else G.sel.push(i);
-  if (!calma) $("span", b).animate([{ transform: "scale(1)" }, { transform: "scale(1.12)" }, { transform: "scale(1)" }], { duration: 300, easing: EASE });
+  if (!calma && b) $("span", b).animate([{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }], { duration: 300, easing: EASE });
+  if (!calma && $("#visor").classList.contains("ver") && i === G.visor) $("#vs-amo").animate([{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }], { duration: 300, easing: EASE });
   actualizarGaleria();
   red(() => {
     const n = G.sel.length;
@@ -1094,6 +1232,27 @@ function corazon(i, b) {
     pintarGalerias();
     if (n > INCL && !G.avisoMas) { G.avisoMas = true; aviso("La familia del parque quiere <b>más fotos</b>", { ic: "sparkles", sub: "Ya le apareció la oferta en su celular" }); }
   });
+}
+function abrirVisor(i) {
+  G.visor = i; pintarVisor(true);
+  const v = $("#visor"); v.inert = false; v.classList.add("ver");
+  setTimeout(() => $("#vs-x").focus({ preventScroll: true }), 60);
+}
+function cerrarVisor() { const v = $("#visor"); v.classList.remove("ver"); v.inert = true; }
+function pintarVisor() {
+  const i = G.visor, a = $("#vs-a");
+  a.className = `foto vs-capa ${FOTOS[i]}`; a.style.backgroundPosition = posF(i);
+  $("#vs-n").textContent = `${i + 1} de ${FOTOS.length}`;
+  $("#vs-amo").setAttribute("aria-pressed", G.sel.includes(i));
+  $("#vs-wm").hidden = libre(i);
+  $("#vs-desc-t").textContent = libre(i) ? "Descargar" : "Se libera al pagar";
+  $("#vs-desc").classList.toggle("bloq", !libre(i));
+}
+function moverVisor(d, desde = 0) {
+  G.visor = (G.visor + d + FOTOS.length) % FOTOS.length;
+  const a = $("#vs-a"), w = $("#vs-foto").offsetWidth;
+  pintarVisor();
+  if (!calma) a.animate([{ transform: `translateX(${desde ? desde * 0.4 : d * w * 0.35}px)`, opacity: .2 }, { transform: "none", opacity: 1 }], { duration: 320, easing: EASE });
 }
 function toastCel(txt) {
   const t = $("#toast-cel"); $("#toast-cel-txt").textContent = txt;
@@ -1107,10 +1266,11 @@ function comprar(tipo) {
     if (tipo === "toda") G.completa = true; else ext.forEach(i => G.pagadas.add(i));
     G.extraVendido += monto; b.disabled = false;
     actualizarGaleria();
-    toastCel("Pago aprobado. Sus fotos ya están sin marca de agua.");
+    const que = tipo === "toda" ? "la galería completa" : `${ext.length} ${ext.length === 1 ? "foto extra" : "fotos extra"}`;
+    nuevoRecibo({ n: "Familia del parque", concepto: `Fotos extra · ${que}`, m: monto, forma: "Tarjeta", saldo: 0, f: "f-familia" });
+    toastCel("Pago aprobado. Su recibo está en «Mis pagos».");
     red(() => {
       venta(monto, { extra: true });
-      const que = tipo === "toda" ? "la galería completa" : `${ext.length} ${ext.length === 1 ? "foto extra" : "fotos extra"}`;
       alFeed("cash", `La familia del parque compró <b>${que}</b> · ${Q(monto)}`);
       aviso(`Venta en la galería · <b>${Q(monto)}</b>`, { ic: "cash", sub: `La familia del parque compró ${que}` });
       pintarGalerias();
@@ -1120,7 +1280,7 @@ function comprar(tipo) {
 let impFoto = 0;
 function abrirImp(i) {
   impFoto = i;
-  $("#hi-foto").className = "foto hi-foto " + FOTOS[i];
+  $("#hi-foto").className = "foto hi-foto " + FOTOS[i]; $("#hi-foto").style.backgroundPosition = posF(i);
   $("#hi-t").textContent = "Foto " + (i + 1);
   $("#hi-prods").innerHTML = PRODS.map(([n, d, p], k) => `<button type="button" data-k="${k}"><span>${n}<small>${d}</small></span><b>${Q(p)}</b></button>`).join("");
   $$("#hi-prods button").forEach(b => b.addEventListener("click", () => pedirImp(Number(b.dataset.k))));
@@ -1131,7 +1291,8 @@ function cerrarImp() { const h = $("#hoja-imp"); h.classList.remove("ver"); h.in
 function pedirImp(k) {
   const [n, , p] = PRODS[k];
   cerrarImp();
-  toastCel(`Pedido recibido: ${n}.`);
+  nuevoRecibo({ n: "Familia del parque", concepto: `${n} · foto ${impFoto + 1}`, m: p, forma: "Tarjeta", saldo: 0, f: "f-familia" });
+  toastCel(`Pedido recibido: ${n}. Su recibo está en «Mis pagos».`);
   red(() => {
     venta(p);
     alFeed("frame", `La familia del parque pidió <b>${n}</b> de la foto ${impFoto + 1} · ${Q(p)}`);
@@ -1167,7 +1328,7 @@ async function accionSesion(k, b) {
     pintarCobrar(); pintarCifras(); pintarAgenda();
     setTimeout(() => {
       cerrarHoja($("#hoja-ses"));
-      simularWA({ texto: `Hola. Le escribe Foto González Studio. Quedó cancelada su sesión (${s.t.toLowerCase()}). Cuando quiera la volvemos a apartar, aquí estamos.`, nota: "" });
+      simularWA({ para: s.n, f: s.f, texto: `Hola. Le escribe Foto González Studio. Quedó cancelada su sesión (${s.t.toLowerCase()}). Cuando quiera la volvemos a apartar, aquí estamos.`, nota: "" });
       alFeed("calendar", `Sesión cancelada: <b>${s.n}</b> · el espacio se ofreció a la lista de espera`);
       aviso("Sesión cancelada · <b>se avisó a la familia</b>", { ic: "calendar", sub: "El espacio se ofreció a 6 familias en lista de espera" });
     }, 600);
@@ -1178,7 +1339,7 @@ async function moverSesion(k, b) {
   if (!(await accion(b, { espera: "…", listo: "Listo", ms: 300 }))) return;
   if (dd <= 6) s.d = dd; else AG.splice(AG.indexOf(s), 1);
   pintarAgenda();
-  simularWA({ texto: `Hola. Le escribe Foto González Studio. Movimos su sesión (${s.t.toLowerCase()}) al ${fechaTxt(d)} a las ${hora12(s.h)}. ¡Los esperamos!`, respuesta: "¡Perfecto, gracias por avisar!", nota: "" });
+  simularWA({ para: s.n, f: s.f, texto: `Hola. Le escribe Foto González Studio. Movimos su sesión (${s.t.toLowerCase()}) al ${fechaTxt(d)} a las ${hora12(s.h)}. ¡Los esperamos!`, respuesta: "¡Perfecto, gracias por avisar!", nota: "" });
   alFeed("calendar", `<b>${s.n}</b>: sesión movida al ${fechaTxt(d)}`);
   aviso(`Sesión movida · <b>${fechaTxt(d)}</b>`, { ic: "calendar", sub: `${s.n} · se le avisó por WhatsApp` });
   if (dd <= 6) setTimeout(pintarSesion, 500); else setTimeout(() => cerrarHoja($("#hoja-ses")), 500);
@@ -1248,7 +1409,8 @@ function reservaPagada(rid) {
   else pintarReservas();
 }
 function pintarAvisoRes() {
-  const n = RES.filter(r => r.estado === "nueva").length, el = $("#hoy-res");
+  pendHoy();
+  const n = RES.filter(r => r.estado === "nueva").length, el = $("#hoy-res"); if (!el) return;
   el.hidden = !n;
   if (n) el.innerHTML = `<span class="ar-ic">${ico("calendar", 20)}</span><span><b>${n} ${n === 1 ? "reserva nueva" : "reservas nuevas"}</b><small>Esperan que les confirme.</small></span>${btn("Ver", "chev", "bt-0 bt-chico", 'data-ir="reservas"')}`;
 }
@@ -1321,7 +1483,7 @@ async function apartarNR(b) {
   alFeed("calendar", `Fecha apartada: <b>${quien}</b> · ${t[1]} · ${fechaTxt(fechaEn(k))}`);
   setTimeout(() => {
     cerrarHoja($("#hoja-res"));
-    if (link) simularWA({ texto: `Hola. Le escribe Foto González Studio. Le apartamos su sesión (${t[1].toLowerCase()}) el ${fechaTxt(fechaEn(k))} a las ${hora12(hh)}. Para dejarla segura, el anticipo es de ${Q(an)}: fotogonzalezstudio.com/pagar`, respuesta: "¡Gracias! Ahorita lo pago.", nota: "" });
+    if (link) simularWA({ para: quien, f: t[3], texto: `Hola. Le escribe Foto González Studio. Le apartamos su sesión (${t[1].toLowerCase()}) el ${fechaTxt(fechaEn(k))} a las ${hora12(hh)}. Para dejarla segura, el anticipo es de ${Q(an)}: fotogonzalezstudio.com/pagar`, respuesta: "¡Gracias! Ahorita lo pago.", nota: "" });
     aviso(`Fecha apartada · <b>${t[1]}</b>`, { ic: "calendar", sub: `${quien} · falta anticipo ${Q(an)}` });
   }, 700);
 }
@@ -1333,7 +1495,7 @@ function iniciarReservas() {
     const r = RES.find(x => x.id === li.dataset.rid), b = e.target.closest("[data-r]"), o = e.target.closest("[data-otra]");
     if (o) {
       r.k = Number(o.dataset.otra); r.otras = null; r.estado = "propuesta";
-      simularWA({ texto: `Hola. Gracias por escribirnos. Para su sesión (${r.t.toLowerCase()}) tenemos libre el ${fechaTxt(fechaEn(r.k))} a las ${hora12(r.h)}. ¿Le queda bien?`, respuesta: "¡Sí, perfecto! Apártenmelo, porfa.", nota: "" });
+      simularWA({ para: r.n, f: r.f, texto: `Hola. Gracias por escribirnos. Para su sesión (${r.t.toLowerCase()}) tenemos libre el ${fechaTxt(fechaEn(r.k))} a las ${hora12(r.h)}. ¿Le queda bien?`, respuesta: "¡Sí, perfecto! Apártenmelo, porfa.", nota: "" });
       alFeed("calendar", `Otra fecha propuesta a <b>${r.n}</b>`);
       cambiaRes(r);
       setTimeout(() => {
@@ -1347,14 +1509,14 @@ function iniciarReservas() {
     if (k === "otra") { if (!r.otras) { r.otras = [r.k + 1, r.k + 3, r.k + 7]; cambiaRes(r); } return; }
     if (k === "ok") {
       if (!(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Confirmada" }))) return;
-      simularWA({ texto: `Hola. ¡Su fecha está libre! ${r.t} el ${fechaTxt(fechaEn(r.k))} a las ${hora12(r.h)}. Para apartarla, el anticipo es de ${Q(anticipoDe(r))}. Puede pagarlo aquí: fotogonzalezstudio.com/pagar`, respuesta: "¡Gracias! Ahorita lo pago.", nota: "" });
+      simularWA({ para: r.n, f: r.f, texto: `Hola. ¡Su fecha está libre! ${r.t} el ${fechaTxt(fechaEn(r.k))} a las ${hora12(r.h)}. Para apartarla, el anticipo es de ${Q(anticipoDe(r))}. Puede pagarlo aquí: fotogonzalezstudio.com/pagar`, respuesta: "¡Gracias! Ahorita lo pago.", nota: "" });
       r.estado = "anticipo"; r.horas = 24; r.otras = null; COBRAR.push(cobroRes(r)); pintarCobrar(); pintarCifras();
       alFeed("check", `Reserva confirmada a <b>${r.n}</b> · se pidió el anticipo`);
       setTimeout(() => cambiaRes(r), 800);
       return;
     }
     if (k === "rec") { const c = COBRAR.find(x => x.id === "res-" + r.id); if (c && !c.recordado) { await recordarPago(c, b); setTimeout(() => cambiaRes(r), 900); } return; }
-    if (k === "pago" && (await accion(b, { espera: "Guardando…", listo: "Pagado", ms: 420 }))) setTimeout(() => pagar("res-" + r.id), 380);
+    if (k === "pago") abrirPago("res-" + r.id);
   });
   $("#rec-ajustes").addEventListener("click", e => {
     const b = e.target.closest("[data-rec]"); if (!b) return;
@@ -1409,6 +1571,7 @@ function pintarEnVivo() {
   pinta($("#ev-cam"), ENV.conectada ? `
     <div class="ev-est on"><span class="ev-dot"></span><span><b>${ENV.pausa ? "En pausa" : "Cámara conectada"}</b><small>Cámara principal · Wi-Fi</small></span></div>
     <div class="ev-ses"><span class="foto ${s.f}" aria-hidden="true"></span><span><b>${s.t}</b><small>${s.n}</small></span></div>
+    <div class="ev-hud" id="ev-hud">${ENV.camDe && ENV.camDe !== YO.id ? `${ico("link", 14)}La cámara está conectada en otro aparato del equipo` : `${ico("zap", 14)}Esperando la primera foto…`}</div>
     <div class="ev-chips"><span class="chip">${ico("zap", 13)}Batería 82 %</span><span class="chip">${ico("sd", 13)}Tarjeta A · 61 GB libres</span><span class="chip vivo">${ico("escudo", 13)}Se guarda solo en disco y nube</span></div>`
     : `<div class="ev-est"><span class="ev-dot"></span><span><b>Cámara sin conectar</b><small>Encienda la cámara y su Wi-Fi</small></span></div>
     <div class="ev-ses"><span class="foto ${s.f}" aria-hidden="true"></span><span><b>${s.t}</b><small>${s.n} · ${cuandoTxt(s.d)} ${hora12(s.h)}</small></span></div>
@@ -1420,17 +1583,22 @@ function pintarEnVivo() {
 }
 function siguienteEV(ms) { clearTimeout(ENV.t); ENV.t = setTimeout(llegaFoto, ms ?? 2600 + Math.random() * 1800); }
 function llegaFoto() {
-  if (!ENV.conectada || ENV.pausa) return;
+  if (!ENV.conectada || ENV.pausa || ENV.camDe !== YO.id) return;
   if (document.hidden) return siguienteEV();
   const s = sesEnVivo(), lista = FOTOS_TIPO[s.tipo] || ["f-familia"];
-  const f = { id: "ev" + (++ENV.n), num: String(1200 + ENV.n).padStart(4, "0"), c: azar(lista), pos: `${20 + Math.round(Math.random() * 60)}% ${15 + Math.round(Math.random() * 45)}%`, h: hora(), guardada: false, borrada: false, nube: false };
+  const f = { id: "ev" + (++ENV.n), mb: (18 + Math.random() * 12).toFixed(1), num: String(1200 + ENV.n).padStart(4, "0"), c: azar(lista), pos: `${20 + Math.round(Math.random() * 60)}% ${15 + Math.round(Math.random() * 45)}%`, h: hora(), guardada: false, borrada: false, nube: false };
   ENV.fotos.push(f);
   if (VISTA === "envivo") {
     const g = $("#ev-grid"); $(".ev-vacio", g)?.remove();
     const v = document.createElement("div"); v.innerHTML = tileEV(f); const li = v.firstElementChild; g.prepend(li);
-    if (!calma) li.animate([{ opacity: 0, transform: "scale(0.95)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: EASE });
+    if (!calma) {
+      li.classList.add("llegando"); $(".ev-num", li).textContent = `Recibiendo #${f.num} · ${f.mb} MB`;
+      li.animate([{ opacity: 0, transform: "scale(0.95)" }, { opacity: 1, transform: "none" }], { duration: 300, easing: EASE });
+      setTimeout(() => { li.classList.remove("llegando"); li.classList.add("revela"); $(".ev-num", li).textContent = `#${f.num} · ${f.h}`; }, 750);
+    }
+    ENV.ult = { num: f.num, mb: f.mb, t: Date.now() }; hudEV();
   }
-  cifrasEV(); pantallaFoto(f);
+  cifrasEV(); pantallaFoto(f); sync();
   setTimeout(() => { f.nube = true; const n = $(`.ev-ft[data-f="${f.id}"] .ev-nube`); if (n) { n.classList.add("ok"); n.innerHTML = ico("cloud", 13); n.title = "Guardada en el disco y la nube"; } }, 1200 + Math.random() * 900);
   if (ENV.fotos.length < 40) siguienteEV();
 }
@@ -1444,13 +1612,13 @@ function guardarEV(f, on) {
   const li = $(`.ev-ft[data-f="${f.id}"]`);
   if (li) { li.classList.toggle("guardada", on); const g = $(".ev-g", li); g.setAttribute("aria-pressed", on); if (on && !calma) g.animate([{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }], { duration: 300, easing: EASE }); }
   if (ENV.actual === f) $("#pf-amo").setAttribute("aria-pressed", on);
-  cifrasEV(); tiraPF();
+  cifrasEV(); tiraPF(); sync();
 }
 function iniciarEnVivo() {
   $("#ev-cam").addEventListener("click", async e => {
     const b = e.target.closest("#ev-con"); if (!b) return;
     if (!(await accion(b, { espera: "Buscando la cámara…", listo: "Conectada", ms: 1500 }))) return;
-    ENV.conectada = true; ENV.pausa = false;
+    ENV.conectada = true; ENV.pausa = false; ENV.camDe = YO.id; ENV.inicio = Date.now();
     setTimeout(() => { pintarEnVivo(); pintarSubnav("envivo"); aviso("Cámara conectada · <b>las fotos llegan solas</b>", { ic: "camara", sub: "Cada foto se guarda en el disco y en la nube" }); }, 500);
     siguienteEV(1800);
   });
@@ -1463,7 +1631,7 @@ function iniciarEnVivo() {
       const s = sesEnVivo(), g = ENV.fotos.filter(f => f.guardada && !f.borrada).length, tot = vivasEV().length;
       if (!(await accion(b, { espera: "Mandando…", listo: "Enviadas" }))) return;
       clearTimeout(ENV.t); ENV.conectada = false;
-      simularWA({ texto: `Hola. ¡Gracias por la sesión de hoy! Ya les dejamos un primer vistazo de ${g || tot} fotos en su galería privada. Las demás se las mandamos editadas esta semana.`, respuesta: "¡Qué emoción! Ya las estamos viendo.", nota: "" });
+      simularWA({ para: s.n, f: s.f, texto: `Hola. ¡Gracias por la sesión de hoy! Ya les dejamos un primer vistazo de ${g || tot} fotos en su galería privada. Las demás se las mandamos editadas esta semana.`, respuesta: "¡Qué emoción! Ya las estamos viendo.", nota: "" });
       alFeed("images", `<b>${s.n}</b>: ${tot} fotos de hoy en su galería · ${g} favoritas`);
       aviso(`Fotos de hoy en su galería · <b>${tot}</b>`, { ic: "images", sub: `${s.n} · ${g} marcadas como favoritas` });
       setTimeout(() => { ENV.fotos = []; pintarEnVivo(); pintarSubnav("envivo"); }, 900);
@@ -1474,7 +1642,7 @@ function iniciarEnVivo() {
     const f = ENV.fotos.find(x => x.id === li.dataset.f);
     if (e.target.closest(".ev-g")) return guardarEV(f, !f.guardada);
     if (e.target.closest(".ev-x")) {
-      f.borrada = true; cifrasEV(); tiraPF();
+      f.borrada = true; cifrasEV(); tiraPF(); sync();
       const fin = () => { li.remove(); if (!vivasEV().length) pintarEnVivo(); };
       if (calma) fin(); else li.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(0.95)" }], { duration: 220, easing: EASE, fill: "forwards" }).onfinish = fin;
       deshacer(`Foto #${f.num} borrada`, () => { f.borrada = false; pintarEnVivo(); tiraPF(); });
@@ -1519,6 +1687,786 @@ function pantallaFoto(f, manual) {
 function tiraPF() {
   if (!ENV.fam) return;
   $("#pf-tira").innerHTML = vivasEV().slice(-10).reverse().map(f => `<button type="button" data-pf="${f.id}" class="${ENV.actual === f ? "on" : ""}${f.guardada ? " amo" : ""}" aria-label="Ver la foto ${f.num}"><span class="foto ${f.c}" style="background-position:${f.pos}"></span></button>`).join("");
+}
+
+/* ---------- Recibos del estudio ---------- */
+const diaHace = k => { const d = new Date(); d.setHours(10, 30, 0, 0); d.setDate(d.getDate() - k); return d.toISOString(); };
+const fechaCorta = iso => new Date(iso).toLocaleDateString("es-GT", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
+const fechaLarga = iso => new Date(iso).toLocaleDateString("es-GT", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const numRec = n => String(n).padStart(6, "0");
+let NUM_REC = 123;
+const RECIBOS = [
+  { num: 123, fecha: diaHace(3), n: "Familia del parque", concepto: "Saldo · Familia en exterior", m: 425, forma: "Transferencia", boleta: "77410", saldo: 0, f: "f-familia" },
+  { num: 122, fecha: diaHace(4), n: "Quinceañera de noviembre", concepto: "Saldo · XV en estudio con video", m: 1200, forma: "Efectivo", saldo: 0, f: "f-xv" },
+  { num: 121, fecha: diaHace(6), n: "Colegio La Asunción", concepto: "Anticipo · Desfile y graduación", m: 2400, forma: "Depósito", boleta: "884512", saldo: 2400, f: "f-graduacion" },
+  { num: 120, fecha: diaHace(8), n: "Novios de diciembre", concepto: "Anticipo · Boda con video", m: 3900, forma: "Transferencia", boleta: "51208", saldo: 3900, f: "f-boda" },
+  { num: 118, fecha: diaHace(10), n: "Familia del parque", concepto: "Anticipo · Familia en exterior", m: 425, forma: "Tarjeta", saldo: 425, f: "f-familia" }
+];
+const FORMAS = [["Efectivo", "cash"], ["Transferencia", "banco"], ["Tarjeta", "tarjeta"], ["Depósito", "recibo"]];
+function letras(n) {
+  const U = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte", "veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"];
+  const D = ["", "", "", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+  const C = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+  const cien = x => { if (x === 100) return "cien"; const c = Math.floor(x / 100), r = x % 100; let t = C[c]; if (r) t += (t ? " " : "") + (r < 30 ? U[r] : D[Math.floor(r / 10)] + (r % 10 ? " y " + U[r % 10] : "")); return t; };
+  const ent = Math.floor(n), cent = Math.round((n - ent) * 100), mil = Math.floor(ent / 1000), r = ent % 1000;
+  let t = ent === 0 ? "cero" : (mil ? (mil === 1 ? "mil" : cien(mil).replace(/uno$/, "un") + " mil") : "") + (r ? (mil ? " " : "") + cien(r) : "");
+  t = t.replace(/uno$/, "un");
+  return t.charAt(0).toUpperCase() + t.slice(1) + (ent === 1 ? " quetzal" : " quetzales") + ` con ${String(cent).padStart(2, "0")}/100`;
+}
+function nuevoRecibo(o) {
+  const r = { num: ++NUM_REC, fecha: new Date().toISOString(), boleta: "", ...o };
+  RECIBOS.unshift(r);
+  pintarRecibos(); pintarFamPagos(); sync();
+  return r;
+}
+function reciboHTML(r, nuevo) {
+  return `<article class="recibo${nuevo ? " nuevo" : ""}" aria-label="Recibo número ${numRec(r.num)}">
+    <header class="rc-cab">
+      <span class="rc-logo"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span>
+      <div class="rc-est"><b>Foto González Studio</b><small>Fotografía y video</small><small>Residenciales Bella Aurora, zona 6, Retalhuleu</small><small>+502 5016 8853 · premiumdesigngt@gmail.com</small></div>
+    </header>
+    <div class="rc-titulo"><span>Recibo de pago</span><b>No. ${numRec(r.num)}</b></div>
+    <dl class="rc-datos">
+      <div><dt>Fecha</dt><dd>${fechaLarga(r.fecha)}</dd></div>
+      <div><dt>Recibimos de</dt><dd>${r.n}</dd></div>
+      <div><dt>La cantidad de</dt><dd>${letras(r.m)}</dd></div>
+      <div><dt>Por concepto de</dt><dd>${r.concepto}</dd></div>
+      <div><dt>Forma de pago</dt><dd>${r.forma}${r.boleta ? ` · referencia ${esc(r.boleta)}` : ""}</dd></div>
+    </dl>
+    <div class="rc-total"><span>Total recibido</span><b>${Q(r.m)}</b></div>
+    <div class="rc-saldo${r.saldo ? "" : " ok"}"><span>Saldo pendiente</span><b>${r.saldo ? Q(r.saldo) : "Q 0.00 · cancelado"}</b></div>
+    <div class="rc-sello" aria-hidden="true"><span>Pagado</span><small>${fechaCorta(r.fecha)}</small></div>
+    <footer class="rc-pie">
+      <div class="rc-firma"><span></span><small>Foto González Studio</small></div>
+      <p>Gracias por confiar en nosotros.</p>
+      <p class="rc-legal">Este recibo no sustituye la factura electrónica.</p>
+    </footer>
+  </article>`;
+}
+let RECIBO_ACT = null;
+function abrirRecibo(num, nuevo = false) {
+  const r = RECIBOS.find(x => x.num === num); if (!r) return;
+  RECIBO_ACT = r;
+  $("#recibo-t").textContent = `Recibo No. ${numRec(r.num)}`;
+  $("#recibo-cuerpo").innerHTML = reciboHTML(r, nuevo) + `<div class="rc-bts">
+    ${btn("Mandar por WhatsApp", "wa", "bt-1 bt-full", 'data-rc="wa"')}
+    <div class="rc-bts2">${btn("Compartir", "share", "bt-0", 'data-rc="comp"')}${btn("Imprimir o PDF", "printer", "bt-0", 'data-rc="imp"')}</div></div>`;
+  abrirHoja($("#hoja-recibo")); $("#recibo-cuerpo").scrollTop = 0;
+}
+function imprimirRecibo(r) {
+  const c = $("#imprimir"); c.innerHTML = reciboHTML(r);
+  document.documentElement.classList.add("imprimiendo");
+  const fin = () => { document.documentElement.classList.remove("imprimiendo"); c.innerHTML = ""; removeEventListener("afterprint", fin); };
+  addEventListener("afterprint", fin);
+  setTimeout(() => { window.print(); setTimeout(() => { if (document.documentElement.classList.contains("imprimiendo")) fin(); }, 1500); }, 60);
+}
+let REC_F = "hoy", REC_Q = "";
+function pintarRecibos() {
+  const ul = $("#recibos"); if (!ul) return;
+  const hoy = new Date(), q = normal(REC_Q.trim());
+  const vis = RECIBOS.filter(r => {
+    const d = new Date(r.fecha);
+    if (REC_F === "hoy" && d.toDateString() !== hoy.toDateString()) return false;
+    if (REC_F === "mes" && (d.getMonth() !== hoy.getMonth() || d.getFullYear() !== hoy.getFullYear())) return false;
+    return !q || normal([numRec(r.num), r.num, r.n, r.concepto, r.forma].join(" ")).includes(q);
+  });
+  ul.innerHTML = vis.length ? vis.map(r => `<li><button type="button" class="rec-fila" data-rnum="${r.num}">
+      <span class="rec-num">No.<b>${numRec(r.num)}</b></span>
+      <span class="cob-t"><b>${r.n}</b><small>${r.concepto} · ${r.forma}</small></span>
+      <span class="rec-m"><b>${Q(r.m)}</b><small>${fechaCorta(r.fecha)}</small></span></button></li>`).join("")
+    : `<li class="vacio">${REC_F === "hoy" && !q ? "Todavía no hay recibos hoy." : "Ningún recibo coincide."}</li>`;
+  const tot = vis.reduce((t, r) => t + r.m, 0);
+  $("#rec-n").textContent = vis.length ? `${vis.length} · ${Q(tot)}` : "";
+}
+function iniciarRecibos() {
+  pintarRecibos();
+  $("#recibos").addEventListener("click", e => { const b = e.target.closest("[data-rnum]"); if (b) abrirRecibo(Number(b.dataset.rnum)); });
+  $("#rec-q").addEventListener("input", e => { REC_Q = e.target.value; pintarRecibos(); });
+  $("#rec-seg").addEventListener("click", e => {
+    const b = e.target.closest("[data-rf]"); if (!b) return;
+    REC_F = b.dataset.rf;
+    $$("[data-rf]").forEach(x => x.setAttribute("aria-selected", x === b));
+    $("#rec-seg").style.setProperty("--i", ["hoy", "mes", "todos"].indexOf(REC_F));
+    pintarRecibos(); $$("#recibos li").forEach((li, i) => entra(li, i * 25));
+  });
+  $("#recibo-cuerpo").addEventListener("click", async e => {
+    const b = e.target.closest("[data-rc]"); if (!b || !RECIBO_ACT) return;
+    const r = RECIBO_ACT;
+    if (b.dataset.rc === "wa") {
+      if (!(await accion(b, { espera: "Abriendo WhatsApp…", listo: "Enviado" }))) return;
+      simularWA({ para: r.n, f: r.f, texto: `Hola. Le compartimos su recibo No. ${numRec(r.num)} por ${Q(r.m)} (${r.concepto}).${r.saldo ? ` Saldo pendiente: ${Q(r.saldo)}.` : " Su cuenta quedó cancelada."} ¡Gracias por su pago!`, respuesta: "¡Recibido, muchas gracias!", nota: "" });
+    } else if (b.dataset.rc === "comp") {
+      const texto = `Foto González Studio · Recibo No. ${numRec(r.num)}\n${r.n}\n${r.concepto}\nTotal recibido: ${Q(r.m)}`;
+      try { if (navigator.share) await navigator.share({ title: `Recibo No. ${numRec(r.num)}`, text: texto }); else simularWA({ texto, nota: "" }); } catch (er) { /* cerró la hoja */ }
+    } else imprimirRecibo(r);
+  });
+}
+/* Registrar un pago: forma de pago y recibo */
+let PAGO = null;
+function abrirPago(id) {
+  const c = COBRAR.find(x => x.id === id); if (!c || c.pagado) return;
+  PAGO = { id, forma: "Transferencia" };
+  $("#pago-cuerpo").innerHTML = `
+    <div class="pg-cab"><span class="foto ${c.f}" aria-hidden="true"></span><div><small>${c.que} · ${c.t}</small><b>${c.n}</b></div></div>
+    <p class="pg-monto">${Q(c.m)}</p>
+    <h4 class="grupo-t">¿Cómo pagó?</h4>
+    <div class="pg-formas" role="radiogroup" aria-label="Forma de pago">${FORMAS.map(([f, ic]) => `<button type="button" role="radio" aria-checked="${f === PAGO.forma}" data-forma="${f}">${ico(ic, 22)}<span>${f}</span></button>`).join("")}</div>
+    <label class="nr-campo pg-bol"><span>Número de boleta o referencia</span><input id="pg-bol" type="text" inputmode="numeric" maxlength="20" autocomplete="off" placeholder="Opcional"></label>
+    ${btn("Registrar y hacer recibo", "recibo", "bt-1 bt-full", 'id="pg-ok"')}`;
+  abrirHoja($("#hoja-pago"));
+}
+function iniciarPago() {
+  $("#pago-cuerpo").addEventListener("click", async e => {
+    const f = e.target.closest("[data-forma]");
+    if (f) {
+      PAGO.forma = f.dataset.forma;
+      $$("[data-forma]").forEach(x => x.setAttribute("aria-checked", x === f));
+      $(".pg-bol").hidden = PAGO.forma === "Efectivo";
+      if (!calma) f.animate([{ transform: "scale(0.95)" }, { transform: "scale(1)" }], { duration: 200, easing: EASE });
+      return;
+    }
+    const ok = e.target.closest("#pg-ok"); if (!ok) return;
+    if (!(await accion(ok, { espera: "Guardando…", listo: "Recibo listo", ms: 500 }))) return;
+    const boleta = PAGO.forma === "Efectivo" ? "" : ($("#pg-bol").value || "").trim();
+    const r = pagar(PAGO.id, { forma: PAGO.forma, boleta });
+    setTimeout(() => { cerrarHoja($("#hoja-pago"), true); if (r) setTimeout(() => abrirRecibo(r.num, true), 260); }, 450);
+  });
+}
+
+/* ---------- Pendientes de hoy, arriba de todo ---------- */
+let pendRAF = 0;
+function pendHoy() { cancelAnimationFrame(pendRAF); pendRAF = requestAnimationFrame(pintarPendHoy); }
+function pintarPendHoy() {
+  const caja = $("#pendientes"); if (!caja) return;
+  const cob = COBRAR.filter(c => !c.pagado && !c.cancelada), resN = RES.filter(r => r.estado === "nueva").length, sc = sinCopia();
+  const ops = OPORT.filter(o => !o.estado).length, tar = TAREAS.filter(t => !t.hecha && (!t.para || t.para === YO.rol)).length;
+  const ps = proxima(), mt = maletaDe(ps).length + (UTIL[ps.tipo] || []).length, mh = (MAL[ps.id] || new Set()).size;
+  const items = [
+    cob.length && { id: "cob", ic: "cash", c: "#2F7D4F", n: cob.length, t: cob.length === 1 ? "Cobro pendiente" : "Cobros pendientes", s: Q(cob.reduce((t, c) => t + c.m, 0)), ir: "cobrar" },
+    ops && { id: "msg", ic: "wa", c: "#8E2234", n: ops, t: ops === 1 ? "Mensaje por mandar" : "Mensajes por mandar", s: "Ventas posibles", ir: "msg" },
+    resN && { id: "res", ic: "calendar", c: "#7A5C8E", n: resN, t: resN === 1 ? "Reserva por confirmar" : "Reservas por confirmar", s: "De la página y WhatsApp", ir: "reservas" },
+    ps.d === hoyIdx() && mh < mt && { id: "mal", ic: "maleta", c: "#A24A24", n: `${mh}/${mt}`, t: "Maleta de hoy", s: ps.t, ir: "maleta" },
+    sc && { id: "resp", ic: "sd", c: "#B7792A", n: sc, t: sc === 1 ? "Tarjeta sin respaldo" : "Tarjetas sin respaldo", s: "No las borre todavía", ir: "respaldo" },
+    tar && { id: "tar", ic: "tomas", c: "#1F3A5F", n: tar, t: tar === 1 ? "Tarea para usted" : "Tareas para usted", s: "Del equipo", ir: "tar" }
+  ].filter(Boolean);
+  const antes = new Set($$("[data-pend]", caja).map(b => b.dataset.pend));
+  caja.innerHTML = `<div class="pend-cab"><h2 id="h-pend">Pendientes de hoy</h2><span class="tenue chico">${items.length ? items.length : ""}</span></div>
+    ${items.length ? `<div class="pend-grid">${items.map(x => `<button type="button" class="pend" data-pend="${x.id}" data-pir="${x.ir}" style="--c:${x.c}">
+      <span class="pend-ic">${ico(x.ic, 20)}</span><b class="pend-n">${x.n}</b><span class="pend-t">${x.t}</span><small>${x.s}</small>${ico("chev", 16)}</button>`).join("")}</div>`
+      : `<p class="pend-ok">${icoListo()}Todo al día. Buen trabajo.</p>`}`;
+  $$("[data-pend]", caja).forEach((b, i) => { if (antes.size && !antes.has(b.dataset.pend)) entra(b, i * 30); });
+}
+function iniciarPendientes() {
+  pintarPendHoy();
+  $("#pendientes").addEventListener("click", e => {
+    const b = e.target.closest("[data-pir]"); if (!b) return;
+    const k = b.dataset.pir;
+    if (k === "msg") return $("#oport").closest(".bloque").scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "start" });
+    if (k === "tar") return $("#tareas-b").scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "start" });
+    if (k === "maleta") return abrirSesion(proxima().id, "maleta");
+    irVista(k);
+  });
+}
+
+/* ---------- Buscador para todo ---------- */
+const GAL_LISTA = [["parque", "Familia del parque", "Familia en exterior · 24 fotos", "f-familia"], ["xv", "Quinceañera de noviembre", "XV en estudio · 180 fotos", "f-xv"], ["oct", "Novios de octubre", "Boda · 420 fotos", "f-boda"], ["dic", "Novios de diciembre", "Boda con video · 610 fotos", "f-pareja"], ["bebe", "Familia del recién nacido", "Recién nacido · 38 fotos", "f-bebe"]];
+const PANTALLAS = [["Nueva reserva", "Apartar una fecha paso a paso", "plus", "nueva"], ["Cámara en vivo", "Conectar la cámara", "camara", "envivo"], ["Subir fotos", "A la galería de una familia", "subir", "subir"], ["Ofertas por WhatsApp", "A un grupo de clientes", "send", "ofertas"], ["Contacto y portafolio", "Compartir con un toque", "contacto", "compartir"], ["Tarjetas y respaldo", "Disco y nube", "sd", "respaldo"], ["Recibos", "Todos los pagos", "recibo", "cobrar"]];
+const SUGIERE = ["XV", "Champerico", "Saldo", "Boda", "Bebé", "Recibo"];
+function indiceBusca() {
+  const L = [];
+  CLI.forEach(c => L.push({ g: "Clientes", t: c.n, s: c.prox.t, f: c.hist[0][3], txt: [c.n, c.desde, c.tag, c.nota, c.prox.t, ...c.hist.map(h => h[1]), c.g.sitio].join(" "), ir: () => { irVista("clientes"); elegirCliente(c.id); if (fichaEnHoja()) { $("#cli-cuerpo").scrollTop = 0; abrirHoja($("#hoja-cli")); } } }));
+  AG.forEach(s => L.push({ g: "Sesiones", t: s.t, s: `${cuandoTxt(s.d)} · ${hora12(s.h)} · ${s.n}`, f: s.f, txt: [s.t, s.n, s.lugar, s.tipo, DIAS[s.d], cuandoTxt(s.d)].join(" "), ir: () => { irVista("agenda"); abrirSesion(s.id); } }));
+  RES.filter(r => r.estado !== "lista").forEach(r => L.push({ g: "Reservas", t: r.t, s: `${r.n} · ${fechaTxt(fechaEn(r.k))}`, f: r.f, txt: [r.t, r.n, r.origen, "reserva"].join(" "), ir: () => irVista("reservas") }));
+  COBRAR.filter(c => !c.pagado && !c.cancelada).forEach(c => L.push({ g: "Por cobrar", t: `${c.n}`, s: `${c.que} · ${c.t} · ${Q(c.m)}`, f: c.f, txt: [c.n, c.que, c.t, "saldo cobro anticipo debe"].join(" "), ir: () => { irVista("cobrar"); setTimeout(() => { const li = $(`.cob[data-id="${c.id}"]`); if (li) { li.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "center" }); li.classList.add("resalta"); setTimeout(() => li.classList.remove("resalta"), 1600); } }, 80); } }));
+  RECIBOS.forEach(r => L.push({ g: "Recibos", t: `Recibo No. ${numRec(r.num)}`, s: `${r.n} · ${Q(r.m)} · ${fechaCorta(r.fecha)}`, ic: "recibo", txt: [numRec(r.num), r.n, r.concepto, r.forma, "recibo pago"].join(" "), ir: () => abrirRecibo(r.num) }));
+  GAL_LISTA.forEach(([id, n, s, f]) => L.push({ g: "Galerías", t: n, s, f, txt: [n, s, "galería fotos enlace"].join(" "), ir: () => { irVista("fotos"); setTimeout(() => $(`[data-gal-id="${id}"]`)?.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "center" }), 80); } }));
+  PANTALLAS.forEach(([t, s, ic, k]) => L.push({ g: "Ir a", t, s, ic, txt: t + " " + s, ir: () => k === "nueva" ? (irVista("reservas"), abrirNuevaReserva()) : k === "subir" ? (irVista("fotos"), abrirSubida()) : irVista(k) }));
+  return L;
+}
+let BU_RES = [];
+function marcar1(t, q) {
+  if (!q) return esc(t);
+  const n = normal(t), w = q.split(/\s+/)[0], i = n.indexOf(w);
+  if (i < 0) return esc(t);
+  return esc(t.slice(0, i)) + "<mark>" + esc(t.slice(i, i + w.length)) + "</mark>" + esc(t.slice(i + w.length));
+}
+function pintarBusca() {
+  const raw = $("#bu-q").value, q = normal(raw.trim()), c = $("#bu-cuerpo");
+  if (!q) {
+    c.innerHTML = `<p class="bu-et">Pruebe con</p><div class="bu-sug">${SUGIERE.map(x => `<button type="button" data-sug="${x}">${x}</button>`).join("")}</div>
+      <p class="bu-et">Ir rápido a</p><div class="bu-grupo">${PANTALLAS.map((p, i) => filaBu({ t: p[0], s: p[1], ic: p[2] }, "p" + i, "")).join("")}</div>`;
+    BU_RES = indiceBusca().filter(x => x.g === "Ir a");
+    return;
+  }
+  const ws = q.split(/\s+/), todo = indiceBusca().filter(x => ws.every(w => normal(x.txt).includes(w)));
+  BU_RES = todo;
+  if (!todo.length) { c.innerHTML = `<p class="bu-nada">${ico("search", 28)}<span>Nada con «${esc(raw.trim())}».<br>Pruebe con un nombre, un lugar o un tipo de sesión.</span></p>`; return; }
+  const grupos = {};
+  todo.forEach((x, i) => (grupos[x.g] ||= []).push([x, i]));
+  c.innerHTML = Object.entries(grupos).map(([g, xs]) => `<p class="bu-et">${g} <span>${xs.length}</span></p><div class="bu-grupo">${xs.slice(0, 5).map(([x, i]) => filaBu(x, i, q)).join("")}</div>`).join("");
+  $$(".bu-fila", c).forEach((b, i) => entra(b, Math.min(i, 8) * 20));
+}
+function filaBu(x, i, q) {
+  return `<button type="button" class="bu-fila" data-bi="${i}">${x.f ? `<span class="foto bu-f ${x.f}" aria-hidden="true"></span>` : `<span class="bu-ic">${ico(x.ic, 18)}</span>`}
+    <span class="bu-t"><b>${marcar1(x.t, q)}</b><small>${esc(x.s)}</small></span>${ico("chev", 16)}</button>`;
+}
+function abrirBusca() {
+  const b = $("#busca"); if (!b.hidden) return;
+  b._foco = document.activeElement;
+  b.hidden = false; requestAnimationFrame(() => b.classList.add("ver"));
+  document.documentElement.classList.add("con-hoja");
+  $("#bu-q").value = ""; pintarBusca();
+  setTimeout(() => $("#bu-q").focus(), 30);
+}
+function cerrarBusca() {
+  const b = $("#busca"); if (b.hidden) return;
+  b.classList.remove("ver"); setTimeout(() => { if (!b.classList.contains("ver")) b.hidden = true; }, 260);
+  bloquear();
+}
+function iniciarBusca() {
+  document.addEventListener("click", e => { if (e.target.closest("[data-buscar]")) abrirBusca(); });
+  addEventListener("keydown", e => {
+    if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !/input|textarea/i.test(document.activeElement.tagName))) { e.preventDefault(); abrirBusca(); }
+    if (e.key === "Escape" && !$("#busca").hidden) { e.stopImmediatePropagation(); cerrarBusca(); }
+  }, true);
+  $("#bu-q").addEventListener("input", pintarBusca);
+  $("#bu-q").addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const x = BU_RES[0]; if (x) { cerrarBusca(); setTimeout(x.ir, 120); } }
+    if (e.key === "ArrowDown") { e.preventDefault(); $(".bu-fila", $("#bu-cuerpo"))?.focus(); }
+  });
+  $("#bu-cuerpo").addEventListener("keydown", e => {
+    if (!/Arrow(Up|Down)/.test(e.key)) return;
+    const fs = $$(".bu-fila", $("#bu-cuerpo")), i = fs.indexOf(document.activeElement); if (i < 0) return;
+    e.preventDefault(); const n = fs[i + (e.key === "ArrowDown" ? 1 : -1)]; (n || $("#bu-q")).focus();
+  });
+  $("#bu-cuerpo").addEventListener("click", e => {
+    const s = e.target.closest("[data-sug]"); if (s) { $("#bu-q").value = s.dataset.sug; pintarBusca(); $("#bu-q").focus(); return; }
+    const f = e.target.closest("[data-bi]"); if (!f) return;
+    const k = f.dataset.bi, x = k.startsWith("p") ? BU_RES[Number(k.slice(1))] : BU_RES[Number(k)];
+    if (x) { cerrarBusca(); setTimeout(x.ir, 140); }
+  });
+  $("#bu-cancel").addEventListener("click", cerrarBusca);
+  $("#busca").addEventListener("click", e => { if (e.target.id === "busca") cerrarBusca(); });
+}
+
+/* ---------- Tiempo real: varios teléfonos y aparatos a la vez ---------- */
+const ROLES = { "Dueño": ["D", "#8E2234", "iPhone"], "Recepción": ["R", "#7A5C8E", "iPad"], "Editor": ["E", "#2F7D4F", "computadora"], "Asistente": ["A", "#A24A24", "iPhone"] };
+const qs = new URLSearchParams(location.search);
+const EMBED = qs.get("embed") === "1";
+function tipoAparato() {
+  if (qs.get("aparato")) return qs.get("aparato");
+  const ua = navigator.userAgent;
+  if (/iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return "iPad";
+  if (matchMedia("(pointer: coarse)").matches) return Math.min(screen.width, screen.height) < 600 ? "iPhone" : "tablet";
+  return "computadora";
+}
+const YO = { id: Math.random().toString(36).slice(2, 9), t: Date.now() + Math.random(), rol: ROLES[qs.get("rol")] ? qs.get("rol") : "Dueño", aparato: tipoAparato() };
+const PEERS = new Map();
+let canal = null; try { canal = new BroadcastChannel("fgs-sistema-completo"); } catch (e) { canal = null; }
+let REMOTO = false, syncT = 0;
+const icoAparato = a => a === "iPhone" ? "celu" : a === "iPad" || a === "tablet" ? "tableta" : "compu";
+const aparatoTxt = a => a === "computadora" ? "la computadora" : `el ${a}`;
+function enviar(tipo, datos = {}) { if (!canal || REMOTO) return; try { canal.postMessage({ tipo, de: YO.id, rol: YO.rol, aparato: YO.aparato, t: YO.t, datos }); } catch (e) { /* sin canal */ } }
+const lider = () => [...PEERS.values()].every(p => p.t > YO.t);
+function sync() { if (REMOTO || !canal || !PEERS.size) return; clearTimeout(syncT); syncT = setTimeout(() => enviar("estado", estado()), 160); }
+const setArr = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, [...v]]));
+function estado() {
+  return { S: { ...S }, NUM_REC, COBRAR, RECIBOS, AG, RES, TAREAS, TARJ: TARJ.map(t => ({ ...t, copiando: null })),
+    OP: OPORT.map(o => [o.id, o.estado || null, o.logro]), MAL: setArr(MAL), TOM: setArr(TOM), AGO: [...AG_OFRECIDO], CLE: [...CL.enviadas],
+    GAL: { ...GAL }, INV: { ...INV }, REC: { ...REC }, ENL: ENLACES,
+    G: { sel: G.sel, pagadas: [...G.pagadas], completa: G.completa, extraVendido: G.extraVendido, avisoMas: G.avisoMas },
+    ENV: { ses: ENV.ses, conectada: ENV.conectada, pausa: ENV.pausa, fotos: ENV.fotos, n: ENV.n, camDe: ENV.camDe } };
+}
+const reemplazar = (arr, nuevo) => arr.splice(0, arr.length, ...nuevo);
+function aplicar(e) {
+  REMOTO = true;
+  try {
+    Object.assign(S, e.S); NUM_REC = e.NUM_REC;
+    reemplazar(COBRAR, e.COBRAR); reemplazar(RECIBOS, e.RECIBOS); reemplazar(AG, e.AG); reemplazar(RES, e.RES); reemplazar(TAREAS, e.TAREAS); reemplazar(TARJ, e.TARJ);
+    e.OP.forEach(([id, est, logro]) => { const o = OPORT.find(x => x.id === id); if (o) { o.estado = est || undefined; if (logro) o.logro = logro; } });
+    [[MAL, e.MAL], [TOM, e.TOM]].forEach(([dst, src]) => { Object.keys(dst).forEach(k => delete dst[k]); Object.entries(src).forEach(([k, v]) => dst[k] = new Set(v)); });
+    AG_OFRECIDO.clear(); e.AGO.forEach(x => AG_OFRECIDO.add(x)); CL.enviadas = new Set(e.CLE);
+    Object.assign(GAL, e.GAL); Object.assign(INV, e.INV); Object.assign(REC, e.REC); Object.assign(ENLACES, e.ENL);
+    Object.assign(G, { sel: e.G.sel, pagadas: new Set(e.G.pagadas), completa: e.G.completa, extraVendido: e.G.extraVendido, avisoMas: e.G.avisoMas });
+    const nuevas = e.ENV.fotos.length > ENV.fotos.length;
+    Object.assign(ENV, { ses: e.ENV.ses, conectada: e.ENV.conectada, pausa: e.ENV.pausa, fotos: e.ENV.fotos, n: e.ENV.n, camDe: e.ENV.camDe });
+    if (ENV.camDe !== YO.id) clearTimeout(ENV.t);
+    repintar(nuevas);
+  } finally { REMOTO = false; }
+}
+function repintar(fotosNuevas) {
+  pintarCifras();
+  OPORT.forEach(o => { const li = $(`.op[data-id="${o.id}"]`); if (li) { li.classList.toggle("lograda", o.estado === "lograda"); $(".op-pie", li).innerHTML = pieOp(o); } });
+  pintarPendientes(); pintarCobrar(); pintarRecibos(); pintarAgenda(); pintarAvisoRes();
+  if (VISTA === "reservas") { pintarReservas(); pintarRecordatorios(); }
+  pintarClientes(); elegirCliente(CL.sel); pintarGalerias(); actualizarGaleria(); pintarFamPagos(); pintarRespaldo(); pintarTareas(); pintarMas();
+  if (VISTA === "envivo") pintarEnVivo(); else cifrasEV();
+  if (SESV.includes(VISTA)) pintarSubnav(VISTA);
+  if (SES) { SES = AG.find(x => x.id === SES.id) || null; if (SES && abiertas.has($("#hoja-ses"))) pintarSesion(); else if (!SES) cerrarHoja($("#hoja-ses"), true); }
+  if (fotosNuevas && ENV.fam) pantallaFoto(vivasEV().pop());
+  pendHoy();
+}
+function miembros() {
+  const reales = [{ ...YO, yo: true }, ...[...PEERS.entries()].map(([id, p]) => ({ id, ...p }))];
+  const usados = new Set(reales.map(m => m.rol));
+  const sim = ["Dueño", "Recepción", "Editor"].filter(r => !usados.has(r)).map(r => ({ rol: r, aparato: ROLES[r][2], sim: true }));
+  return [...reales, ...sim];
+}
+function avatarEq(m, chico) {
+  const [ini, c] = ROLES[m.rol] || ["?", "#5B574F"];
+  return `<span class="av-eq${chico ? " chico" : ""}" style="--c:${c}" title="${m.rol} · ${m.aparato}"><b>${ini}</b><i>${ico(icoAparato(m.aparato), 10)}</i></span>`;
+}
+function pintarEquipo() {
+  const ms = miembros(), reales = ms.filter(m => !m.sim).length;
+  const tira = $("#equipo-vivo");
+  if (tira) tira.innerHTML = `<div class="eq-lista">${ms.map(m => `<span class="eq-m${m.yo ? " yo" : ""}">${avatarEq(m)}<span><b>${m.yo ? "Usted" : m.rol}</b><small>${m.yo ? `${m.rol} · ` : ""}${m.aparato === "computadora" ? "compu" : m.aparato}</small></span></span>`).join("")}</div>
+    <div class="eq-acc"><span class="eq-vivo"><i></i>${ms.length} en línea${reales > 1 ? ` · ${reales} aparatos de verdad` : ""}</span>
+    ${EMBED ? "" : `${btn("Ver en dos teléfonos", "celu", "bt-0 bt-chico", 'data-dos="1"')}${btn("Abrir otra ventana", "share", "bt-0 bt-chico eq-otra", 'data-otra-v="1"')}`}</div>`;
+  const lado = $("#equipo-lado");
+  if (lado) lado.innerHTML = `<p class="mono">EN LÍNEA</p><div class="eq-avs">${ms.map(m => avatarEq(m, true)).join("")}</div>`;
+}
+function feedLocalDe(rol) { const [ini, c] = ROLES[rol] || ["?", "#5B574F"]; return `<span class="quien" style="--c:${c}" title="${rol}">${ini}</span>`; }
+function alFeed(ic, html, clave = "") { feedLocal(ic, html, clave, YO.rol); enviar("feed", { ic, html, clave }); sync(); }
+function alFeedDe(rol, ic, html) { feedLocal(ic, html, "", rol); enviar("feed", { ic, html, quien: rol }); sync(); }
+const avisoLocal = aviso;
+aviso = (html, op = {}) => { const el = avisoLocal(html, op); enviar("aviso", { html, op }); sync(); return el; };
+function iniciarTiempoReal() {
+  pintarEquipo();
+  if (EMBED) document.documentElement.classList.add("embed");
+  document.addEventListener("click", e => {
+    if (e.target.closest("[data-dos]")) abrirDosTel();
+    if (e.target.closest("[data-otra-v]")) {
+      const libres = Object.keys(ROLES).filter(r => !miembros().some(m => !m.sim && m.rol === r));
+      window.open(`${location.pathname}?rol=${encodeURIComponent(libres[0] || "Asistente")}`, "_blank");
+    }
+  });
+  if (!canal) return;
+  canal.onmessage = ({ data: m }) => {
+    if (!m || m.de === YO.id) return;
+    const nuevo = !PEERS.has(m.de);
+    if (m.tipo === "adios") { PEERS.delete(m.de); pintarEquipo(); pendHoy(); return; }
+    PEERS.set(m.de, { rol: m.rol, aparato: m.aparato, t: m.t, visto: Date.now() });
+    if (m.rol === YO.rol && m.t < YO.t) { const libre = Object.keys(ROLES).find(r => r !== m.rol && ![...PEERS.values()].some(p => p.rol === r)); if (libre) { YO.rol = libre; enviar("hola"); } }
+    if (nuevo) {
+      enviar("hola");
+      if (lider()) setTimeout(() => enviar("estado", estado()), 250);
+      avisoLocal(`Se conectó <b>${m.rol}</b>`, { ic: icoAparato(m.aparato), sub: `Desde ${aparatoTxt(m.aparato)}: lo que haga se ve aquí al instante` });
+      pintarEquipo(); pendHoy();
+    }
+    if (m.tipo === "estado") aplicar(m.datos);
+    else if (m.tipo === "feed") feedLocal(m.datos.ic, m.datos.html, m.datos.clave, m.datos.quien || m.rol);
+    else if (m.tipo === "aviso") avisoLocal(m.datos.html, { ...m.datos.op, sub: `${m.datos.op?.sub ? m.datos.op.sub + " · " : ""}desde ${aparatoTxt(m.aparato)} de ${m.rol}` });
+    else if (m.tipo === "tarea" && m.datos.para === YO.rol) avisoLocal(`Le asignaron: <b>${esc(m.datos.t)}</b>`, { ic: "tomas", sub: `${m.rol} se la pasó desde ${aparatoTxt(m.aparato)}` });
+  };
+  enviar("hola");
+  setInterval(() => {
+    enviar("hola");
+    const ya = Date.now(); let cambio = false;
+    PEERS.forEach((p, k) => { if (ya - p.visto > 11000) { PEERS.delete(k); cambio = true; } });
+    if (cambio) { pintarEquipo(); pendHoy(); }
+  }, 4000);
+  addEventListener("pagehide", () => enviar("adios"));
+}
+/* Dos teléfonos lado a lado (cada uno es el sistema de verdad, conectado al otro) */
+function abrirDosTel() {
+  const d = $("#dos-tel"), tels = $("#dt-tels");
+  tels.innerHTML = [["Recepción", "iPhone"], ["Editor", "iPhone"]].map(([rol, ap]) => `<figure class="dt-marco"><div class="dt-esc"><iframe title="Teléfono de ${rol}" src="${location.pathname}?embed=1&rol=${encodeURIComponent(rol)}&aparato=${ap}"></iframe></div><figcaption>${avatarEq({ rol, aparato: ap }, true)}<span>Teléfono de <b>${rol}</b></span></figcaption></figure>`).join("");
+  d.hidden = false; requestAnimationFrame(() => d.classList.add("ver"));
+  document.documentElement.classList.add("con-hoja");
+  escalarDosTel(); setTimeout(() => $("#dt-x").focus({ preventScroll: true }), 80);
+}
+function escalarDosTel() {
+  const tels = $("#dt-tels"); if (!tels || $("#dos-tel").hidden) return;
+  const W = tels.clientWidth, H = tels.clientHeight - 40, n = 2, gap = 16;
+  const esc2 = Math.min(1, (W - gap * (n - 1) - 16 * n) / n / 390, (H - 16) / 844);
+  $$(".dt-esc", tels).forEach(x => { x.style.setProperty("--e", esc2.toFixed(3)); });
+}
+function cerrarDosTel() {
+  const d = $("#dos-tel"); d.classList.remove("ver");
+  setTimeout(() => { d.hidden = true; $("#dt-tels").innerHTML = ""; }, 280);
+  bloquear();
+}
+
+/* ---------- Tareas del equipo ---------- */
+const TAREAS = [
+  { id: "t1", t: "Editar las 38 fotos del recién nacido", para: "Editor", hecha: false },
+  { id: "t2", t: "Confirmar las reservas nuevas", para: "Recepción", hecha: false },
+  { id: "t3", t: "Llamar a los novios de octubre por el saldo", para: null, hecha: false },
+  { id: "t4", t: "Recoger el álbum 30×30 en el laboratorio", para: null, hecha: false }
+];
+let TAR_ASIG = null;
+function pintarTareas() {
+  const ul = $("#tareas"); if (!ul) return;
+  const orden = [...TAREAS].sort((a, b) => a.hecha - b.hecha);
+  ul.innerHTML = orden.map(t => `<li class="tar${t.hecha ? " hecha" : ""}" data-tid="${t.id}">
+    <button type="button" class="chk tar-chk" role="checkbox" aria-checked="${t.hecha}" aria-label="Marcar como hecha: ${esc(t.t)}"><span class="caja">${t.hecha ? icoListo() : ""}</span></button>
+    <span class="tar-t">${esc(t.t)}</span>
+    ${t.para ? `<button type="button" class="tar-para" data-asig="1" aria-label="Cambiar a quién le toca">${avatarEq({ rol: t.para, aparato: (miembros().find(m => m.rol === t.para) || {}).aparato || ROLES[t.para][2] }, true)}<span>${t.para}</span></button>`
+      : `<button type="button" class="tar-para vacia" data-asig="1">${ico("userplus", 15)}<span>Asignar</span></button>`}
+    ${TAR_ASIG === t.id ? `<div class="tar-asig">${Object.keys(ROLES).slice(0, 3).map(r => `<button type="button" class="chip-b" data-a="${r}">${r}</button>`).join("")}</div>` : ""}
+  </li>`).join("");
+  const pend = TAREAS.filter(t => !t.hecha).length;
+  $("#tar-n").textContent = pend ? `${pend} por hacer` : "Todo hecho";
+  pendHoy();
+}
+function iniciarTareas() {
+  pintarTareas();
+  $("#tareas").addEventListener("click", e => {
+    const li = e.target.closest(".tar"); if (!li) return;
+    const t = TAREAS.find(x => x.id === li.dataset.tid);
+    if (e.target.closest(".tar-chk")) {
+      t.hecha = !t.hecha;
+      if (t.hecha) alFeed("check", `Tarea hecha: <b>${esc(t.t)}</b>`); else sync();
+      const c = $(".tar-chk .caja", li); c.innerHTML = t.hecha ? icoListo() : ""; li.classList.toggle("hecha", t.hecha); $(".tar-chk", li).setAttribute("aria-checked", t.hecha);
+      setTimeout(() => { pintarTareas(); $$("#tareas .tar").forEach((x, i) => entra(x, i * 20)); }, 420);
+      return;
+    }
+    if (e.target.closest("[data-asig]")) { TAR_ASIG = TAR_ASIG === t.id ? null : t.id; pintarTareas(); entra($(".tar-asig", $(`.tar[data-tid="${t.id}"]`))); return; }
+    const a = e.target.closest("[data-a]");
+    if (a) {
+      t.para = a.dataset.a; TAR_ASIG = null; pintarTareas();
+      const m = miembros().find(x => x.rol === t.para);
+      enviar("tarea", { t: t.t, para: t.para });
+      alFeed("tomas", `Tarea para <b>${t.para}</b>: ${esc(t.t)}`);
+      avisoLocal(`Le llegó a <b>${t.para}</b>`, { ic: icoAparato(m?.aparato), sub: `En ${aparatoTxt(m?.aparato || ROLES[t.para][2])}${m && !m.sim ? " · al instante" : ""}` });
+    }
+  });
+  $("#tar-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const v = $("#tar-in").value.trim(); if (v.length < 3) { $("#tar-in").focus(); return; }
+    TAREAS.unshift({ id: "t" + Date.now(), t: v, para: null, hecha: false });
+    $("#tar-in").value = ""; pintarTareas(); entra($("#tareas .tar"));
+    alFeed("plus", `Tarea nueva: <b>${esc(v)}</b>`);
+  });
+}
+
+/* ---------- Más: mosaico con fotos y datos en vivo ---------- */
+function pintarMas() {
+  const m = $("#mosaico"); if (!m) return;
+  const sc = sinCopia(), eligiendo = 1, sinEnviar = GAL.publicadaBebe ? 0 : 1;
+  const tiles = [
+    { ir: "fotos", t: "Galerías", f: "f-xv", d: `${eligiendo} familia eligiendo ahora`, vivo: true, x: sinEnviar ? `${sinEnviar} por mandar` : "" },
+    { ir: "compartir", t: "Portafolio", f: "f-boda", d: "6 álbumes para mandar" },
+    { ir: "ofertas", t: "Ofertas", f: "f-camisola", d: "27 apartaron con la última" },
+    { ir: "respaldo", t: "Respaldo", f: "f-graduacion", d: sc ? `${sc} ${sc === 1 ? "tarjeta" : "tarjetas"} sin copia` : "Todo en dos lugares", alerta: !!sc },
+    { ir: "pagina", t: "Su página", f: "f-familia", d: webN ? `${webN} ${webN === 1 ? "aviso nuevo" : "avisos nuevos"}` : "Lo que ven en internet", ancho: true }
+  ];
+  m.innerHTML = tiles.map(x => `<button type="button" class="mos${x.ancho ? " ancho" : ""}${x.alerta ? " alerta" : ""}" data-ir="${x.ir}">
+    <span class="foto ${x.f}" aria-hidden="true"></span><span class="mos-som" aria-hidden="true"></span>
+    ${x.x ? `<span class="mos-x">${x.x}</span>` : ""}
+    <span class="mos-txt"><b>${x.t}</b><small>${x.vivo ? "<i></i>" : x.alerta ? ico("alerta", 13) : ""}${x.d}</small></span></button>`).join("")
+    + `<button type="button" class="mos ancho eq" data-dos="1"><span class="mos-eq">${miembros().map(x => avatarEq(x)).join("")}</span><span class="mos-txt"><b>Equipo en vivo</b><small><i></i>${miembros().length} en línea · véalo en dos teléfonos</small></span></button>`;
+}
+
+/* ---------- Subir fotos a la galería de una familia ---------- */
+const SUB = { gal: "bebe", fotos: [], fase: "elegir", url: [] };
+const GAL_SUB = GAL_LISTA.filter(g => g[0] !== "oct");
+function abrirSubida(gal) {
+  SUB.url.forEach(u => URL.revokeObjectURL(u)); Object.assign(SUB, { gal: gal || SUB.gal || "bebe", fotos: [], fase: "elegir", url: [] });
+  pintarSubida(); abrirHoja($("#hoja-sub")); $("#sub-cuerpo").scrollTop = 0;
+}
+function pintarSubida() {
+  const c = $("#sub-cuerpo"), g = GAL_LISTA.find(x => x[0] === SUB.gal);
+  if (SUB.fase === "elegir") {
+    c.innerHTML = `<h4 class="grupo-t">¿A qué galería?</h4>
+      <div class="sub-gals">${GAL_SUB.map(([id, n, s, f]) => `<button type="button" class="nr-cli" data-sg="${id}" aria-pressed="${id === SUB.gal}"><span class="foto av ${f}" aria-hidden="true"></span><b>${n}</b></button>`).join("")}</div>
+      <label class="sub-zona" id="sub-zona" for="sub-in"><span class="sub-zic">${ico("subir", 30)}</span><b>Elegir fotos del aparato</b><small>Del carrete del iPhone, del iPad o de la compu. También puede arrastrarlas aquí.</small>
+        <input id="sub-in" type="file" accept="image/*" multiple class="sr"></label>
+      ${btn("Usar 24 fotos de muestra", "images", "bt-0 bt-full", 'id="sub-muestra"')}
+      <p class="sub-nota">${ico("lock", 14)}En el demo las fotos no salen de su aparato.</p>`;
+    return;
+  }
+  const tot = SUB.fotos.length, listas = SUB.fotos.filter(f => f.fase === "lista").length;
+  c.innerHTML = `<div class="sub-cab"><span class="foto ${g[3]}" aria-hidden="true"></span><div><small>Subiendo a</small><b>${g[1]}</b></div></div>
+    <div class="sub-pasos"><span class="on" id="sp-1">${ico("subir", 14)}Subir</span><span id="sp-2">${ico("lock", 14)}Marca de agua</span><span id="sp-3">${ico("check", 14)}Lista</span></div>
+    <div class="sub-stats"><b id="sub-n">${listas} de ${tot}</b><span id="sub-vel">Preparando…</span></div>
+    <div class="prog sub-prog"><i id="sub-barra" style="transform:scaleX(${listas / tot})"></i></div>
+    <ul class="sub-grid" id="sub-grid">${SUB.fotos.map((f, i) => `<li class="sub-ft ${f.fase}" data-si="${i}"><span class="foto ${f.c || ""}" style="${f.url ? `background-image:url('${f.url}')` : `background-position:${f.pos}`}" aria-hidden="true"></span>
+      <svg class="sub-anillo" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" class="an-pista"/><circle cx="18" cy="18" r="15" class="an-lleno" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg>
+      <span class="sub-wm" aria-hidden="true">FOTO GONZÁLEZ</span><span class="sub-ok">${ico("check", 12)}</span></li>`).join("")}</ul>
+    <div class="sub-fin" id="sub-fin" hidden></div>`;
+}
+function empezarSubida(lista) {
+  SUB.fotos = lista; SUB.fase = "subiendo"; pintarSubida();
+  let i = 0, activas = 0, bytes = 0; const t0 = performance.now(), total = lista.length;
+  const grid = $("#sub-grid");
+  const paso = () => {
+    while (activas < 3 && i < total) {
+      const k = i++, f = SUB.fotos[k], li = $(`[data-si="${k}"]`, grid), ring = $(".an-lleno", li), dur = calma ? 200 : 650 + Math.random() * 700;
+      activas++; f.fase = "subiendo"; li.className = "sub-ft subiendo";
+      const ini = performance.now();
+      const anima = ahora => {
+        const p = Math.min(1, (ahora - ini) / dur);
+        ring.style.strokeDashoffset = 94.25 * (1 - p);
+        if (p < 1) return requestAnimationFrame(anima);
+        f.fase = "marca"; li.className = "sub-ft marca"; bytes += f.mb;
+        setTimeout(() => {
+          f.fase = "lista"; li.className = "sub-ft lista"; activas--;
+          const listas = SUB.fotos.filter(x => x.fase === "lista").length, seg = (performance.now() - t0) / 1000;
+          $("#sub-n").textContent = `${listas} de ${total}`;
+          $("#sub-vel").textContent = listas < total ? `${(bytes / seg).toFixed(1)} MB/s · quedan ${Math.max(1, Math.round((total - listas) * seg / listas))} s` : `${bytes.toFixed(0)} MB en ${seg.toFixed(1)} s`;
+          $("#sub-barra").style.transform = `scaleX(${listas / total})`;
+          if (listas > total / 3) $("#sp-2").classList.add("on");
+          if (listas === total) terminarSubida(bytes); else paso();
+        }, calma ? 60 : 420);
+      };
+      requestAnimationFrame(anima);
+    }
+  };
+  paso();
+}
+function terminarSubida(mb) {
+  $("#sp-3").classList.add("on");
+  const g = GAL_LISTA.find(x => x[0] === SUB.gal), n = SUB.fotos.length, fin = $("#sub-fin");
+  fin.innerHTML = `<p class="todo-listo">${icoListo()}${n} fotos listas, con marca de agua</p>
+    ${btn("Mandar el enlace a la familia", "link", "bt-1 bt-full", 'id="sub-mandar"')}`;
+  fin.hidden = false; entra(fin); fin.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "nearest" });
+  alFeed("subir", `${n} fotos subidas a la galería de <b>${g[1]}</b>`);
+  aviso(`Fotos subidas · <b>${n}</b>`, { ic: "subir", sub: `${g[1]} · ${mb.toFixed(0)} MB` });
+}
+function iniciarSubida() {
+  $("#subir-fotos").addEventListener("click", () => abrirSubida());
+  const c = $("#sub-cuerpo");
+  c.addEventListener("click", async e => {
+    const sg = e.target.closest("[data-sg]");
+    if (sg) { SUB.gal = sg.dataset.sg; $$("[data-sg]", c).forEach(b => b.setAttribute("aria-pressed", b === sg)); return; }
+    if (e.target.closest("#sub-muestra")) {
+      const g = GAL_LISTA.find(x => x[0] === SUB.gal), lista = Array.from({ length: 24 }, (_, i) => ({ c: azar(FOTOS_TIPO[{ parque: "familia", xv: "xv", dic: "boda", bebe: "bebe" }[SUB.gal]] || [g[3]]), pos: posF(i + 3), mb: 18 + Math.random() * 14, fase: "espera" }));
+      return empezarSubida(lista);
+    }
+    if (e.target.closest("#sub-mandar")) {
+      const b = e.target.closest("#sub-mandar");
+      if (!(await accion(b, { espera: "Creando el enlace…", listo: "Enlace listo" }))) return;
+      if (SUB.gal === "bebe") GAL.publicadaBebe = true;
+      ENLACES[SUB.gal] = { ...enlaceDe(SUB.gal), activo: true };
+      pintarGalerias(); pintarMas();
+      setTimeout(() => { cerrarHoja($("#hoja-sub"), true); setTimeout(() => abrirEnlace(SUB.gal, true), 260); }, 500);
+    }
+  });
+  c.addEventListener("change", e => {
+    if (e.target.id !== "sub-in") return;
+    const fs = [...e.target.files].filter(f => f.type.startsWith("image/")).slice(0, 60);
+    if (!fs.length) return;
+    const lista = fs.map(f => { const url = URL.createObjectURL(f); SUB.url.push(url); return { url, mb: f.size / 1048576 || 8, fase: "espera" }; });
+    empezarSubida(lista);
+  });
+  ["dragover", "dragleave", "drop"].forEach(t => c.addEventListener(t, e => {
+    const z = $("#sub-zona"); if (!z) return;
+    e.preventDefault(); z.classList.toggle("sobre", t === "dragover");
+    if (t === "drop") { const inp = $("#sub-in"); inp.files = e.dataTransfer.files; inp.dispatchEvent(new Event("change", { bubbles: true })); }
+  }));
+}
+
+/* ---------- Enlace individual de cada familia ---------- */
+const ENLACES = { parque: { activo: true, pin: true, desc: false, dias: 21, visitas: 14 }, xv: { activo: true, pin: true, desc: false, dias: 3, visitas: 52 }, oct: { activo: true, pin: true, desc: false, dias: 14, visitas: 31 }, dic: { activo: true, pin: false, desc: true, dias: 0, visitas: 88 }, bebe: { activo: false, pin: true, desc: false, dias: 21, visitas: 0 } };
+const CODIGOS = { parque: "parque-7K2", xv: "xv-noviembre-4QM", oct: "boda-octubre-9TD", dic: "boda-diciembre-2HX", bebe: "recien-nacido-5RB" };
+const PINES = { parque: "4821", xv: "1503", oct: "7710", dic: "2512", bebe: "3094" };
+const enlaceDe = id => ENLACES[id] || (ENLACES[id] = { activo: false, pin: true, desc: false, dias: 21, visitas: 0 });
+const urlFam = id => `fotogonzalezstudio.com/g/${CODIGOS[id]}`;
+function abrirEnlace(id, recien = false) {
+  const e = enlaceDe(id), g = GAL_LISTA.find(x => x[0] === id);
+  $("#enl-t").textContent = "Enlace de la familia";
+  $("#enl-cuerpo").innerHTML = `
+    <div class="enl-cab"><span class="foto ${g[3]}" aria-hidden="true"></span><div><b>${g[1]}</b><small>${g[2]}</small></div></div>
+    <div class="enl-tarjeta${e.activo ? " on" : ""}${recien ? " recien" : ""}">
+      <div class="enl-qr" id="enl-qr" aria-hidden="true"></div>
+      <div class="enl-datos"><small>${e.activo ? "Enlace activo" : "Enlace apagado"}</small><b class="enl-url">${urlFam(id)}</b>
+        ${e.pin ? `<span class="enl-pin">PIN <b>${PINES[id]}</b></span>` : `<span class="enl-pin">Sin PIN</span>`}
+        <span class="enl-vis">${ico("eye", 13)}${e.visitas} ${e.visitas === 1 ? "visita" : "visitas"}${e.dias ? ` · vence en ${e.dias} días` : ""}</span></div>
+    </div>
+    <div class="grupo-ios enl-aj">
+      ${[["activo", "Galería visible para la familia", "Si lo apaga, el enlace deja de abrir"], ["pin", "Pedir PIN para entrar", "Solo entra quien tenga el número"], ["desc", "Permitir descargar en alta", "Normalmente se libera al pagar el saldo"]].map(([k, t, d]) => `<button type="button" class="sw-fila" role="switch" aria-checked="${!!e[k]}" data-enl="${k}"><span class="txt">${t}<small>${d}</small></span><span class="switch" aria-hidden="true"><i></i></span></button>`).join("")}
+      <div class="enl-dias"><span class="txt">Se cierra en<small>Después de esa fecha ya no abre</small></span><div class="enl-dias-bts">${[7, 21, 60].map(d => `<button type="button" class="chip-b" data-dias="${d}" aria-pressed="${e.dias === d}">${d} días</button>`).join("")}</div></div>
+    </div>
+    <div class="rc-bts">
+      ${btn(e.activo ? "Mandar enlace y PIN por WhatsApp" : "Activar y mandar a la familia", "wa", "bt-1 bt-full", 'data-ea="wa"')}
+      <div class="rc-bts2">${btn("Copiar enlace", "copiar", "bt-0", 'data-ea="copiar"')}${btn("Verla como la familia", "eye", "bt-0", 'data-ea="ver"')}</div>
+    </div>`;
+  $("#enl-cuerpo").dataset.gid = id;
+  cargarQR().then(() => { const q = qrcode(0, "M"); q.addData("https://" + urlFam(id)); q.make(); $("#enl-qr").innerHTML = q.createSvgTag({ cellSize: 3, margin: 0, scalable: true }); }).catch(() => { $("#enl-qr").innerHTML = ico("qr", 40); });
+  abrirHoja($("#hoja-enlace")); $("#enl-cuerpo").scrollTop = 0;
+}
+function iniciarEnlace() {
+  const c = $("#enl-cuerpo");
+  c.addEventListener("click", async ev => {
+    const id = c.dataset.gid, e = enlaceDe(id);
+    const sw = ev.target.closest("[data-enl]");
+    if (sw) {
+      const k = sw.dataset.enl; e[k] = !e[k]; sw.setAttribute("aria-checked", e[k]); sync();
+      if (k === "activo" || k === "pin") setTimeout(() => { abrirEnlace(id); }, 220);
+      return;
+    }
+    const d = ev.target.closest("[data-dias]");
+    if (d) { e.dias = Number(d.dataset.dias); $$("[data-dias]", c).forEach(x => x.setAttribute("aria-pressed", x === d)); $(".enl-vis", c).innerHTML = `${ico("eye", 13)}${e.visitas} visitas · vence en ${e.dias} días`; sync(); return; }
+    const a = ev.target.closest("[data-ea]"); if (!a) return;
+    const g = GAL_LISTA.find(x => x[0] === id);
+    if (a.dataset.ea === "wa") {
+      if (!(await accion(a, { espera: "Abriendo WhatsApp…", listo: "Enviado" }))) return;
+      e.activo = true; if (id === "bebe") GAL.publicadaBebe = true;
+      simularWA({ para: g[1], f: g[3], texto: `Hola. ¡Sus fotos ya están listas! Las puede ver y elegir aquí: ${urlFam(id)}${e.pin ? `\nSu PIN: ${PINES[id]}` : ""}\nMarque con el corazón sus favoritas. La galería está abierta ${e.dias} días.`, respuesta: "¡Ya las estamos viendo! Están preciosas.", nota: "" });
+      alFeed("link", `Enlace enviado a <b>${g[1]}</b>`);
+      setTimeout(() => { e.visitas++; pintarGalerias(); pintarMas(); sync(); }, 3000);
+      pintarGalerias();
+    } else if (a.dataset.ea === "copiar") {
+      try { await navigator.clipboard.writeText("https://" + urlFam(id)); } catch (er) { /* sin permiso */ }
+      await accion(a, { espera: "Copiando…", listo: "Copiado", ms: 200 });
+      setTimeout(() => { a.disabled = false; a.classList.remove("listo"); a.style.minWidth = ""; poner(a, `${ico("copiar", 20)}<span>Copiar enlace</span>`); }, 1500);
+    } else {
+      cerrarHoja($("#hoja-enlace"), true);
+      PORTAL.dentro = false; PORTAL.pin = ""; pintarPin(); irPortal("pt-pin", true);
+      if (modoHoja()) abrirCliente(); else if (!calma) $("#cliente .cel").animate([{ transform: "scale(1)" }, { transform: "scale(1.02)" }, { transform: "scale(1)" }], { duration: 600, easing: EASE });
+      avisoLocal("Así la ve la familia", { ic: "eye", sub: "Su galería privada, con su enlace y su PIN" });
+    }
+  });
+}
+
+/* ---------- WhatsApp como en el iPhone ---------- */
+let WA_T = [];
+simularWA = function ({ texto, respuesta = "", para = "Cliente", f = "" } = {}) {
+  const w = $("#wa"); WA_T.forEach(clearTimeout); WA_T = [];
+  $("#wa-n").textContent = para; $("#wa-est").textContent = "en línea";
+  const av = $("#wa-av");
+  av.className = "wa-av" + (f ? " foto " + f : "");
+  av.textContent = f ? "" : (para.match(/\p{L}+/gu) || ["F"]).slice(0, 2).map(x => x[0]).join("").toUpperCase();
+  const chat = $("#wa-chat"); chat.innerHTML = `<span class="wa-dia">Hoy</span>`;
+  const burbuja = (txt, yo) => {
+    const b = document.createElement("div"); b.className = "wa-b" + (yo ? " yo" : "");
+    b.innerHTML = `<p></p><small><span class="h"></span>${yo ? '<span class="tk">✓</span>' : ""}</small>`;
+    $("p", b).textContent = txt; $(".h", b).textContent = hora();
+    chat.append(b); if (!calma) b.animate([{ opacity: 0, transform: `translateY(10px) scale(0.98)` }, { opacity: 1, transform: "none" }], { duration: 320, easing: EASE });
+    chat.scrollTop = chat.scrollHeight; return b;
+  };
+  const yo = burbuja(texto, true);
+  const t = (ms, fn) => WA_T.push(setTimeout(fn, calma ? Math.min(ms, 300) : ms));
+  t(450, () => { $(".tk", yo).textContent = "✓✓"; });
+  t(1100, () => { $(".tk", yo).classList.add("leido"); });
+  if (respuesta) {
+    let esc2;
+    t(1500, () => { $("#wa-est").textContent = "escribiendo…"; esc2 = document.createElement("div"); esc2.className = "wa-b escribe"; esc2.innerHTML = "<i></i><i></i><i></i>"; chat.append(esc2); chat.scrollTop = chat.scrollHeight; });
+    t(3100, () => { esc2?.remove(); $("#wa-est").textContent = "en línea"; burbuja(respuesta, false); });
+  }
+  if (w.hidden) {
+    w._foco = document.activeElement;
+    w.hidden = false; requestAnimationFrame(() => w.classList.add("ver"));
+    document.documentElement.classList.add("con-hoja");
+    setTimeout(() => $("#wa-atras").focus({ preventScroll: true }), 60);
+  }
+};
+function cerrarWA() {
+  const w = $("#wa"); if (w.hidden) return;
+  WA_T.forEach(clearTimeout); WA_T = [];
+  w.classList.remove("ver"); setTimeout(() => { if (!w.classList.contains("ver")) w.hidden = true; }, 320);
+  bloquear();
+  if (w._foco && document.contains(w._foco)) w._foco.focus({ preventScroll: true });
+}
+function iniciarWA() {
+  $("#wa-atras").addEventListener("click", cerrarWA);
+  $("#wa").addEventListener("click", e => { if (e.target.id === "wa") cerrarWA(); });
+  const top = $(".wa-top"), panel = $(".wa-panel"); let y0 = null, dy = 0;
+  top.addEventListener("pointerdown", e => { if (e.target.closest("button") || !enCel()) return; y0 = e.clientY; dy = 0; panel.style.transition = "none"; top.setPointerCapture(e.pointerId); });
+  top.addEventListener("pointermove", e => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); panel.style.transform = `translateY(${dy}px)`; });
+  const fin = () => { if (y0 === null) return; y0 = null; panel.style.transition = ""; panel.style.transform = ""; if (dy > 110) cerrarWA(); };
+  top.addEventListener("pointerup", fin); top.addEventListener("pointercancel", fin);
+}
+
+/* ---------- Portal de la familia: entra con su PIN y ve todas sus sesiones ---------- */
+const PORTAL = { dentro: false, pant: "pt-pin", pin: "", proxPagada: false };
+const SES_FAM = [
+  { id: "activa", t: "Familia en exterior", fecha: "Noviembre 2026", f: "f-familia", activa: true },
+  { id: "mundial", t: "Sesión Mundial 2026", fecha: "Junio 2026", f: "f-camisola", n: 12, fotos: ["f-camisola", "f-mundial", "f-familia"] },
+  { id: "navidad", t: "Mini sesión navideña", fecha: "Diciembre 2025", f: "f-maracas", n: 8, fotos: ["f-maracas", "f-familia", "f-pastel"] },
+  { id: "primer", t: "Primer año de la hija", fecha: "Febrero 2024", f: "f-primer", n: 15, fotos: ["f-primer", "f-pastel", "f-bebe"] }
+];
+const PANTS = ["pt-pin", "pt-ini", "cel-scroll", "pt-ses"];
+function irPortal(id, atras = false) {
+  if (id !== "pt-pin" && !PORTAL.dentro) { PORTAL.dentro = true; pintarPortalIni(); }
+  if (id === PORTAL.pant) return;
+  const de = $("#" + PORTAL.pant), a = $("#" + id);
+  PORTAL.pant = id;
+  $$(".pt-pant").forEach(p => { if (p !== de && p !== a) { p.classList.remove("activa"); p.inert = true; } });
+  a.inert = false; de.inert = true;
+  if (calma) { de.classList.remove("activa"); a.classList.add("activa"); }
+  else {
+    a.classList.add("activa");
+    a.animate([{ transform: `translateX(${atras ? -30 : 100}%)` }, { transform: "none" }], { duration: 380, easing: EASE });
+    de.animate([{ transform: "none", opacity: 1 }, { transform: `translateX(${atras ? 100 : -30}%)`, opacity: atras ? 1 : .6 }], { duration: 380, easing: EASE }).onfinish = () => de.classList.remove("activa");
+  }
+  $("#cel-sub").textContent = id === "pt-pin" ? "Su portal privado" : "Familia del parque";
+  a.scrollTop = 0;
+  actualizarGaleria(); if (id === "pt-ini") pintarPortalIni();
+}
+function pintarPin(error) {
+  $("#pin-puntos").innerHTML = [0, 1, 2, 3].map(i => `<i class="${i < PORTAL.pin.length ? "on" : ""}"></i>`).join("");
+  $("#pin-msj").textContent = error ? "Ese PIN no es. Pruebe otra vez." : "Llegó por WhatsApp junto con su enlace.";
+  $("#pin-msj").classList.toggle("error", !!error);
+}
+function teclaPin(d) {
+  if (d === "x") PORTAL.pin = PORTAL.pin.slice(0, -1);
+  else if (PORTAL.pin.length < 4) PORTAL.pin += d;
+  pintarPin();
+  if (PORTAL.pin.length === 4) setTimeout(() => {
+    if (PORTAL.pin === PINES.parque) {
+      $("#pin-puntos").classList.add("ok");
+      setTimeout(() => { PORTAL.pin = ""; pintarPin(); $("#pin-puntos").classList.remove("ok"); irPortal("pt-ini"); }, 420);
+      alFeed("eye", "<b>La familia del parque</b> entró a su portal con su PIN");
+    } else {
+      PORTAL.pin = ""; pintarPin(true);
+      if (!calma) $("#pin-puntos").animate([{ transform: "translateX(0)" }, { transform: "translateX(-10px)" }, { transform: "translateX(8px)" }, { transform: "translateX(-5px)" }, { transform: "translateX(0)" }], { duration: 380, easing: EASE });
+    }
+  }, 180);
+}
+function pintarPortalIni() {
+  const mios = RECIBOS.filter(r => r.n === "Familia del parque"), tot = mios.reduce((t, r) => t + r.m, 0);
+  $("#pt-ini").innerHTML = `
+    <div class="pti-hola"><small>${new Date().toLocaleDateString("es-GT", { weekday: "long", day: "numeric", month: "long" })}</small><h2>Hola, familia del parque</h2></div>
+    <div class="pti-prox"><span class="foto f-maracas" aria-hidden="true"></span><div class="pti-prox-t"><small>Su próxima sesión</small><b>Mini sesión navideña 2026</b><span>Sábado 12 de diciembre · 10:00 a. m.</span>
+      ${PORTAL.proxPagada ? `<em class="ok">${ico("check", 12)}Anticipo pagado</em>` : `<button type="button" class="pti-pagar" data-pt="pagar">Pagar anticipo · ${Q(175)}</button>`}</div></div>
+    <p class="pti-et">Sus sesiones</p>
+    <div class="pti-lista">${SES_FAM.map(s => `<button type="button" class="pti-ses" data-pts="${s.id}"><span class="foto ${s.f}" aria-hidden="true"></span>
+      <span class="pti-ses-t"><b>${s.t}</b><small>${s.fecha}</small></span>
+      <em class="${s.activa ? "vivo" : ""}">${s.activa ? `<i></i>Elija sus fotos` : `${ico("check", 11)}${s.n} fotos`}</em></button>`).join("")}</div>
+    <button type="button" class="pti-pagos" data-pt="pagos"><span class="fpg-ic">${ico("recibo", 16)}</span><span><b>Mis pagos y recibos</b><small>${mios.length} recibos · ${Q(tot)}</small></span>${ico("chev", 15)}</button>
+    <button type="button" class="pti-salir" data-pt="salir">${ico("lock", 13)}Salir del portal</button>`;
+}
+function abrirSesFam(id) {
+  const s = SES_FAM.find(x => x.id === id);
+  if (s.activa) { vistaFam("fotos"); return irPortal("cel-scroll"); }
+  $("#pt-ses").innerHTML = `
+    <div class="fam-portada"><span class="foto ${s.f}" aria-hidden="true"></span><button type="button" class="pt-atras" data-pt="ini" aria-label="Volver a mis sesiones">${ico("back", 18)}</button>
+      <div class="fpo-txt"><small>${s.fecha}</small><h2 class="cel-t">${s.t}</h2><p>${s.n} fotos · entregada</p></div></div>
+    <div class="pts-bts"><button type="button" class="btn btn-chico btn-acento" data-pt="bajar">${ico("download", 15)}Descargar todas</button><button type="button" class="btn btn-chico" data-pt="imprimir">${ico("frame", 15)}Pedir impresas</button></div>
+    <div class="galeria pts-grid">${Array.from({ length: s.n }, (_, i) => `<div class="ft libre"><span class="foto ${s.fotos[i % s.fotos.length]}" style="background-position:${posF(i + 2)}" aria-hidden="true"></span></div>`).join("")}</div>`;
+  irPortal("pt-ses");
+}
+function iniciarPortal() {
+  $("#pin-teclas").innerHTML = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "x"].map(d => d ? `<button type="button" data-tecla="${d}" aria-label="${d === "x" ? "Borrar" : d}">${d === "x" ? ico("back", 20) : d}</button>` : "<span></span>").join("");
+  pintarPin();
+  $("#pt-pin").addEventListener("click", e => {
+    const t = e.target.closest("[data-tecla]");
+    if (t) { if (!calma) t.animate([{ transform: "scale(0.9)" }, { transform: "scale(1)" }], { duration: 200, easing: EASE }); return teclaPin(t.dataset.tecla); }
+    if (e.target.closest("#pin-muestra")) { PORTAL.pin = ""; [..."4821"].forEach((d, i) => setTimeout(() => teclaPin(d), calma ? 0 : 140 + i * 170)); }
+  });
+  $(".pantalla").addEventListener("click", async e => {
+    const s = e.target.closest("[data-pts]"); if (s) return abrirSesFam(s.dataset.pts);
+    const b = e.target.closest("[data-pt]"); if (!b) return;
+    const k = b.dataset.pt;
+    if (k === "ini") return irPortal("pt-ini", true);
+    if (k === "salir") { PORTAL.dentro = false; return irPortal("pt-pin", true); }
+    if (k === "pagos") { vistaFam("pagos"); return irPortal("cel-scroll"); }
+    if (k === "bajar") { b.disabled = true; b.textContent = "Descargando…"; setTimeout(() => { b.disabled = false; b.innerHTML = `${ico("check", 15)}Descargadas`; toastCel("Fotos guardadas en su carrete, en alta resolución."); }, 1200); return; }
+    if (k === "imprimir") return toastCel("Elija una foto y el tamaño. Llega en 5 días.");
+    if (k === "pagar" && !PORTAL.proxPagada) {
+      b.disabled = true; b.textContent = "Pagando…";
+      setTimeout(() => {
+        PORTAL.proxPagada = true;
+        nuevoRecibo({ n: "Familia del parque", concepto: "Anticipo · Mini sesión navideña 2026", m: 175, forma: "Tarjeta", saldo: 175, f: "f-maracas" });
+        pintarPortalIni(); toastCel("Anticipo pagado. Su fecha quedó segura.");
+        red(() => { venta(175); alFeed("cash", "<b>La familia del parque</b> pagó el anticipo de la mini sesión navideña · Q 175.00"); aviso("Anticipo pagado desde el portal · <b>Q 175.00</b>", { ic: "cash", sub: "Familia del parque · mini sesión navideña" }); });
+      }, 800);
+    }
+  });
+  PANTS.forEach(id => { const p = $("#" + id); p.inert = id !== PORTAL.pant; p.classList.toggle("activa", id === PORTAL.pant); });
+  if (qs.get("portal") === "1") setTimeout(() => { if (modoHoja()) abrirCliente(); else if (!calma) $("#cliente .cel").animate([{ transform: "scale(1)" }, { transform: "scale(1.02)" }, { transform: "scale(1)" }], { duration: 600, easing: EASE }); }, 400);
 }
 
 /* ---------- Hojas que suben desde abajo (como en el iPhone) ---------- */
@@ -1568,7 +2516,10 @@ function iniciarHojas() {
   $("#velo").addEventListener("click", () => { [...abiertas].forEach(h => cerrarHoja(h)); cerrarCliente(); });
   addEventListener("keydown", e => {
     if (e.key !== "Escape") return;
+    if (!$("#wa").hidden) return cerrarWA();
     if (!$("#llamada").hidden) return colgar();
+    if (!$("#dos-tel").hidden) return cerrarDosTel();
+    if ($("#visor").classList.contains("ver")) return cerrarVisor();
     if (ENV.fam) return cerrarPantalla();
     const ult = [...abiertas].pop(); if (ult) return cerrarHoja(ult);
     cerrarImp(); cerrarCliente();
@@ -1613,6 +2564,8 @@ function irVista(v) {
   if (v === "reservas") { pintarReservas(); pintarRecordatorios(); }
   if (v === "envivo") pintarEnVivo();
   if (v === "compartir") pintarQR();
+  if (v === "mas") pintarMas();
+  if (v === "cobrar") pintarRecibos();
   if (v === "clientes") colocarFicha();
   scrollTo(0, MAS.includes(v) || SESV.includes(v) ? 0 : (POS[v] || 0));
   barraSup();
@@ -1632,13 +2585,13 @@ function pestanas() {
   document.addEventListener("click", e => { const b = e.target.closest("[data-ir]"); if (b) irVista(b.dataset.ir); });
 }
 function pintarMasCuenta() {
-  const n = sinCopia() + webN, c = $("#cuenta-mas");
+  const n = sinCopia() + webN, c = $("#cuenta-mas"); if (!c) return;
   c.textContent = n; c.classList.toggle("cero", !n);
 }
 function barraSup() { $("#barra-sup").classList.toggle("ver", scrollY > 64); }
 window.antesDePalanca = id => {
   [...abiertas].forEach(h => cerrarHoja(h, true));
-  if (id === "galeria") { if (modoHoja()) abrirCliente(); return; }
+  if (id === "galeria") { irPortal("cel-scroll"); if (modoHoja()) abrirCliente(); return; }
   if (modoHoja()) cerrarCliente();
   irVista(VISTA_DE[id]);
   const mp = { fechas: "fechas", cotizacion: "cobros", saldo: "cobros", resena: "resenas" }[id];
@@ -1655,7 +2608,7 @@ function llegoDeLaWeb(html, ic) {
   li.innerHTML = `<span class="ic">${ico(ic, 16)}</span><span>${html}</span><time>${hora()}</time>`;
   ul.prepend(li);
   webN++; const c = $("#cuenta-web"); c.textContent = webN; c.classList.remove("cero");
-  $("#mas-web").textContent = `${webN} ${webN === 1 ? "aviso nuevo" : "avisos nuevos"}`;
+  pintarMas();
   pintarMasCuenta();
 }
 addEventListener("message", e => {
@@ -1688,8 +2641,15 @@ const TIPOS = [["XV con video", 2900], ["XV en estudio", 2400], ["Familia en ext
 const RESENAS = ["«Las fotos de los XV quedaron preciosas.»", "«Muy pacientes con los niños.»", "«Elegimos las fotos desde el celular. Súper fácil.»", "«El video de la boda nos hizo llorar otra vez.»"];
 let nId = 0;
 function evento() {
-  if (document.hidden || abiertas.size || ENV.fam) return;
+  if (document.hidden || abiertas.size || ENV.fam || !lider()) return;
   const r = Math.random();
+  const deEquipo = TAREAS.filter(t => !t.hecha && t.para && miembros().some(m => m.sim && m.rol === t.para));
+  if (r < .22 && deEquipo.length) {
+    const t = azar(deEquipo); t.hecha = true; pintarTareas();
+    alFeedDe(t.para, "check", `<b>${t.para}</b> terminó: ${esc(t.t)}`);
+    aviso(`<b>${t.para}</b> terminó una tarea`, { ic: "check", sub: `${esc(t.t)} · desde ${aparatoTxt(ROLES[t.para][2])}` });
+    return;
+  }
   if (r < .32) {
     const n = azar(NOMBRES), [t, m] = azar(TIPOS), a = Math.round(m / 2 / 25) * 25;
     COBRAR.push({ id: "n" + (++nId), n, t, que: "Anticipo", m: a, f: azar(["f-familia", "f-xv", "f-bebe", "f-pareja"]) });
@@ -1712,6 +2672,12 @@ function evento() {
   }
 }
 function ciclo() { evento(); setTimeout(ciclo, 12000 + Math.random() * 6000); }
+/* ---------- Cámara: datos de la última foto ---------- */
+function hudEV() {
+  const h = $("#ev-hud"); if (!h || !ENV.ult) return;
+  const vivas = ENV.fotos.length, min = Math.max(1, (Date.now() - (ENV.inicio || Date.now())) / 60000);
+  h.innerHTML = `${ico("zap", 14)}Última: <b>#${ENV.ult.num}</b> · ${ENV.ult.mb} MB · llegó en 0.8 s · <b>${Math.round(vivas / min)}</b> fotos por minuto`;
+}
 
 /* ---------- Arranque ---------- */
 $("#fecha").textContent = new Date().toLocaleDateString("es-GT", { weekday: "long", day: "numeric", month: "long" });
@@ -1732,6 +2698,19 @@ iniciarCompartir();
 iniciarRespaldo();
 iniciarReservas();
 iniciarEnVivo();
+iniciarRecibos();
+iniciarPago();
+iniciarTareas();
+iniciarSubida();
+iniciarEnlace();
+iniciarBusca();
+iniciarTiempoReal();
+iniciarWA();
+iniciarPortal();
+iniciarPendientes();
+pintarMas();
+$("#dt-x").addEventListener("click", cerrarDosTel);
+addEventListener("resize", escalarDosTel);
 alFeed("eye", "<b>La familia del parque</b> abrió sus fotos");
 alFeed("cash", "Anticipo de <b>Colegio La Asunción</b> · Q 2,400.00");
 $$("#feed li").forEach(li => li.classList.remove("nuevo"));
@@ -1743,7 +2722,7 @@ ajustarCliente();
 new ResizeObserver(() => { if (VISTA === "clientes") colocarFicha(); }).observe($("#principal"));
 addEventListener("scroll", barraSup, { passive: true });
 
-cintaDemo({ sistema: "Sistema completo", palancas: PALANCAS });
+if (!EMBED) cintaDemo({ sistema: "Sistema completo", palancas: PALANCAS });
 
 if (!calma) {
   $$("#v-hoy .titulo-v, #v-hoy .cifra, #prox-ses, #oport .op").forEach((el, i) => el.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 440, delay: 60 + Math.min(i, 8) * 45, easing: EASE, fill: "backwards" }));
