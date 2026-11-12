@@ -108,6 +108,7 @@ function pintarCifras() {
   odometro($("#k-cobrar"), debeT); odometro($("#cob-pend-q"), debeT);
   odometro($("#k-extra"), S.extra);
   odometro($("#cobrado-q"), S.cobradoHoy);
+  if (typeof tablero === "function") tablero();
 }
 function flotar(sel, monto) {
   if (calma) return;
@@ -368,7 +369,7 @@ function pintarAgenda() {
   $("#ag-p").textContent = AG.filter(pendiente).length;
   $("#ag-l").textContent = libres;
   odometro($("#ag-q"), AG.filter(s => !pendiente(s)).reduce((t, s) => t + (s.a || debe(s)), 0));
-  pintarProxSesion();
+  pintarProxSesion(); tablero();
 }
 function iniciarAgenda() {
   pintarAgenda();
@@ -1951,7 +1952,7 @@ function iniciarBusca() {
 }
 
 /* ---------- Tiempo real: varios teléfonos y aparatos a la vez ---------- */
-const ROLES = { "Dueño": ["D", "#8E2234", "iPhone"], "Recepción": ["R", "#7A5C8E", "iPad"], "Editor": ["E", "#2F7D4F", "computadora"], "Asistente": ["A", "#A24A24", "iPhone"] };
+const ROLES = { "Dueño": ["D", "#111111", "iPhone"], "Recepción": ["R", "#4A4A4A", "iPad"], "Editor": ["E", "#7A7A7A", "computadora"], "Asistente": ["A", "#9A9A9A", "iPhone"] };
 const qs = new URLSearchParams(location.search);
 const EMBED = qs.get("embed") === "1";
 function tipoAparato() {
@@ -2024,6 +2025,7 @@ function pintarEquipo() {
     <div class="eq-acc"><span class="eq-vivo"><i></i>${ms.length} en línea${reales > 1 ? ` · ${reales} aparatos de verdad` : ""}</span>
     ${EMBED ? "" : `${btn("Ver en dos teléfonos", "celu", "bt-0 bt-chico", 'data-dos="1"')}${btn("Abrir otra ventana", "share", "bt-0 bt-chico eq-otra", 'data-otra-v="1"')}`}</div>`;
   const lado = $("#equipo-lado");
+  tablero();
   if (lado) lado.innerHTML = `<p class="mono">EN LÍNEA</p><div class="eq-avs">${ms.map(m => avatarEq(m, true)).join("")}</div>`;
 }
 function feedLocalDe(rol) { const [ini, c] = ROLES[rol] || ["?", "#5B574F"]; return `<span class="quien" style="--c:${c}" title="${rol}">${ini}</span>`; }
@@ -2108,7 +2110,7 @@ function pintarTareas() {
   </li>`).join("");
   const pend = TAREAS.filter(t => !t.hecha).length;
   $("#tar-n").textContent = pend ? `${pend} por hacer` : "Todo hecho";
-  pendHoy();
+  pendHoy(); tablero();
 }
 function iniciarTareas() {
   pintarTareas();
@@ -2471,6 +2473,72 @@ function iniciarPortal() {
   if (qs.get("portal") === "1") setTimeout(() => { if (modoHoja()) abrirCliente(); else if (!calma) $("#cliente .cel").animate([{ transform: "scale(1)" }, { transform: "scale(1.02)" }, { transform: "scale(1)" }], { duration: 600, easing: EASE }); }, 400);
 }
 
+/* ---------- Tablero de Hoy: línea de sesiones, avance del mes y equipo ---------- */
+let RANGO = "semana", tabRAF = 0;
+const META_MES = 50000;
+function tablero() { cancelAnimationFrame(tabRAF); tabRAF = requestAnimationFrame(() => { pintarLinea(); pintarAvance(); pintarEquipoTablero(); }); }
+function pintarLinea() {
+  const el = $("#linea"); if (!el) return;
+  const hoy = hoyIdx();
+  const ses = AG.filter(s => RANGO === "hoy" ? s.d === hoy : true).sort((a, b) => a.d - b.d || hNum(a.h) - hNum(b.h));
+  if (!ses.length) { el.innerHTML = `<p class="linea-vacia">${ico("calendar", 22)}<span>Sin sesiones hoy.</span><button type="button" class="chip-b" data-rango-ir="semana">Ver la semana</button></p>`; return; }
+  el.innerHTML = ses.map(s => {
+    const x = Math.max(0, Math.min(1, (hNum(s.h) - 8) / 10)), tipo = pendiente(s) ? "bla" : s.luz ? "gri" : "neg";
+    const [hh, mm] = s.h.split(":");
+    return `<div class="ln-fila${s.d === hoy ? " hoy" : ""}"><span class="ln-h">${RANGO === "semana" ? `<small>${s.d === hoy ? "Hoy" : DIAS[s.d].slice(0, 3)}</small>` : ""}${hh.padStart(2, "0")}:${mm}</span>
+      <span class="ln-raya" aria-hidden="true"></span>
+      <button type="button" class="ln-pil ${tipo}" data-lses="${s.id}" style="--x:${(x * 34).toFixed(1)}%"><span class="ln-t">${s.t}</span><span class="ln-av foto ${s.f}" aria-hidden="true"></span></button></div>`;
+  }).join("");
+}
+function pintarAvance() {
+  const el = $("#av-pct"); if (!el) return;
+  const pct = Math.min(100, S.ingresos / META_MES * 100);
+  odometro(el, pct, n => n.toFixed(1));
+  $("#av-meta").textContent = S.ingresos >= META_MES ? `¡Meta de ${Q(META_MES)} cumplida!` : `de la meta de ${Q(META_MES)} · faltan ${Q(META_MES - S.ingresos)}`;
+  const serie = [.30, .36, .33, .45, .41, .52, .49, .58, .55, .63, .60, pct / 100];
+  const W = 200, H = 70, pts = serie.map((v, i) => [i / (serie.length - 1) * W, H - 6 - v * (H - 14)]);
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], cx = (x0 + x1) / 2; d += ` C${cx},${y0} ${cx},${y1} ${x1},${y1}`; }
+  $("#av-path").setAttribute("d", d);
+}
+const PAPEL_EQ = { "Dueño": ["Tomar fotos y vender", ["f-xv", "f-boda"], 18, 22, 4], "Recepción": ["Agenda y cobros", ["f-familia", "f-bebe"], 24, 30, 7], "Editor": ["Editar y entregar", ["f-pareja", "f-primer"], 12, 16, 3] };
+function pintarEquipoTablero() {
+  const st = $("#tb-eq-stats"), ng = $("#tb-eq-negro"); if (!st || !ng) return;
+  const ses = 10 + AG.length, porEnt = GAL.publicadaBebe ? 2 : 3, ent = GAL.publicadaBebe ? 12 : 11;
+  const linea = v => `<svg viewBox="0 0 40 10" aria-hidden="true"><path d="M0 ${10 - v} C10 ${8 - v} 14 ${2 + v / 3} 22 ${6 - v / 4} S34 ${3} 40 ${5 - v / 5}"/></svg>`;
+  st.innerHTML = [["Sesiones del mes", ses, 6], ["Por entregar", porEnt, 3], ["Entregadas", ent, 8]].map(([t, n, v]) => `<div><small>${t}</small><b>${n}</b>${linea(v)}</div>`).join("");
+  const ms = miembros();
+  ng.innerHTML = Object.entries(PAPEL_EQ).map(([rol, [que, fotos, hBase, tBase, cli]]) => {
+    const mias = TAREAS.filter(t => t.para === rol), hechas = hBase + mias.filter(t => t.hecha).length, tot = tBase + mias.length;
+    const m = ms.find(x => x.rol === rol), pct = Math.round(hechas / tot * 100);
+    return `<div class="eqn">
+      <div class="eqn-cab"><b>${rol}</b><small>${que}</small></div>
+      <div class="eqn-avs">${avatarEq(m || { rol, aparato: ROLES[rol][2] })}${fotos.map(f => `<span class="foto ${f}" aria-hidden="true"></span>`).join("")}</div>
+      <div class="eqn-prog"><span>Progreso</span><span>${pct} %</span></div>
+      <div class="eqn-barra"><i style="transform:scaleX(${pct / 100})"></i></div>
+      <div class="eqn-pie"><span>${ico("check", 15)}${hechas}</span><span>${ico("users", 15)}${cli}</span><span class="eqn-on"><i></i>${m && !m.sim && !m.yo ? "Conectado" : m && m.yo ? "Usted" : "En línea"}</span></div>
+    </div>`;
+  }).join("");
+}
+function iniciarTablero() {
+  tablero();
+  $("#tb-rango").addEventListener("click", e => {
+    const b = e.target.closest("[data-rango]"); if (!b) return;
+    RANGO = b.dataset.rango;
+    $$("[data-rango]").forEach(x => x.setAttribute("aria-selected", x === b));
+    $("#tb-rango").style.setProperty("--i", RANGO === "hoy" ? 0 : 1);
+    pintarLinea(); $$("#linea .ln-fila").forEach((f, i) => entra(f, i * 30));
+  });
+  $("#linea").addEventListener("click", e => {
+    const p = e.target.closest("[data-lses]"); if (p) return abrirSesion(p.dataset.lses);
+    if (e.target.closest("[data-rango-ir]")) $('[data-rango="semana"]').click();
+  });
+  $("#tb-campana").addEventListener("click", () => {
+    const u = $("#ultimo-b"); u.scrollIntoView({ behavior: calma ? "auto" : "smooth", block: "start" });
+    u.classList.add("resalta"); setTimeout(() => u.classList.remove("resalta"), 1400);
+  });
+}
+
 /* ---------- Hojas que suben desde abajo (como en el iPhone) ---------- */
 const abiertas = new Set();
 function velo(ver) {
@@ -2707,6 +2775,7 @@ iniciarSubida();
 iniciarEnlace();
 iniciarBusca();
 iniciarTiempoReal();
+iniciarTablero();
 iniciarWA();
 iniciarPortal();
 iniciarPendientes();

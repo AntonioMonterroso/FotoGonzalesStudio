@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#F5F2EC">
+<meta name="theme-color" content="#EDEDEB">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,10 +15,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="../comun.css?v=20261112e">
-<link rel="stylesheet" href="completo.css?v=20261112e">
-<script src="letras.js?v=20261112e" data-letra-sistema></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
+<link rel="stylesheet" href="../comun.css?v=20261112f">
+<link rel="stylesheet" href="completo.css?v=20261112f">
+<link rel="stylesheet" href="claro.css?v=20261112a">
+<script src="letras.js?v=20261112f" data-letra-sistema></script>
 </head>
 <body>
 <div class="barra-sup" id="barra-sup" aria-hidden="true"><b id="barra-sup-t">Hoy</b></div>
@@ -54,43 +55,65 @@
 
     <!-- HOY -->
     <section class="vista" id="v-hoy" role="tabpanel" aria-labelledby="t-hoy" data-titulo="Hoy">
-      <header class="titulo-v">
-        <p class="fecha" id="fecha"></p>
-        <h1 id="saludo">Buenos días.</h1>
+      <header class="tb-cab">
+        <div class="titulo-v"><p class="fecha" id="fecha"></p><h1 id="saludo">Buenos días.</h1></div>
+        <div class="tb-herr">
+          <button class="tb-pil" type="button" data-ir="agenda"><span class="tb-circ"><span data-i="calendar"></span></span><span>Agenda</span></button>
+          <span class="tb-pil tb-clima" aria-label="Clima en Retalhuleu: 29 grados, soleado"><span data-i="sun"></span><span><b>29°</b><small>Soleado · Reu</small></span></span>
+          <button class="tb-pil tb-busca" type="button" data-buscar><span class="tb-circ"><span data-i="search"></span></span><span>Buscar…</span></button>
+          <button class="tb-circ tb-solo" type="button" id="tb-campana" aria-label="Ver lo último"><span data-i="bell"></span><i></i></button>
+        </div>
       </header>
-      <div class="equipo-vivo" id="equipo-vivo" aria-live="polite"></div>
       <section class="pendientes" id="pendientes" aria-labelledby="h-pend"></section>
-      <div class="cifras" data-palanca="vivo">
-        <div class="cifra grande"><small id="k-mes-lbl">Ganado este mes</small><b id="k-ing"></b></div>
-        <button type="button" class="cifra ir" data-ir="cobrar"><small>Por cobrar</small><b id="k-cobrar"></b><span class="cifra-ir" data-i="chev"></span></button>
-        <button type="button" class="cifra ir" data-ir="fotos"><small>Fotos extra</small><b id="k-extra"></b><span class="cifra-ir" data-i="chev"></span></button>
+      <div class="tb-grid">
+        <section class="bloque tb-linea" aria-labelledby="h-linea">
+          <div class="bloque-cab"><h2 id="h-linea">Sesiones</h2>
+            <div class="seg tb-rango" id="tb-rango" role="tablist" aria-label="Qué sesiones ver" style="--n:2;--i:1"><span class="pastilla" aria-hidden="true"></span><button type="button" role="tab" data-rango="hoy" aria-selected="false">Hoy</button><button type="button" role="tab" data-rango="semana" aria-selected="true">Semana</button></div></div>
+          <div class="linea" id="linea"></div>
+          <div class="linea-ley"><span><i class="neg"></i>En el estudio</span><span><i class="gri"></i>Afuera</span><span><i class="bla"></i>Falta pagar</span></div>
+        </section>
+        <section class="bloque tb-avance" data-palanca="vivo" aria-labelledby="h-av">
+          <div class="bloque-cab"><h2 id="h-av">Avance del mes</h2><button type="button" class="tb-mini" data-ir="cobrar" aria-label="Ir a Cobrar"><span data-i="chev"></span></button></div>
+          <p class="av-pct"><b id="av-pct">0</b><span>%</span></p>
+          <small class="av-meta" id="av-meta">de la meta del mes</small>
+          <svg class="av-graf" viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true"><path id="av-path" d=""/></svg>
+          <ul class="av-filas">
+            <li><i class="neg"></i><span id="k-mes-lbl">Ganado</span><b id="k-ing"></b></li>
+            <li><i class="gri"></i><span>Por cobrar</span><b id="k-cobrar"></b></li>
+            <li><i class="cla"></i><span>Fotos extra</span><b id="k-extra"></b></li>
+          </ul>
+        </section>
+        <section class="bloque prox-ses" id="prox-ses" data-palanca="maleta" aria-label="Su próxima sesión"></section>
+      </div>
+      <div class="tb-fila2">
+        <section class="bloque" id="tareas-b" aria-labelledby="h-tar">
+          <div class="bloque-cab"><h2 id="h-tar">Tareas del equipo</h2><span class="tenue chico" id="tar-n"></span></div>
+          <ul class="tareas" id="tareas"></ul>
+          <form class="tar-nueva" id="tar-form" autocomplete="off">
+            <label for="tar-in">Nueva tarea</label>
+            <div><input id="tar-in" type="text" maxlength="80" placeholder="Ej.: Llevar el set navideño al estudio" enterkeyhint="done"><button class="bt bt-2 bt-chico" type="submit"><span class="bt-in"><span data-i="plus"></span><span>Agregar</span></span></button></div>
+          </form>
+        </section>
+        <section class="tb-equipo" aria-labelledby="h-eq">
+          <div class="bloque tb-eq-cab">
+            <h2 id="h-eq">Equipo</h2>
+            <div class="equipo-vivo" id="equipo-vivo" aria-live="polite"></div>
+            <div class="tb-eq-stats" id="tb-eq-stats"></div>
+          </div>
+          <div class="tb-eq-negro" id="tb-eq-negro"></div>
+        </section>
       </div>
       <div class="hoy-grid">
-        <div class="hoy-col">
-          <section class="bloque prox-ses" id="prox-ses" data-palanca="maleta" aria-label="Su próxima sesión"></section>
-          <section class="bloque" data-palanca="ventas" aria-labelledby="h-ventas">
-            <div class="bloque-cab"><h2 id="h-ventas">Escríbales hoy</h2><span class="tenue chico" id="op-total"></span></div>
-            <div class="seg motivos" id="motivos" role="tablist" aria-label="Motivo del mensaje"></div>
-            <ul class="oportunidades" id="oport" aria-live="polite"></ul>
-            <p class="op-vacio" id="op-vacio" hidden></p>
-          </section>
-        </div>
-        <div class="hoy-col">
-          
-          
-          <section class="bloque" id="tareas-b" aria-labelledby="h-tar">
-            <div class="bloque-cab"><h2 id="h-tar">Tareas del equipo</h2><span class="tenue chico" id="tar-n"></span></div>
-            <ul class="tareas" id="tareas"></ul>
-            <form class="tar-nueva" id="tar-form" autocomplete="off">
-              <label for="tar-in">Nueva tarea</label>
-              <div><input id="tar-in" type="text" maxlength="80" placeholder="Ej.: Llevar el set navideño al estudio" enterkeyhint="done"><button class="bt bt-2 bt-chico" type="submit"><span class="bt-in"><span data-i="plus"></span><span>Agregar</span></span></button></div>
-            </form>
-          </section>
-          <section class="bloque" aria-labelledby="h-act">
-            <div class="bloque-cab"><h2 id="h-act">Lo último</h2><span class="punto-vivo" aria-hidden="true"></span></div>
-            <ul class="feed" id="feed" aria-live="polite"></ul>
-          </section>
-        </div>
+        <section class="bloque" data-palanca="ventas" aria-labelledby="h-ventas">
+          <div class="bloque-cab"><h2 id="h-ventas">Escríbales hoy</h2><span class="tenue chico" id="op-total"></span></div>
+          <div class="seg motivos" id="motivos" role="tablist" aria-label="Motivo del mensaje"></div>
+          <ul class="oportunidades" id="oport" aria-live="polite"></ul>
+          <p class="op-vacio" id="op-vacio" hidden></p>
+        </section>
+        <section class="bloque" id="ultimo-b" aria-labelledby="h-act">
+          <div class="bloque-cab"><h2 id="h-act">Lo último</h2><span class="punto-vivo" aria-hidden="true"></span></div>
+          <ul class="feed" id="feed" aria-live="polite"></ul>
+        </section>
       </div>
     </section>
 
@@ -420,7 +443,7 @@
   <button class="ll-colgar" id="ll-colgar" type="button" aria-label="Colgar"><span data-i="phone"></span></button>
 </div>
 
-<script src="../comun.js?v=20261112e"></script>
-<script src="completo.js?v=20261112e"></script>
+<script src="../comun.js?v=20261112f"></script>
+<script src="completo.js?v=20261112f"></script>
 </body>
 </html>
