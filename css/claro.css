@@ -1,0 +1,86 @@
+/* Propuesta · diseño claro (se activa con el interruptor de diseño) */
+:root {
+  --papel: #EDEDEB; --papel2: #E4E4E1; --carta: #FFFFFF; --tinta: #111111; --tinta2: #4B4B4B; --tinta3: #8C8C8C; --linea: #E2E2DF;
+  --acento: #111111; --acento-suave: #EFEFED; --marca: #8E2234; --oscuro: #0E0E0E;
+  --vidrio: rgba(255, 255, 255, .6); --borde-v: rgba(255, 255, 255, .92); --sombra-v: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 26px 50px -36px rgba(0, 0, 0, .35);
+}
+body { background: radial-gradient(120% 80% at 20% 0%, #F7F7F6 0%, #EAEAE8 55%, #E2E2DF 100%) fixed; font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; }
+@media (min-width: 900px) {
+  body::before, body::after { content: ""; position: fixed; z-index: -1; pointer-events: none; }
+  body::before { top: 70px; left: -80px; width: 360px; height: 310px; border-radius: 52% 48% 46% 54% / 55% 50% 50% 45%;
+    background: radial-gradient(circle at 38% 30%, #FFFFFF 0%, #E9E9E6 45%, #CFCFCB 100%), var(--grano); background-blend-mode: multiply; box-shadow: inset -30px -40px 70px rgba(0, 0, 0, .12), 0 40px 70px -40px rgba(0, 0, 0, .3); opacity: .9; }
+  body::after { right: -50px; bottom: -70px; width: 300px; height: 300px; border-radius: 50%; border: 54px solid #F6F6F5; box-shadow: inset 0 14px 30px rgba(0, 0, 0, .12), 0 40px 70px -30px rgba(0, 0, 0, .28); }
+}
+
+/* Letra: una sola, títulos gruesos y apretados */
+h1, h2, h3, .faq summary, .dolor .n, .sistema .desde b, .rt-tabla thead th, .ficha .total, .compra-unica b.p, .comp thead th, .beneficios b { font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; font-stretch: 100%; }
+h1, h2 { font-weight: 800; letter-spacing: -.045em; }
+h3 { font-weight: 700; letter-spacing: -.02em; }
+.portada h1 em { color: #9A9A97; }
+.cierre h2 { font-stretch: 100%; }
+.eyebrow { display: inline-flex; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .85); box-shadow: 0 0 0 1px var(--linea); color: var(--tinta); }
+.eyebrow::after { display: none; }
+.eyebrow .num { color: var(--marca); font-weight: 700; }
+.vivo .eyebrow, .calc .eyebrow { background: rgba(255, 255, 255, .1); box-shadow: 0 0 0 1px rgba(255, 255, 255, .2); color: #EDE8DF; }
+
+/* Botones: píldora negra con el ícono en círculo blanco */
+.btn { border-radius: 999px; min-height: 50px; background: rgba(255, 255, 255, .85); border-color: var(--linea); color: var(--tinta); font-weight: 600; }
+.btn-tinta, .btn-acento { background: #111; border-color: #111; color: #fff; padding-left: 8px; box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .55); }
+.btn-tinta > span:first-child:has(> svg), .btn-acento > span:first-child:has(> svg) { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #fff; color: #111; flex: none; transition: transform 220ms var(--ease-out); }
+.btn-tinta:not(:has(> span:first-child > svg)), .btn-acento:not(:has(> span:first-child > svg)) { padding-left: 20px; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: #fff; box-shadow: 0 0 0 1px #111 inset; }
+  .btn-tinta:hover, .btn-acento:hover { background: #000; color: #fff; }
+  .btn-tinta:hover > span:first-child:has(> svg), .btn-acento:hover > span:first-child:has(> svg) { transform: rotate(-45deg); }
+}
+
+/* Barra flotante en píldora */
+.barra { inset: 12px 12px auto 12px; padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--vidrio); border: 1px solid var(--borde-v); box-shadow: var(--sombra-v);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); }
+.barra nav { padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .55); }
+.barra nav a { font-weight: 600; }
+.barra nav a[aria-current="true"] { background: #111; color: #fff; }
+.barra nav a[aria-current="true"] small { color: #BDBDBA; }
+.btn-dis { background: #fff; border-color: var(--linea); }
+
+/* Secciones como paneles de vidrio */
+.sec { padding: clamp(14px, 2.4vw, 26px) 0; background: transparent !important; }
+.sec > .envoltura { background: var(--vidrio); border: 1px solid var(--borde-v); border-radius: 36px; box-shadow: var(--sombra-v); padding: clamp(24px, 4.6vw, 60px);
+  width: calc(100% - 24px); max-width: calc(var(--ancho) + 2 * var(--gutter)); -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3); }
+@media (max-width: 899px) { .sec > .envoltura { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .88); border-radius: 26px; } }
+.sec.vivo > .envoltura, .sec.cierre > .envoltura { background: #0E0E0E; color: #EDE8DF; border-color: #0E0E0E; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .7); }
+.sec.cierre h2 { color: #fff; }
+.sec.cierre .lead { color: #BDBDBA !important; }
+.sec.cierre .firma span { color: #CFCFCC; }
+.sec.cierre .firma b { color: #fff; }
+.sec.cierre .firma img { filter: invert(1); }
+.sec.cierre .btn-acento { background: #fff; color: #111; border-color: #fff; }
+.sec.cierre .btn-acento > span:first-child:has(> svg) { background: #111; color: #fff; }
+.portada { padding-top: 104px; }
+.portada > .envoltura { background: var(--vidrio); border: 1px solid var(--borde-v); border-radius: 40px; box-shadow: var(--sombra-v); padding: clamp(22px, 4vw, 56px); width: calc(100% - 24px); max-width: calc(var(--ancho) + 2 * var(--gutter));
+  -webkit-backdrop-filter: blur(26px) saturate(1.3); backdrop-filter: blur(26px) saturate(1.3); }
+.visor { border-radius: 30px; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .7); }
+.beneficios li { background: rgba(255, 255, 255, .85); border-color: transparent; box-shadow: 0 0 0 1px var(--linea); border-radius: 20px; }
+.beneficios b { font-weight: 800; letter-spacing: -.02em; }
+
+/* Tarjetas */
+.dolor .n { color: var(--marca); font-weight: 800; }
+.sistema, .plan, .caja, .ficha, .dom-op, .navegador, .m-vista, .rt-tabla, .comp-tabla, .vitrina .vit-vista { border-radius: 28px; }
+.sistema, .caja, .ficha, .dom-op { background: #fff; border-color: transparent; box-shadow: 0 0 0 1px var(--linea), 0 22px 44px -32px rgba(0, 0, 0, .3); }
+.sistema .cinta, .plan .cinta { background: #111; }
+.plan { background: #fff; border-color: transparent; box-shadow: 0 0 0 1px var(--linea), 0 22px 44px -32px rgba(0, 0, 0, .3); }
+.plan.recomendado { background: #0E0E0E; border-color: #0E0E0E; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .7); }
+.plan.recomendado .cinta { background: #fff; color: #111; }
+.plan.recomendado .lista li svg { color: #fff; }
+.plan.recomendado .btn { background: #fff; color: #111; border-color: #fff; }
+.calc { border-radius: 30px; background: #0E0E0E; }
+.comp td.suyo { background: #F1F1EF; }
+.comp thead th.suyo { color: #111; }
+.compra-unica { border-radius: 24px; border-style: solid; border-color: var(--linea); background: rgba(255, 255, 255, .7); }
+.faq details { border-bottom-color: var(--linea); }
+.pie { border-top: 0; }
+.intro { background: none; }
+.negativo { margin: 22px auto; }
+.extra-linea > *, .planes > *, .bd > *, .dominio > *, .medida > * { min-width: 0; }
+.negativo { max-width: calc(var(--ancho) + 2 * var(--gutter)); }
+@media (max-width: 560px) { .sec > .envoltura { padding: 20px 16px; } .caja { padding: 18px 14px; } }

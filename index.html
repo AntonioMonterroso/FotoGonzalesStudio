@@ -14,8 +14,10 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238E2234' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/estilos.css?v=20261111g">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
+<link rel="stylesheet" href="css/estilos.css?v=20261113a">
+<link rel="stylesheet" href="demos/foto.css?v=20261113a">
+<script src="demos/diseno.js?v=20261113a" data-css="css/claro.css?v=20261113a"></script>
 </head>
 <body>
 
@@ -48,15 +50,15 @@
 <header class="barra" id="barra">
   <a class="barra-firma" href="#portada"><img src="img/firma-m.png" alt=""><span>Monterroso Dev Studio</span></a>
   <nav id="menu" aria-label="Secciones">
-    <a href="#sistemas">Sistemas</a>
-    <a href="#demos">Demos</a>
-    <a href="#vivo">En vivo</a>
-    <a href="#base">Base de datos</a>
-    <a href="#dominio">Dominio</a>
-    <a href="#precios">Precios</a>
-    <a href="#arranque" class="nav-ancho">Cómo trabajamos</a>
+    <a href="#hoy" data-toma="1"><small>01</small>Hoy</a>
+    <a href="#sistemas" data-toma="2"><small>02</small>Lo que cambia</a>
+    <a href="#demos" data-toma="3"><small>03</small>Las demos</a>
+    <a href="#precios" data-toma="4"><small>04</small>Inversión</a>
+    <a href="#arranque" data-toma="5" class="nav-ancho"><small>05</small>Cómo trabajamos</a>
+    <a href="#cierre" data-toma="6" class="nav-ancho"><small>06</small>Empecemos</a>
   </nav>
-  <a class="btn btn-tinta btn-barra" href="#precios">Ver precios</a>
+  <button class="btn-dis" type="button" data-diseno-btn aria-label="Cambiar el diseño"><span data-i="aperture"></span><span class="dis-txt">Diseño: <b data-diseno-txt>Claro</b></span></button>
+  <a class="btn btn-tinta btn-barra" href="#precios">Ver la inversión</a>
   <button class="menu-btn" id="menu-btn" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu"><span data-i="menu"></span></button>
 </header>
 
@@ -68,15 +70,20 @@
         <p class="para"><span class="marca"><img src="img/monograma-fg.png" alt="" style="width:46%;height:auto;filter:invert(1)"></span>Propuesta para <b>&nbsp;Foto González Studio</b></p>
         <h1 id="titulo">
           <span class="linea"><span>Ustedes toman</span></span>
-          <span class="linea"><span>la foto.</span></span>
+          <span class="linea"><span>la foto<span class="pt">.</span></span></span>
           <span class="linea"><span>El sistema hace</span></span>
-          <span class="linea"><span><em>lo demás.</em></span></span>
+          <span class="linea"><span><em>lo demás<span class="pt">.</span></em></span></span>
         </h1>
-        <p class="bajada">Página, tienda y sistema completo para el estudio de Retalhuleu. Reservas, galerías privadas y pedidos que se actualizan al instante, en el celular del cliente y en el suyo.</p>
+        <p class="bajada">Una página, una tienda y un sistema de gestión hechos para Foto González Studio. Más reservas confirmadas, más fotos vendidas por sesión y menos horas en el chat.</p>
         <div class="acciones">
-          <a class="btn btn-tinta" href="#sistemas">Ver los tres sistemas <span data-i="arrow"></span></a>
-          <a class="btn" href="#demos">Abrir las tres demos</a>
+          <a class="btn btn-tinta" href="#hoy"><span data-i="arrow"></span>Ver la propuesta</a>
+          <a class="btn" href="#demos">Probar las demos</a>
         </div>
+        <ul class="beneficios" aria-label="Lo que gana el estudio">
+          <li><b>Reservas con anticipo</b><span>La fecha se aparta pagada, sin perseguir a nadie.</span></li>
+          <li><b>Más venta por sesión</b><span>Fotos extra, impresiones y álbumes desde la galería.</span></li>
+          <li><b>Clientes que vuelven</b><span>Recordatorios de la próxima sesión, con el mensaje listo.</span></li>
+        </ul>
       </div>
       <div class="visor" id="visor" aria-label="Visor de cámara con una foto de muestra">
         <div class="foto f-xv" id="visor-foto"></div>
@@ -90,12 +97,15 @@
     </div>
   </section>
 
+  <div class="negativo" data-toma-n="01" data-titulo="Lo que pasa hoy" data-pregunta="¿Dónde se van el tiempo y las ventas del estudio?"></div>
+
   <!-- 01 Hoy -->
-  <section class="sec" id="hoy">
+  <section class="sec" id="hoy" data-toma="1">
     <div class="envoltura">
       <header class="sec-cabeza">
         <p class="eyebrow mono"><span class="num">01</span> Lo que pasa hoy</p>
-        <h2 class="enfoca">Mucho talento. Demasiado WhatsApp.</h2>
+        <h2 class="enfoca">El talento está. El tiempo se va en el chat.</h2>
+        <p class="lead">Hoy cada reserva, cada selección de fotos y cada entrega pasa por WhatsApp. Eso cuesta horas de trabajo y ventas que no se concretan.</p>
       </header>
       <div class="dolores">
         <article class="dolor revela"><span class="n">01</span><div><h3>«¿Ya están mis fotos?»</h3><p>La misma pregunta, cada día, de cada cliente. Y el cliente no tiene dónde ver cómo va su pedido.</p></div></article>
@@ -110,31 +120,50 @@
           <p class="burbuja revela">Ok. Le mando las que me gustaron: 3, 7, 12, 15, 22, 23, 31…<small>9:41</small></p>
           <p class="burbuja revela">Ah no, la 22 no, mejor la 24<small>9:43</small></p>
         </div>
-        <p class="remate revela">Cada mensaje de estos es tiempo lejos de la cámara. <b>Con el sistema, el cliente lo ve todo por su cuenta.</b></p>
+        <p class="remate revela">Cada mensaje es tiempo lejos de la cámara. <b>Con el sistema, el cliente resuelve solo y el estudio solo confirma.</b></p>
       </div>
     </div>
   </section>
 
+  <div class="negativo" data-toma-n="02" data-titulo="Lo que cambia" data-pregunta="¿Qué gana el estudio con cada sistema?"></div>
+
   <!-- 02 Sistemas -->
-  <section class="sec" id="sistemas" style="background: var(--papel2)">
+  <section class="sec" id="sistemas" data-toma="2" style="background: var(--papel2)">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">02</span> Tres sistemas</p>
-        <h2 class="enfoca">Tres formas de crecer. Ustedes escogen por dónde empezar.</h2>
-        <p class="lead">Los tres usan la misma base de datos. Si empiezan con la página y después quieren la tienda o el sistema completo, se suma encima: nada se pierde ni se vuelve a hacer.</p>
+        <p class="eyebrow mono"><span class="num">02 A</span> Tres sistemas</p>
+        <h2 class="enfoca">Tres sistemas, un objetivo: que el estudio venda más.</h2>
+        <p class="lead">Comparten la misma base de datos. Pueden empezar por la página y pasar a la tienda o al sistema completo sin rehacer nada: lo pagado se abona.</p>
       </header>
       <div class="sistemas" id="sistemas-lista"></div>
     </div>
   </section>
 
 
-  <!-- 03 Demos: cómo vende cada sistema -->
-  <section class="sec" id="demos">
+  <!-- 04 Tiempo real en todo -->
+  <section class="sec" id="tiempo-real" data-toma="2">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">03</span> Hechos para vender</p>
-        <h2 class="enfoca">Cada sistema trabaja para que el estudio venda más.</h2>
-        <p class="lead">Hoy tienen 2,700 seguidores en Facebook y ninguno puede apartar fecha ni comprar por su cuenta: todo pasa por Messenger o WhatsApp. Una página bonita no basta. Cada uno trae piezas pensadas para que el cliente se enganche, aparte, compre más y vuelva. Ábranlos: son demos que funcionan, y con «Ver cómo vende» se marca en pantalla cada parte que vende y por qué.</p>
+        <p class="eyebrow mono"><span class="num">02 B</span> En tiempo real</p>
+        <h2 class="enfoca">Todo al día, en cada aparato.</h2>
+        <p class="lead">Lo que hace el cliente lo ve el estudio al instante, y al revés: sin recargar y sin preguntar. Esto se actualiza solo en cada sistema.</p>
+      </header>
+      <div class="revela"><table class="rt-tabla" id="rt-tabla">
+        <thead><tr><th>Qué se actualiza al instante</th><th>Página</th><th>Tienda</th><th>Completo</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <div class="negativo" data-toma-n="03" data-titulo="Véalo funcionar" data-pregunta="Pruebe cada sistema antes de decidir."></div>
+
+  <!-- 03 Demos: cómo vende cada sistema -->
+  <section class="sec" id="demos" data-toma="3">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">03 A</span> Las demos</p>
+        <h2 class="enfoca">Funcionan hoy. Pruébelas antes de decidir.</h2>
+        <p class="lead">El estudio tiene 2,700 seguidores en Facebook y ninguno puede apartar ni comprar por su cuenta. Cada demo muestra cómo cambia eso: reservar con anticipo, vender fotos extra y ofrecer la próxima sesión. Con «Ver cómo vende» se señala cada parte y lo que aporta.</p>
       </header>
       <div class="vitrinas" id="vitrinas"></div>
 
@@ -142,7 +171,7 @@
         <div class="calc-cab">
           <p class="eyebrow mono" style="color:#B9B2A6"><span class="num">Q</span> Hagamos cuentas</p>
           <h3>¿Cuánto más puede vender el estudio?</h3>
-          <p>Muevan los números a lo que ustedes viven. Son supuestos para conversar, no promesas: el punto es ver cuántas ventas hacen falta para que el sistema se pague solo.</p>
+          <p>Ajuste los números a la realidad del estudio. Son supuestos de referencia, no promesas: sirven para ver cuántas ventas pagan el sistema.</p>
         </div>
         <div class="calc-cuerpo">
           <form class="calc-datos" id="calc-form" onsubmit="return false"></form>
@@ -153,12 +182,12 @@
   </section>
 
   <!-- 04 En vivo -->
-  <section class="sec vivo" id="vivo">
+  <section class="sec vivo" id="vivo" data-toma="3">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">04</span> Pruébenlo</p>
-        <h2 class="enfoca">Toque el celular. Mire la computadora.</h2>
-        <p class="lead">Esto es el tiempo real. Lo que el cliente hace en su teléfono le aparece al estudio en el mismo segundo, sin recargar nada. Y lo que el estudio cambia, el cliente lo ve al momento. <span class="pulso mono"><i></i>EN VIVO</span></p>
+        <p class="eyebrow mono"><span class="num">03 B</span> En vivo</p>
+        <h2 class="enfoca">Toque el celular. Mire el panel.</h2>
+        <p class="lead">Lo que el cliente hace en su teléfono aparece en el panel del estudio en el mismo segundo. Lo que el estudio actualiza, el cliente lo ve al momento. <span class="pulso mono"><i></i>EN VIVO</span></p>
       </header>
 
       <div class="escena">
@@ -240,28 +269,110 @@
     </div>
   </section>
 
-  <!-- 04 Tiempo real en todo -->
-  <section class="sec" id="tiempo-real">
+  <!-- 11 A su medida -->
+  <section class="sec" id="medida" data-toma="3">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">05</span> Tiempo real en todo</p>
-        <h2 class="enfoca">En vivo en todo, no solo en la demo.</h2>
-        <p class="lead">Todo lo que cambia se ve al instante, en cualquier aparato, sin recargar. Esto es lo que se actualiza solo en cada sistema.</p>
+        <p class="eyebrow mono"><span class="num">03 C</span> A su medida</p>
+        <h2 class="enfoca">Con la imagen del estudio, no de una plantilla.</h2>
+        <p class="lead">Cambie el color, la letra, el paquete que más quieren vender y el tono de los mensajes, y vea el resultado al instante.</p>
       </header>
-      <div class="revela"><table class="rt-tabla" id="rt-tabla">
-        <thead><tr><th>Qué se actualiza al instante</th><th>Página</th><th>Tienda</th><th>Completo</th></tr></thead>
-        <tbody></tbody>
-      </table></div>
+      <div class="medida revela">
+        <form class="m-ctrl" id="m-ctrl" aria-label="Personalizar el panel">
+          <fieldset><legend>Color del estudio</legend><div class="m-colores" id="m-colores"></div></fieldset>
+          <fieldset><legend>Letra</legend><div class="m-pildoras" id="m-letras"></div></fieldset>
+          <fieldset><legend>Lo que más quieren vender</legend><div class="m-pildoras" id="m-paquetes"></div></fieldset>
+          <fieldset><legend>Cómo le hablan al cliente</legend><div class="m-pildoras" id="m-tonos"></div></fieldset>
+          <a class="btn btn-tinta m-ver" id="m-ver" href="demos/completo/"><span data-i="play"></span>Ver el sistema completo así</a>
+        </form>
+        <div class="m-vista" id="m-vista">
+          <div class="top"><i></i><i></i><i></i><span class="url mono">panel.fotogonzalezstudio.com</span></div>
+          <div class="m-area">
+            <div class="mv-fecha">Miércoles, 11 de noviembre · Retalhuleu</div>
+            <div class="mv-h1">Buenos días.</div>
+            <p class="mv-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
+            <div class="mv-cifras"><div><small>Ingresos de noviembre</small><b>Q 38,450.00</b></div><div><small>Ticket promedio</small><b>Q 1,602.08</b></div></div>
+            <div class="mv-op">
+              <span class="mv-ic" data-i="gift"></span>
+              <div><small>Lo próximo que le puede vender</small><b id="mv-paq">Sesión de primer año</b><p id="mv-por"></p><span class="mv-btn" id="mv-btn">Mandar la oferta</span></div>
+            </div>
+            <div class="mv-wa" aria-live="polite"><small>Así le llega al cliente por WhatsApp</small><p id="mv-msg"></p></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-mas revela">
+        <h3>Y también se adapta</h3>
+        <ul>
+          <li><b>Su logo y su nombre</b>En la página, el panel, los mensajes y las facturas.</li>
+          <li><b>Sus paquetes y precios</b>Con lo que incluye cada uno. Los cambian ustedes cuando quieran.</li>
+          <li><b>Sus horarios</b>Días libres, horas de estudio y cuánto dura cada sesión.</li>
+          <li><b>Sus mensajes</b>Confirmación, recordatorio y entrega, escritos con sus palabras.</li>
+          <li><b>Quién ve qué</b>La recepción no ve la caja y cada fotógrafo ve su agenda.</li>
+          <li><b>Sus pantallas</b>Lo que más usan va primero. Lo que no usan, se quita.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="negativo" data-toma-n="04" data-titulo="Inversión" data-pregunta="¿Cuánto cuesta y qué incluye?"></div>
+
+  <!-- 07 Precios -->
+  <section class="sec" id="precios" data-toma="4" style="background: var(--papel2)">
+    <div class="envoltura">
+      <div class="precios-cab">
+        <header class="sec-cabeza" style="margin-bottom:0">
+          <p class="eyebrow mono"><span class="num">04 A</span> Inversión</p>
+          <h2 class="enfoca">Inversión clara, en quetzales.</h2>
+          <p class="lead">Un pago inicial y una mensualidad que incluye la base de datos, el hospedaje y el soporte. Sin comisión por venta. Abajo se detalla cada quetzal.</p>
+        </header>
+        <label class="iva"><input type="checkbox" id="iva"> Mostrar con IVA (12%)</label>
+      </div>
+      <div class="planes" id="planes"></div>
+
+      <div class="extra-linea">
+        <div class="caja revela">
+          <h3>Extras</h3>
+          <div class="extras" id="extras"></div>
+        </div>
+        <div class="caja revela">
+          <h3>Arme su plan</h3>
+          <form class="armado" id="plan-form" onsubmit="return false">
+            <div class="elige" role="radiogroup" aria-label="Sistema">
+              <label><input type="radio" name="paq" value="pagina">Página</label>
+              <label><input type="radio" name="paq" value="tienda">Tienda</label>
+              <label><input type="radio" name="paq" value="completo" checked>Completo</label>
+            </div>
+            <dl class="resumen" id="resumen"></dl>
+            <a class="btn btn-acento wa" id="plan-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Mandar mi plan por WhatsApp</a>
+          </form>
+        </div>
+      </div>
+
+      <div class="compra-unica revela">
+        <p><b>¿Prefieren comprarlo?</b> El sistema completo con el código a nombre del estudio. Supabase Pro lo pagan ustedes directo (cerca de US$30 al mes) y nosotros damos soporte.</p>
+        <div><b class="p" id="cu-precio">Q 15,000.00</b> <span style="color:var(--tinta2)">+ <span id="cu-mes">Q 350.00</span>/mes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Comparativa -->
+  <section class="sec" id="comparativa" data-toma="4">
+    <div class="envoltura">
+      <header class="sec-cabeza">
+        <p class="eyebrow mono"><span class="num">04 B</span> Comparativa</p>
+        <h2 class="enfoca">Frente a lo que se usa hoy.</h2>
+      </header>
+      <div class="revela"><table class="comp" id="comp"></table></div>
     </div>
   </section>
 
   <!-- 05 Base de datos -->
-  <section class="sec" id="base" style="background: var(--papel2)">
+  <section class="sec" id="base" data-toma="4" style="background: var(--papel2)">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">06</span> La base de datos</p>
-        <h2 class="enfoca">Una base de datos de verdad: Supabase Pro.</h2>
-        <p class="lead">Supabase es el servicio en la nube donde viven los clientes, las fotos, las reservas y los pedidos. Es el que hace posible el tiempo real. Usamos el plan <b>Pro</b> en los tres sistemas: el gratuito se pausa cuando hay poca actividad y no guarda respaldos, y un estudio no puede quedarse sin página un lunes.</p>
+        <p class="eyebrow mono"><span class="num">04 C</span> La base de datos</p>
+        <h2 class="enfoca">Información segura y siempre disponible.</h2>
+        <p class="lead">Clientes, fotos, reservas y pedidos se guardan en <b>Supabase Pro</b>, el servicio que hace posible el tiempo real. No se pausa por poca actividad y respalda la información cada día. Va incluido en la mensualidad.</p>
       </header>
       <div class="bd-tabs" role="tablist" aria-label="Ver qué guarda cada sistema" id="bd-tabs">
         <button role="tab" aria-selected="false" data-plan="pagina">Página</button>
@@ -297,12 +408,12 @@
   </section>
 
   <!-- 06 Dominio -->
-  <section class="sec" id="dominio">
+  <section class="sec" id="dominio" data-toma="4">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">07</span> Dominio</p>
-        <h2 class="enfoca">Su nombre. Su dirección.</h2>
-        <p class="lead">Una dirección propia se recuerda, se imprime en la tarjeta y le da confianza al cliente antes de pagar el anticipo. Queda registrada <b>a nombre del estudio</b>, no del programador.</p>
+        <p class="eyebrow mono"><span class="num">04 D</span> Dominio</p>
+        <h2 class="enfoca">Su nombre, su dirección.</h2>
+        <p class="lead">Una dirección propia genera confianza antes del anticipo y se imprime en la tarjeta. Se registra <b>a nombre del estudio</b>.</p>
       </header>
       <div class="dominio">
         <div class="navegador revela">
@@ -319,63 +430,15 @@
     </div>
   </section>
 
-  <!-- 07 Precios -->
-  <section class="sec" id="precios" style="background: var(--papel2)">
-    <div class="envoltura">
-      <div class="precios-cab">
-        <header class="sec-cabeza" style="margin-bottom:0">
-          <p class="eyebrow mono"><span class="num">08</span> Precios</p>
-          <h2 class="enfoca">Precios claros, en quetzales.</h2>
-          <p class="lead">Un pago de arranque y una mensualidad que ya trae Supabase Pro adentro. Abajo se ve en qué se va cada quetzal.</p>
-        </header>
-        <label class="iva"><input type="checkbox" id="iva"> Mostrar con IVA (12%)</label>
-      </div>
-      <div class="planes" id="planes"></div>
-
-      <div class="extra-linea">
-        <div class="caja revela">
-          <h3>Extras</h3>
-          <div class="extras" id="extras"></div>
-        </div>
-        <div class="caja revela">
-          <h3>Arme su plan</h3>
-          <form class="armado" id="plan-form" onsubmit="return false">
-            <div class="elige" role="radiogroup" aria-label="Sistema">
-              <label><input type="radio" name="paq" value="pagina">Página</label>
-              <label><input type="radio" name="paq" value="tienda">Tienda</label>
-              <label><input type="radio" name="paq" value="completo" checked>Completo</label>
-            </div>
-            <dl class="resumen" id="resumen"></dl>
-            <a class="btn btn-acento wa" id="plan-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Mandar mi plan por WhatsApp</a>
-          </form>
-        </div>
-      </div>
-
-      <div class="compra-unica revela">
-        <p><b>¿Prefieren comprarlo?</b> El sistema completo con el código a nombre del estudio. Supabase Pro lo pagan ustedes directo (cerca de US$30 al mes) y nosotros damos soporte.</p>
-        <div><b class="p" id="cu-precio">Q 15,000.00</b> <span style="color:var(--tinta2)">+ <span id="cu-mes">Q 350.00</span>/mes</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 08 Comparativa -->
-  <section class="sec" id="comparativa">
-    <div class="envoltura">
-      <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">09</span> Comparativa</p>
-        <h2 class="enfoca">Contra lo que hay hoy.</h2>
-      </header>
-      <div class="revela"><table class="comp" id="comp"></table></div>
-    </div>
-  </section>
+  <div class="negativo" data-toma-n="05" data-titulo="Cómo trabajamos" data-pregunta="¿Cómo se hace, paso a paso?"></div>
 
   <!-- 10 Cómo trabajamos -->
-  <section class="sec" id="arranque" style="background: var(--papel2)">
+  <section class="sec" id="arranque" data-toma="5" style="background: var(--papel2)">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">10</span> Cómo trabajamos</p>
-        <h2 class="enfoca">De la propuesta a la primera reserva, sin sorpresas.</h2>
-        <p class="lead">En cada paso queda claro qué hacemos nosotros, qué necesitamos de ustedes y qué reciben. No pasamos al siguiente sin su visto bueno.</p>
+        <p class="eyebrow mono"><span class="num">05 A</span> Cómo trabajamos</p>
+        <h2 class="enfoca">De la aprobación a la primera reserva, en etapas claras.</h2>
+        <p class="lead">En cada etapa queda definido qué hacemos, qué necesitamos del estudio y qué recibe. Nada avanza sin su aprobación.</p>
       </header>
       <div class="principios">
         <div class="revela"><span class="pr-ic" data-i="chat"></span><b>Un solo contacto</b><p>Antonio, por WhatsApp. Sin intermediarios ni tickets.</p></div>
@@ -433,58 +496,13 @@
     </div>
   </section>
 
-  <!-- 11 A su medida -->
-  <section class="sec" id="medida">
-    <div class="envoltura">
-      <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">11</span> A su medida</p>
-        <h2 class="enfoca">El sistema se viste como el estudio.</h2>
-        <p class="lead">Pruébelo aquí. Cambie el color, la letra, lo que más quieren vender y la forma de hablarle al cliente, y mire cómo queda su panel al instante.</p>
-      </header>
-      <div class="medida revela">
-        <form class="m-ctrl" id="m-ctrl" aria-label="Personalizar el panel">
-          <fieldset><legend>Color del estudio</legend><div class="m-colores" id="m-colores"></div></fieldset>
-          <fieldset><legend>Letra</legend><div class="m-pildoras" id="m-letras"></div></fieldset>
-          <fieldset><legend>Lo que más quieren vender</legend><div class="m-pildoras" id="m-paquetes"></div></fieldset>
-          <fieldset><legend>Cómo le hablan al cliente</legend><div class="m-pildoras" id="m-tonos"></div></fieldset>
-          <a class="btn btn-tinta m-ver" id="m-ver" href="demos/completo/"><span data-i="play"></span>Ver el sistema completo así</a>
-        </form>
-        <div class="m-vista" id="m-vista">
-          <div class="top"><i></i><i></i><i></i><span class="url mono">panel.fotogonzalezstudio.com</span></div>
-          <div class="m-area">
-            <div class="mv-fecha">Miércoles, 11 de noviembre · Retalhuleu</div>
-            <div class="mv-h1">Buenos días.</div>
-            <p class="mv-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
-            <div class="mv-cifras"><div><small>Ingresos de noviembre</small><b>Q 38,450.00</b></div><div><small>Ticket promedio</small><b>Q 1,602.08</b></div></div>
-            <div class="mv-op">
-              <span class="mv-ic" data-i="gift"></span>
-              <div><small>Lo próximo que le puede vender</small><b id="mv-paq">Sesión de primer año</b><p id="mv-por"></p><span class="mv-btn" id="mv-btn">Mandar la oferta</span></div>
-            </div>
-            <div class="mv-wa" aria-live="polite"><small>Así le llega al cliente por WhatsApp</small><p id="mv-msg"></p></div>
-          </div>
-        </div>
-      </div>
-      <div class="m-mas revela">
-        <h3>Y también se adapta</h3>
-        <ul>
-          <li><b>Su logo y su nombre</b>En la página, el panel, los mensajes y las facturas.</li>
-          <li><b>Sus paquetes y precios</b>Con lo que incluye cada uno. Los cambian ustedes cuando quieran.</li>
-          <li><b>Sus horarios</b>Días libres, horas de estudio y cuánto dura cada sesión.</li>
-          <li><b>Sus mensajes</b>Confirmación, recordatorio y entrega, escritos con sus palabras.</li>
-          <li><b>Quién ve qué</b>La recepción no ve la caja y cada fotógrafo ve su agenda.</li>
-          <li><b>Sus pantallas</b>Lo que más usan va primero. Lo que no usan, se quita.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   <!-- 12 Cómo crece -->
-  <section class="sec" id="crece" style="background: var(--papel2)">
+  <section class="sec" id="crece" data-toma="5" style="background: var(--papel2)">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">12</span> Cómo crece</p>
-        <h2 class="enfoca">Hoy es el comienzo. El sistema crece con el estudio.</h2>
-        <p class="lead">Las mejoras no salen de una lista fija. Salen de lo que muestra el panel: qué se vende, qué preguntan los clientes y en qué paso se quedan.</p>
+        <p class="eyebrow mono"><span class="num">05 B</span> Cómo crece</p>
+        <h2 class="enfoca">El sistema crece con el estudio.</h2>
+        <p class="lead">Las mejoras se deciden con los números del panel: qué se vende, qué preguntan los clientes y en qué paso se detienen.</p>
       </header>
       <ol class="ruta-crece">
         <li class="revela"><span class="cuando mono">Al entregar</span><h3>Su plan, funcionando</h3><ul><li>El sistema publicado en su dominio</li><li>El equipo capacitado</li><li>Un mes de ajustes sin costo</li></ul></li>
@@ -500,24 +518,26 @@
     </div>
   </section>
 
+  <div class="negativo" data-toma-n="06" data-titulo="Empecemos" data-pregunta="Respuestas claras y el primer paso."></div>
+
   <!-- 13 Preguntas -->
-  <section class="sec" id="preguntas">
+  <section class="sec" id="preguntas" data-toma="6">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">13</span> Preguntas</p>
-        <h2 class="enfoca">Lo que suelen preguntar.</h2>
+        <p class="eyebrow mono"><span class="num">06 A</span> Preguntas</p>
+        <h2 class="enfoca">Preguntas frecuentes.</h2>
       </header>
       <div class="faq" id="faq"></div>
     </div>
   </section>
 
   <!-- Cierre -->
-  <section class="sec cierre" id="cierre">
+  <section class="sec cierre" id="cierre" data-toma="6">
     <div class="envoltura">
       <h2 class="enfoca">Empecemos.</h2>
-      <p class="lead" style="color:var(--tinta2);font-size:1.2rem;max-width:44ch;margin-top:18px">Ya tomamos sus datos del Facebook. Con sus fotos en archivo y una llamada de media hora, les enseñamos la página con su trabajo.</p>
+      <p class="lead" style="color:var(--tinta2);font-size:1.2rem;max-width:46ch;margin-top:18px">Con sus fotos en archivo y una llamada de 30 minutos, le presentamos una primera versión con el trabajo del estudio. Esta propuesta es válida por 15 días.</p>
       <div class="fila">
-        <a class="btn btn-acento wa" id="cierre-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Escribirme por WhatsApp</a>
+        <a class="btn btn-acento wa" id="cierre-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Agendar la llamada por WhatsApp</a>
         <div class="firma"><img src="img/firma-m.png" alt="M de Monterroso"><span><b>Antonio Monterroso</b>Monterroso Dev Studio · +502 3764 5139</span></div>
       </div>
     </div>
@@ -526,7 +546,8 @@
 
 <footer class="pie">Monterroso Dev Studio · Propuesta para Foto González Studio · Válida por 15 días · Precios en quetzales, sin IVA salvo que se marque. Costos de Supabase calculados a US$1 = Q 7.70 (noviembre de 2026). Las fotos son del estudio, tomadas de su Facebook.</footer>
 
-<script src="js/propuesta.js?v=20261112b"></script>
+<script src="js/propuesta.js?v=20261113a"></script>
+<script src="demos/foto.js?v=20261113a" data-visor=".sistema .vista, .vit-vista, .navegador .foto, .m-vista" data-toma=".sistema .vista, .vit-vista"></script>
 <script src="demos/completo/letras.js?v=20261111g"></script>
 <script src="js/medida.js?v=20261111g"></script>
 </body>

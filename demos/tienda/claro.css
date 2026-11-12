@@ -1,0 +1,84 @@
+/* Tienda en línea · diseño claro (se activa con el interruptor de diseño) */
+:root {
+  --papel: #EDEDEB; --papel2: #E4E4E1; --carta: #FFFFFF; --tinta: #111111; --tinta2: #4B4B4B; --tinta3: #8C8C8C; --linea: #E2E2DF;
+  --acento: #111111; --acento-osc: #000000; --acento-suave: #EFEFED; --marca: #8E2234; --oro: #111111;
+  --serif: "Plus Jakarta Sans", ui-sans-serif, sans-serif; --sans: "Plus Jakarta Sans", ui-sans-serif, sans-serif; --mono: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+  --vidrio: rgba(255, 255, 255, .6); --borde-v: rgba(255, 255, 255, .92); --sombra-v: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 26px 50px -36px rgba(0, 0, 0, .35);
+}
+body { background: radial-gradient(120% 80% at 20% 0%, #F7F7F6 0%, #EAEAE8 55%, #E2E2DF 100%) fixed; font-family: var(--sans); }
+@media (min-width: 900px) {
+  body::before, body::after { content: ""; position: fixed; z-index: -1; pointer-events: none; }
+  body::before { top: 90px; right: -60px; width: 330px; height: 290px; border-radius: 52% 48% 46% 54% / 55% 50% 50% 45%;
+    background: radial-gradient(circle at 38% 30%, #FFFFFF 0%, #E9E9E6 45%, #CFCFCB 100%), var(--grano); background-blend-mode: multiply; box-shadow: inset -30px -40px 70px rgba(0, 0, 0, .12); opacity: .85; }
+  body::after { left: -60px; bottom: -80px; width: 280px; height: 280px; border-radius: 50%; border: 50px solid #F6F6F5; box-shadow: inset 0 14px 30px rgba(0, 0, 0, .1), 0 40px 70px -30px rgba(0, 0, 0, .25); }
+}
+h1, h2, h3 { font-family: var(--sans); font-weight: 800; letter-spacing: -.045em; }
+h1 em { font-style: normal; font-weight: 800; color: #9A9A97; }
+h3 { letter-spacing: -.02em; font-weight: 700; }
+.sec-cab .lema { font-family: var(--sans); font-style: normal; font-weight: 700; color: var(--tinta); }
+.eyebrow { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .85); box-shadow: 0 0 0 1px var(--linea); color: var(--tinta); font-weight: 700; font-size: .7rem; }
+.eyebrow .punto { background: var(--marca); }
+
+/* Botones en píldora negra con el ícono en círculo blanco */
+.btn { border-radius: 999px; min-height: 52px; background: rgba(255, 255, 255, .85); border-color: var(--linea); color: var(--tinta); font-weight: 600; }
+.btn:active { transform: scale(0.97); }
+.btn-acento, .btn-tinta { background: #111; border-color: #111; color: #fff; padding-left: 8px; box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .55); }
+.btn-acento > span:first-child:has(> svg), .btn-tinta > span:first-child:has(> svg) { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #fff; color: #111; flex: none; }
+.btn-acento > span:first-child:has(> svg) svg, .btn-tinta > span:first-child:has(> svg) svg { width: 18px; height: 18px; }
+.btn-acento:not(:has(> span:first-child > svg)), .btn-tinta:not(:has(> span:first-child > svg)) { padding-left: 22px; }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background: #fff; box-shadow: 0 0 0 1px #111 inset; } .btn-acento:hover, .btn-tinta:hover { background: #000; color: #fff; } }
+
+/* Barra flotante */
+.barra-t { position: sticky; top: 12px; margin: 12px 12px 0; padding: 8px 8px 8px 16px; border-radius: 999px; background: var(--vidrio); border: 1px solid var(--borde-v); box-shadow: var(--sombra-v);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); }
+.logo { font-family: var(--sans); font-weight: 800; letter-spacing: -.04em; }
+.logo i { font-style: normal; font-weight: 500; }
+.logo .marca { background: #111; }
+.vence { background: #111; color: #fff; }
+.vence b { color: #fff; }
+.btn-carrito { background: #111; color: #fff; border-color: #111; }
+.cuenta { background: var(--marca); box-shadow: 0 0 0 2px #fff; }
+
+/* Secciones como paneles de vidrio */
+.sec { padding: clamp(14px, 2.4vw, 26px) 0; background: transparent !important; }
+.sec > .envoltura, .hola > .envoltura { background: var(--vidrio); border: 1px solid var(--borde-v); border-radius: 34px; box-shadow: var(--sombra-v); padding: clamp(22px, 4.4vw, 56px);
+  width: calc(100% - 24px); max-width: calc(var(--ancho) + 2 * var(--gutter)); margin: 0 auto; -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3); }
+.hola { padding: 22px 0 14px; }
+@media (max-width: 899px) { .sec > .envoltura, .hola > .envoltura { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, .88); border-radius: 26px; } }
+.collage .foto { border-radius: 24px; }
+.collage .c1 { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); }
+.collage .sello { background: #111; color: #fff; border-radius: 999px; }
+.miniatura { border-radius: 16px; }
+.miniatura[aria-pressed="true"] { box-shadow: 0 0 0 3px #111; }
+
+/* En su pared, paquetes y catálogo */
+.pared-caja, .config, .pack, .prod, .regalo, .seguimiento, .estudio { border-radius: 28px; }
+.pared { border-radius: 24px; }
+.chip { border-radius: 999px; }
+.chip:has(input:checked) { background: #111; color: #fff; border-color: #111; }
+.chip:has(input:checked) small { color: #CFCFCC; }
+.precio-caja b { font-weight: 800; letter-spacing: -.03em; }
+.pack, .prod { background: #fff; border-color: transparent; box-shadow: 0 0 0 1px var(--linea), 0 20px 40px -30px rgba(0, 0, 0, .3); }
+.pack:nth-child(2) { background: #0E0E0E; color: #fff; }
+.pack:nth-child(2) .cuerpo p, .pack:nth-child(2) .precios s { color: #A9A9A6; }
+.pack:nth-child(2) .btn { background: #fff; color: #111; border-color: #fff; }
+.pack .ahorro { background: #111; color: #fff; border-radius: 999px; }
+.pack:nth-child(2) .ahorro { background: #fff; color: #111; }
+.prod .mas { background: #111; color: #fff; border-color: #111; border-radius: 50%; }
+.regalo { background: #0E0E0E; color: #fff; }
+.regalo .nota, .regalo p { color: #CFCFCC; }
+.regalo .chip { background: rgba(255, 255, 255, .08); color: #fff; border-color: rgba(255, 255, 255, .2); }
+.regalo .chip:has(input:checked) { background: #fff; color: #111; }
+.regalo .btn-tinta { background: #fff; color: #111; }
+.regalo .btn-tinta > span:first-child:has(> svg) { background: #111; color: #fff; }
+.tarjeta-r { border-radius: 22px; }
+.pasos .bola { background: #111; }
+.pasos li.hecho .bola { background: #111; }
+.en-vivo { color: var(--marca); }
+.en-vivo i { background: var(--marca); }
+.feed-e li { border-radius: 14px; }
+
+/* Pie y carrito */
+.pie { background: transparent; }
+.carrito { border-radius: 28px 0 0 28px; background: #F3F3F1; }
+.barra-envio i { background: #111; }

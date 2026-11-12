@@ -10,11 +10,13 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238E2234' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
 <link rel="stylesheet" href="../comun.css?v=20261111c">
 <link rel="stylesheet" href="pagina.css?v=20261111c">
+<link rel="stylesheet" href="../foto.css?v=20261113a">
+<script src="../diseno.js?v=20261113a" data-css="claro.css?v=20261113a"></script>
 </head>
-<body>
+<body class="claro">
 
 <header class="barra" id="barra">
   <a class="logo" href="#inicio" aria-label="Foto González Studio, inicio"><span class="logo-ic"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><span>Foto <em>González</em></span></a>
@@ -38,13 +40,13 @@
           <i class="punto"></i><span id="chip-txt">Quedan <b id="libres-n">2</b> sábados libres en diciembre</span><span data-i="arrow"></span>
         </a>
         <h1 id="titulo">
-          <span class="linea"><span>El tiempo pasa,</span></span>
+          <span class="linea"><span>El tiempo pasa<span class="pt">,</span></span></span>
           <span class="linea"><span>los momentos</span></span>
-          <span class="linea"><span><em>permanecen.</em></span></span>
+          <span class="linea"><span><em>permanecen<span class="pt">.</span></em></span></span>
         </h1>
         <p class="bajada">Fotografía y video para XV años, bodas y familias en Retalhuleu. Usted escoge sus fotos desde el celular y le avisamos en cuanto estén listas.</p>
         <div class="acciones">
-          <a class="btn btn-acento" href="#quiz">Encontrar mi sesión <span data-i="arrow"></span></a>
+          <a class="btn btn-acento" href="#quiz"><span data-i="arrow"></span>Encontrar mi sesión</a>
           <a class="btn" href="#fechas">Ver fechas libres</a>
         </div>
         <ul class="sellos" aria-label="Lo que ofrecemos">
@@ -54,9 +56,11 @@
         </ul>
       </div>
       <div class="portada-fotos" aria-hidden="true">
+        <div class="pf-cab solo-claro"><span>Nuestro trabajo</span><span class="pf-pts"><i></i><i></i><i></i><i></i></span></div>
         <div class="foto f-xv grande" id="foto-portada"></div>
         <div class="foto f-bebe chica"></div>
         <p class="pie-foto mono">XV años · en el estudio</p>
+        <div class="pf-pie solo-claro"><span class="pf-avs"><i class="foto f-bebe"></i><i class="foto f-familia"></i><i class="foto f-boda"></i></span><span><b>Más de 400 familias</b><small>retratadas en Retalhuleu</small></span></div>
       </div>
     </div>
   </section>
@@ -79,6 +83,8 @@
       </div>
     </div>
   </section>
+
+  <div class="negativo" data-toma-n="02" data-titulo="Portafolio" data-pregunta="Bodas, XV años, bebés y familias."></div>
 
   <!-- Portafolio -->
   <section class="sec fondo2" id="portafolio">
@@ -124,10 +130,12 @@
           <div><b data-r="s">00</b><small>seg</small></div>
         </div>
         <p class="cupos"><span id="cupos-n">7</span> de 20 cupos libres <span class="cupos-barra"><i id="cupos-barra"></i></span></p>
-        <button class="btn btn-acento" type="button" id="promo-btn">Quiero un cupo <span data-i="arrow"></span></button>
+        <button class="btn btn-acento" type="button" id="promo-btn"><span data-i="arrow"></span>Quiero un cupo</button>
       </div>
     </div>
   </section>
+
+  <div class="negativo" data-toma-n="05" data-titulo="Fechas libres" data-pregunta="Escoja su día y apártelo desde el celular."></div>
 
   <!-- Fechas libres -->
   <section class="sec" id="fechas">
@@ -219,6 +227,8 @@
     </div>
   </section>
 
+  <div class="negativo" data-toma-n="09" data-titulo="Visítenos" data-pregunta="Residenciales Bella Aurora, zona 6, Retalhuleu."></div>
+
   <!-- Visítenos -->
   <section class="sec" id="visitenos">
     <div class="envoltura visita">
@@ -253,6 +263,7 @@
     <a class="logo" href="#inicio"><span class="logo-ic"><img class="fg-mono" src="../../img/monograma-fg.png" alt=""></span><span>Foto <em>González</em></span></a>
     <p>Residenciales Bella Aurora, zona 6, Retalhuleu · +502 5016 8853 · premiumdesigngt@gmail.com</p>
     <p>Fotos del estudio (de su Facebook). Horario y reseñas de muestra; van los del estudio.</p>
+    <a class="btn btn-acento pie-cta" href="#fechas"><span data-i="arrow"></span>Apartar mi fecha</a>
     <p class="credito">Página de muestra por <a href="../../">Monterroso Dev Studio</a></p>
   </div>
 </footer>
@@ -270,7 +281,8 @@
   <button class="v-nav v-next" type="button" id="v-next" aria-label="Foto siguiente"><span data-i="arrow"></span></button>
 </div>
 
-<script src="../comun.js?v=20261111c"></script>
+<script src="../comun.js?v=20261113a"></script>
 <script src="pagina.js?v=20261111c"></script>
+<script src="../foto.js?v=20261113a" data-visor=".tile, .portada-fotos .grande, .promo-foto, .resena:first-child .foto" data-toma=".tile, .promo-foto" data-obturador="1"></script>
 </body>
 </html>

@@ -764,3 +764,17 @@ p { margin: 0 0 1em; }
 .visor .visor-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 3; }
 .visor .enfoque, .visor .esquinas, .visor .tercios, .visor .rec, .visor .datos { z-index: 2; }
 .visor .toca { position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); white-space: nowrap; z-index: 2; padding: 4px 10px; border-radius: 999px; background: rgba(22,21,19,.55); color: #fff; font-size: .7rem; letter-spacing: .08em; pointer-events: none; }
+
+/* ===== Menú por tomas, interruptor de diseño y beneficios de la portada ===== */
+.barra nav a small { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .64rem; color: var(--tinta3); margin-right: 6px; letter-spacing: .04em; }
+.barra nav a[aria-current="true"] small { color: var(--acento); }
+.btn-dis { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linea); background: var(--carta); color: var(--tinta); font-size: .86rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: transform 140ms var(--ease-out), border-color 160ms var(--ease-out); }
+.btn-dis:active { transform: scale(0.97); }
+.btn-dis svg { width: 16px; height: 16px; }
+@media (hover: hover) and (pointer: fine) { .btn-dis:hover { border-color: var(--tinta); } }
+@media (max-width: 1100px) { .btn-dis .dis-txt { display: none; } .btn-dis { width: 44px; height: 44px; padding: 0; justify-content: center; } }
+.beneficios { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 640px; }
+.beneficios li { padding: 12px 14px; border-radius: 14px; background: var(--carta); border: 1px solid var(--linea); }
+.beneficios b { display: block; font-family: "Archivo", sans-serif; font-size: .98rem; line-height: 1.2; }
+.beneficios span { display: block; margin-top: 4px; color: var(--tinta2); font-size: .84rem; line-height: 1.4; }
+@media (max-width: 700px) { .beneficios { grid-template-columns: 1fr; } }

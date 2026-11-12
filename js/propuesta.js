@@ -44,21 +44,21 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 const PRECIOS = {
   pagina: {
     n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 300, plazo: "1 a 2 semanas",
-    para: "Para que los encuentren, vean su trabajo y aparten fecha.",
+    para: "Para que lo encuentren, vean su trabajo y aparten fecha con anticipo.",
     vista: "land",
     x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
     desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 105]]
   },
   tienda: {
     n: "Tienda en línea", tipo: "E-commerce", ini: 3000, mes: 420, plazo: "3 a 4 semanas",
-    para: "Para vender impresiones, álbumes y sesiones sin estar en el chat.",
+    para: "Para vender impresiones, álbumes y sesiones sin atender cada pedido por chat.",
     vista: "tienda",
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
     desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 190]]
   },
   completo: {
     n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 5800, mes: 690, plazo: "5 a 7 semanas", rec: true,
-    para: "Para manejar todo el estudio, de la reserva a la entrega.",
+    para: "Para gestionar el estudio completo, de la reserva a la entrega, y vender más a cada cliente.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
     desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 390]]
@@ -636,7 +636,8 @@ function barra() {
   const secciones = $$("main > section[id]");
   const io = new IntersectionObserver(ents => ents.forEach(e => {
     if (!e.isIntersecting) return;
-    $$("a", menu).forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id));
+    const t = e.target.dataset.toma;
+    $$("a", menu).forEach(a => a.setAttribute("aria-current", !!t && a.dataset.toma === t));
   }), { rootMargin: "-45% 0px -50% 0px" });
   secciones.forEach(s => io.observe(s));
 }

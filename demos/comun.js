@@ -109,6 +109,7 @@ function cintaDemo({ sistema, palancas }) {
   const c = document.createElement("div");
   c.className = "cinta-demo";
   c.innerHTML = `<span class="et mono">DEMO · <b>${sistema}</b></span>
+    ${window.cambiarDiseno ? `<button class="cinta-dis" type="button" data-diseno-btn aria-label="Cambiar el diseño" aria-pressed="${window.disenoActual() === "claro"}">${ico("aperture", 16)}<span class="dis-txt">Diseño: <b data-diseno-txt>${window.disenoActual() === "claro" ? "Claro" : "Clásico"}</b></span></button>` : ""}
     <a href="../../#demos">${ico("back", 16)}<span>Propuesta</span></a>
     <button class="ver-venta" type="button" aria-pressed="false">${ico("trend", 16)}<span>Ver cómo vende</span><span class="txt-largo">&nbsp;(${ids.length})</span></button>`;
   document.body.append(c);

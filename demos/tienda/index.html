@@ -10,9 +10,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B23F29' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83m13.79-4-5.74 9.94'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,300..800;1,300..600&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
 <link rel="stylesheet" href="../comun.css?v=20261111c">
 <link rel="stylesheet" href="tienda.css?v=20261111c">
+<link rel="stylesheet" href="../foto.css?v=20261113a">
+<script src="../diseno.js?v=20261113a" data-css="claro.css?v=20261113a"></script>
 </head>
 <body>
 
@@ -30,7 +32,7 @@
     <div class="envoltura">
       <div class="hola-texto">
         <p class="eyebrow mono"><span class="punto"></span>Galería lista · Sus XV años · 24 fotos</p>
-        <h1>Sus fotos de XV ya están listas. <em>Ahora, llévelas a casa.</em></h1>
+        <h1>Sus fotos de XV ya están listas<span class="pt">.</span> <em>Ahora, llévelas a casa<span class="pt">.</span></em></h1>
         <p class="bajada">Las 24 fotos de su sesión de XV, ya editadas. Véalas colgadas en su sala antes de pedirlas, arme su álbum o mándele una a los abuelos.</p>
         <div class="acciones">
           <a class="btn btn-acento" href="#pared"><span data-i="frame"></span>Ver una en mi pared</a>
@@ -58,6 +60,8 @@
       </div>
     </div>
   </section>
+
+  <div class="negativo" data-toma-n="02" data-titulo="Véala en su pared" data-pregunta="Escoja el tamaño viendo su foto a escala, junto al sillón."></div>
 
   <!-- En su pared -->
   <section class="sec sec-pared" id="pared">
@@ -251,7 +255,8 @@
   </div>
 </aside>
 
-<script src="../comun.js?v=20261111c"></script>
+<script src="../comun.js?v=20261113a"></script>
 <script src="tienda.js?v=20261111c"></script>
+<script src="../foto.js?v=20261113a" data-visor=".collage .c1, .pared-caja .pared, .prod .vista, .pack .vista" data-toma=".collage .c1, .prod .vista" data-obturador="1"></script>
 </body>
 </html>
