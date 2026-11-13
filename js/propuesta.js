@@ -240,7 +240,7 @@ function entrarPortada(retraso) {
 
 /* ---------- Visor: el punto de enfoque busca, fija y dispara; al tocarlo, dispara al momento ---------- */
 function visor() {
-  const fotos = ["f-xv", "f-bebe", "f-boda", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato", "f-camisola", "f-pareja", "f-graduacion", "f-fuerza"];
+  const fotos = ["f-xv", "f-bebe", "f-pedida", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato", "f-camisola", "f-pareja", "f-graduacion", "f-fuerza"];
   const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100"];
   const v = $("#visor"), enf = $("#enfoque"), foto = $("#visor-foto");
   const flash = document.createElement("div"); flash.className = "visor-flash"; flash.setAttribute("aria-hidden", "true"); v.append(flash);
@@ -288,7 +288,7 @@ function visor() {
 /* ---------- Tres sistemas ---------- */
 function miniVista(tipo) {
   if (tipo === "land") return `<div class="mini m-land"><div class="top"><i></i><i></i><i></i></div><div class="lienzo"><div class="hero foto f-xv"></div><span class="titulo"></span><span class="titulo"></span><div class="tiras"><span class="foto f-quince"></span><span class="foto f-bebe"></span><span class="foto f-familia"></span><span class="foto f-retrato"></span></div></div></div>`;
-  if (tipo === "tienda") return `<div class="mini m-tienda"><div class="top"><i></i><i></i><i></i></div><div class="lienzo"><span class="carrito">3</span><div class="rej">${["f-producto", "f-boda", "f-familia", "f-quince", "f-paisaje", "f-bebe"].map(f => `<div class="prod"><span class="foto ${f}"></span><i></i></div>`).join("")}</div></div></div>`;
+  if (tipo === "tienda") return `<div class="mini m-tienda"><div class="top"><i></i><i></i><i></i></div><div class="lienzo"><span class="carrito">3</span><div class="rej">${["f-producto", "f-pedida", "f-familia", "f-quince", "f-paisaje", "f-bebe"].map(f => `<div class="prod"><span class="foto ${f}"></span><i></i></div>`).join("")}</div></div></div>`;
   return `<div class="mini m-sis"><div class="top" style="grid-column:1/-1"><i></i><i></i><i></i></div><div class="lado"><i></i><i></i><i></i><i></i><i></i></div><div class="area"><div class="cifras"><span></span><span></span><span></span></div><div class="tablero">${[3, 2, 2, 1].map(n => `<div class="col">${"<span></span>".repeat(n)}</div>`).join("")}</div></div></div>`;
 }
 function pintarSistemas() {
@@ -480,7 +480,7 @@ function pintarFAQ() {
 }
 
 /* ---------- Demo en vivo ---------- */
-const FOTOS_DEMO = ["f-familia", "f-bebe", "f-retrato", "f-paisaje", "f-familia", "f-boda", "f-bebe", "f-retrato", "f-quince", "f-familia", "f-paisaje", "f-bebe", "f-retrato", "f-familia", "f-graduacion", "f-paisaje", "f-bebe", "f-familia", "f-retrato", "f-boda", "f-familia", "f-paisaje", "f-bebe", "f-quince"];
+const FOTOS_DEMO = ["f-familia", "f-bebe", "f-xv", "f-paisaje", "f-pedida", "f-primer", "f-retrato", "f-cacao", "f-quince", "f-mundial", "f-anillo", "f-pastel", "f-glam", "f-graduacion", "f-pareja", "f-camisola", "f-fuerza", "f-maracas", "f-producto", "f-maestra", "f-toga", "f-boda", "f-maternidad", "f-navidad"];
 const PAQ_DEMO = [{ n: "Sesión de estudio", p: 450 }, { n: "Familia en exterior", p: 850 }, { n: "XV años", p: 2400 }];
 const ESTADOS = [["Recibido", "Pagó el anticipo"], ["En edición", "Retoque y color"], ["En impresión", "Laboratorio"], ["Listo para recoger", "En el estudio"], ["Entregado", "¡Gracias!"]];
 const DIAS = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];

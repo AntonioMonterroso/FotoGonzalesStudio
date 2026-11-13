@@ -50,13 +50,29 @@
     setTimeout(function () { o.classList.add("abre"); }, 60);
     setTimeout(function () { o.remove(); }, 1300);
   }
+  /* Fotos de muestra (no son del estudio): llevan su etiqueta cuando se ven grandes */
+  var MUESTRA = ".foto.f-toga, .foto.f-toga2, .foto.f-maternidad, .foto.f-boda, .foto.f-navidad", pend = false;
+  function muestras() {
+    pend = false;
+    var a = document.querySelectorAll(MUESTRA + ", .foto[data-muestra]");
+    for (var i = 0; i < a.length; i++) {
+      var e = a[i], si = e.matches(MUESTRA) && e.offsetWidth >= 120 && e.offsetHeight >= 90;
+      if (si && !e.hasAttribute("data-muestra")) e.setAttribute("data-muestra", "");
+      else if (!si && e.hasAttribute("data-muestra")) e.removeAttribute("data-muestra");
+    }
+  }
+  function luego() { if (!pend) { pend = true; requestAnimationFrame(function () { setTimeout(muestras, 60); }); } }
   function iniciar() {
-    negativos(); recorrer(document.body); obturador();
-    if (!SEL_V && !SEL_T) return;
+    negativos(); recorrer(document.body); obturador(); muestras();
+    addEventListener("resize", luego); document.addEventListener("click", function () { setTimeout(luego, 350); });
     new MutationObserver(function (ms) {
-      for (var i = 0; i < ms.length; i++) for (var k = 0; k < ms[i].addedNodes.length; k++) { var nd = ms[i].addedNodes[k]; if (nd.nodeType === 1) recorrer(nd); }
+      for (var i = 0; i < ms.length; i++) {
+        if (ms[i].type === "attributes") { if (ms[i].attributeName === "class") luego(); continue; }
+        for (var k = 0; k < ms[i].addedNodes.length; k++) { var nd = ms[i].addedNodes[k]; if (nd.nodeType === 1 && (SEL_V || SEL_T)) recorrer(nd); }
+        luego();
+      }
       negativos();
-    }).observe(document.body, { childList: true, subtree: true });
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar); else iniciar();
 })();

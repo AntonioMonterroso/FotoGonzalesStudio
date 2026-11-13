@@ -34,6 +34,27 @@
 }
 [data-diseno="claro"] .tira-caja.hoja { border-radius: 26px; }
 
+@media (max-width: 960px) { .hoja .tira { grid-template-columns: repeat(6, 1fr); } }
+
+/* Cuadros de la misma sesión: plano, medio, cara y detalle */
+.f-xv.v-medio { background-size: 165%; background-position: 54% 24%; }
+.f-xv.v-cara { background-size: 290%; background-position: 54% 16%; }
+.f-xv.v-det { background-size: 230%; background-position: 50% 82%; }
+.f-quince.v-medio { background-size: 165%; background-position: 48% 22%; }
+.f-quince.v-cara { background-size: 290%; background-position: 46% 14%; }
+.f-quince.v-det { background-size: 230%; background-position: 50% 80%; }
+.f-glam.v-medio { background-size: 165%; background-position: 66% 26%; }
+.f-glam.v-cara { background-size: 290%; background-position: 69% 25%; }
+.f-glam.v-det { background-size: 230%; background-position: 55% 82%; }
+
+/* ===== La pared: una sala de verdad (foto de muestra) ===== */
+.pared { aspect-ratio: 3 / 2; background: #D9D3C8 url("../../img/fotos/muestra/sala.jpg") 50% 100% / 104% auto no-repeat; }
+.pared .sillon, .pared .piso { display: none; }
+.pared .cuadro { bottom: calc(123 * var(--cm)); }
+.pared-tinte { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--color-pared); mix-blend-mode: multiply; transition: background-color 300ms var(--ease-out);
+  -webkit-mask: url("../../img/fotos/muestra/sala-pared.png") 50% 100% / 104% auto no-repeat; mask: url("../../img/fotos/muestra/sala-pared.png") 50% 100% / 104% auto no-repeat; }
+.pared::before { content: "Sala de muestra"; position: absolute; left: 12px; bottom: 10px; z-index: 7; padding: 3px 8px; border-radius: 999px; background: rgba(0, 0, 0, .5); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .02em; pointer-events: none; }
+
 /* ===== Recorte y encuadre ===== */
 .recorte { margin: 18px 0 6px; max-width: 300px; }
 .rc-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
@@ -57,7 +78,8 @@
 .rc-e.e4 { right: -1px; bottom: -1px; border-left: 0; border-top: 0; }
 .rc-nota { margin: 8px 0 0; font-size: .82rem; color: var(--tinta2); max-width: 46ch; }
 .rc-nota b { color: var(--tinta); }
-#capas-foto .capa-foto { background-position: 50% var(--rc-y, 50%); transition: background-position 300ms var(--ease-out), opacity 400ms var(--ease-out); }
+#capas-foto .capa-foto:not([class*="v-"]) { background-position: 50% var(--rc-y, 50%); }
+#capas-foto .capa-foto { transition: background-position 300ms var(--ease-out), opacity 400ms var(--ease-out); }
 
 /* ===== Laboratorio de impresión ===== */
 .config { container-type: inline-size; container-name: config; }
@@ -93,7 +115,7 @@
 
 /* ===== Sobre de entrega ===== */
 .sobre { --kraft: #C9A57B; position: relative; width: min(100%, 360px); height: 184px; margin: 88px 0 22px; perspective: 900px; }
-.sobre::before { content: ""; position: absolute; inset: 0; border-radius: 6px; background: #B48E63; box-shadow: 0 24px 40px -26px rgba(0, 0, 0, .55); }
+.sobre::before { content: ""; position: absolute; inset: 0; border-radius: 6px; background: #B48E63 url("../../img/fotos/muestra/papel-kraft.jpg") center / cover; background-blend-mode: multiply; box-shadow: 0 24px 40px -26px rgba(0, 0, 0, .55); }
 .sobre-fotos { position: absolute; left: 10%; right: 10%; top: 0; height: 100%; z-index: 2; }
 .sobre-fotos span { position: absolute; top: 8%; width: 42%; aspect-ratio: 4 / 5; border-radius: 3px; border: 5px solid #FBF8F2; box-shadow: 0 10px 20px -10px rgba(0, 0, 0, .5);
   left: calc(var(--k) * 26%); rotate: calc(-6deg + var(--k) * 6deg); opacity: 0; transform: translateY(-62%);
@@ -104,14 +126,14 @@
   transition: transform 800ms var(--ease-out) calc(var(--k) * 70ms), opacity 200ms linear 1100ms; }
 .sobre-cuerpo { position: absolute; left: 0; right: 0; bottom: 0; height: 74%; z-index: 3; display: flex; align-items: flex-end; padding: 0 16px 14px; }
 .sobre-cuerpo::before { content: ""; position: absolute; inset: 0; border-radius: 0 0 6px 6px; background: var(--kraft);
-  background-image: var(--grano), linear-gradient(160deg, rgba(255, 255, 255, .12), rgba(0, 0, 0, .06)); background-blend-mode: multiply;
+  background-image: linear-gradient(160deg, rgba(255, 255, 255, .1), rgba(0, 0, 0, .08)), url("../../img/fotos/muestra/papel-kraft.jpg"); background-size: cover; background-blend-mode: multiply;
   clip-path: polygon(0 0, 50% 19%, 100% 0, 100% 100%, 0 100%); }
 .sobre-etq { position: relative; z-index: 1; }
 .sobre-etq { display: grid; gap: 1px; padding: 8px 12px; border-radius: 4px; background: #FBF8F2; color: #2A2622; box-shadow: 0 1px 0 rgba(0, 0, 0, .08); font-size: .74rem; max-width: 74%; }
 .sobre-etq b { font-size: .82rem; letter-spacing: -.01em; }
 .sobre-etq span { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .66rem; color: #5A544C; }
 .sobre-etq i { font-style: normal; font-size: .62rem; color: #8E2234; letter-spacing: .04em; margin-top: 2px; }
-.sobre-solapa { position: absolute; left: 0; right: 0; top: 0; height: 40%; z-index: 1; background: #BF9A6E; clip-path: polygon(0 0, 100% 0, 50% 100%);
+.sobre-solapa { position: absolute; left: 0; right: 0; top: 0; height: 40%; z-index: 1; background: #BF9A6E url("../../img/fotos/muestra/papel-kraft.jpg") center / cover; background-blend-mode: multiply; clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: 50% 0; transform: rotateX(180deg); transition: transform 700ms var(--ease-out); }
 .sobre.e2 .sobre-solapa, .sobre.e3 .sobre-solapa, .sobre.vacio .sobre-solapa { z-index: 4; transform: rotateX(0deg); transition-delay: 600ms; }
 .sobre-sello { position: absolute; left: 50%; top: 30%; z-index: 5; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; display: grid; place-items: center;

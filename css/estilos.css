@@ -725,7 +725,7 @@ p { margin: 0 0 1em; }
   .vit-vista .mini, .barra-res i, .barra-res em { transition: none; }
 }
 
-/* ===== Fotos reales del estudio (de su Facebook). Bodas, bebés y producto siguen de muestra. ===== */
+/* ===== Fotos reales del estudio (de su Facebook) ===== */
 .f-xv { background: #5E5A57 url("../img/fotos/xv-1.jpg") center 18% / cover no-repeat; }
 .f-quince { background: #5E5A57 url("../img/fotos/xv-2.jpg") center 18% / cover no-repeat; }
 .f-familia { background: #1E3B26 url("../img/fotos/familia.jpg") center 30% / cover no-repeat; }
@@ -753,6 +753,19 @@ p { margin: 0 0 1em; }
 .f-maracas { background: #D9D2C0 url("../img/fotos/desfile-maracas.jpg") center 20% / cover no-repeat; }
 :is(.f-bebe, .f-boda, .f-pareja, .f-producto, .f-mascota, .f-anillo, .f-fuerza, .f-pastel, .f-primer, .f-camisola, .f-maracas)::after { opacity: 0; }
 
+/* ===== Golden Glam sin las letras del afiche, pedida real y fotos de muestra (Unsplash, uso comercial gratis) ===== */
+.f-glam { background: #E9E6E1 url("../img/fotos/golden-glam-foto.jpg") 62% 24% / cover no-repeat; }
+.f-pedida { background: #B9B07A url("../img/fotos/pareja-sonrisa.jpg") center 30% / cover no-repeat; }
+.f-boda { background: #D8D2C6 url("../img/fotos/muestra/boda.jpg") center 30% / cover no-repeat; }
+.f-toga { background: #2F4A2C url("../img/fotos/muestra/graduacion-colegio.jpg") center 25% / cover no-repeat; }
+.f-toga2 { background: #1C1A1E url("../img/fotos/muestra/graduacion-diploma.jpg") center 20% / cover no-repeat; }
+.f-maternidad { background: #D9D7D3 url("../img/fotos/muestra/maternidad.jpg") center 40% / cover no-repeat; }
+.f-navidad { background: #E9E7E2 url("../img/fotos/muestra/navidad.jpg") center 35% / cover no-repeat; }
+:is(.f-pedida, .f-boda, .f-toga, .f-toga2, .f-maternidad, .f-navidad)::after { opacity: 0; }
+.foto[data-muestra]::before { content: "Foto de muestra"; position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); z-index: 2; padding: 3px 8px; border-radius: 999px;
+  background: rgba(0, 0, 0, .58); color: #fff; font-family: inherit; font-size: 10px; font-weight: 600; letter-spacing: .02em; line-height: 1.3; white-space: nowrap; pointer-events: none; }
+
+
 /* La base sin tablas: texto normal, no código */
 .tabla-bd .nom { font-family: "Hanken Grotesk", sans-serif; font-weight: 650; letter-spacing: 0; }
 .tabla-bd .campos { font-family: "Hanken Grotesk", sans-serif; letter-spacing: 0; font-size: .9rem; }
@@ -778,3 +791,4 @@ p { margin: 0 0 1em; }
 .beneficios b { display: block; font-family: "Archivo", sans-serif; font-size: .98rem; line-height: 1.2; }
 .beneficios span { display: block; margin-top: 4px; color: var(--tinta2); font-size: .84rem; line-height: 1.4; }
 @media (max-width: 700px) { .beneficios { grid-template-columns: 1fr; } }
+.foto[data-muestra]:has(> .toma-datos)::before { bottom: auto; top: 12px; }

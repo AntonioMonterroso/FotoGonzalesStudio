@@ -7,7 +7,7 @@
   const caja = $(".tira-caja");
   if (caja) {
     caja.classList.add("hoja");
-    caja.insertAdjacentHTML("afterbegin", `<div class="hc-cab" aria-hidden="true"><span>FGS 400</span><span>Rollo 01 · 24 exp.</span><span class="hc-lapiz">Marcadas: sus favoritas</span></div>`);
+    caja.insertAdjacentHTML("afterbegin", `<div class="hc-cab" aria-hidden="true"><span>FGS 400</span><span>Rollo 01 · 12 exp.</span><span class="hc-lapiz">Marcadas: sus favoritas</span></div>`);
     caja.insertAdjacentHTML("beforeend", `<div class="hc-pie" aria-hidden="true"><span>▸ XV años · Retalhuleu</span><span>Hoja de contactos</span></div>`);
     $$("#tira .miniatura").forEach((b, i) => b.style.setProperty("--i", i));
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { caja.classList.add("dibuja"); io.disconnect(); } }), { threshold: .25 });
@@ -88,6 +88,7 @@
 
   /* ---------- Revelado al agregar y destellos ---------- */
   const pared = $("#pared-vista");
+  if (pared) pared.insertAdjacentHTML("afterbegin", `<span class="pared-tinte" aria-hidden="true"></span>`);
   if (pared) pared.insertAdjacentHTML("beforeend", `<span class="luz-roja" aria-hidden="true"></span><span class="destello" aria-hidden="true"></span><span class="lab-aviso" aria-hidden="true">Revelando…</span>`);
   const cuadro = $("#cuadro");
   if (cuadro) cuadro.insertAdjacentHTML("beforeend", `<span class="capa-revela" aria-hidden="true"></span>`);

@@ -39,7 +39,7 @@ const EVENTOS = [["bebe", "f-bebe", "Recién nacidos, embarazo y primer año"], 
 
 const CATS = { todo: "Todo", bodas: "Bodas", xv: "XV años", bebes: "Bebés", familia: "Familia", estudio: "Estudio", grad: "Desfiles y eventos" };
 const PORTA = [
-  ["f-xv", "xv", "XV · círculo de luz", "alto"], ["f-boda", "bodas", "Pedida de mano · Retalhuleu", ""], ["f-bebe", "bebes", "Recién nacido · 10 días", ""],
+  ["f-xv", "xv", "XV · círculo de luz", "alto"], ["f-pedida", "bodas", "Pedida de mano · Retalhuleu", ""], ["f-bebe", "bebes", "Recién nacido · 10 días", ""],
   ["f-familia", "familia", "Con la camisola del Mundial 2026", "ancho2"], ["f-retrato", "estudio", "Retrato en estudio", ""], ["f-graduacion", "grad", "Desfile escolar · Retalhuleu", ""],
   ["f-pareja", "bodas", "Sesión de pareja", ""], ["f-quince", "xv", "XV · vestido corinto", "alto"], ["f-pastel", "bebes", "Primer año · tema circo", ""],
   ["f-paisaje", "grad", "Banda de marcha · desfile nocturno", "ancho2"], ["f-camisola", "familia", "Cada quien con su camisola", ""], ["f-cacao", "grad", "Baile folclórico", ""],
@@ -51,7 +51,7 @@ const RESENAS = [
   ["f-familia", "Familia de San Sebastián", "Sesión familiar", "Mi mamá lloró cuando vio el álbum. Escogimos las fotos desde el celular, cada quien en su casa, y en una semana ya estaban listas."],
   ["f-quince", "Quinceañera de Reu", "XV años", "Me avisaron por WhatsApp cuando estaban las fotos. Ni tuve que preguntar."],
   ["f-bebe", "Papás primerizos", "Recién nacido", "Mucha paciencia con el bebé. Tres horas y ni un mal gesto."],
-  ["f-boda", "Novios de Champerico", "Pedida y boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
+  ["f-pedida", "Novios de Champerico", "Pedida y boda", "Apartamos la fecha en línea un domingo en la noche. El lunes ya teníamos el contrato."],
   ["f-graduacion", "Familia de Bella Aurora", "Desfile escolar", "Encontramos a nuestra hija en la galería del desfile y pedimos tres fotos esa misma noche."]
 ];
 

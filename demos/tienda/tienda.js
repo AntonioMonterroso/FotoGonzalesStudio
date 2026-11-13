@@ -3,9 +3,8 @@
 "use strict";
 
 /* ---------- Datos de muestra ---------- */
-const FOTOS = ["f-xv", "f-quince", "f-glam", "f-xv", "f-familia", "f-xv", "f-quince", "f-glam", "f-xv", "f-familia", "f-quince", "f-xv",
-  "f-quince", "f-glam", "f-xv", "f-familia", "f-quince", "f-xv", "f-glam", "f-quince", "f-xv", "f-familia", "f-quince", "f-glam"];
-const FAVS = new Set([0, 3, 5, 8, 11, 14, 17, 20]); // las 8 que eligió en su galería
+const FOTOS = ["f-xv", "f-xv v-medio", "f-xv v-cara", "f-quince", "f-quince v-medio", "f-quince v-cara", "f-glam", "f-glam v-medio", "f-glam v-cara", "f-xv v-det", "f-quince v-det", "f-glam v-det"];
+const FAVS = new Set([0, 2, 6, 8]); // las 8 que eligió en su galería
 let fotoSel = 0;
 const fotoCls = () => FOTOS[fotoSel];
 const numFoto = () => String(fotoSel + 1).padStart(2, "0");
@@ -180,7 +179,7 @@ function agregarCuadro() {
 
 /* ---------- Paquetes y catálogo ---------- */
 function vistaPack(p) {
-  if (p.v === "abuelos") return `<div class="foto ${fotoCls()} a1" data-su-foto="a1"></div>` + ["a2", "a3", "a4"].map((c, i) => `<div class="foto ${FOTOS[(i * 5 + 3) % 24]} ${c}"></div>`).join("");
+  if (p.v === "abuelos") return `<div class="foto ${fotoCls()} a1" data-su-foto="a1"></div>` + ["a2", "a3", "a4"].map((c, i) => `<div class="foto ${FOTOS[(i * 5 + 3) % FOTOS.length]} ${c}"></div>`).join("");
   if (p.v === "triptico") return ["t1", "t2", "t3"].map((c, i) => i === 1 ? `<div class="foto ${fotoCls()} ${c}" data-su-foto="${c}"></div>` : `<div class="foto ${FOTOS[i * 7 + 1]} ${c}"></div>`).join("");
   return `<div class="foto ${fotoCls()} n1" data-su-foto="n1"></div><div class="foto ${FOTOS[6]} n2"></div><div class="foto ${FOTOS[9]} n3"></div><span class="caja-r"></span>`;
 }

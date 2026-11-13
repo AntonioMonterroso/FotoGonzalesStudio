@@ -237,7 +237,7 @@ const COBRAR = [
   { id: "c-qmarzo", n: "Quinceañera de marzo", t: "XV con video", que: "Anticipo", m: 600, total: 2900, f: "f-quince" },
   { id: "c-castillo", n: "Novios de octubre", t: "Boda", que: "Saldo", m: 1200, f: "f-anillo" },
   { id: "c-primer", n: "Familia del primer año", t: "Primer año", que: "Anticipo", m: 325, total: 650, f: "f-primer" },
-  { id: "c-grad", n: "Colegio La Asunción", t: "Graduación", que: "Saldo", m: 2400, f: "f-graduacion" }
+  { id: "c-grad", n: "Colegio La Asunción", t: "Graduación", que: "Saldo", m: 2400, f: "f-toga" }
 ];
 const filaCobro = c => `<li class="cob" data-id="${c.id}">
   <div class="cob-fila"><span class="foto cob-f ${c.f}" aria-hidden="true"></span>
@@ -564,7 +564,7 @@ const MES_C = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "O
 const CLI = [
   { id: "abuelos", n: "Abuelos de Bella Aurora", desde: "Clientes desde 2021 · Bella Aurora", tag: "50 años de casados",
     fechas: [["heart", "Bodas de oro", 2, 20], ["cake", "Cumpleaños del abuelo", 7, 8]],
-    hist: [["Dic 2025", "Cuatro generaciones", 1200, "f-familia"], ["Feb 2024", "Retrato de pareja", 450, "f-retrato"]],
+    hist: [["Dic 2025", "Cuatro generaciones", 1200, "f-familia"], ["Feb 2024", "Retrato de pareja", 450, "f-pareja"]],
     nota: "Vienen con hijos y nietos: 18 personas. Llevar silla para la abuela y hacer las fotos de grupo primero.",
     g: { col: [["#D9C9A3", "Beige"], ["#FFFFFF", "Blanco"]], ropa: "Guayabera blanca y vestido beige", ninos: "8 nietos de 2 a 14 años", mascota: "No", sitio: "El jardín de su casa", fav: ["f-familia", "Las cuatro generaciones juntas"] },
     prox: { ic: "heart", t: "Sesión de bodas de oro", por: "El 20 de febrero cumplen 50 años de casados.", m: 1500, album: "Familias",
@@ -572,7 +572,7 @@ const CLI = [
     cod: "REF-0098", refs: ["Familia del parque", "Clienta frecuente", "Mamá primeriza"] },
   { id: "valeria", n: "Clienta frecuente", desde: "Clienta desde 2022 · Bella Aurora", tag: "Recomienda",
     fechas: [["cake", "Su cumpleaños", 1, 22], ["heart", "Aniversario de bodas", 3, 9], ["sparkles", "Nace su bebé", 12, 15]],
-    hist: [["Oct 2026", "Maternidad en estudio", 950, "f-glam"], ["Mar 2025", "Aniversario en exterior", 850, "f-pareja"], ["Mar 2024", "Boda civil con video", 4200, "f-boda"], ["Dic 2023", "Mini sesión navideña", 350, "f-familia"]],
+    hist: [["Oct 2026", "Maternidad en estudio", 950, "f-maternidad"], ["Mar 2025", "Aniversario en exterior", 850, "f-pareja"], ["Mar 2024", "Boda civil con video", 4200, "f-boda"], ["Dic 2023", "Mini sesión navideña", 350, "f-navidad"]],
     nota: "Prefiere las sesiones por la mañana. Pagó siempre a tiempo.",
     g: { col: [["#E8DCCB", "Crema"], ["#8E2234", "Vino"]], ropa: "Vestidos largos y telas que se muevan", ninos: "Su bebé nace en diciembre", mascota: "No", sitio: "Luz de la mañana, afuera", fav: ["f-pareja", "Acostados en el pasto, en el aniversario"] },
     prox: { ic: "sparkles", t: "Sesión de recién nacido", por: "Hizo su maternidad en octubre y el bebé nace a mediados de diciembre.", m: 950, album: "Bebés",
@@ -596,7 +596,7 @@ const CLI = [
     cod: "REF-0293", refs: [] },
   { id: "perez", n: "Familia del bebé", desde: "Clientes desde 2025 · Champerico", tag: "Cumple en 3 semanas",
     fechas: [["cake", "El bebé cumple 1 año", 12, 1]],
-    hist: [["Dic 2025", "Recién nacido", 950, "f-bebe"], ["Ago 2025", "Maternidad", 850, "f-retrato"]],
+    hist: [["Dic 2025", "Recién nacido", 950, "f-bebe"], ["Ago 2025", "Maternidad", 850, "f-maternidad"]],
     nota: "Viajan desde Champerico: darles horario después de las 10 de la mañana.",
     g: { col: [["#F4C9C0", "Rosado"], ["#FFFFFF", "Blanco"]], ropa: "Body blanco y tutú para el primer año", ninos: "El bebé y una prima", mascota: "No", sitio: "El set de circo del estudio", fav: ["f-bebe", "Dormido en la canasta"] },
     prox: { ic: "cake", t: "Sesión de primer año", por: "Le hicieron su recién nacido en diciembre y cumple 1 año el 1 de diciembre.", m: 650, album: "Primer año",
@@ -604,7 +604,7 @@ const CLI = [
     cod: "REF-0388", refs: ["Familia nueva"] },
   { id: "lopez", n: "Familia del parque", desde: "Clientes desde 2023 · San Sebastián", tag: "Eligiendo fotos",
     fechas: [["cake", "Cumpleaños de la hija", 2, 14], ["heart", "Aniversario de bodas", 6, 2]],
-    hist: [["Nov 2026", "Familia en exterior", 850, "f-familia"], ["Jun 2026", "Sesión Mundial 2026", 350, "f-camisola"], ["Dic 2025", "Mini sesión navideña", 350, "f-maracas"], ["Feb 2024", "Primer año de la hija", 650, "f-primer"]],
+    hist: [["Nov 2026", "Familia en exterior", 850, "f-familia"], ["Jun 2026", "Sesión Mundial 2026", 350, "f-camisola"], ["Dic 2025", "Mini sesión navideña", 350, "f-navidad"], ["Feb 2024", "Primer año de la hija", 650, "f-primer"]],
     nota: "Siempre compran alguna impresión. Mejor sesiones cortas y antes de las 10.",
     g: { col: [["#2F5D3A", "Verde"], ["#F2E6D0", "Beige"], ["#3B5B8C", "Mezclilla"]], ropa: "Toda la familia en tonos tierra", ninos: "Una niña de 3 años: llevar juguete", mascota: "Un perrito café, quieren incluirlo", sitio: "El parque central, temprano", fav: ["f-familia", "Los tres caminando de la mano"] },
     prox: { ic: "book", t: "Álbum de la sesión que está eligiendo", por: "Está marcando sus fotos ahora. Es cuando más ganas tiene de llevárselas impresas.", m: 650, album: "Familias",
@@ -612,9 +612,9 @@ const CLI = [
     cod: "REF-0217", refs: [] },
   { id: "mama", n: "Mamá primeriza", desde: "Clienta desde 2026 · Retalhuleu", tag: "Bebé en enero",
     fechas: [["sparkles", "Nace su bebé", 1, 10]],
-    hist: [["Oct 2026", "Maternidad", 950, "f-glam"]],
+    hist: [["Oct 2026", "Maternidad", 950, "f-maternidad"]],
     nota: "Le da pena la cámara: platicarle y poner su música. Le encanta el blanco y negro.",
-    g: { col: [["#FFFFFF", "Blanco"], ["#1C1B19", "Negro"]], ropa: "Vestido blanco ajustado", ninos: "Su primer bebé", mascota: "Una gata", sitio: "Estudio con fondo negro", fav: ["f-glam", "El perfil con luz dorada"] },
+    g: { col: [["#FFFFFF", "Blanco"], ["#1C1B19", "Negro"]], ropa: "Vestido blanco ajustado", ninos: "Su primer bebé", mascota: "Una gata", sitio: "Estudio con fondo negro", fav: ["f-maternidad", "El perfil con luz dorada"] },
     prox: { ic: "sparkles", t: "Recién nacido en sus primeros 15 días", por: "Su bebé nace en enero. Las fotos de recién nacido salen mejor antes de los 15 días.", m: 950, album: "Bebés",
       wa: "Hola. ¡Ya casi llega su bebé! Las fotos de recién nacido salen más bonitas en sus primeros 15 días. Le apartamos la sesión por Q 950.00 y la movemos según el día que nazca. ¿Le parece?", resp: "¡Sí, porfa! Así ya no me preocupo por eso." },
     cod: "REF-0602", refs: [] },
@@ -865,13 +865,13 @@ const SEG = [
   { id: "inactivos", n: "Clientes que no vuelven desde 2025", c: 64, f: ["f-familia", "f-retrato", "f-pareja"] }
 ];
 const OFR = [
-  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos · 8 fotos", p: 350, f: "f-maracas", vence: 15, msj: "Ya armamos el set navideño en el estudio: mini sesión de 20 minutos con 8 fotos editadas por {precio}. Quedan pocos espacios en diciembre. ¿Le apartamos uno?" },
+  { id: "navidad", n: "Mini sesión navideña", d: "20 minutos · 8 fotos", p: 350, f: "f-navidad", vence: 15, msj: "Ya armamos el set navideño en el estudio: mini sesión de 20 minutos con 8 fotos editadas por {precio}. Quedan pocos espacios en diciembre. ¿Le apartamos uno?" },
   { id: "anio", n: "Sesión de primer año", d: "Con pastel · 15 fotos y video", p: 650, f: "f-primer", vence: 30, msj: "¡Su bebé ya va por su primer año! Le ofrecemos la sesión con pastel en el estudio, 15 fotos y un video corto, por {precio}. ¿Le apartamos fecha?" },
   { id: "cuadro", n: "Cuadro 40×60", d: "Su foto favorita · listo en 5 días", p: 375, f: "f-fuerza", vence: 7, msj: "¿Ya tiene su foto favorita en la pared? Este mes el cuadro 40×60 con marco de madera sale en {precio}. Solo díganos cuál y lo mandamos a imprimir." }
 ];
 const HIST_OFR = [{ n: "Sesión Mundial 2026", f: "f-camisola", cuando: "Junio 2026", env: 112, apa: 27, q: 11630 }];
 const CAM = { seg: "bebes", ofr: "navidad", corriendo: false, editando: false };
-const FOTOS_OFR = ["f-maracas", "f-primer", "f-fuerza", "f-xv", "f-familia", "f-pareja", "f-bebe", "f-boda"];
+const FOTOS_OFR = ["f-navidad", "f-maracas", "f-primer", "f-fuerza", "f-xv", "f-familia", "f-pareja", "f-bebe", "f-boda"];
 const msjDe = (o, nombre = "familia") => `Hola, ${nombre}. Le escribe Foto González Studio. ` + o.msj.replace("{precio}", Q(o.p));
 function pintarOfertas() {
   pinta($("#ofe-ofr"), `<div class="ofe-cab"><h2>1. ¿Qué les ofrece?</h2>${btn("Nueva oferta", "plus", "bt-0 bt-chico", 'data-ofe="nueva"')}</div>
@@ -999,7 +999,7 @@ function enviarCampana() {
 /* ---------- Mi contacto y portafolio ---------- */
 const URL_PAG = new URL("../pagina/", location.href).href;
 const urlPorta = albs => URL_PAG + "#portafolio";
-const ALBUMES = [["XV años", "f-xv", 48], ["Bodas", "f-boda", 64], ["Bebés", "f-bebe", 36], ["Familias", "f-familia", 40], ["Primer año", "f-primer", 28], ["Graduaciones", "f-graduacion", 52]];
+const ALBUMES = [["XV años", "f-xv", 48], ["Bodas", "f-boda", 64], ["Bebés", "f-bebe", 36], ["Familias", "f-familia", 40], ["Primer año", "f-primer", 28], ["Graduaciones", "f-toga2", 52]];
 const PORTA = new Set();
 const VCARD = () => ["BEGIN:VCARD", "VERSION:3.0", "N:;Foto González Studio;;;", "FN:Foto González Studio", "ORG:Foto González Studio", "TITLE:Fotografía y video",
   "TEL;TYPE=CELL,VOICE:+50250168853", "EMAIL;TYPE=WORK:premiumdesigngt@gmail.com", "ADR;TYPE=WORK:;;Residenciales Bella Aurora, zona 6;Retalhuleu;;;Guatemala", "URL:" + URL_PAG, "END:VCARD"].join("\r\n");
@@ -1138,6 +1138,8 @@ function iniciarRespaldo() {
 const FOTOS = ["f-familia", "f-primer", "f-camisola", "f-pastel", "f-familia", "f-bebe", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia", "f-primer", "f-camisola", "f-familia", "f-pastel", "f-bebe", "f-familia"];
 const POSF = ["50% 30%", "35% 45%", "60% 35%", "45% 60%", "70% 40%", "30% 30%", "55% 55%", "40% 25%", "65% 60%", "50% 45%", "25% 50%", "75% 30%"];
 const posF = i => POSF[(i * 5) % POSF.length];
+const TAMF = ["cover", "170%", "240%", "135%"];
+const tamF = i => TAMF[Math.floor(i / 6) % TAMF.length];
 const INCL = 10, P_EXTRA = 35, P_TODA = 450;
 const G = { sel: [], pagadas: new Set(), completa: false, extraVendido: 0, avisoMas: false, vista: "fotos", visor: 0 };
 const PRODS = [["Impresión 20×30", "Papel lustre profesional", 95], ["Cuadro 40×60", "Marco de madera natural", 375], ["Lienzo 60×90", "Listo para colgar", 650]];
@@ -1145,7 +1147,7 @@ const libre = i => { if (G.completa || G.pagadas.has(i)) return true; const k = 
 const extrasPend = () => G.completa ? [] : G.sel.slice(INCL).filter(i => !G.pagadas.has(i));
 function tileFam(f, i) {
   return `<div class="ft" data-n="${i}">
-    <span class="foto ${f}" style="background-position:${posF(i)}" aria-hidden="true"></span>
+    <span class="foto ${f}" style="background-position:${posF(i)};background-size:${tamF(i)}" aria-hidden="true"></span>
     <span class="wm" aria-hidden="true"><span>FOTO GONZÁLEZ</span><span>FOTO GONZÁLEZ</span><span>FOTO GONZÁLEZ</span></span>
     <span class="extra-tag">EXTRA</span>
     <button class="abrir" type="button" aria-label="Ver en grande la foto ${i + 1}"></button>
@@ -1243,7 +1245,7 @@ function abrirVisor(i) {
 function cerrarVisor() { const v = $("#visor"); v.classList.remove("ver"); v.inert = true; }
 function pintarVisor() {
   const i = G.visor, a = $("#vs-a");
-  a.className = `foto vs-capa ${FOTOS[i]}`; a.style.backgroundPosition = posF(i);
+  a.className = `foto vs-capa ${FOTOS[i]}`; a.style.backgroundPosition = posF(i); a.style.backgroundSize = tamF(i);
   $("#vs-n").textContent = `${i + 1} de ${FOTOS.length}`;
   $("#vs-amo").setAttribute("aria-pressed", G.sel.includes(i));
   $("#vs-wm").hidden = libre(i);
@@ -1282,7 +1284,7 @@ function comprar(tipo) {
 let impFoto = 0;
 function abrirImp(i) {
   impFoto = i;
-  $("#hi-foto").className = "foto hi-foto " + FOTOS[i]; $("#hi-foto").style.backgroundPosition = posF(i);
+  $("#hi-foto").className = "foto hi-foto " + FOTOS[i]; $("#hi-foto").style.backgroundPosition = posF(i); $("#hi-foto").style.backgroundSize = tamF(i);
   $("#hi-t").textContent = "Foto " + (i + 1);
   $("#hi-prods").innerHTML = PRODS.map(([n, d, p], k) => `<button type="button" data-k="${k}"><span>${n}<small>${d}</small></span><b>${Q(p)}</b></button>`).join("");
   $$("#hi-prods button").forEach(b => b.addEventListener("click", () => pedirImp(Number(b.dataset.k))));
@@ -1438,7 +1440,7 @@ function pintarRecordatorios() {
     : `<li class="vacio">Los recordatorios están apagados.</li>`;
 }
 /* Nueva reserva paso a paso */
-const TIPOS_RES = [["retrato", "Retrato", 450, "f-retrato"], ["familia", "Familia", 850, "f-familia"], ["bebe", "Recién nacido", 950, "f-bebe"], ["primer", "Primer año", 650, "f-primer"], ["xv", "XV años", 2400, "f-xv"], ["pareja", "Pareja", 850, "f-pareja"], ["boda", "Boda", 5800, "f-boda"], ["grad", "Graduación", 650, "f-graduacion"]];
+const TIPOS_RES = [["retrato", "Retrato", 450, "f-retrato"], ["familia", "Familia", 850, "f-familia"], ["bebe", "Recién nacido", 950, "f-bebe"], ["primer", "Primer año", 650, "f-primer"], ["xv", "XV años", 2400, "f-xv"], ["pareja", "Pareja", 850, "f-pareja"], ["boda", "Boda", 5800, "f-boda"], ["grad", "Graduación", 650, "f-toga"]];
 const HORAS_RES = ["9:00", "10:30", "14:00", "16:00", "17:00"];
 const PASOS_NR = ["¿Qué sesión?", "¿Qué día?", "¿A qué hora?", "¿Para quién?", "Revisar y apartar"];
 const NR = {};
@@ -1547,7 +1549,7 @@ function iniciarReservas() {
 }
 
 /* ---------- Cámara en vivo: las fotos llegan solas ---------- */
-const FOTOS_TIPO = { pareja: ["f-pareja", "f-anillo", "f-boda"], boda: ["f-boda", "f-anillo", "f-pareja"], xv: ["f-xv", "f-quince", "f-glam"], bebe: ["f-bebe", "f-pastel", "f-producto"], primer: ["f-primer", "f-pastel"], familia: ["f-familia", "f-camisola"], retrato: ["f-retrato", "f-glam", "f-fuerza"], grad: ["f-graduacion", "f-maracas", "f-cacao", "f-maestra", "f-paisaje"] };
+const FOTOS_TIPO = { pareja: ["f-pareja", "f-anillo", "f-boda"], boda: ["f-boda", "f-anillo", "f-pareja"], xv: ["f-xv", "f-quince", "f-glam"], bebe: ["f-bebe", "f-pastel", "f-producto"], primer: ["f-primer", "f-pastel"], familia: ["f-familia", "f-camisola"], retrato: ["f-retrato", "f-glam", "f-fuerza"], grad: ["f-toga", "f-graduacion", "f-toga2", "f-maracas", "f-cacao", "f-maestra", "f-paisaje"] };
 const ENV = { ses: null, conectada: false, pausa: false, fotos: [], n: 0, t: null, fam: false, actual: null };
 const sesEnVivo = () => AG.find(s => s.id === ENV.ses) || proxima();
 function irEnVivo(id) {
@@ -2378,7 +2380,7 @@ const PORTAL = { dentro: false, pant: "pt-pin", pin: "", proxPagada: false };
 const SES_FAM = [
   { id: "activa", t: "Familia en exterior", fecha: "Noviembre 2026", f: "f-familia", activa: true },
   { id: "mundial", t: "Sesión Mundial 2026", fecha: "Junio 2026", f: "f-camisola", n: 12, fotos: ["f-camisola", "f-mundial", "f-familia"] },
-  { id: "navidad", t: "Mini sesión navideña", fecha: "Diciembre 2025", f: "f-maracas", n: 8, fotos: ["f-maracas", "f-familia", "f-pastel"] },
+  { id: "navidad", t: "Mini sesión navideña", fecha: "Diciembre 2025", f: "f-navidad", n: 8, fotos: ["f-navidad", "f-familia", "f-pastel"] },
   { id: "primer", t: "Primer año de la hija", fecha: "Febrero 2024", f: "f-primer", n: 15, fotos: ["f-primer", "f-pastel", "f-bebe"] }
 ];
 const PANTS = ["pt-pin", "pt-ini", "cel-scroll", "pt-ses"];
@@ -2463,7 +2465,7 @@ function iniciarPortal() {
       b.disabled = true; b.textContent = "Pagando…";
       setTimeout(() => {
         PORTAL.proxPagada = true;
-        nuevoRecibo({ n: "Familia del parque", concepto: "Anticipo · Mini sesión navideña 2026", m: 175, forma: "Tarjeta", saldo: 175, f: "f-maracas" });
+        nuevoRecibo({ n: "Familia del parque", concepto: "Anticipo · Mini sesión navideña 2026", m: 175, forma: "Tarjeta", saldo: 175, f: "f-navidad" });
         pintarPortalIni(); toastCel("Anticipo pagado. Su fecha quedó segura.");
         red(() => { venta(175); alFeed("cash", "<b>La familia del parque</b> pagó el anticipo de la mini sesión navideña · Q 175.00"); aviso("Anticipo pagado desde el portal · <b>Q 175.00</b>", { ic: "cash", sub: "Familia del parque · mini sesión navideña" }); });
       }, 800);
