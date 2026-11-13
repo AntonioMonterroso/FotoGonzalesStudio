@@ -115,6 +115,18 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.05; }
 .cinta-demo .ver-venta[aria-pressed="true"] { background: #fff; color: var(--tinta); }
 @media (hover: hover) and (pointer: fine) { .cinta-demo a:hover { background: rgba(255,255,255,.1); } }
 @media (max-width: 640px) { .cinta-demo .et { display: none; } .cinta-demo .txt-largo { display: none; } }
+.cinta-demo { transform-origin: 100% 50%; transition: opacity 200ms var(--ease-out), scale 200ms var(--ease-out); }
+@media (max-width: 640px) { .cinta-demo { gap: 2px; } .cinta-demo a, .cinta-demo button { padding: 8px 10px; } }
+.cinta-demo .cinta-plegar { width: 40px; padding: 0; justify-content: center; color: #B9B2A6; }
+@media (hover: hover) and (pointer: fine) { .cinta-demo .cinta-plegar:hover { background: rgba(255,255,255,.1); color: #fff; } }
+.cinta-abrir { position: fixed; z-index: 90; right: 16px; bottom: 16px; width: 52px; height: 52px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center;
+  background: rgba(22,21,19,.94); color: #fff; box-shadow: 0 12px 30px rgba(0,0,0,.28); cursor: pointer;
+  opacity: 0; scale: .95; pointer-events: none; transition: opacity 180ms var(--ease-out), scale 180ms var(--ease-out), transform 140ms var(--ease-out); }
+.cinta-abrir svg { width: 20px; height: 20px; }
+.cinta-abrir:active { transform: scale(0.97); }
+html.cinta-plegada .cinta-demo { opacity: 0; scale: .95; pointer-events: none; transition-duration: 150ms; }
+html.cinta-plegada .cinta-abrir { opacity: 1; scale: 1; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .cinta-demo, .cinta-abrir, html.cinta-plegada .cinta-demo { scale: 1; } }
 
 /* ===== Palancas de venta ===== */
 .pin { position: absolute; z-index: 40; top: -12px; left: -12px; width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; background: var(--acento); color: #fff; font: 700 .8rem/1 var(--mono); display: grid; place-items: center; cursor: pointer; box-shadow: 0 6px 16px rgba(142,34,52,.45);

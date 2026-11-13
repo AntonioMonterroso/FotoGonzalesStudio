@@ -68,10 +68,10 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .vistas .cuenta.cero { opacity: 0; transform: scale(0.6); }
 
 /* La cinta de la demo y los avisos no tapan el menú */
-.cinta-demo { bottom: calc(var(--inf) + 70px); }
+.cinta-demo, .cinta-abrir { bottom: calc(var(--inf) + 70px); }
 .letra-viendo { bottom: calc(var(--inf) + 124px); }
-html.con-hoja .cinta-demo, html.con-hoja .letra-viendo { opacity: 0; pointer-events: none; }
-.cinta-demo { transition: opacity 200ms var(--ease-out); }
+html.con-hoja .cinta-demo, html.con-hoja .cinta-abrir, html.con-hoja .letra-viendo { opacity: 0; pointer-events: none; }
+.cinta-demo { transition: opacity 200ms var(--ease-out), scale 200ms var(--ease-out); }
 @media (max-width: 743px) {
   .avisos { top: calc(var(--sup) + 8px); bottom: auto; left: 8px; right: 8px; max-width: none; }
   .aviso { border-radius: 18px; padding: 10px 14px 10px 10px; background: color-mix(in srgb, var(--carta) 92%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); animation-name: aviso-arriba; }
@@ -670,7 +670,7 @@ html.con-hoja .cinta-demo, html.con-hoja .letra-viendo { opacity: 0; pointer-eve
   .equipo { display: flex; }
   .equipo span { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--oscuro); margin-right: -6px; display: grid; place-items: center; font-size: .66rem; font-weight: 700; color: #fff; }
   .lado-pie .lema { font-family: var(--serif); font-style: italic; color: #D8D1C5; font-size: .92rem; line-height: 1.35; margin: 12px 0 0; }
-  .cinta-demo { bottom: 16px; }
+  .cinta-demo, .cinta-abrir { bottom: 16px; }
   .letra-viendo { bottom: 88px; }
   .hoja { align-items: center; padding: 24px; }
   .hoja-panel { width: min(600px, 100%); max-height: 88vh; border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.3); transform: translateY(24px) scale(0.98); opacity: 0; transition: transform 240ms var(--ease-out), opacity 200ms var(--ease-out), visibility 0s linear 240ms; }
@@ -990,7 +990,7 @@ button.cifra:active { transform: scale(0.97); }
   .lupa-lado kbd { margin-left: auto; padding: 2px 6px; border-radius: 6px; background: rgba(255,255,255,.1); font: 600 .72rem var(--sans); color: #A39C90; }
   @media (hover: hover) and (pointer: fine) { .lupa-lado:hover { background: rgba(255,255,255,.12); color: #fff; } }
 }
-html.embed .lupa, html.embed .cinta-demo { display: none; }
+html.embed .lupa, html.embed .cinta-demo, html.embed .cinta-abrir { display: none; }
 .titulo-v { padding-right: 52px; }
 @media (min-width: 744px) { .titulo-v { padding-right: 0; } }
 

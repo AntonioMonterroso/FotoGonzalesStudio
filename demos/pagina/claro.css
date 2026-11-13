@@ -10,12 +10,6 @@
 }
 body.claro { background: radial-gradient(120% 80% at 20% 0%, #F7F7F6 0%, #EAEAE8 55%, #E2E2DF 100%) fixed; color: var(--tinta); font-family: var(--sans); }
 
-/* Ondas suaves del fondo (solo en pantallas grandes) */
-@media (min-width: 900px) {
-  html:has(body.claro)::before { content: ""; position: fixed; z-index: -1; top: -120px; right: -160px; width: 620px; height: 420px; pointer-events: none; border-radius: 50%;
-    background: repeating-radial-gradient(ellipse at 30% 60%, rgba(255, 255, 255, 0) 0 16px, rgba(0, 0, 0, .045) 17px 19px, rgba(255, 255, 255, .55) 20px 26px); filter: blur(1px); transform: rotate(-12deg); opacity: .9; }
-}
-
 /* Tipografía: una sola letra, títulos gruesos y apretados */
 .claro h1, .claro h2 { font-family: var(--sans); font-weight: 800; letter-spacing: -.045em; }
 .claro h2 { font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.1rem); line-height: 1.02; }

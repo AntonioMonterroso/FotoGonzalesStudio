@@ -50,7 +50,7 @@ h1, h2, h3, h4 { letter-spacing: -.02em; }
   .vistas button[aria-selected="true"] { background: #111; color: #fff; }
   .vistas .cuenta { background: var(--marca); box-shadow: 0 0 0 2px #fff; }
   .principal { padding-bottom: calc(var(--inf) + 176px); }
-  .cinta-demo { bottom: calc(var(--inf) + 84px); }
+  .cinta-demo, .cinta-abrir { bottom: calc(var(--inf) + 84px); }
   .letra-viendo { bottom: calc(var(--inf) + 138px); }
   .lupa { background: #111; color: #fff; box-shadow: 0 10px 20px -10px rgba(0, 0, 0, .6); }
 }

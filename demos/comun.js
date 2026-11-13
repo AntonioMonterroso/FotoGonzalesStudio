@@ -48,6 +48,8 @@ const ICO = {
   layout: '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
   plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
   minus: '<path d="M5 12h14"/>',
+  chevAbajo: '<path d="m6 9 6 6 6-6"/>',
+  chevArriba: '<path d="m18 15-6-6-6 6"/>',
   share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98"/><path d="m15.41 6.51-6.82 3.98"/>',
   download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
   zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
@@ -111,8 +113,28 @@ function cintaDemo({ sistema, palancas }) {
   c.innerHTML = `<span class="et mono">DEMO · <b>${sistema}</b></span>
     ${window.cambiarDiseno ? `<button class="cinta-dis" type="button" data-diseno-btn aria-label="Cambiar el diseño" aria-pressed="${window.disenoActual() === "claro"}">${ico("aperture", 16)}<span class="dis-txt">Diseño: <b data-diseno-txt>${window.disenoActual() === "claro" ? "Claro" : "Clásico"}</b></span></button>` : ""}
     <a href="../../#demos">${ico("back", 16)}<span>Propuesta</span></a>
-    <button class="ver-venta" type="button" aria-pressed="false">${ico("trend", 16)}<span>Ver cómo vende</span><span class="txt-largo">&nbsp;(${ids.length})</span></button>`;
+    <button class="ver-venta" type="button" aria-pressed="false">${ico("trend", 16)}<span>Ver cómo vende</span><span class="txt-largo">&nbsp;(${ids.length})</span></button>
+    <button class="cinta-plegar" type="button" aria-label="Plegar la barra de la demo" aria-controls="cinta-demo">${ico("chevAbajo", 18)}</button>`;
+  c.id = "cinta-demo";
   document.body.append(c);
+
+  // la barra se pliega en un botón redondo y lo recuerda
+  const abre = document.createElement("button");
+  abre.type = "button"; abre.className = "cinta-abrir"; abre.innerHTML = ico("chevArriba", 20);
+  abre.setAttribute("aria-label", "Mostrar la barra de la demo"); abre.setAttribute("aria-controls", "cinta-demo");
+  document.body.append(abre);
+  function plegar(si, foco) {
+    document.documentElement.classList.toggle("cinta-plegada", si);
+    c.inert = si; abre.inert = !si;
+    abre.setAttribute("aria-expanded", String(!si));
+    try { localStorage.setItem("fgs.cinta", si ? "plegada" : "abierta"); } catch (e) { /* sin almacenamiento */ }
+    if (foco) setTimeout(() => (si ? abre : $(".cinta-plegar", c)).focus(), 60);
+  }
+  let plegadaAntes = false;
+  try { plegadaAntes = localStorage.getItem("fgs.cinta") === "plegada"; } catch (e) { /* sin almacenamiento */ }
+  plegar(plegadaAntes, false);
+  $(".cinta-plegar", c).addEventListener("click", e => { e.stopPropagation(); plegar(true, e.detail === 0); });
+  abre.addEventListener("click", e => { e.stopPropagation(); plegar(false, e.detail === 0); });
 
   // pines numerados sobre cada palanca
   ids.forEach((id, i) => {
