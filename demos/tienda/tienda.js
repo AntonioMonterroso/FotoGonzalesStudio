@@ -105,9 +105,13 @@ function totales() {
 
 /* ---------- Tira de fotos ---------- */
 function pintarTira() {
+  const LAPIZ = '<svg class="lapiz" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M50 6 C82 4 96 26 95 58 C94 96 74 114 46 113 C16 112 4 88 5 56 C6 26 22 9 54 8 C70 8 80 14 86 22"/></svg>';
+  const MARCO = '<svg class="lapiz-marco" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M6 7 L95 4 L96 114 L4 116 Z"/></svg>';
   $("#tira").innerHTML = FOTOS.map((f, i) => `
-    <button type="button" class="miniatura foto ${f}" data-n="${i}" aria-pressed="${i === fotoSel}" aria-label="Foto ${i + 1}${FAVS.has(i) ? ", de sus favoritas" : ""}">
-      ${FAVS.has(i) ? `<span class="fav">${ico("heart", 12)}</span>` : ""}<span class="num mono">${String(i + 1).padStart(2, "0")}</span>
+    <button type="button" class="miniatura" data-n="${i}" aria-pressed="${i === fotoSel}" aria-label="Foto ${i + 1}${FAVS.has(i) ? ", de sus favoritas" : ""}">
+      <span class="hc-img foto ${f}" aria-hidden="true"></span>
+      ${FAVS.has(i) ? `<span class="fav">${ico("heart", 12)}</span>${LAPIZ}` : ""}${MARCO}
+      <span class="hc-n">${i + 1}${i % 2 ? "A" : ""}</span>
     </button>`).join("");
   $$("#tira .miniatura").forEach(b => b.addEventListener("click", () => elegirFoto(Number(b.dataset.n))));
 }
@@ -115,6 +119,7 @@ function elegirFoto(i) {
   if (i === fotoSel) return;
   fotoSel = i;
   $$("#tira .miniatura").forEach(b => b.setAttribute("aria-pressed", Number(b.dataset.n) === i));
+  if (window.alElegirFoto) window.alElegirFoto(i);
   $("#foto-num").textContent = numFoto();
   // la foto nueva se funde sobre la anterior dentro del cuadro
   const capas = $("#capas-foto"), nueva = document.createElement("div");
@@ -149,6 +154,7 @@ function pintarCuadro() {
   odometro($("#precio"), precioCuadro());
   $("#pie-pared").textContent = `Cuadro de ${t.n} en ${ACAB[cfg.acab].n.toLowerCase()}, sobre un sillón de 2.10 m.`;
   pintarStock();
+  if (window.alCambiarCuadro) window.alCambiarCuadro();
 }
 function pintarStock(saltar = false) {
   const el = $("#stock"), marco = $('input[name="acab"][value="marco"]');
@@ -168,6 +174,7 @@ function agregarCuadro() {
   const t = TAM[cfg.tam], a = ACAB[cfg.acab];
   agregar({ k: `cuadro-${cfg.tam}-${cfg.acab}-${fotoSel}`, n: `Cuadro ${t.n}`, det: `${a.n} · foto ${numFoto()}`, p: precioCuadro(), foto: fotoCls(), marco: cfg.acab === "marco" }, $("#cuadro"));
   if (cfg.acab === "marco") { stockNogal--; pintarStock(true); }
+  if (window.alAgregarCuadro) window.alAgregarCuadro();
   confirmar($("#agregar-cuadro"), "Agregado al carrito");
 }
 
@@ -409,7 +416,7 @@ function pagar() {
   btn.dataset.ocupado = "1"; btn.disabled = true; btn.textContent = "Procesando…";
   red(() => setTimeout(() => {
     const code = "FGS-" + (2200 + Math.floor(Math.random() * 700));
-    pedido = { code, total: t.total, n: piezas(), lista: carrito.map(i => `${i.c > 1 ? i.c + " × " : ""}${i.n}`), estado: 0, metodo: METODOS[m], recoger: t.recoger };
+    pedido = { code, total: t.total, n: piezas(), lista: carrito.map(i => `${i.c > 1 ? i.c + " × " : ""}${i.n}`), fotos: [...new Set(carrito.map(i => i.foto).filter(Boolean))].slice(0, 3), estado: 0, metodo: METODOS[m], recoger: t.recoger };
     estudio.ventas += t.total; estudio.pedidos++;
     alFeed(`<b>La quinceañera</b> pagó ${Q(t.total)} · ${METODOS[m]}`, "cash", true);
     pintarEstudio();
@@ -423,18 +430,25 @@ function pagar() {
     avanzarPedido();
   }, 600));
 }
-let avancePrevio = 0;
-const PASOS = [["Recibido", "check"], ["En impresión", "images"], ["Listo", "package"], ["Entregado", "home"]];
+let avancePrevio = 0, sobreAntes = -1;
+const PASOS = [["Recibido", "check"], ["En el laboratorio", "images"], ["En su sobre", "package"], ["Entregado", "home"]];
 function pintarSeguimiento() {
   const p = pedido, est = p ? p.estado : -1;
-  $("#seg-cuerpo").innerHTML = `
+  const fotos = p ? (p.fotos.length ? p.fotos : [fotoCls()]) : ["f-xv", "f-quince"];
+  const sobre = `<div class="sobre e${Math.min(sobreAntes, est)}${p ? "" : " vacio"}" aria-hidden="true">
+      <div class="sobre-fotos">${fotos.map((f, k) => `<span class="foto ${f}" style="--k:${k}"></span>`).join("")}</div>
+      <div class="sobre-cuerpo"><div class="sobre-etq"><b>Foto González Studio</b><span>${p ? "Orden " + p.code : "Su pedido"}</span><span>${p ? `${p.n} pieza${p.n === 1 ? "" : "s"} · ${p.recoger ? "recoge en el estudio" : "envío a domicilio"}` : "Aún sin pedido"}</span><i>Manéjese con cuidado · fotografías</i></div></div>
+      <div class="sobre-solapa"></div><span class="sobre-sello">FG</span><span class="sobre-entregado">Entregado</span>
+    </div>`;
+  $("#seg-cuerpo").innerHTML = sobre + `
     ${p ? `<div class="seg-cab"><div><small>Su pedido</small><b>${p.code}</b></div><div style="text-align:right"><small>${p.n} pieza${p.n === 1 ? "" : "s"} · ${p.metodo}</small><b>${Q(p.total)}</b></div></div>`
       : `<p class="seg-vacio">Cuando haga un pedido, aquí lo verá avanzar sin tener que preguntar por WhatsApp.</p>`}
     <ol class="pasos" style="--avance:${avancePrevio}">${PASOS.map(([n, i], k) => `<li class="${k <= est ? "hecho" : ""}${k === est ? " ahora" : ""}"><span class="bola">${ico(i, 16)}</span>${k === 3 && p?.recoger ? "Recogido" : n}</li>`).join("")}</ol>
     ${p ? `<p class="seg-items">${p.lista.join(" · ")}</p>` : ""}`;
   const ol = $("#seg-cuerpo .pasos"), nuevo = Math.max(0, est) / 3;
   avancePrevio = nuevo;
-  requestAnimationFrame(() => requestAnimationFrame(() => ol.style.setProperty("--avance", nuevo)));
+  const sb = $("#seg-cuerpo .sobre"); sobreAntes = est;
+  requestAnimationFrame(() => requestAnimationFrame(() => { ol.style.setProperty("--avance", nuevo); sb.classList.remove("e-1", "e0", "e1", "e2"); sb.classList.add("e" + est); }));
 }
 function avanzarPedido() {
   const p = pedido;
