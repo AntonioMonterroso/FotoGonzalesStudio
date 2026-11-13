@@ -116,7 +116,18 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.05; }
 @media (hover: hover) and (pointer: fine) { .cinta-demo a:hover { background: rgba(255,255,255,.1); } }
 @media (max-width: 640px) { .cinta-demo .et { display: none; } .cinta-demo .txt-largo { display: none; } }
 .cinta-demo { transform-origin: 100% 50%; transition: opacity 200ms var(--ease-out), scale 200ms var(--ease-out); }
-@media (max-width: 640px) { .cinta-demo { gap: 2px; } .cinta-demo a, .cinta-demo button { padding: 8px 10px; } }
+.cinta-demo .vv-corto { display: none; }
+/* Teléfono: barra delgada, clara y sin amontonar */
+@media (max-width: 640px) {
+  .cinta-demo { gap: 2px; padding: 3px; bottom: 12px; box-shadow: 0 10px 26px rgba(0,0,0,.24); }
+  .cinta-demo a, .cinta-demo button { min-height: 32px; padding: 0 11px; gap: 6px; font-size: .8rem; }
+  .cinta-demo svg { width: 15px; height: 15px; }
+  .cinta-demo .cinta-dis, .cinta-demo .cinta-plegar { width: 32px; padding: 0; justify-content: center; }
+  .cinta-demo .vv-largo { display: none; }
+  .cinta-demo .vv-corto { display: inline; }
+  .cinta-abrir { right: 12px; bottom: 12px; width: 44px; height: 44px; }
+  .cinta-abrir svg { width: 18px; height: 18px; }
+}
 .cinta-demo .cinta-plegar { width: 40px; padding: 0; justify-content: center; color: #B9B2A6; }
 @media (hover: hover) and (pointer: fine) { .cinta-demo .cinta-plegar:hover { background: rgba(255,255,255,.1); color: #fff; } }
 .cinta-abrir { position: fixed; z-index: 90; right: 16px; bottom: 16px; width: 52px; height: 52px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center;
