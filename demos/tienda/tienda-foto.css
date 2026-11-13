@@ -53,7 +53,6 @@
 .pared .cuadro { bottom: calc(123 * var(--cm)); }
 .pared-tinte { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--color-pared); mix-blend-mode: multiply; transition: background-color 300ms var(--ease-out);
   -webkit-mask: url("../../img/fotos/muestra/sala-pared.png") 50% 100% / 104% auto no-repeat; mask: url("../../img/fotos/muestra/sala-pared.png") 50% 100% / 104% auto no-repeat; }
-.pared::before { content: "Sala de muestra"; position: absolute; left: 12px; bottom: 10px; z-index: 7; padding: 3px 8px; border-radius: 999px; background: rgba(0, 0, 0, .5); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .02em; pointer-events: none; }
 
 /* ===== Recorte y encuadre ===== */
 .recorte { margin: 18px 0 6px; max-width: 300px; }
