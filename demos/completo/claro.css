@@ -8,13 +8,6 @@
 }
 body { background: radial-gradient(120% 80% at 20% 0%, #F6F6F5 0%, #EAEAE8 55%, #E1E1DE 100%) fixed; }
 
-/* Objetos suaves del fondo (compu y iPad) */
-@media (min-width: 744px) {
-  body::after { content: ""; position: fixed; z-index: -1; pointer-events: none; }
-  body::after { right: 30%; bottom: -90px; width: 280px; height: 280px; border-radius: 50%; border: 50px solid #F6F6F5;
-    box-shadow: inset 0 14px 30px rgba(0, 0, 0, .1), 0 40px 70px -30px rgba(0, 0, 0, .25); }
-}
-
 /* Letra: una sola, títulos gruesos y apretados */
 h1, h2, h3, h4 { letter-spacing: -.02em; }
 .titulo-v h1, #saludo { font-family: var(--sans); font-weight: 800; letter-spacing: -.05em; line-height: .95; font-size: 2.5rem; }
