@@ -77,3 +77,12 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .extra-linea > *, .planes > *, .bd > *, .dominio > *, .medida > * { min-width: 0; }
 .negativo { max-width: calc(var(--ancho) + 2 * var(--gutter)); }
 @media (max-width: 560px) { .sec > .envoltura { padding: 20px 16px; } .caja { padding: 18px 14px; } }
+
+/* Teléfono: más fino */
+@media (max-width: 640px) {
+  .sec { padding: 10px 0; }
+  .portada { padding-top: 84px; }
+  .portada > .envoltura { padding: 20px 16px; border-radius: 28px; }
+  body .negativo { margin: 12px auto; }
+  .beneficios li { border-radius: 16px; }
+}

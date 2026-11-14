@@ -12,6 +12,7 @@ const EASE = "cubic-bezier(0.25, 1, 0.5, 1)";
 
 /* ---------- Íconos (Lucide, ISC) ---------- */
 const ICO = {
+  chevAbajo: '<path d="m6 9 6 6 6-6"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
   aperture: '<circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/>',
@@ -642,6 +643,31 @@ function barra() {
   secciones.forEach(s => io.observe(s));
 }
 
+/* ---------- Teléfono: listas largas cortas, con «Ver todo» ---------- */
+let nLista = 0;
+function verTodo(lista, n = 4) {
+  if (!lista || lista.children.length <= n + 1) return;
+  const total = lista.children.length;
+  lista.classList.add("corta");
+  if (!lista.id) lista.id = "lista-corta-" + (++nLista);
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "ver-todo";
+  b.setAttribute("aria-controls", lista.id);
+  const pintar = () => {
+    const abierta = lista.classList.contains("abierta");
+    b.setAttribute("aria-expanded", String(abierta));
+    b.innerHTML = `<span>${abierta ? "Ver menos" : `Ver todo (${total})`}</span>${ico("chevAbajo", 16)}`;
+  };
+  b.addEventListener("click", () => {
+    const antes = b.getBoundingClientRect().top;
+    lista.classList.toggle("abierta"); pintar();
+    const despues = b.getBoundingClientRect().top;
+    if (Math.abs(despues - antes) > 1) scrollBy({ top: despues - antes, behavior: "instant" });
+  });
+  pintar();
+  (lista.closest("table") || lista).after(b);
+}
+
 /* ---------- Arranque ---------- */
 pintarIconos();
 pintarSistemas();
@@ -660,6 +686,8 @@ $("#iva").addEventListener("change", () => { actualizarPlanes(); resumen(); });
 $$('#plan-form input[name="paq"]').forEach(i => i.addEventListener("change", resumen));
 $("#cierre-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hola Antonio, vi la propuesta para Foto González Studio y quiero hablar.");
 $$(".wa").forEach(a => a.addEventListener("click", destello));
+$$("#sistemas-lista .lista, #vitrinas .palancas").forEach(l => verTodo(l));
+verTodo($("#rt-tabla tbody"));
 iniciarDemo();
 escribirDominio();
 barra();
