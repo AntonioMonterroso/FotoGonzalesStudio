@@ -73,8 +73,11 @@ function odometro(el, valor, fmt = Q) {
   setTimeout(() => { if (Number(el.dataset.v) === valor) el.textContent = fmt(valor); }, dur + 80);
 }
 
-/* ---------- Avisos (prueba social y notificaciones) ---------- */
-function aviso(html, { ic = "bell", foto = "", dur = 4800, sub = "" } = {}) {
+/* ---------- Avisos (prueba social y notificaciones) ----------
+   solo: true = aviso que sale sin que la persona toque nada; en el teléfono no se muestra. */
+const TEL_AVISO = matchMedia("(max-width: 640px)");
+function aviso(html, { ic = "bell", foto = "", dur = 4800, sub = "", solo = false } = {}) {
+  if (solo && TEL_AVISO.matches) return null;
   let caja = $("#avisos");
   if (!caja) { caja = document.createElement("div"); caja.id = "avisos"; caja.className = "avisos"; caja.setAttribute("aria-live", "polite"); document.body.append(caja); }
   const el = document.createElement("div");

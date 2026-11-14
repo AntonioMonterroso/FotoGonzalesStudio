@@ -266,7 +266,7 @@ async function recordarPago(c, b) {
   setTimeout(() => { const li = $(`.cob[data-id="${c.id}"]`); if (li && !c.pagado) { const v = document.createElement("div"); v.innerHTML = filaCobro(c); li.querySelector(".cob-bts").replaceWith(v.firstElementChild.querySelector(".cob-bts")); } }, 900);
   setTimeout(() => pagar(c.id, { auto: true }), 5200 + Math.random() * 1800);
 }
-function pagar(id, { auto = false, silencio = false, forma = "Transferencia", boleta = "" } = {}) {
+function pagar(id, { auto = false, solo = false, silencio = false, forma = "Transferencia", boleta = "" } = {}) {
   const c = COBRAR.find(x => x.id === id); if (!c || c.pagado) return null;
   c.pagado = true;
   S.cobradoHoy += c.m; venta(c.m);
@@ -286,7 +286,7 @@ function pagar(id, { auto = false, silencio = false, forma = "Transferencia", bo
   if (id === "c-castillo" && !o.estado) { o.estado = "lograda"; o.logro = "Ya pagó"; pieCambia(o); pintarPendientes(); }
   if (!silencio) {
     alFeed("cash", `<b>${c.n}</b> pagó ${c.que.toLowerCase()} · ${Q(c.m)}`);
-    aviso(`${c.que} recibido · <b>${Q(c.m)}</b>`, { ic: "cash", sub: `${auto ? `${c.n} pagó después del recordatorio` : c.n} · recibo No. ${numRec(rec.num)}` });
+    aviso(`${c.que} recibido · <b>${Q(c.m)}</b>`, { ic: "cash", sub: `${auto ? `${c.n} pagó después del recordatorio` : c.n} · recibo No. ${numRec(rec.num)}`, solo });
   }
   return rec;
 }
@@ -2719,7 +2719,7 @@ function evento() {
   if (r < .22 && deEquipo.length) {
     const t = azar(deEquipo); t.hecha = true; pintarTareas();
     alFeedDe(t.para, "check", `<b>${t.para}</b> terminó: ${esc(t.t)}`);
-    aviso(`<b>${t.para}</b> terminó una tarea`, { ic: "check", sub: `${esc(t.t)} · desde ${aparatoTxt(ROLES[t.para][2])}` });
+    aviso(`<b>${t.para}</b> terminó una tarea`, { ic: "check", sub: `${esc(t.t)} · desde ${aparatoTxt(ROLES[t.para][2])}`, solo: true });
     return;
   }
   if (r < .32) {
@@ -2727,20 +2727,20 @@ function evento() {
     COBRAR.push({ id: "n" + (++nId), n, t, que: "Anticipo", m: a, f: azar(["f-familia", "f-xv", "f-bebe", "f-pareja"]) });
     pintarCobrar(); pintarCifras(); entra($("#cobrar").lastElementChild);
     alFeed("calendar", `<b>${n}</b> apartó fecha · ${t} · falta anticipo ${Q(a)}`);
-    aviso(`Fecha apartada · <b>${n}</b>`, { ic: "calendar", sub: `${t} · falta anticipo ${Q(a)}` });
+    aviso(`Fecha apartada · <b>${n}</b>`, { ic: "calendar", sub: `${t} · falta anticipo ${Q(a)}`, solo: true });
   } else if (r < .52) {
     const c = COBRAR.filter(x => !x.pagado && x.id !== "c-castillo");
     if (!c.length) return;
-    pagar(azar(c).id, { auto: true });
+    pagar(azar(c).id, { auto: true, solo: true });
   } else if (r < .8) {
     const n = azar(NOMBRES), k = 2 + Math.floor(Math.random() * 5), m = k * P_EXTRA;
     venta(m, { extra: true });
     alFeed("images", `<b>${n}</b> compró ${k} fotos extra · ${Q(m)}`);
-    aviso(`Fotos extra vendidas · <b>${Q(m)}</b>`, { ic: "images", sub: `${n} · ${k} fotos` });
+    aviso(`Fotos extra vendidas · <b>${Q(m)}</b>`, { ic: "images", sub: `${n} · ${k} fotos`, solo: true });
   } else {
     const n = azar(NOMBRES);
     alFeed("star", `Opinión de 5 estrellas de <b>${n}</b>: ${azar(RESENAS)}`);
-    aviso("Opinión nueva de <b>5 estrellas</b>", { ic: "star", sub: n + " · en Google" });
+    aviso("Opinión nueva de <b>5 estrellas</b>", { ic: "star", sub: n + " · en Google", solo: true });
   }
 }
 function ciclo() { evento(); setTimeout(ciclo, 12000 + Math.random() * 6000); }

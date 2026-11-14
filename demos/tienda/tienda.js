@@ -480,7 +480,7 @@ function alFeed(html, ic = "bag", tuyo = false) {
 /* ---------- Prueba social y existencia en vivo ---------- */
 function otraCompra() {
   const [q, que, m, f] = azar(OTROS);
-  aviso(`<b>${q}</b> pidió ${que}`, { foto: f, sub: "Hace un momento · Retalhuleu" });
+  aviso(`<b>${q}</b> pidió ${que}`, { foto: f, sub: "Hace un momento · Retalhuleu", solo: true });
   estudio.ventas += m; estudio.pedidos++;
   alFeed(`<b>${q}</b> · ${que} · ${Q(m)}`, "bag");
   pintarEstudio();

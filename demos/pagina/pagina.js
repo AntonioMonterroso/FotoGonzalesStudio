@@ -443,14 +443,14 @@ function botAparta() {
   pintarCal(); if (!enVista) recienTachado.clear();
   pintarChip();
   agregarReciente(quien, `${p.n} · ${fechaCorta(d)}`, "ahora mismo");
-  aviso(`<b>${quien}</b> ${quien.includes(" y ") ? "apartaron" : "apartó"} el ${fechaTxt(d)}`, { ic: "calendar", sub: `${p.n} · hace un momento` });
+  aviso(`<b>${quien}</b> ${quien.includes(" y ") ? "apartaron" : "apartó"} el ${fechaTxt(d)}`, { ic: "calendar", sub: `${p.n} · hace un momento`, solo: true });
   return true;
 }
 function vida() {
   const siguiente = () => setTimeout(() => {
     if (!document.hidden) {
-      if (turno % 2 === 0) { if (!botAparta()) aviso(...OTROS[0].slice(0, 1), { ic: OTROS[0][1] }); }
-      else { const o = OTROS[(turno >> 1) % OTROS.length]; aviso(o[0], { ic: o[1], sub: o[2] }); if (o[1] === "gift" && promo.cupos > 2) { promo.cupos--; pintarCupos(); } }
+      if (turno % 2 === 0) { if (!botAparta()) aviso(...OTROS[0].slice(0, 1), { ic: OTROS[0][1], solo: true }); }
+      else { const o = OTROS[(turno >> 1) % OTROS.length]; aviso(o[0], { ic: o[1], sub: o[2], solo: true }); if (o[1] === "gift" && promo.cupos > 2) { promo.cupos--; pintarCupos(); } }
       turno++;
     }
     siguiente();
