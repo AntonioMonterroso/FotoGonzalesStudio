@@ -398,3 +398,9 @@ body.incrustada { padding-bottom: 0; }
   body .neg-txt b { font-size: 1.12rem; }
   body .neg-txt small { font-size: .84rem; }
 }
+
+/* ===== Teléfono: sin el botón flotante de WhatsApp (queda «Escribirnos ahora» en Visítenos) ===== */
+@media (max-width: 640px) {
+  .wa-flota { display: none; }
+  .avisos { max-width: min(340px, calc(100vw - 32px)) !important; }
+}
