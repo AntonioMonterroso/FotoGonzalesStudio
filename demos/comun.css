@@ -115,6 +115,8 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.05; }
 .cinta-demo .ver-venta[aria-pressed="true"] { background: #fff; color: var(--tinta); }
 @media (hover: hover) and (pointer: fine) { .cinta-demo a:hover { background: rgba(255,255,255,.1); } }
 @media (max-width: 640px) { .cinta-demo .et { display: none; } .cinta-demo .txt-largo { display: none; } }
+/* Tablet pequeña: la barra completa mide ~770 px; sin la etiqueta «DEMO ·…» cabe entera */
+@media (min-width: 641px) and (max-width: 860px) { .cinta-demo .et { display: none; } }
 .cinta-demo { transform-origin: 100% 50%; transition: opacity 200ms var(--ease-out), scale 200ms var(--ease-out); }
 .cinta-demo .vv-corto { display: none; }
 /* Teléfono: barra delgada, clara y sin amontonar */
