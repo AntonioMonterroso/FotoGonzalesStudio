@@ -307,6 +307,7 @@ h3 { font-family: "Jost", var(--sans); font-size: 1.15rem; font-weight: 700; let
 .credito a { color: var(--tinta); }
 
 /* ===== WhatsApp flotante (solo móvil) ===== */
+/* Botón flotante de WhatsApp: quitado en todos los tamaños (queda «Escribirnos ahora» en Visítenos) */
 .wa-flota { display: none; position: fixed; right: 16px; bottom: 80px; z-index: 80; width: 56px; height: 56px; border-radius: 50%; border: 0; background: #1F8F5F; color: #fff; place-items: center; cursor: pointer; box-shadow: 0 12px 30px rgba(31,143,95,.4);
   transition: transform 140ms var(--ease-out), opacity 200ms var(--ease-out); }
 .wa-flota svg { width: 24px; height: 24px; }
@@ -329,10 +330,6 @@ h3 { font-family: "Jost", var(--sans); font-size: 1.15rem; font-weight: 700; let
   .eventos-lista { grid-template-columns: 1fr; max-width: 520px; }
   .guia-portada { order: 1; }
   .libro { width: min(220px, 70%); }
-}
-@media (max-width: 760px) {
-  .wa-flota { display: grid; }
-  .avisos { max-width: calc(100vw - 104px) !important; }
 }
 @media (max-width: 640px) {
   .porta { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
@@ -397,10 +394,4 @@ body.incrustada { padding-bottom: 0; }
   body .neg-txt { padding: 12px 16px 16px; }
   body .neg-txt b { font-size: 1.12rem; }
   body .neg-txt small { font-size: .84rem; }
-}
-
-/* ===== Teléfono: sin el botón flotante de WhatsApp (queda «Escribirnos ahora» en Visítenos) ===== */
-@media (max-width: 640px) {
-  .wa-flota { display: none; }
-  .avisos { max-width: min(340px, calc(100vw - 32px)) !important; }
 }
