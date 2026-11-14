@@ -1529,3 +1529,8 @@ html.embed .lupa, html.embed .cinta-demo, html.embed .cinta-abrir { display: non
 .wa.sms .wa-ics .wa-mic, .wa.sms .wa-pie .wa-mic { color: #0A7CFF; }
 .fc-a { font-size: .7rem; min-height: 64px; padding: 0 2px; }
 .fc-a svg { width: 21px; height: 21px; }
+
+/* ===== Teléfono: letra, espacios y títulos más finos ===== */
+@media (max-width: 743px) {
+  .titulo-v h1 { font-size: 1.85rem; }
+}

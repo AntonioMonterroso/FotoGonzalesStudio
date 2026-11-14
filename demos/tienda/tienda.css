@@ -373,3 +373,23 @@ h3 { font-size: clamp(1.3rem, 1.1rem + .6vw, 1.6rem); line-height: 1.15; }
 @media (max-width: 960px) { .ev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .ev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .ev-pie .btn { padding: 8px 10px; font-size: .84rem; } }
 @media (prefers-reduced-motion: reduce) { .ev-foto { animation-name: suave; } }
+
+/* ===== Teléfono: letra, espacios y títulos más finos ===== */
+@media (max-width: 640px) {
+  body { font-size: 1rem; }
+  h1 { font-size: 2.15rem; }
+  h2 { font-size: 1.62rem; line-height: 1.1; }
+  h3 { font-size: 1.12rem; }
+  .bajada { font-size: 1rem; margin: 16px 0 22px; }
+  .hola { padding: 32px 0 36px; }
+  .sec { padding: 52px 0; }
+  .sec-cab { margin-bottom: 24px; }
+  .sec-cab p { font-size: 1rem; margin-top: 10px; }
+  .sec-cab .lema { font-size: 1rem; }
+  .eyebrow { margin-bottom: 12px; }
+  .regalo-texto h3 { font-size: 1.4rem; }
+  body .negativo { margin: 18px auto; }
+  body .neg-txt { padding: 12px 16px 16px; }
+  body .neg-txt b { font-size: 1.12rem; }
+  body .neg-txt small { font-size: .84rem; }
+}

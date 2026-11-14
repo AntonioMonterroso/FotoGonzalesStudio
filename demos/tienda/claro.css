@@ -76,3 +76,10 @@ h3 { letter-spacing: -.02em; font-weight: 700; }
 .pie { background: transparent; }
 .carrito { border-radius: 28px 0 0 28px; background: #F3F3F1; }
 .barra-envio i { background: #111; }
+
+/* ===== Teléfono: letra, espacios y títulos más finos ===== */
+@media (max-width: 640px) {
+  .sec { padding: 10px 0; }
+  .sec > .envoltura, .hola > .envoltura { padding: 22px 16px; border-radius: 26px; }
+  body .negativo { margin: 12px auto; }
+}

@@ -142,3 +142,8 @@ h1, h2, h3, h4 { letter-spacing: -.02em; }
 .tarj { border-radius: 24px; }
 .vistas .ti svg { stroke-width: 1.9; }
 @media (prefers-reduced-motion: reduce) { .eqn-barra i { transition: none; } }
+
+/* ===== Teléfono: letra, espacios y títulos más finos ===== */
+@media (max-width: 743px) {
+  .titulo-v h1, #saludo { font-size: 2.05rem; }
+}

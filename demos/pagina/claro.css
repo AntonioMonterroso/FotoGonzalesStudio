@@ -176,3 +176,13 @@ body.claro { background: radial-gradient(120% 80% at 20% 0%, #F7F7F6 0%, #EAEAE8
 
 .claro .portada h1 .pt { margin-left: -.09em; }
 .negativo { max-width: calc(var(--ancho) + 2 * var(--gutter)); }
+
+/* ===== Teléfono: letra, espacios y títulos más finos ===== */
+@media (max-width: 640px) {
+  .claro h2 { font-size: 1.62rem; }
+  .claro .portada h1 { font-size: 2.3rem; }
+  .claro .sec, .claro .promo { padding: 10px 0; }
+  .claro .sec > .envoltura, .claro .promo > .envoltura { padding: 22px 16px; border-radius: 26px; }
+  .claro .portada > .envoltura { padding: 20px 16px; border-radius: 28px; }
+  body .negativo { margin: 12px auto; }
+}
