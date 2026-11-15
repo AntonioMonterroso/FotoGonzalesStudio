@@ -824,3 +824,12 @@ p { margin: 0 0 1em; }
   body .neg-txt small { font-size: .84rem; }
   .vitrinas { gap: 40px; }
 }
+
+/* ===== Teléfono: la barra de arriba se esconde al bajar y vuelve al subir ===== */
+@media (max-width: 640px) {
+  .barra.oculta { transform: translateY(calc(-100% - 24px)); }
+}
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .barra { transition: border-color 200ms var(--ease-out), opacity 200ms var(--ease-out); }
+  .barra.oculta { transform: none; opacity: 0; pointer-events: none; }
+}

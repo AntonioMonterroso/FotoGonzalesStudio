@@ -634,6 +634,17 @@ function barra() {
     btn.setAttribute("aria-expanded", abierto);
   });
   $$("a", menu).forEach(a => a.addEventListener("click", () => { menu.classList.remove("abierto"); btn.setAttribute("aria-expanded", "false"); }));
+  // Teléfono: la barra se esconde al bajar y vuelve apenas se sube un poco
+  const tel = matchMedia("(max-width: 640px)");
+  let ultimo = scrollY;
+  addEventListener("scroll", () => {
+    const y = scrollY, d = y - ultimo;
+    if (Math.abs(d) < 6) return;
+    ultimo = y;
+    b.classList.toggle("oculta", tel.matches && d > 0 && y > 120 && !menu.classList.contains("abierto") && !b.querySelector(":focus-visible"));
+  }, { passive: true });
+  b.addEventListener("focusin", () => b.classList.remove("oculta"));
+  tel.addEventListener("change", () => b.classList.remove("oculta"));
   const secciones = $$("main > section[id]");
   const io = new IntersectionObserver(ents => ents.forEach(e => {
     if (!e.isIntersecting) return;
