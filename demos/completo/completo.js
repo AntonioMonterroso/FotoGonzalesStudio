@@ -2794,6 +2794,20 @@ matchMedia("(max-width: 1279px)").addEventListener("change", ajustarCliente);
 ajustarCliente();
 new ResizeObserver(() => { if (VISTA === "clientes") colocarFicha(); }).observe($("#principal"));
 addEventListener("scroll", barraSup, { passive: true });
+/* Teléfono: el menú de abajo y la barra de arriba se esconden al bajar y vuelven al subir */
+const TEL_BARRAS = matchMedia("(max-width: 743px)");
+let yBarras = scrollY;
+function mostrarBarras() { document.documentElement.classList.remove("barras-ocultas"); }
+function barrasAlBajar() {
+  const y = scrollY, d = y - yBarras, h = document.documentElement;
+  if (y < 120 || !TEL_BARRAS.matches) { mostrarBarras(); yBarras = y; return; }
+  if (Math.abs(d) < 6) return;
+  yBarras = y;
+  h.classList.toggle("barras-ocultas", d > 0 && !h.classList.contains("con-hoja") && !document.querySelector(".lado :focus-visible, .lupa:focus-visible"));
+}
+addEventListener("scroll", barrasAlBajar, { passive: true });
+TEL_BARRAS.addEventListener("change", mostrarBarras);
+document.addEventListener("focusin", e => { if (e.target.closest && e.target.closest(".lado, .lupa")) mostrarBarras(); });
 
 if (!EMBED) cintaDemo({ sistema: "Sistema completo", palancas: PALANCAS });
 

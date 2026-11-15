@@ -1534,3 +1534,21 @@ html.embed .lupa, html.embed .cinta-demo, html.embed .cinta-abrir { display: non
 @media (max-width: 743px) {
   .titulo-v h1 { font-size: 1.85rem; }
 }
+
+/* ===== Teléfono: las barras se esconden al bajar y vuelven al subir ===== */
+@media (max-width: 743px) {
+  .lado { transition: translate 280ms var(--ease-out); }
+  .barra-sup { transition: opacity 200ms var(--ease-out), translate 280ms var(--ease-out); }
+  .lupa { transition: transform 140ms var(--ease-out), translate 280ms var(--ease-out); }
+  .cinta-demo { transition: opacity 200ms var(--ease-out), scale 200ms var(--ease-out), translate 280ms var(--ease-out); }
+  .cinta-abrir { transition: opacity 180ms var(--ease-out), scale 180ms var(--ease-out), transform 140ms var(--ease-out), translate 280ms var(--ease-out); }
+  html.barras-ocultas .lado { translate: 0 calc(100% + var(--inf) + 24px); }
+  html.barras-ocultas .barra-sup { translate: 0 -100%; }
+  html.barras-ocultas .lupa { translate: 0 calc(-100% - var(--sup) - 24px); }
+  html.barras-ocultas .cinta-demo, html.barras-ocultas .cinta-abrir { translate: 0 54px; }
+}
+@media (max-width: 743px) and (prefers-reduced-motion: reduce) {
+  .lado, .lupa { transition: opacity 200ms var(--ease-out); }
+  html.barras-ocultas .lado, html.barras-ocultas .barra-sup, html.barras-ocultas .lupa { translate: none; opacity: 0; pointer-events: none; }
+  html.barras-ocultas .cinta-demo, html.barras-ocultas .cinta-abrir { translate: none; }
+}
