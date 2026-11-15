@@ -121,7 +121,8 @@ function cintaDemo({ sistema, palancas }) {
   c.id = "cinta-demo";
   document.body.append(c);
 
-  // la barra se pliega en un botón redondo y lo recuerda
+  // la barra se pliega en un botón redondo y lo recuerda (en el teléfono empieza plegada; clave aparte)
+  const enTel = matchMedia("(max-width: 640px)").matches, CLAVE = enTel ? "fgs.cinta.tel" : "fgs.cinta";
   const abre = document.createElement("button");
   abre.type = "button"; abre.className = "cinta-abrir"; abre.innerHTML = ico("chevArriba", 20);
   abre.setAttribute("aria-label", "Mostrar la barra de la demo"); abre.setAttribute("aria-controls", "cinta-demo");
@@ -130,11 +131,11 @@ function cintaDemo({ sistema, palancas }) {
     document.documentElement.classList.toggle("cinta-plegada", si);
     c.inert = si; abre.inert = !si;
     abre.setAttribute("aria-expanded", String(!si));
-    try { localStorage.setItem("fgs.cinta", si ? "plegada" : "abierta"); } catch (e) { /* sin almacenamiento */ }
+    try { localStorage.setItem(CLAVE, si ? "plegada" : "abierta"); } catch (e) { /* sin almacenamiento */ }
     if (foco) setTimeout(() => (si ? abre : $(".cinta-plegar", c)).focus(), 60);
   }
-  let plegadaAntes = false;
-  try { plegadaAntes = localStorage.getItem("fgs.cinta") === "plegada"; } catch (e) { /* sin almacenamiento */ }
+  let plegadaAntes = enTel;
+  try { const g = localStorage.getItem(CLAVE); if (g) plegadaAntes = g === "plegada"; } catch (e) { /* sin almacenamiento */ }
   plegar(plegadaAntes, false);
   $(".cinta-plegar", c).addEventListener("click", e => { e.stopPropagation(); plegar(true, e.detail === 0); });
   abre.addEventListener("click", e => { e.stopPropagation(); plegar(false, e.detail === 0); });
