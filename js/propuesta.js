@@ -44,25 +44,25 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 /* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 300, plazo: "1 a 2 semanas",
+    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350, plazo: "1 a 2 semanas",
     para: "Para que lo encuentren, vean su trabajo y aparten fecha con anticipo.",
     vista: "land",
     x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Hospedaje, soporte y cambios", 105]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Dominio .com", 10], ["Hospedaje, soporte y cambios", 145]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 3000, mes: 420, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 2000, mes: 450, plazo: "3 a 4 semanas",
     para: "Para vender impresiones, álbumes y sesiones sin atender cada pedido por chat.",
     vista: "tienda",
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Hospedaje, soporte y pedidos", 190]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Dominio .com", 10], ["Hospedaje, soporte y pedidos", 210]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 5800, mes: 690, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 3500, mes: 690, alt: 2500, plazo: "5 a 7 semanas", rec: true,
     para: "Para gestionar el estudio completo, de la reserva a la entrega, y vender más a cada cliente.",
     vista: "sis",
     x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Hospedaje y soporte prioritario", 390]]
+    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Dominio .com", 10], ["Hospedaje y soporte prioritario", 380]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -103,11 +103,9 @@ const CALC = [
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
-const COMPRA_UNICA = { ini: 15000, mes: 350 };
 
 const EXTRAS = [
-  { id: "com", n: "Dominio .com", d: "fotogonzalezstudio.com", ini: 120, anual: true, on: true },
-  { id: "gt", n: "Dominio .com.gt", d: "fotogonzalezstudio.com.gt", ini: 380, anual: true },
+  { id: "gt", n: "Dominio .com.gt", d: "fotogonzalezstudio.com.gt, además del .com incluido", ini: 380, anual: true },
   { id: "pasarela", n: "Cobro con tarjeta", d: "Configurar la pasarela de pago. La comisión por venta la cobra la pasarela.", ini: 600, solo: ["tienda", "completo"] },
   { id: "fel", n: "Factura electrónica FEL", d: "Cada venta sale con su factura certificada.", mes: 350 },
   { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, ordenadas por categoría.", ini: 500 },
@@ -302,7 +300,7 @@ function pintarSistemas() {
         <h3>${p.n}</h3>
         <p style="color:var(--tinta2);margin:0">${p.para}</p>
         <ul class="lista">${p.x.map(t => `<li>${ico("check")}<span>${t}</span></li>`).join("")}</ul>
-        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${Q(p.mes)}/mes</span></div>
+        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.alt || p.ini)}</b> + ${Q(p.mes)}/mes${p.alt ? `<small class="desde-nota">Con 12 meses mínimo. Sin permanencia: ${Q(p.ini)}</small>` : ""}</span></div>
         <a class="btn btn-tinta btn-demo" href="${DEMOS[id].url}">${ico("play", 16)} Abrir la demo</a>
       </div>
     </article>`).join("");
@@ -414,7 +412,7 @@ function pintarPlanes() {
       ${p.rec ? '<span class="cinta">Recomendado</span>' : ""}
       <div><p class="mono tinta2">${p.tipo.toUpperCase()}</p><h3 style="margin-top:6px">${p.n}</h3></div>
       <div class="monto"><b data-odo="mes-${id}">${Q(p.mes * k)}</b><span>/ mes</span></div>
-      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b> · ${p.plazo}</p>
+      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b> · ${p.plazo}</p>${p.alt ? `<p class="arranque alt">o <b data-odo="alt-${id}">${Q(p.alt * k)}</b> con 12 meses mínimo</p>` : ""}
       <dl class="desglose">${p.desglose.map(([a, v]) => `<dt>${a}</dt><dd>${Q(v * k)}</dd>`).join("")}</dl>
       <a class="btn" href="#plan-form" data-elige="${id}">Escoger este</a>
     </article>`).join("");
@@ -430,8 +428,9 @@ function actualizarPlanes() {
     const p = Object.values(PRECIOS)[i];
     $$(".desglose dd", pl).forEach((dd, j) => dd.textContent = Q(p.desglose[j][1] * k));
   });
-  $("#cu-precio").textContent = Q(COMPRA_UNICA.ini * k);
-  $("#cu-mes").textContent = Q(COMPRA_UNICA.mes * k);
+  $("#dos-sin").textContent = Q(PRECIOS.completo.ini * k);
+  $("#dos-con").textContent = Q(PRECIOS.completo.alt * k);
+  $("#dos-mes").textContent = Q(PRECIOS.completo.mes * k);
   $$(".dom-op .p[data-q]").forEach(el => el.textContent = Q(el.dataset.q * k));
 }
 function pintarExtras() {
@@ -457,16 +456,16 @@ function resumen() {
   const elegidos = EXTRAS.filter(e => { const i = $(`#extras input[value="${e.id}"]`); return i.checked && !i.disabled; });
   const ini = p.ini + elegidos.filter(e => e.ini).reduce((s, e) => s + e.ini, 0);
   const mes = p.mes + elegidos.filter(e => e.mes).reduce((s, e) => s + e.mes, 0);
-  const anual = elegidos.filter(e => e.anual).reduce((s, e) => s + e.ini, 0);
+  const alt = p.alt ? p.alt + elegidos.filter(e => e.ini).reduce((s, e) => s + e.ini, 0) : 0;
   $("#resumen").innerHTML = `
-    <div><dt>Al arrancar</dt><dd data-r="ini"></dd></div>
+    <div><dt>Al arrancar</dt><dd data-r="ini"></dd>${p.alt ? `<small class="r-alt">o ${Q((alt) * k)} con 12 meses mínimo</small>` : ""}</div>
     <div><dt>Cada mes</dt><dd data-r="mes"></dd></div>
     <div><dt>Plazo${k > 1 ? " · con IVA" : " · sin IVA"}</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">${p.plazo}</dd></div>
-    <div><dt>Incluye</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">Supabase Pro${anual ? " · dominio" : ""}</dd></div>`;
+    <div><dt>Incluye</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">Supabase Pro · dominio .com</dd></div>`;
   [["ini", ini * k], ["mes", mes * k]].forEach(([r, v]) => {
     const el = $(`[data-r="${r}"]`); el.dataset.v = resumenPrevio[r] || v; resumenPrevio[r] = v; odometro(el, v);
   });
-  const txt = `Hola Antonio, soy de Foto González Studio. Me interesa el ${p.n.toLowerCase()}${elegidos.length ? " con " + elegidos.map(e => e.n).join(", ") : ""}: ${Q(ini * k)} al arrancar y ${Q(mes * k)} al mes${k > 1 ? " (con IVA)" : ""}. ¿Cuándo empezamos?`;
+  const txt = `Hola Antonio, soy de Foto González Studio. Me interesa el ${p.n.toLowerCase()}${elegidos.length ? " con " + elegidos.map(e => e.n).join(", ") : ""}: ${Q(ini * k)} al arrancar${p.alt ? ` (o ${Q(alt * k)} con 12 meses mínimo)` : ""} y ${Q(mes * k)} al mes${k > 1 ? " (con IVA)" : ""}. ¿Cuándo empezamos?`;
   $("#plan-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(txt);
 }
 
