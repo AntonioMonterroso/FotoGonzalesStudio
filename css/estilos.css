@@ -9,6 +9,7 @@
   --linea: #DCD4C6;
   --acento: #8E2234;        /* corinto, como sus retratos de XV */
   --acento-suave: #F2DDE0;
+  --acento-osc: #741A2A;
   --vivo: #2F7D4F;
   --oscuro: #161513;
   --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
@@ -59,7 +60,7 @@ p { margin: 0 0 1em; }
 .btn svg { width: 18px; height: 18px; }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover { background: var(--tinta); color: var(--papel); }
-  .btn-acento:hover { background: #741A2A; border-color: #741A2A; color: #fff; }
+  .btn-acento:hover { background: var(--acento-osc); border-color: var(--acento-osc); color: #fff; }
 }
 :focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 6px; }
 
@@ -545,13 +546,13 @@ p { margin: 0 0 1em; }
 .ruta-crece > li { background: var(--carta); border: 1px solid var(--linea); border-radius: 14px; padding: 20px; }
 .ruta-crece > li:first-child { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
 .ruta-crece .cuando { color: var(--acento); }
-.ruta-crece > li:first-child .cuando { color: #F2DDE0; }
+.ruta-crece > li:first-child .cuando { color: var(--acento-suave); }
 .ruta-crece h3 { font-size: 1.15rem; margin: 6px 0 12px; }
 .ruta-crece ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .ruta-crece ul li { position: relative; padding-left: 18px; font-size: .94rem; color: var(--tinta2); line-height: 1.45; }
 .ruta-crece ul li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--acento); }
 .ruta-crece > li:first-child ul li { color: #CFC8BC; }
-.ruta-crece > li:first-child ul li::before { background: #F2DDE0; }
+.ruta-crece > li:first-child ul li::before { background: var(--acento-suave); }
 .crece-reglas { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .crece-reglas div { border-top: 2px solid var(--acento); padding-top: 14px; color: var(--tinta2); font-size: .94rem; line-height: 1.5; }
 .crece-reglas b { display: block; color: var(--tinta); font-family: "Archivo"; font-size: 1.02rem; margin-bottom: 4px; }

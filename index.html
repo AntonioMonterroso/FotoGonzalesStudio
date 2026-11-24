@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F5F2EC">
 <title>Propuesta · Foto González Studio</title>
-<meta name="description" content="Propuesta de Monterroso Dev Studio para Foto González Studio: página, tienda en línea y sistema completo, con base de datos Supabase Pro, dominio propio y tiempo real.">
+<meta name="description" content="Propuesta de Monterroso Dev Studio para Foto González Studio: página, tienda en línea y sistema completo, con dominio propio y tiempo real.">
 <meta property="og:title" content="Propuesta para Foto González Studio">
 <meta property="og:description" content="Ustedes toman la foto. El sistema hace lo demás.">
 <meta property="og:type" content="website">
@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="css/estilos.css?v=20261123b">
+<link rel="stylesheet" href="css/estilos.css?v=20261123c">
 <link rel="stylesheet" href="demos/foto.css?v=20261113a">
-<script src="demos/diseno.js?v=20261113a" data-css="css/claro.css?v=20261113i"></script>
+<script src="demos/diseno.js?v=20261113a" data-css="css/claro.css?v=20261123a"></script>
 </head>
 <body>
 
@@ -240,7 +240,7 @@
                 <div class="cifra"><small>Caja de hoy</small><b id="p-caja">Q 1,250.00</b></div>
               </div>
               <div class="seleccion">
-                <div class="quien"><b>Selección · Familia del parque</b><span id="p-sel-txt">esperando…</span></div>
+                <div class="quien"><b>Selección · Familia Prueba</b><span id="p-sel-txt">esperando…</span></div>
                 <div class="tiras-sel" id="p-tiras"></div>
               </div>
               <div>
@@ -254,7 +254,7 @@
             </div>
             <div class="col-b">
               <h4>Actividad <span class="pulso mono" style="font-size:.7rem;color:var(--vivo)"><i></i>EN VIVO</span></h4>
-              <div class="presencia" id="presencia"><span class="avs"><span style="background:#8E2234">FP</span></span><span>La familia del parque está viendo su galería</span></div>
+              <div class="presencia" id="presencia"><span class="avs"><span style="background:var(--acento)">FP</span></span><span>Familia Prueba está viendo su galería</span></div>
               <ul class="feed" id="feed" aria-live="polite"></ul>
             </div>
           </div>
@@ -348,8 +348,8 @@
       </div>
 
       <div class="compra-unica revela">
-        <p><b>El sistema completo, de dos formas.</b> La mensualidad es la misma, <span id="dos-mes">Q 690.00</span>. Cambia el arranque: sin permanencia, o más bajo si se quedan al menos 12 meses desde la entrega.</p>
-        <div class="dos-formas"><span><small>Sin permanencia</small><b class="p" id="dos-sin">Q 3,500.00</b></span><span><small>Con 12 meses mínimo</small><b class="p" id="dos-con">Q 2,500.00</b></span></div>
+        <p><b>El sistema completo, con o sin tienda.</b> Trae la página y el sistema. Si quieren vender en línea, se le agrega la tienda con el mismo arranque de <span id="ct-ini">Q 2,500.00</span>.</p>
+        <div class="dos-formas"><span><small>Página y sistema</small><b class="p" id="ct-sin">Q 690.00</b></span><span><small>Con la tienda</small><b class="p" id="ct-con">Q 850.00</b></span></div>
       </div>
     </div>
   </section>
@@ -365,52 +365,11 @@
     </div>
   </section>
 
-  <!-- 05 Base de datos -->
-  <section class="sec" id="base" data-toma="4" style="background: var(--papel2)">
-    <div class="envoltura">
-      <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">04 C</span> La base de datos</p>
-        <h2 class="enfoca">Información segura y siempre disponible.</h2>
-        <p class="lead">Clientes, fotos, reservas y pedidos se guardan en <b>Supabase Pro</b>, el servicio que hace posible el tiempo real. No se pausa por poca actividad y respalda la información cada día. Va incluido en la mensualidad.</p>
-      </header>
-      <div class="bd-tabs" role="tablist" aria-label="Ver qué guarda cada sistema" id="bd-tabs">
-        <button role="tab" aria-selected="false" data-plan="pagina">Página</button>
-        <button role="tab" aria-selected="false" data-plan="tienda">Tienda</button>
-        <button role="tab" aria-selected="true" data-plan="completo">Sistema completo</button>
-      </div>
-      <div class="bd">
-        <div>
-          <div class="bd-mapa" id="bd-mapa"></div>
-          <div class="leyenda"><span><i></i> Se actualiza al instante</span><span><i style="background:var(--linea)"></i> No lo trae este sistema</span></div>
-        </div>
-        <div class="bd-lado">
-          <div class="ficha revela">
-            <h3>Lo que incluye Supabase Pro</h3>
-            <dl>
-              <dt>Base de datos</dt><dd>8 GB</dd>
-              <dt>Fotos en la nube</dt><dd>100 GB</dd>
-              <dt>Descargas al mes</dt><dd>250 GB</dd>
-              <dt>Personas en vivo a la vez</dt><dd>500</dd>
-              <dt>Mensajes en vivo al mes</dt><dd>5 millones</dd>
-              <dt>Respaldo</dt><dd>Diario, 7 días</dd>
-              <dt>Se pausa por inactividad</dt><dd>Nunca</dd>
-            </dl>
-          </div>
-          <div class="ficha revela" id="bd-costo"></div>
-          <div class="ficha revela">
-            <h3>Seguridad</h3>
-            <p style="margin-top:0">Cada dato tiene reglas: un cliente solo ve <b>su</b> galería, con un enlace privado y un PIN. El equipo entra con su usuario y ve lo que le toca según su puesto. Las fotos privadas se entregan con enlaces que vencen; nadie las encuentra buscando.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 06 Dominio -->
   <section class="sec" id="dominio" data-toma="4">
     <div class="envoltura">
       <header class="sec-cabeza">
-        <p class="eyebrow mono"><span class="num">04 D</span> Dominio</p>
+        <p class="eyebrow mono"><span class="num">04 C</span> Dominio</p>
         <h2 class="enfoca">Su nombre, su dirección.</h2>
         <p class="lead">Una dirección propia genera confianza antes del anticipo y se imprime en la tarjeta. Se registra <b>a nombre del estudio</b>.</p>
       </header>
@@ -423,7 +382,7 @@
           <div class="dom-op revela"><b>fotogonzalezstudio.com</b><span class="p">Incluido</span><span>Va dentro de la mensualidad de los tres planes. El más fácil de recordar y el que la gente escribe por costumbre.</span></div>
           <div class="dom-op revela"><b>fotogonzalezstudio.com.gt</b><span class="p" data-q="380">Q 380.00</span><span>Al año, además del .com. Dice «Guatemala» en la dirección. Cuesta más porque lo maneja el registro nacional.</span></div>
           <div class="dom-op revela"><b>Certificado de seguridad (https)</b><span class="p">Incluido</span><span>El candadito del navegador. Va con cualquiera de los dos, sin costo extra.</span></div>
-          <p class="nota revela" style="color:var(--tinta2);font-size:.92rem;margin:4px 0 0">El 23 de noviembre de 2026 fotogonzalezstudio.com estaba libre; se compra a nombre del estudio al aprobar. La base de datos también puede llevar su propio dominio en Supabase (US$10 al mes), pero al inicio no hace falta y no lo cobramos.</p>
+          <p class="nota revela" style="color:var(--tinta2);font-size:.92rem;margin:4px 0 0">El 23 de noviembre de 2026 fotogonzalezstudio.com estaba libre; se compra a nombre del estudio al aprobar.</p>
         </div>
       </div>
     </div>
@@ -441,13 +400,13 @@
       </header>
       <div class="principios">
         <div class="revela"><span class="pr-ic" data-i="chat"></span><b>Un solo contacto</b><p>Antonio, por WhatsApp. Sin intermediarios ni tickets.</p></div>
-        <div class="revela"><span class="pr-ic" data-i="eye"></span><b>Avances cada semana</b><p>Un enlace de prueba que pueden abrir en su celular cuando quieran.</p></div>
+        <div class="revela"><span class="pr-ic" data-i="eye"></span><b>Avances a la vista</b><p>Un enlace de prueba que pueden abrir en su celular cuando quieran.</p></div>
         <div class="revela"><span class="pr-ic" data-i="check"></span><b>Nada sale sin su visto bueno</b><p>Ustedes aprueban el diseño y cada pantalla antes de publicarla.</p></div>
         <div class="revela"><span class="pr-ic" data-i="lock"></span><b>Lo del estudio es del estudio</b><p>El dominio, sus fotos y la información de sus clientes.</p></div>
       </div>
       <ol class="etapas">
         <li class="etapa revela">
-          <div class="et-cab"><span class="cuando mono">Semana 1</span><h3>Su material</h3><p>Una llamada de media hora para conocer el estudio.</p></div>
+          <div class="et-cab"><span class="cuando mono">Paso 1</span><h3>Su material</h3><p>Reunión para conocer el estudio.</p></div>
           <div class="et-cols">
             <div><small class="mono">Nosotros</small><p>Ordenamos sus paquetes y precios, compramos el dominio y armamos la lista de pantallas.</p></div>
             <div><small class="mono">Ustedes</small><p>Nos pasan sus mejores fotos en archivo, el logo y los precios de hoy.</p></div>
@@ -455,7 +414,7 @@
           </div>
         </li>
         <li class="etapa revela">
-          <div class="et-cab"><span class="cuando mono">Semana 1–2</span><h3>Diseño</h3><p>Se ve como el estudio, no como una plantilla.</p></div>
+          <div class="et-cab"><span class="cuando mono">Paso 2</span><h3>Diseño</h3><p>Se ve como el estudio, no como una plantilla.</p></div>
           <div class="et-cols">
             <div><small class="mono">Nosotros</small><p>La página con su logo, sus colores, su letra y sus fotos reales.</p></div>
             <div><small class="mono">Ustedes</small><p>La revisan en su celular y nos dicen qué cambiar.</p></div>
@@ -463,15 +422,15 @@
           </div>
         </li>
         <li class="etapa revela">
-          <div class="et-cab"><span class="cuando mono">Según el plan</span><h3>Construcción</h3><p>Lo que no se ve, pero hace que todo funcione.</p></div>
+          <div class="et-cab"><span class="cuando mono">Paso 3</span><h3>Construcción</h3><p>Lo que no se ve, pero hace que todo funcione.</p></div>
           <div class="et-cols">
-            <div><small class="mono">Nosotros</small><p>Base de datos Supabase Pro, reglas de seguridad, tiempo real y carga de su portafolio.</p></div>
-            <div><small class="mono">Ustedes</small><p>Una revisión corta cada semana para probar lo nuevo.</p></div>
+            <div><small class="mono">Nosotros</small><p>Armamos cada pantalla del plan, la dejamos segura y subimos su portafolio.</p></div>
+            <div><small class="mono">Ustedes</small><p>Una revisión corta para probar lo nuevo.</p></div>
             <div><small class="mono">Reciben</small><p>Avances que ya se pueden tocar, con datos de prueba.</p></div>
           </div>
         </li>
         <li class="etapa revela">
-          <div class="et-cab"><span class="cuando mono">Entrega</span><h3>Capacitación</h3><p>El día que el sistema empieza a trabajar.</p></div>
+          <div class="et-cab"><span class="cuando mono">Paso 4</span><h3>Capacitación</h3><p>El día que el sistema empieza a trabajar.</p></div>
           <div class="et-cols">
             <div><small class="mono">Nosotros</small><p>Lo publicamos en su dominio y damos una sesión con el equipo.</p></div>
             <div><small class="mono">Ustedes</small><p>Hacen las primeras reservas y entregas reales, con nosotros pendientes.</p></div>
@@ -479,19 +438,14 @@
           </div>
         </li>
         <li class="etapa revela">
-          <div class="et-cab"><span class="cuando mono">Después</span><h3>Acompañamiento</h3><p>La entrega no es el final.</p></div>
+          <div class="et-cab"><span class="cuando mono">Paso 5</span><h3>Acompañamiento</h3><p>La entrega no es el final.</p></div>
           <div class="et-cols">
             <div><small class="mono">Nosotros</small><p>Un primer mes de ajustes sin costo. Después, el soporte va dentro de la mensualidad.</p></div>
             <div><small class="mono">Ustedes</small><p>Nos cuentan qué se traba y qué preguntan los clientes.</p></div>
-            <div><small class="mono">Reciben</small><p>A los tres meses vemos los números juntos y decidimos qué mejorar.</p></div>
+            <div><small class="mono">Reciben</small><p>Vemos los números juntos y decidimos qué mejorar.</p></div>
           </div>
         </li>
       </ol>
-      <div class="plazos">
-        <div class="revela"><b>1 a 2 semanas</b><span>Página del estudio</span></div>
-        <div class="revela"><b>3 a 4 semanas</b><span>Tienda en línea</span></div>
-        <div class="revela"><b>5 a 7 semanas</b><span>Sistema completo · máximo 8</span></div>
-      </div>
     </div>
   </section>
 
@@ -505,9 +459,9 @@
       </header>
       <ol class="ruta-crece">
         <li class="revela"><span class="cuando mono">Al entregar</span><h3>Su plan, funcionando</h3><ul><li>El sistema publicado en su dominio</li><li>El equipo capacitado</li><li>Un mes de ajustes sin costo</li></ul></li>
-        <li class="revela"><span class="cuando mono">A los 3 meses</span><h3>Afinar con los números</h3><ul><li>Paquetes y precios ajustados a lo que más se vende</li><li>Respuestas listas para lo que más preguntan</li><li>Lo que más usan, más a la mano</li></ul></li>
-        <li class="revela"><span class="cuando mono">A los 6 meses</span><h3>Vender por más lados</h3><ul><li>Pedido directo al laboratorio de impresión</li><li>Fotos de eventos para los invitados: cada uno encuentra las suyas con un código QR</li><li>Un resumen del mes que les llega solo</li></ul></li>
-        <li class="revela"><span class="cuando mono">Cuando lo necesiten</span><h3>Crecer el estudio</h3><ul><li>Otro fotógrafo u otra sucursal, con su propia agenda</li><li>Mini sesiones, cursos o presets a la venta en línea</li><li>La factura FEL conectada a cada venta</li></ul></li>
+        <li class="revela"><span class="cuando mono">Después</span><h3>Afinar con los números</h3><ul><li>Paquetes y precios ajustados a lo que más se vende</li><li>Respuestas listas para lo que más preguntan</li><li>Lo que más usan, más a la mano</li></ul></li>
+        <li class="revela"><span class="cuando mono">Más adelante</span><h3>Vender por más lados</h3><ul><li>Pedido directo al laboratorio de impresión</li><li>Fotos de eventos para los invitados: cada uno encuentra las suyas con un código QR</li><li>Un resumen del mes que les llega solo</li></ul></li>
+        <li class="revela"><span class="cuando mono">Cuando lo necesiten</span><h3>Crecer el estudio</h3><ul><li>Otro fotógrafo u otra sucursal, con su propia agenda</li><li>Mini sesiones, cursos o presets a la venta en línea</li></ul></li>
       </ol>
       <div class="crece-reglas">
         <div class="revela"><b>Ustedes deciden el orden</b>La ruta es una idea para empezar. Si algo urge, va primero.</div>
@@ -534,20 +488,20 @@
   <section class="sec cierre" id="cierre" data-toma="6">
     <div class="envoltura">
       <h2 class="enfoca">Empecemos.</h2>
-      <p class="lead" style="color:var(--tinta2);font-size:1.2rem;max-width:46ch;margin-top:18px">Con sus fotos en archivo y una llamada de 30 minutos, le presentamos una primera versión con el trabajo del estudio. Propuesta del 23 de noviembre de 2026, válida hasta el 8 de diciembre de 2026.</p>
+      <p class="lead" style="color:var(--tinta2);font-size:1.2rem;max-width:46ch;margin-top:18px">Con sus fotos en archivo y una reunión, le presentamos una primera versión con el trabajo del estudio. Propuesta del 23 de noviembre de 2026, válida hasta el 8 de diciembre de 2026.</p>
       <div class="fila">
-        <a class="btn btn-acento wa" id="cierre-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Agendar la llamada por WhatsApp</a>
+        <a class="btn btn-acento wa" id="cierre-wa" target="_blank" rel="noopener"><span data-i="chat"></span>Agendar la reunión por WhatsApp</a>
         <div class="firma"><img src="img/firma-m.png" alt="M de Monterroso"><span><b>Antonio Monterroso</b>Monterroso Dev Studio · +502 3764 5139</span></div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="pie">Monterroso Dev Studio · Propuesta para Foto González Studio · 23 de noviembre de 2026, válida hasta el 8 de diciembre de 2026 · Precios en quetzales, sin IVA salvo que se marque. Costos de Supabase calculados a US$1 = Q 7.70 (noviembre de 2026). Las fotos son del estudio, tomadas de su Facebook.</footer>
+<footer class="pie">Monterroso Dev Studio · Propuesta para Foto González Studio · 23 de noviembre de 2026, válida hasta el 8 de diciembre de 2026 · Precios en quetzales, sin IVA salvo que se marque. Costos en dólares calculados a US$1 = Q 7.70 (noviembre de 2026). Las fotos son del estudio, tomadas de su Facebook.</footer>
 
-<script src="js/propuesta.js?v=20261123b"></script>
+<script src="js/propuesta.js?v=20261123c"></script>
 <script src="demos/foto.js?v=20261113d" data-visor=".sistema .vista, .vit-vista, .navegador .foto, .m-vista" data-toma=".sistema .vista, .vit-vista"></script>
 <script src="demos/completo/letras.js?v=20261111g"></script>
-<script src="js/medida.js?v=20261123a"></script>
+<script src="js/medida.js?v=20261123b"></script>
 </body>
 </html>

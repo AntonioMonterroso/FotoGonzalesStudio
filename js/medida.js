@@ -45,9 +45,15 @@
     document.getElementById("mv-btn").textContent = "Mandar la oferta · " + fmtQ(p.m);
     document.getElementById("mv-msg").textContent = mensaje(p);
   }
+  function pintarTodo() {
+    const c = COLORES.find(x => x.id === st.color), r = document.documentElement;
+    Object.entries({ ...varsColor(c), "--marca": c.a }).forEach(([k, v]) => r.style.setProperty(k, v));
+    r.dataset.color = c.id;
+  }
   document.getElementById("m-ctrl").addEventListener("change", e => {
     if (!e.target.name) return;
     st[e.target.name] = e.target.value;
+    if (e.target.name === "color") pintarTodo();
     pintar();
   });
   // Las letras se descargan solo cuando la sección se acerca

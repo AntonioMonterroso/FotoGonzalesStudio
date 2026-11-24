@@ -86,3 +86,11 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
   body .negativo { margin: 12px auto; }
   .beneficios li { border-radius: 16px; }
 }
+
+html[data-color] .btn-tinta, html[data-color] .btn-acento, html[data-color] .barra nav a[aria-current="true"], html[data-color] .sistema .cinta, html[data-color] .plan:not(.recomendado) .cinta { background: var(--marca); border-color: var(--marca); }
+html[data-color] .btn-tinta > span:first-child:has(> svg), html[data-color] .btn-acento > span:first-child:has(> svg) { color: var(--marca); }
+html[data-color] .sec.cierre .btn-acento { background: #fff; color: var(--marca); border-color: #fff; }
+html[data-color] .sec.cierre .btn-acento > span:first-child:has(> svg) { background: var(--marca); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-color] .btn-tinta:hover, html[data-color] .btn-acento:hover { background: var(--acento-osc); border-color: var(--acento-osc); }
+}

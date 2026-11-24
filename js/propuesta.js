@@ -44,25 +44,25 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 /* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350, plazo: "1 a 2 semanas",
+    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350,
     para: "Para que lo encuentren, vean su trabajo y aparten fecha con anticipo.",
     vista: "land",
-    x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión en 3 toques»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Dominio .com", 10], ["Hospedaje, soporte y cambios", 145]]
+    x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
+    desglose: [["Base de datos (US$25)", 195], ["Dominio .com", 10], ["Hospedaje, soporte y cambios", 145]]
   },
   tienda: {
-    n: "Tienda en línea", tipo: "E-commerce", ini: 2000, mes: 450, plazo: "3 a 4 semanas",
+    n: "Tienda en línea", tipo: "E-commerce", ini: 2000, mes: 450,
     para: "Para vender impresiones, álbumes y sesiones sin atender cada pedido por chat.",
     vista: "tienda",
-    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: tarjeta, transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Dominio .com", 10], ["Hospedaje, soporte y pedidos", 210]]
+    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
+    desglose: [["Base de datos (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Dominio .com", 10], ["Hospedaje, soporte y pedidos", 210]]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 3500, mes: 690, alt: 2500, plazo: "5 a 7 semanas", rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 2500, mes: 690, conTienda: 850, rec: true,
     para: "Para gestionar el estudio completo, de la reserva a la entrega, y vender más a cada cliente.",
     vista: "sis",
-    x: ["<b>La página y la tienda, incluidas</b>", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
-    desglose: [["Supabase Pro (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Dominio .com", 10], ["Hospedaje y soporte prioritario", 380]]
+    x: ["<b>La página incluida</b>; la tienda se agrega si la quieren", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
+    desglose: [["Base de datos (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Dominio .com", 10], ["Hospedaje y soporte prioritario", 380]]
   }
 };
 /* Demos y lo que vende cada sistema */
@@ -105,10 +105,9 @@ const CALC = [
 const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
 
 const EXTRAS = [
+  { id: "tienda", n: "Agregar la tienda", d: "La tienda en línea dentro del sistema completo. La mensualidad queda en Q 850.00.", mes: 160, w: "la tienda", solo: ["completo"] },
   { id: "gt", n: "Dominio .com.gt", d: "fotogonzalezstudio.com.gt, además del .com incluido", ini: 380, anual: true },
-  { id: "pasarela", n: "Cobro con tarjeta", d: "Configurar la pasarela de pago. La comisión por venta la cobra la pasarela.", ini: 600, solo: ["tienda", "completo"] },
-  { id: "fel", n: "Factura electrónica FEL", d: "Cada venta sale con su factura certificada.", mes: 350 },
-  { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, ordenadas por categoría.", ini: 500 },
+  { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, ordenadas por categoría.", ini: 300 },
   { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas para el equipo.", ini: 350 }
 ];
 
@@ -126,39 +125,6 @@ const TIEMPO_REAL = [
   ["Mensajes dentro de la galería", "«Esta sin el flash, por favor», junto a la foto.", "mensajes", 0, 0, 1]
 ];
 
-/* Lo que guarda la base, en palabras del estudio (sin nombres técnicos); planes: p = página, t = tienda, c = completo */
-const BD = [
-  { g: "El estudio", t: [
-    ["Datos del estudio", "Logo, colores, WhatsApp y horario.", "ptc", 0],
-    ["Paquetes y precios", "Lo que se ofrece y cuánto cuesta.", "ptc", 1],
-    ["Portafolio", "Las mejores fotos, por categoría.", "ptc", 1],
-    ["Reseñas", "Lo que dicen los clientes, ya aprobado.", "ptc", 1],
-    ["Fechas y reservas", "Qué día está libre y quién apartó.", "ptc", 1],
-    ["Equipo", "Quién entra y qué puede ver.", "ptc", 0]
-  ] },
-  { g: "Ventas", t: [
-    ["Clientes", "Nombre, teléfono, NIT y cumpleaños.", "tc", 0],
-    ["Productos", "Impresiones, cuadros, álbumes y cuántos quedan.", "tc", 1],
-    ["Pedidos", "Qué compró cada quien y cómo va.", "tc", 1],
-    ["Pagos", "Anticipos, saldos y boletas.", "tc", 1],
-    ["Cupones", "Descuentos de temporada.", "tc", 0],
-    ["Fotos de eventos", "Desfiles y actos, para que cada familia compre la suya.", "tc", 1]
-  ] },
-  { g: "Sesiones y entregas", t: [
-    ["Contratos", "Condiciones y firma en el celular.", "c", 0],
-    ["Galerías privadas", "Una por cliente, con enlace y PIN.", "c", 1],
-    ["Fotos de cada sesión", "Versión liviana y en alta, con marca de agua.", "c", 0],
-    ["Favoritas del cliente", "Cada corazón, con su nota.", "c", 1],
-    ["Mensajes", "Comentarios junto a cada foto.", "c", 1],
-    ["Historial", "Quién hizo qué y cuándo.", "c", 0]
-  ] }
-];
-const BD_COSTO = {
-  pagina: { usd: 25, q: 195, lineas: [["Plan Pro", "US$25"], ["Servidor Micro", "Incluido"], ["Fotos del portafolio", "≈ 5 GB, incluido"]] },
-  tienda: { usd: 30, q: 230, lineas: [["Plan Pro", "US$25"], ["Servidor Micro", "Incluido"], ["Fotos y descargas hasta 150 GB", "≈ US$5"]] },
-  completo: { usd: 39, q: 300, lineas: [["Plan Pro", "US$25"], ["Servidor Small", "US$5"], ["Fotos y descargas hasta 400 GB", "≈ US$9"]] }
-};
-
 const COMP_COLS = ["WhatsApp y Drive", "Plataforma extranjera", "Su sistema"];
 const COMP = [
   ["Página con su nombre y su dominio", 0, 1, 1],
@@ -170,19 +136,17 @@ const COMP = [
   ["Respaldo diario de clientes y pedidos", 0, 1, 1],
   ["Ofrece solo fotos extra, impresiones y la próxima sesión", 0, 0, 1],
   ["Le avisa a quién venderle hoy, con el mensaje listo", 0, 0, 1],
-  ["Soporte por WhatsApp, en Guatemala", 0, 0, 1]
+  ["Soporte por WhatsApp", 0, 0, 1]
 ];
 
 const FAQ = [
   ["¿Cómo sabemos que de verdad va a vender más?", "Lo medimos. El panel cuenta las consultas que entran por la página, lo que se vende en la tienda y en las galerías, y cuántos clientes vuelven por los recordatorios. A los tres meses vemos los números juntos y, si algo no está vendiendo, lo cambiamos."],
-  ["¿Qué es Supabase y por qué el plan Pro?", "Es el servicio en la nube que guarda la información y hace que todo se actualice en vivo. El plan Pro cuesta US$25 al mes y ya va dentro de su mensualidad. Lo usamos porque no se pausa, guarda respaldo diario y aguanta a cientos de clientes conectados a la vez."],
-  ["¿Qué pasa si se llena el espacio de las fotos?", "Cada plan trae espacio de sobra para empezar. Si el estudio crece más allá, Supabase cobra cerca de Q 0.17 por GB al mes y se lo pasamos al mismo precio, sin ganancia. Además guardamos una versión liviana de cada foto para la página, así gasta menos."],
+  ["¿Qué pasa si se llena el espacio de las fotos?", "Cada plan trae espacio de sobra para empezar. Si el estudio crece más allá, el servicio de la nube cobra cerca de Q 0.17 por GB al mes y se lo pasamos al mismo precio, sin ganancia. Además guardamos una versión liviana de cada foto para la página, así gasta menos."],
   ["¿El dominio es nuestro?", "Sí. Se registra a nombre del estudio. Si un día deciden irse con otra persona, el dominio se va con ustedes."],
   ["¿Podemos empezar con la página y después subir?", "Sí, para eso los tres usan la misma base de datos. Lo que pagaron de arranque se abona al siguiente sistema y solo pagan la diferencia."],
   ["¿Qué significa que todo sea en tiempo real?", "Que nadie tiene que recargar. Si un cliente aparta el sábado, a otro ya le sale ocupado. Si el estudio pasa el álbum a «Listo», al cliente le cambia en ese segundo."],
   ["¿Tenemos que dejar WhatsApp?", "No. El sistema les arma los mensajes con el enlace de la galería o del pedido y ustedes los mandan por WhatsApp como siempre."],
-  ["¿Y si el cliente comparte las fotos sin pagar el saldo?", "En el sistema completo, la galería sale con marca de agua y sin descarga en alta hasta que el saldo esté pagado. Al registrar el pago se libera sola."],
-  ["¿Cuánto cobra la pasarela de tarjeta?", "La comisión la pone el banco o la pasarela, no nosotros. Al escogerla con ustedes les decimos el porcentaje exacto."]
+  ["¿Y si el cliente comparte las fotos sin pagar el saldo?", "En el sistema completo, la galería sale con marca de agua y sin descarga en alta hasta que el saldo esté pagado. Al registrar el pago se libera sola."]
 ];
 
 /* ---------- Utilidades ---------- */
@@ -300,7 +264,7 @@ function pintarSistemas() {
         <h3>${p.n}</h3>
         <p style="color:var(--tinta2);margin:0">${p.para}</p>
         <ul class="lista">${p.x.map(t => `<li>${ico("check")}<span>${t}</span></li>`).join("")}</ul>
-        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.alt || p.ini)}</b> + ${Q(p.mes)}/mes${p.alt ? `<small class="desde-nota">Con 12 meses mínimo. Sin permanencia: ${Q(p.ini)}</small>` : ""}</span></div>
+        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${Q(p.mes)}/mes${p.conTienda ? `<small class="desde-nota">Con la tienda: ${Q(p.conTienda)}/mes</small>` : ""}</span></div>
       </div>
     </article>`).join("");
 }
@@ -333,7 +297,7 @@ function pintarCalc() {
       <b data-v="0">${Q(0)}</b><small>en ventas extra al mes</small>
       <div class="barra-res"><i></i><em></em></div>
       <p></p>
-    </div>`).join("") + `<p class="calc-nota">Cada sistema suma lo del anterior: la tienda trae la página y el completo trae los tres. Las fotos extra se calculan a ${Q(FOTO_EXTRA)} por cliente (5 fotos a Q 35).</p>`;
+    </div>`).join("") + `<p class="calc-nota">La tienda trae la página. El completo trae la página y el sistema; si le agregan la tienda, suma también lo de la tienda. Las fotos extra se calculan a ${Q(FOTO_EXTRA)} por cliente (5 fotos a Q 35).</p>`;
   calcular();
 }
 function calcular() {
@@ -342,7 +306,7 @@ function calcular() {
   const clientes = v.ses + v.nuevas;
   const pagina = v.nuevas * v.ticket;
   const tienda = pagina + clientes * v.imp / 100 * v.compra;
-  const completo = tienda + clientes * v.extra / 100 * FOTO_EXTRA + v.vuelven * v.ticket;
+  const completo = pagina + clientes * v.extra / 100 * FOTO_EXTRA + v.vuelven * v.ticket;
   const r = { pagina, tienda, completo }, tope = Math.max(completo, 1);
   Object.entries(r).forEach(([id, monto]) => {
     const el = $(`[data-res="${id}"]`), mes = PRECIOS[id].mes;
@@ -362,26 +326,6 @@ function pintarTiempoReal() {
   $("#rt-tabla tbody").innerHTML = TIEMPO_REAL.map(([q, d, canal, a, b, c]) => `
     <tr><td><b>${q}</b><span>${d}</span></td>
     <td data-p="Página">${cel(a)}</td><td data-p="Tienda">${cel(b)}</td><td data-p="Completo">${cel(c)}</td></tr>`).join("");
-}
-
-/* ---------- Base de datos ---------- */
-function pintarBD(plan) {
-  const letra = { pagina: "p", tienda: "t", completo: "c" }[plan];
-  $("#bd-mapa").innerHTML = BD.map(gr => `
-    <div class="grupo revela visto"><small class="mono">${gr.g}</small>
-      ${gr.t.map(([n, campos, planes, rt]) => `
-        <div class="tabla-bd${planes.includes(letra) ? "" : " apagada"}">
-          <div class="nom"><span>${n}</span>${rt ? '<span class="rt" title="Se actualiza al instante"></span>' : ""}</div>
-          <div class="campos">${campos}</div>
-        </div>`).join("")}
-    </div>`).join("");
-  const c = BD_COSTO[plan];
-  const total = c.q;
-  $("#bd-costo").innerHTML = `<h3>Supabase en el plan ${PRECIOS[plan].n.toLowerCase()}</h3>
-    <dl>${c.lineas.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}
-    <dt class="total">Costo estimado al mes</dt><dd class="total">US$${c.usd} ≈ ${Q(total)}</dd></dl>
-    <p>Ya va dentro de su mensualidad. Se calcula a US$1 = Q 7.70; si crece el uso, se lo decimos antes de cobrar nada.</p>`;
-  $$("#bd-tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.plan === plan));
 }
 
 /* ---------- Dominio: se escribe solo ---------- */
@@ -406,7 +350,7 @@ function pintarPlanes() {
       ${p.rec ? '<span class="cinta">Recomendado</span>' : ""}
       <div><p class="mono tinta2">${p.tipo.toUpperCase()}</p><h3 style="margin-top:6px">${p.n}</h3></div>
       <div class="monto"><b data-odo="mes-${id}">${Q(p.mes * k)}</b><span>/ mes</span></div>
-      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b> · ${p.plazo}</p>${p.alt ? `<p class="arranque alt">o <b data-odo="alt-${id}">${Q(p.alt * k)}</b> con 12 meses mínimo</p>` : ""}
+      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${p.conTienda ? `<p class="arranque alt">Con la tienda: <b data-odo="conTienda-${id}">${Q(p.conTienda * k)}</b> al mes</p>` : ""}
       <dl class="desglose">${p.desglose.map(([a, v]) => `<dt>${a}</dt><dd>${Q(v * k)}</dd>`).join("")}</dl>
       <a class="btn" href="#plan-form" data-elige="${id}">Escoger este</a>
     </article>`).join("");
@@ -422,9 +366,9 @@ function actualizarPlanes() {
     const p = Object.values(PRECIOS)[i];
     $$(".desglose dd", pl).forEach((dd, j) => dd.textContent = Q(p.desglose[j][1] * k));
   });
-  $("#dos-sin").textContent = Q(PRECIOS.completo.ini * k);
-  $("#dos-con").textContent = Q(PRECIOS.completo.alt * k);
-  $("#dos-mes").textContent = Q(PRECIOS.completo.mes * k);
+  $("#ct-ini").textContent = Q(PRECIOS.completo.ini * k);
+  $("#ct-sin").textContent = Q(PRECIOS.completo.mes * k);
+  $("#ct-con").textContent = Q(PRECIOS.completo.conTienda * k);
   $$(".dom-op .p[data-q]").forEach(el => el.textContent = Q(el.dataset.q * k));
 }
 function pintarExtras() {
@@ -450,16 +394,15 @@ function resumen() {
   const elegidos = EXTRAS.filter(e => { const i = $(`#extras input[value="${e.id}"]`); return i.checked && !i.disabled; });
   const ini = p.ini + elegidos.filter(e => e.ini).reduce((s, e) => s + e.ini, 0);
   const mes = p.mes + elegidos.filter(e => e.mes).reduce((s, e) => s + e.mes, 0);
-  const alt = p.alt ? p.alt + elegidos.filter(e => e.ini).reduce((s, e) => s + e.ini, 0) : 0;
   $("#resumen").innerHTML = `
-    <div><dt>Al arrancar</dt><dd data-r="ini"></dd>${p.alt ? `<small class="r-alt">o ${Q((alt) * k)} con 12 meses mínimo</small>` : ""}</div>
+    <div><dt>Al arrancar</dt><dd data-r="ini"></dd></div>
     <div><dt>Cada mes</dt><dd data-r="mes"></dd></div>
-    <div><dt>Plazo${k > 1 ? " · con IVA" : " · sin IVA"}</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">${p.plazo}</dd></div>
-    <div><dt>Incluye</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">Supabase Pro · dominio .com</dd></div>`;
+    <div><dt>Precios</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">${k > 1 ? "Con IVA" : "Sin IVA"}</dd></div>
+    <div><dt>Incluye</dt><dd style="font-size:1rem;font-family:inherit;font-weight:600">Hospedaje · dominio .com</dd></div>`;
   [["ini", ini * k], ["mes", mes * k]].forEach(([r, v]) => {
     const el = $(`[data-r="${r}"]`); el.dataset.v = resumenPrevio[r] || v; resumenPrevio[r] = v; odometro(el, v);
   });
-  const txt = `Hola Antonio, soy de Foto González Studio. Me interesa el ${p.n.toLowerCase()}${elegidos.length ? " con " + elegidos.map(e => e.n).join(", ") : ""}: ${Q(ini * k)} al arrancar${p.alt ? ` (o ${Q(alt * k)} con 12 meses mínimo)` : ""} y ${Q(mes * k)} al mes${k > 1 ? " (con IVA)" : ""}. ¿Cuándo empezamos?`;
+  const txt = `Hola Antonio, soy de Foto González Studio. Me interesa el ${p.n.toLowerCase()}${elegidos.length ? " con " + elegidos.map(e => e.w || e.n).join(", ") : ""}: ${Q(ini * k)} al arrancar y ${Q(mes * k)} al mes${k > 1 ? " (con IVA)" : ""}. ¿Cuándo empezamos?`;
   $("#plan-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(txt);
 }
 
@@ -592,7 +535,7 @@ function pestanas() {
   tabs.forEach(t => t.addEventListener("click", () => {
     tabs.forEach(x => { x.setAttribute("aria-selected", x === t); $("#" + x.getAttribute("aria-controls")).hidden = x !== t; });
     const donde = { "t-galeria": "está viendo su galería", "t-reservar": "está viendo fechas libres", "t-pedido": "está revisando su pedido" }[t.id];
-    red(() => { $("#presencia span:last-child").textContent = "La familia del parque " + donde; });
+    red(() => { $("#presencia span:last-child").textContent = "Familia Prueba " + donde; });
   }));
 }
 function iniciarDemo() {
@@ -600,7 +543,7 @@ function iniciarDemo() {
   $("#p-caja").dataset.v = demo.caja; $("#p-caja").textContent = Q(demo.caja);
   $("#reservar").addEventListener("click", reservar);
   $("#avanzar").addEventListener("click", avanzar);
-  alFeed("eye", "La familia del parque abrió su galería");
+  alFeed("eye", "Familia Prueba abrió su galería");
   alFeed("bag", "Pedido en línea · <b>2 cuadros 40×60</b>");
   $$("#feed li").forEach(li => li.classList.remove("nuevo"));
 }
@@ -678,8 +621,6 @@ pintarSistemas();
 pintarVitrinas();
 pintarCalc();
 pintarTiempoReal();
-pintarBD("completo");
-$$("#bd-tabs button").forEach(b => b.addEventListener("click", () => pintarBD(b.dataset.plan)));
 pintarPlanes();
 pintarExtras();
 pintarComp();
