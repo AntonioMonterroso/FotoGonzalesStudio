@@ -92,7 +92,7 @@ const CALC = [
 const FOTO_EXTRA = 175;
 
 const EXTRAS = [
-  { id: "tienda", n: "Agregar la tienda", d: "La mensualidad queda en Q 850.00.", mes: 160, w: "la tienda", solo: ["completo"] },
+  { id: "tienda", n: "Agregar la tienda", d: k => `La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"] },
   { id: "gt", n: "Dominio .com.gt", d: "Además del .com incluido.", ini: 380, anual: true },
   { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, por categoría.", ini: 300 },
   { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas.", ini: 350 }
@@ -311,7 +311,7 @@ function actualizarPlanes() {
 function pintarExtras() {
   $("#extras").innerHTML = EXTRAS.map(e => `
     <label data-id="${e.id}"><input type="checkbox" value="${e.id}"${e.on ? " checked" : ""}>
-      <span>${e.n}<small>${e.d}</small></span>
+      <span>${e.n}<small data-extra-d="${e.id}">${typeof e.d === "function" ? e.d(iva()) : e.d}</small></span>
       <span class="p" data-extra="${e.id}"></span></label>`).join("");
   $$("#extras input").forEach(i => i.addEventListener("change", resumen));
 }
@@ -327,6 +327,7 @@ function resumen() {
     const vale = !e.solo || e.solo.includes(id);
     l.style.opacity = vale ? 1 : .4; $("input", l).disabled = !vale;
     $(`[data-extra="${e.id}"]`).textContent = vale ? precioExtra(e, k) : "No aplica";
+    if (typeof e.d === "function") $(`[data-extra-d="${e.id}"]`).textContent = e.d(k);
   });
   const elegidos = EXTRAS.filter(e => { const i = $(`#extras input[value="${e.id}"]`); return i.checked && !i.disabled; });
   const ini = p.ini + elegidos.filter(e => e.ini).reduce((s, e) => s + e.ini, 0);
