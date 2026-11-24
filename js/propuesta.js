@@ -68,7 +68,7 @@ const PRECIOS = {
 /* Demos y lo que vende cada sistema */
 const DEMOS = {
   pagina: { gancho: "Convierte al que mira en el que aparta.", palancas: [
-    ["sparkles", "Cuestionario de 3 toques", "Recomienda el paquete y deja el mensaje escrito. Llega una consulta lista para cerrar, no un «info»."],
+    ["sparkles", "Cuestionario", "Recomienda el paquete y deja el mensaje escrito. Llega una consulta lista para cerrar, no un «info»."],
     ["calendar", "Fechas libres en vivo", "«Quedan 3 sábados en diciembre» es cierto. La gente decide antes cuando ve que se acaba."],
     ["star", "El paquete del medio, destacado", "Junto al Premium, el Clásico se ve como la compra sensata. Casi nadie escoge el más barato."],
     ["users", "Reseñas y reservas reales a la vista", "Ver que otras familias apartan esta semana quita el miedo a pagar el anticipo."],
