@@ -2,7 +2,7 @@
 (function () {
   const SEL = [
     ".sec-cabeza > .eyebrow", ".sec-cabeza > p", ".precios-cab .iva", ".planes", ".compra-unica",
-    ".rt-tabla tbody tr", ".comp tbody tr", ".palancas li", ".m-mas h3", ".m-mas li", ".extras label",
+    ".palancas li", ".m-mas h3", ".m-mas li", ".extras label",
     ".deslizador", ".calc-res .res", ".calc-nota", ".beneficios li", ".vivo-explica > *", ".tercios > *",
     ".m-ctrl fieldset", ".et-cols > div", ".cierre .fila", ".cierre .lead", ".portada .para", ".lista li", ".escena > *"
   ].join(",");

@@ -1,16 +1,13 @@
-/* Propuesta Foto González Studio — Monterroso Dev Studio
-   Precios: cambiar en PRECIOS y EXTRAS. Todo en quetzales, sin IVA. */
 "use strict";
 
 const WA = "50237645139";
-const CAMBIO = 7.7; // US$1 = Q7.70
+const CAMBIO = 7.7;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const Q = n => "Q " + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const calma = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const EASE = "cubic-bezier(0.25, 1, 0.5, 1)";
 
-/* ---------- Íconos (Lucide, ISC) ---------- */
 const ICO = {
   chevAbajo: '<path d="m6 9 6 6 6-6"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
@@ -41,58 +38,51 @@ const ICO = {
 const ico = (n, w = 18) => `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[n]}</svg>`;
 const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dataset.i]).forEach(el => { el.innerHTML = ico(el.dataset.i); el.removeAttribute("data-i"); });
 
-/* ---------- Datos de la propuesta ---------- */
 const PRECIOS = {
   pagina: {
     n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350,
-    para: "Para que lo encuentren, vean su trabajo y aparten fecha con anticipo.",
+    para: "Para que lo encuentren y aparten fecha con anticipo.",
     vista: "land",
-    x: ["<b>Portafolio por categoría</b>: bodas, XV años, bebés, familia, estudio, graduaciones", "<b>«Encuentre su sesión»</b>: recomienda el paquete y deja el mensaje escrito", "<b>Fechas libres en vivo</b>: «quedan 3 sábados» es cierto y empuja a decidir", "Paquetes con el del medio destacado y anticipo para apartar", "Reseñas, promoción del mes con fecha límite y guía gratis a cambio del WhatsApp", "Panel sencillo para subir fotos y cambiar paquetes; lista para Google"],
+    x: ["<b>Portafolio</b> por categoría", "<b>«Encuentre su sesión»</b>: recomienda el paquete", "<b>Fechas libres en vivo</b>", "Paquetes con anticipo para apartar", "Reseñas y promoción del mes", "Panel sencillo, lista para Google"],
     desglose: [["Base de datos (US$25)", 195], ["Dominio .com", 10], ["Hospedaje, soporte y cambios", 145]]
   },
   tienda: {
     n: "Tienda en línea", tipo: "E-commerce", ini: 2000, mes: 450,
-    para: "Para vender impresiones, álbumes y sesiones sin atender cada pedido por chat.",
+    para: "Para vender impresiones y álbumes sin atender cada pedido por chat.",
     vista: "tienda",
-    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: el cliente ve su foto a escala y se anima al tamaño grande", "Impresiones, cuadros, álbumes, fotolibros y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b>: cada familia busca a su hijo y compra la foto, con precio menor desde 5", "Paquetes que ahorran, <b>envío gratis desde un monto</b> y venta cruzada de un toque", "Carrito y cobro: transferencia con boleta o contra entrega", "<b>Recordatorio de carrito olvidado</b> por WhatsApp y cupones de temporada", "Pedido con código que el cliente sigue al instante; aviso al estudio en cuanto entra"],
+    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: su foto a escala", "Impresiones, álbumes y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b> por familia", "Paquetes y <b>envío gratis desde un monto</b>", "Pago por transferencia o contra entrega", "<b>Recordatorio de carrito olvidado</b>", "Pedido con código que el cliente sigue"],
     desglose: [["Base de datos (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Dominio .com", 10], ["Hospedaje, soporte y pedidos", 210]]
   },
   completo: {
     n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 2500, mes: 690, conTienda: 850, rec: true,
-    para: "Para gestionar el estudio completo, de la reserva a la entrega, y vender más a cada cliente.",
+    para: "Para llevar el estudio de la reserva a la entrega y vender más.",
     vista: "sis",
-    x: ["<b>La página incluida</b>; la tienda se agrega si la quieren", "<b>Ventas que el sistema le encuentra cada día</b>, por motivo: fechas especiales, cobros, galerías y reseñas, con el mensaje listo", "<b>Cámara en vivo</b> (según el modelo de cámara): las fotos llegan solas, se guardan o borran con un toque, se copian al disco y a la nube, y la familia las ve en pantalla grande", "<b>Cada sesión preparada</b>: maleta, lista de tomas, luz y clima; en eventos, horario, contactos, quién va y QR para los invitados", "Reservas paso a paso con anticipo, bandeja de reservas nuevas, cambios de fecha y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, marca de agua hasta pagar el saldo y todo lo pendiente de cobro en una lista", "<b>Portal de cada familia</b>: entra con su enlace y su PIN y ve todas sus sesiones; ahí elige fotos, paga y guarda sus recibos", "<b>Ofertas por WhatsApp</b> a un grupo de clientes, referidos con premio, reseña pedida al entregar y portafolio para compartir", "Clientes con sus gustos para la sesión, historial, contratos, caja y reportes; usuarios por puesto. <b>Pensado para el iPhone</b>: se instala como una app"],
+    x: ["<b>La página incluida</b>; la tienda, si la quieren", "<b>Ventas que le encuentra cada día</b>, con el mensaje listo", "<b>Cámara en vivo</b> (según la cámara): las fotos llegan solas", "<b>Cada sesión preparada</b>: tomas, luz y clima", "Reservas con anticipo y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, con marca de agua", "<b>Portal de cada familia</b> con enlace y PIN", "<b>Ofertas por WhatsApp</b>, referidos y reseñas", "Clientes, caja y reportes; <b>se instala como app</b>"],
     desglose: [["Base de datos (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Dominio .com", 10], ["Hospedaje y soporte prioritario", 380]]
   }
 };
-/* Demos y lo que vende cada sistema */
 const DEMOS = {
   pagina: { gancho: "Convierte al que mira en el que aparta.", palancas: [
-    ["sparkles", "Cuestionario", "Recomienda el paquete y deja el mensaje escrito. Llega una consulta lista para cerrar, no un «info»."],
-    ["calendar", "Fechas libres en vivo", "«Quedan 3 sábados en diciembre» es cierto. La gente decide antes cuando ve que se acaba."],
-    ["star", "El paquete del medio, destacado", "Junto al Premium, el Clásico se ve como la compra sensata. Casi nadie escoge el más barato."],
-    ["users", "Reseñas y reservas reales a la vista", "Ver que otras familias apartan esta semana quita el miedo a pagar el anticipo."],
-    ["gift", "Guía gratis a cambio del WhatsApp", "El que todavía no está listo deja su número, y el estudio le vuelve a ofrecer en la temporada."]
+    ["sparkles", "Cuestionario", "Recomienda el paquete y deja la consulta lista para cerrar."],
+    ["calendar", "Fechas libres en vivo", "«Quedan 3 sábados» es cierto y empuja a decidir."],
+    ["star", "El paquete del medio, destacado", "Junto al Premium, el Clásico se ve como la compra sensata."],
+    ["gift", "Guía gratis a cambio del WhatsApp", "El que no está listo deja su número para la próxima temporada."]
   ] },
   tienda: { gancho: "Cada galería termina en algo impreso.", palancas: [
-    ["frame", "Su foto, en su pared", "El cliente ve su propia foto a escala junto a un sillón. Así se anima al 60×90 en vez del 30×40."],
-    ["package", "Paquetes que ahorran", "Pack abuelos, tríptico de pared, regalo de Navidad: una compra se vuelve tres piezas."],
-    ["cart", "Envío gratis desde Q 600 y venta cruzada", "«Le faltan Q 80 para el envío gratis» y el mini álbum se agrega con un toque."],
-    ["clock", "La galería vence", "Con fecha de vencimiento, el pedido de impresiones no se queda para «después»."],
-    ["users", "Desfiles y eventos que se venden", "El estudio ya cubre desfiles, bandas y actos. Cada familia busca a su hijo en la galería del evento y compra la foto; desde 5, más baratas."],
-    ["send", "Recordatorio de carrito olvidado", "Si dejó dos cuadros sin pagar, le llega un WhatsApp con el carrito listo para terminar."],
-    ["gift", "Tarjetas de regalo", "Un cliente le regala una sesión a otra familia: el estudio cobra hoy y gana un cliente nuevo."]
+    ["frame", "Su foto, en su pared", "Verla a escala anima al tamaño grande."],
+    ["package", "Paquetes que ahorran", "Una compra se vuelve tres piezas."],
+    ["cart", "Envío gratis desde Q 600", "«Le faltan Q 80» y el mini álbum entra al carrito."],
+    ["users", "Desfiles y eventos", "Cada familia busca a su hijo y compra la foto."],
+    ["send", "Carrito olvidado", "Le llega un WhatsApp para terminar la compra."]
   ] },
   completo: { gancho: "Le encuentra ventas al estudio cada mañana.", palancas: [
-    ["bell", "Ventas que le encuentra cada día", "Cumpleaños del bebé, aniversario de boda, galería por vencer, cotización sin respuesta. Con el mensaje listo para mandar."],
-    ["heart", "Galería que vende fotos extra", "El paquete trae 10 y la familia quiere 14. La oferta de las extras sale sola, sin que nadie la ofrezca por chat."],
-    ["lock", "Marca de agua hasta pagar", "El saldo se cobra sin perseguir: al pagar, las fotos se liberan solas."],
-    ["send", "Campañas a quien sí le interesa", "Mini sesiones navideñas solo a las familias con bebé fotografiado este año. Las respuestas se ven en vivo."],
-    ["users", "Referidos y reseñas", "Cada cliente trae su código para recomendar, y la reseña se pide justo al entregar, cuando está más contento."],
-    ["lock", "Portal de cada familia", "Entra con su enlace y su PIN y ve todas sus sesiones con el estudio: elige fotos, paga el anticipo y guarda sus recibos."]
+    ["bell", "Ventas que le encuentra cada día", "Cumpleaños, aniversarios y galerías por vencer, con el mensaje listo."],
+    ["heart", "Galería que vende fotos extra", "El paquete trae 10 y la familia quiere 14."],
+    ["lock", "Marca de agua hasta pagar", "Al pagar el saldo, las fotos se liberan solas."],
+    ["send", "Campañas a quien le interesa", "Mini sesiones navideñas solo a las familias con bebé."],
+    ["users", "Portal de cada familia", "Con su enlace y su PIN elige fotos, paga y guarda sus recibos."]
   ], extra: ["?portal=1", "users", "Abrir el portal de la familia"] }
 };
-/* Calculadora: supuestos editables (no son promesas) */
 const CALC = [
   { id: "ses", n: "Sesiones al mes hoy", min: 2, max: 60, paso: 1, v: 12, fmt: v => v },
   { id: "ticket", n: "Precio promedio de una sesión", min: 300, max: 6000, paso: 50, v: 850, fmt: Q },
@@ -102,54 +92,25 @@ const CALC = [
   { id: "extra", n: "Clientes que compran fotos extra", min: 0, max: 80, paso: 5, v: 30, fmt: v => v + " %", de: "completo" },
   { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
 ];
-const FOTO_EXTRA = 175; // 5 fotos extra × Q 35
+const FOTO_EXTRA = 175;
 
 const EXTRAS = [
-  { id: "tienda", n: "Agregar la tienda", d: "La tienda en línea dentro del sistema completo. La mensualidad queda en Q 850.00.", mes: 160, w: "la tienda", solo: ["completo"] },
-  { id: "gt", n: "Dominio .com.gt", d: "fotogonzalezstudio.com.gt, además del .com incluido", ini: 380, anual: true },
-  { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, ordenadas por categoría.", ini: 300 },
-  { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas para el equipo.", ini: 350 }
-];
-
-const TIEMPO_REAL = [
-  ["Fechas libres del calendario", "Al apartar una fecha, desaparece para todos.", "reservas", 1, 1, 1],
-  ["Paquetes y precios publicados", "El estudio cambia un precio y la página ya lo muestra.", "paquetes", 1, 1, 1],
-  ["Reseñas nuevas", "Aparecen en cuanto el estudio las aprueba.", "resenas", 1, 1, 1],
-  ["Inventario de productos", "«Quedan 3» baja con cada venta.", "productos", 0, 1, 1],
-  ["Estado del pedido para el cliente", "En impresión, listo, entregado.", "pedidos", 0, 1, 1],
-  ["Aviso de pedido o pago nuevo al estudio", "Suena en el panel y en el celular del dueño.", "pagos", 0, 1, 1],
-  ["Selección de fotos del cliente", "Cada corazón llega al estudio con la foto exacta.", "selecciones", 0, 0, 1],
-  ["Quién está viendo su galería", "Saber que la familia está eligiendo ahora mismo.", "presencia", 0, 0, 1],
-  ["Flujo de edición y entregas", "El editor termina y el cliente ya puede descargar.", "galerias", 0, 0, 1],
-  ["Caja del día y anticipos", "Cada cobro suma al momento en el panel.", "pagos", 0, 0, 1],
-  ["Mensajes dentro de la galería", "«Esta sin el flash, por favor», junto a la foto.", "mensajes", 0, 0, 1]
-];
-
-const COMP_COLS = ["WhatsApp y Drive", "Plataforma extranjera", "Su sistema"];
-const COMP = [
-  ["Página con su nombre y su dominio", 0, 1, 1],
-  ["El cliente elige sus fotos en una galería", 0, 1, 1],
-  ["Reservas con anticipo y calendario en vivo", 0, 1, 1],
-  ["Tienda de impresiones y álbumes en quetzales", 0, 0, 1],
-  ["Precio en quetzales, sin comisión por foto o venta", 1, 0, 1],
-  ["Todo en español, pensado para Guatemala", 1, 0, 1],
-  ["Respaldo diario de clientes y pedidos", 0, 1, 1],
-  ["Ofrece solo fotos extra, impresiones y la próxima sesión", 0, 0, 1],
-  ["Le avisa a quién venderle hoy, con el mensaje listo", 0, 0, 1],
-  ["Soporte por WhatsApp", 0, 0, 1]
+  { id: "tienda", n: "Agregar la tienda", d: "La mensualidad queda en Q 850.00.", mes: 160, w: "la tienda", solo: ["completo"] },
+  { id: "gt", n: "Dominio .com.gt", d: "Además del .com incluido.", ini: 380, anual: true },
+  { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, por categoría.", ini: 300 },
+  { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas.", ini: 350 }
 ];
 
 const FAQ = [
-  ["¿Cómo sabemos que de verdad va a vender más?", "Lo medimos. El panel cuenta las consultas que entran por la página, lo que se vende en la tienda y en las galerías, y cuántos clientes vuelven por los recordatorios. A los tres meses vemos los números juntos y, si algo no está vendiendo, lo cambiamos."],
-  ["¿Qué pasa si se llena el espacio de las fotos?", "Cada plan trae espacio de sobra para empezar. Si el estudio crece más allá, el servicio de la nube cobra cerca de Q 0.17 por GB al mes y se lo pasamos al mismo precio, sin ganancia. Además guardamos una versión liviana de cada foto para la página, así gasta menos."],
-  ["¿El dominio es nuestro?", "Sí. Se registra a nombre del estudio. Si un día deciden irse con otra persona, el dominio se va con ustedes."],
-  ["¿Podemos empezar con la página y después subir?", "Sí, para eso los tres usan la misma base de datos. Lo que pagaron de arranque se abona al siguiente sistema y solo pagan la diferencia."],
-  ["¿Qué significa que todo sea en tiempo real?", "Que nadie tiene que recargar. Si un cliente aparta el sábado, a otro ya le sale ocupado. Si el estudio pasa el álbum a «Listo», al cliente le cambia en ese segundo."],
-  ["¿Tenemos que dejar WhatsApp?", "No. El sistema les arma los mensajes con el enlace de la galería o del pedido y ustedes los mandan por WhatsApp como siempre."],
-  ["¿Y si el cliente comparte las fotos sin pagar el saldo?", "En el sistema completo, la galería sale con marca de agua y sin descarga en alta hasta que el saldo esté pagado. Al registrar el pago se libera sola."]
+  ["¿Cómo sabemos que va a vender más?", "El panel cuenta consultas, ventas y clientes que vuelven. A los tres meses vemos los números juntos y ajustamos."],
+  ["¿Qué pasa si se llena el espacio de las fotos?", "Cada plan trae espacio de sobra. Si el estudio crece, la nube cobra cerca de Q 0.17 por GB al mes y se lo pasamos sin ganancia."],
+  ["¿El dominio es nuestro?", "Sí. Se registra a nombre del estudio y se va con ustedes."],
+  ["¿Podemos empezar con la página y después subir?", "Sí. Lo pagado de arranque se abona y solo pagan la diferencia."],
+  ["¿Qué significa tiempo real?", "Que nadie recarga. Si un cliente aparta el sábado, a otro ya le sale ocupado."],
+  ["¿Tenemos que dejar WhatsApp?", "No. El sistema arma los mensajes y ustedes los mandan como siempre."],
+  ["¿Y si comparten las fotos sin pagar el saldo?", "En el sistema completo, la galería lleva marca de agua hasta que paguen."]
 ];
 
-/* ---------- Utilidades ---------- */
 const iva = () => ($("#iva")?.checked ? 1.12 : 1);
 function odometro(el, valor, fmt = Q) {
   const desde = Number(el.dataset.v || 0);
@@ -162,14 +123,13 @@ function odometro(el, valor, fmt = Q) {
     if (k < 1) requestAnimationFrame(paso);
   };
   requestAnimationFrame(paso);
-  setTimeout(() => { if (Number(el.dataset.v) === valor) el.textContent = fmt(valor); }, dur + 80); // por si la pestaña no dibuja
+  setTimeout(() => { if (Number(el.dataset.v) === valor) el.textContent = fmt(valor); }, dur + 80);
 }
 function destello() {
   if (calma) return;
   $("#destello").animate([{ opacity: .75 }, { opacity: 0 }], { duration: 320, easing: EASE });
 }
 
-/* ---------- Intro: diafragma ---------- */
 function intro() {
   const el = $("#intro");
   let visto = false;
@@ -201,7 +161,6 @@ function entrarPortada(retraso) {
     { duration: 900, delay: retraso + 120, easing: EASE, fill: "backwards" });
 }
 
-/* ---------- Visor: el punto de enfoque busca, fija y dispara; al tocarlo, dispara al momento ---------- */
 function visor() {
   const fotos = ["f-xv", "f-bebe", "f-pedida", "f-primer", "f-maracas", "f-quince", "f-familia", "f-retrato", "f-camisola", "f-pareja", "f-graduacion", "f-fuerza"];
   const exif = ["f/2.8 · 1/250 · ISO 100", "f/1.8 · 1/500 · ISO 200", "f/4 · 1/160 · ISO 100", "f/2.2 · 1/125 · ISO 400", "f/2 · 1/200 · ISO 100", "f/8 · 1/320 · ISO 100"];
@@ -217,9 +176,7 @@ function visor() {
     setTimeout(() => {
       enf.classList.add("fijo");
       setTimeout(() => {
-        // flash suave dentro del visor
         if (!calma) flash.animate([{ opacity: 0 }, { opacity: .9, offset: .18 }, { opacity: 0 }], { duration: 620, easing: EASE });
-        // la foto vieja se desvanece sobre la nueva
         const vieja = foto.cloneNode(); vieja.removeAttribute("id"); vieja.classList.add("visor-vieja"); foto.after(vieja);
         i = (i + 1) % fotos.length; cuadro++;
         foto.className = "foto " + fotos[i];
@@ -248,7 +205,6 @@ function visor() {
   programar();
 }
 
-/* ---------- Tres sistemas ---------- */
 function miniVista(tipo) {
   if (tipo === "land") return `<div class="mini m-land"><div class="top"><i></i><i></i><i></i></div><div class="lienzo"><div class="hero foto f-xv"></div><span class="titulo"></span><span class="titulo"></span><div class="tiras"><span class="foto f-quince"></span><span class="foto f-bebe"></span><span class="foto f-familia"></span><span class="foto f-retrato"></span></div></div></div>`;
   if (tipo === "tienda") return `<div class="mini m-tienda"><div class="top"><i></i><i></i><i></i></div><div class="lienzo"><span class="carrito">3</span><div class="rej">${["f-producto", "f-pedida", "f-familia", "f-quince", "f-paisaje", "f-bebe"].map(f => `<div class="prod"><span class="foto ${f}"></span><i></i></div>`).join("")}</div></div></div>`;
@@ -269,7 +225,6 @@ function pintarSistemas() {
     </article>`).join("");
 }
 
-/* ---------- Demos: cómo vende cada sistema ---------- */
 function pintarVitrinas() {
   $("#vitrinas").innerHTML = Object.entries(PRECIOS).map(([id, p], i) => {
     const d = DEMOS[id];
@@ -297,7 +252,7 @@ function pintarCalc() {
       <b data-v="0">${Q(0)}</b><small>en ventas extra al mes</small>
       <div class="barra-res"><i></i><em></em></div>
       <p></p>
-    </div>`).join("") + `<p class="calc-nota">La tienda trae la página. El completo trae la página y el sistema; si le agregan la tienda, suma también lo de la tienda. Las fotos extra se calculan a ${Q(FOTO_EXTRA)} por cliente (5 fotos a Q 35).</p>`;
+    </div>`).join("") + `<p class="calc-nota">Con la tienda, el completo suma también lo de la tienda. Fotos extra a ${Q(FOTO_EXTRA)} por cliente.</p>`;
   calcular();
 }
 function calcular() {
@@ -320,15 +275,6 @@ function calcular() {
   });
 }
 
-/* ---------- Tiempo real ---------- */
-function pintarTiempoReal() {
-  const cel = v => v ? `<span class="si" aria-label="Sí">${ico("check")}</span>` : `<span class="no" aria-label="No">—</span>`;
-  $("#rt-tabla tbody").innerHTML = TIEMPO_REAL.map(([q, d, canal, a, b, c]) => `
-    <tr><td><b>${q}</b><span>${d}</span></td>
-    <td data-p="Página">${cel(a)}</td><td data-p="Tienda">${cel(b)}</td><td data-p="Completo">${cel(c)}</td></tr>`).join("");
-}
-
-/* ---------- Dominio: se escribe solo ---------- */
 function escribirDominio() {
   const el = $("#url-txt"), dominios = ["fotogonzalezstudio.com", "fotogonzalezstudio.com.gt"];
   if (calma) { el.textContent = dominios[0]; return; }
@@ -342,7 +288,6 @@ function escribirDominio() {
   new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { o.disconnect(); setTimeout(tic, 1800); } }, { threshold: .4 }).observe(el);
 }
 
-/* ---------- Precios ---------- */
 function pintarPlanes() {
   const k = iva();
   $("#planes").innerHTML = Object.entries(PRECIOS).map(([id, p]) => `
@@ -406,23 +351,16 @@ function resumen() {
   $("#plan-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(txt);
 }
 
-/* ---------- Comparativa y preguntas ---------- */
-function pintarComp() {
-  const cel = (v, suyo, col) => `<td data-p="${col}"${suyo ? ' class="suyo"' : ""}>${v ? `<span class="si">${ico("check")}</span>` : '<span class="no">—</span>'}</td>`;
-  $("#comp").innerHTML = `<thead><tr><th></th>${COMP_COLS.map((c, i) => `<th${i === 2 ? ' class="suyo"' : ""}>${c}</th>`).join("")}</tr></thead>
-    <tbody>${COMP.map(([q, ...v]) => `<tr><td>${q}</td>${v.map((x, i) => cel(x, i === 2, COMP_COLS[i])).join("")}</tr>`).join("")}</tbody>`;
-}
 function pintarFAQ() {
   $("#faq").innerHTML = FAQ.map(([q, a]) => `<details class="revela"><summary>${q}</summary><p>${a}</p></details>`).join("");
 }
 
-/* ---------- Demo en vivo ---------- */
 const FOTOS_DEMO = ["f-familia", "f-bebe", "f-xv", "f-paisaje", "f-pedida", "f-primer", "f-retrato", "f-cacao", "f-quince", "f-mundial", "f-anillo", "f-pastel", "f-glam", "f-graduacion", "f-pareja", "f-camisola", "f-fuerza", "f-maracas", "f-producto", "f-maestra", "f-toga", "f-boda", "f-maternidad", "f-navidad"];
 const PAQ_DEMO = [{ n: "Sesión de estudio", p: 450 }, { n: "Familia en exterior", p: 850 }, { n: "XV años", p: 2400 }];
 const ESTADOS = [["Recibido", "Pagó el anticipo"], ["En edición", "Retoque y color"], ["En impresión", "Laboratorio"], ["Listo para recoger", "En el estudio"], ["Entregado", "¡Gracias!"]];
 const DIAS = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
 const demo = { sel: [], estado: 0, caja: 1250, reservas: [], fecha: null, paq: 1 };
-const red = fn => setTimeout(fn, 180 + Math.random() * 220); // simula el viaje por internet
+const red = fn => setTimeout(fn, 180 + Math.random() * 220);
 
 function hora() { return new Date().toLocaleTimeString("es-GT", { hour: "2-digit", minute: "2-digit" }); }
 function alFeed(icono, html) {
@@ -548,7 +486,6 @@ function iniciarDemo() {
   $$("#feed li").forEach(li => li.classList.remove("nuevo"));
 }
 
-/* ---------- Revelado al hacer scroll ---------- */
 function revelar() {
   const io = new IntersectionObserver(ents => ents.forEach(e => {
     if (!e.isIntersecting) return;
@@ -561,7 +498,6 @@ function revelar() {
   $$(".revela:not(.visto), .enfoca, .revelado").forEach(el => io.observe(el));
 }
 
-/* ---------- Barra y menú ---------- */
 function barra() {
   const b = $("#barra"), menu = $("#menu"), btn = $("#menu-btn");
   addEventListener("scroll", () => b.classList.toggle("con-borde", scrollY > 20), { passive: true });
@@ -570,7 +506,6 @@ function barra() {
     btn.setAttribute("aria-expanded", abierto);
   });
   $$("a", menu).forEach(a => a.addEventListener("click", () => { menu.classList.remove("abierto"); btn.setAttribute("aria-expanded", "false"); }));
-  // Teléfono: la barra se esconde al bajar y vuelve apenas se sube un poco
   const tel = matchMedia("(max-width: 640px)");
   let ultimo = scrollY;
   addEventListener("scroll", () => {
@@ -590,7 +525,6 @@ function barra() {
   secciones.forEach(s => io.observe(s));
 }
 
-/* ---------- Teléfono: listas largas cortas, con «Ver todo» ---------- */
 let nLista = 0;
 function verTodo(lista, n = 4, siempre = false) {
   if (!lista || lista.children.length <= n + 1) return;
@@ -615,15 +549,12 @@ function verTodo(lista, n = 4, siempre = false) {
   (lista.closest("table") || lista).after(b);
 }
 
-/* ---------- Arranque ---------- */
 pintarIconos();
 pintarSistemas();
 pintarVitrinas();
 pintarCalc();
-pintarTiempoReal();
 pintarPlanes();
 pintarExtras();
-pintarComp();
 pintarFAQ();
 resumen();
 actualizarPlanes();
@@ -633,7 +564,6 @@ $("#cierre-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Ho
 $$(".wa").forEach(a => a.addEventListener("click", destello));
 $$("#sistemas-lista .lista").forEach(l => verTodo(l, 4, true));
 $$("#vitrinas .palancas").forEach(l => verTodo(l));
-verTodo($("#rt-tabla tbody"));
 iniciarDemo();
 escribirDominio();
 barra();
