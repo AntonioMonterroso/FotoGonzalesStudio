@@ -592,13 +592,13 @@ function barra() {
 
 /* ---------- Teléfono: listas largas cortas, con «Ver todo» ---------- */
 let nLista = 0;
-function verTodo(lista, n = 4) {
+function verTodo(lista, n = 4, siempre = false) {
   if (!lista || lista.children.length <= n + 1) return;
   const total = lista.children.length;
-  lista.classList.add("corta");
+  lista.classList.add(siempre ? "corta-siempre" : "corta");
   if (!lista.id) lista.id = "lista-corta-" + (++nLista);
   const b = document.createElement("button");
-  b.type = "button"; b.className = "ver-todo";
+  b.type = "button"; b.className = "ver-todo" + (siempre ? " siempre" : "");
   b.setAttribute("aria-controls", lista.id);
   const pintar = () => {
     const abierta = lista.classList.contains("abierta");
@@ -631,7 +631,8 @@ $("#iva").addEventListener("change", () => { actualizarPlanes(); resumen(); });
 $$('#plan-form input[name="paq"]').forEach(i => i.addEventListener("change", resumen));
 $("#cierre-wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hola Antonio, vi la propuesta para Foto González Studio y quiero hablar.");
 $$(".wa").forEach(a => a.addEventListener("click", destello));
-$$("#sistemas-lista .lista, #vitrinas .palancas").forEach(l => verTodo(l));
+$$("#sistemas-lista .lista").forEach(l => verTodo(l, 4, true));
+$$("#vitrinas .palancas").forEach(l => verTodo(l));
 verTodo($("#rt-tabla tbody"));
 iniciarDemo();
 escribirDominio();
