@@ -80,16 +80,6 @@ const DEMOS = {
     ["users", "Portal de cada familia", "Con su enlace y su PIN elige fotos, paga y guarda sus recibos."]
   ], extra: ["?portal=1", "users", "Abrir el portal de la familia"] }
 };
-const CALC = [
-  { id: "ses", n: "Sesiones al mes hoy", min: 2, max: 60, paso: 1, v: 12, fmt: v => v },
-  { id: "ticket", n: "Precio promedio de una sesión", min: 300, max: 6000, paso: 50, v: 850, fmt: Q },
-  { id: "nuevas", n: "Sesiones nuevas al mes por la página", min: 0, max: 15, paso: 1, v: 2, fmt: v => v, de: "pagina" },
-  { id: "imp", n: "Clientes que compran impresiones o cuadros", min: 0, max: 80, paso: 5, v: 25, fmt: v => v + " %", de: "tienda" },
-  { id: "compra", n: "Compra promedio en la tienda", min: 100, max: 2500, paso: 25, v: 450, fmt: Q, de: "tienda" },
-  { id: "extra", n: "Clientes que compran fotos extra", min: 0, max: 80, paso: 5, v: 30, fmt: v => v + " %", de: "completo" },
-  { id: "vuelven", n: "Sesiones al mes por recordatorios y campañas", min: 0, max: 10, paso: 1, v: 1, fmt: v => v, de: "completo" }
-];
-const FOTO_EXTRA = 175;
 
 const EXTRAS = [
   { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"] },
@@ -235,41 +225,6 @@ function pintarVitrinas() {
       </div>
     </article>`;
   }).join("");
-}
-function pintarCalc() {
-  const f = $("#calc-form");
-  f.innerHTML = CALC.map(c => `<label class="deslizador${c.de ? " de-" + c.de : ""}">
-      <span class="fila-d"><span>${c.n}${c.de ? `<small>${PRECIOS[c.de].n}</small>` : ""}</span><output id="o-${c.id}">${c.fmt(c.v)}</output></span>
-      <input type="range" id="c-${c.id}" min="${c.min}" max="${c.max}" step="${c.paso}" value="${c.v}">
-    </label>`).join("");
-  $$("input", f).forEach(i => i.addEventListener("input", calcular));
-  $("#calc-res").innerHTML = Object.entries(PRECIOS).map(([id, p]) => `
-    <div class="res${p.rec ? " rec" : ""}" data-res="${id}">
-      <span class="mono">${p.n.toUpperCase()}</span>
-      <b data-v="0">${Q(0)}</b><small>en ventas extra al mes</small>
-      <div class="barra-res"><i></i><em></em></div>
-      <p></p>
-    </div>`).join("") + `<p class="calc-nota">El completo siempre trae la página; con la tienda suma también lo de la tienda. Fotos extra a ${Q(FOTO_EXTRA)} por cliente.</p>`;
-  calcular();
-}
-function calcular() {
-  const v = {};
-  CALC.forEach(c => { v[c.id] = Number($("#c-" + c.id).value); $("#o-" + c.id).textContent = c.fmt(v[c.id]); });
-  const clientes = v.ses + v.nuevas;
-  const pagina = v.nuevas * v.ticket;
-  const tienda = pagina + clientes * v.imp / 100 * v.compra;
-  const completo = pagina + clientes * v.extra / 100 * FOTO_EXTRA + v.vuelven * v.ticket;
-  const r = { pagina, tienda, completo }, tope = Math.max(completo, 1);
-  Object.entries(r).forEach(([id, monto]) => {
-    const el = $(`[data-res="${id}"]`), mes = PRECIOS[id].mes;
-    odometro($("b", el), Math.round(monto));
-    $(".barra-res i", el).style.transform = `scaleX(${Math.min(1, monto / tope)})`;
-    $(".barra-res em", el).style.left = Math.min(100, mes / tope * 100) + "%";
-    const veces = monto / mes;
-    $("p", el).innerHTML = monto <= 0 ? "Muevan los números de arriba." :
-      veces >= 1 ? `La mensualidad de ${Q(mes)} se cubre <b>${veces.toFixed(1).replace(".0", "")} veces</b>.` :
-      `Cubre el ${Math.round(veces * 100)} % de la mensualidad de ${Q(mes)}.`;
-  });
 }
 
 function escribirDominio() {
@@ -545,7 +500,6 @@ function verTodo(lista, n = 4, siempre = false) {
 pintarIconos();
 pintarSistemas();
 pintarVitrinas();
-pintarCalc();
 pintarPlanes();
 pintarExtras();
 pintarFAQ();
