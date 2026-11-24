@@ -92,7 +92,7 @@ const CALC = [
 const FOTO_EXTRA = 175;
 
 const EXTRAS = [
-  { id: "tienda", n: "Agregar la tienda", d: k => `La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"] },
+  { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"] },
   { id: "gt", n: "Dominio .com.gt", d: "Además del .com incluido.", ini: 380, anual: true },
   { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, por categoría.", ini: 300 },
   { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas.", ini: 350 }
@@ -217,7 +217,7 @@ function pintarSistemas() {
         <h3>${p.n}</h3>
         <p style="color:var(--tinta2);margin:0">${p.para}</p>
         <ul class="lista">${p.x.map(t => `<li>${ico("check")}<span>${t}</span></li>`).join("")}</ul>
-        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${Q(p.mes)}/mes${p.conTienda ? `<small class="desde-nota">Con la tienda: ${Q(p.conTienda)}/mes</small>` : ""}</span></div>
+        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${Q(p.mes)}/mes${p.conTienda ? `<small class="desde-nota">Con la tienda (la página va incluida): ${Q(p.conTienda)}/mes</small>` : ""}</span></div>
       </div>
     </article>`).join("");
 }
@@ -249,7 +249,7 @@ function pintarCalc() {
       <b data-v="0">${Q(0)}</b><small>en ventas extra al mes</small>
       <div class="barra-res"><i></i><em></em></div>
       <p></p>
-    </div>`).join("") + `<p class="calc-nota">Con la tienda, el completo suma también lo de la tienda. Fotos extra a ${Q(FOTO_EXTRA)} por cliente.</p>`;
+    </div>`).join("") + `<p class="calc-nota">El completo siempre trae la página; con la tienda suma también lo de la tienda. Fotos extra a ${Q(FOTO_EXTRA)} por cliente.</p>`;
   calcular();
 }
 function calcular() {
@@ -292,7 +292,7 @@ function pintarPlanes() {
       ${p.rec ? '<span class="cinta">Recomendado</span>' : ""}
       <div><p class="mono tinta2">${p.tipo.toUpperCase()}</p><h3 style="margin-top:6px">${p.n}</h3></div>
       <div class="monto"><b data-odo="mes-${id}">${Q(p.mes * k)}</b><span>/ mes</span></div>
-      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${p.conTienda ? `<p class="arranque alt">Con la tienda: <b data-odo="conTienda-${id}">${Q(p.conTienda * k)}</b> al mes</p>` : ""}
+      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${p.conTienda ? `<p class="arranque alt">Con la tienda, la página incluida: <b data-odo="conTienda-${id}">${Q(p.conTienda * k)}</b> al mes</p>` : ""}
       <a class="btn" href="#plan-form" data-elige="${id}">Escoger este</a>
     </article>`).join("");
   $$("[data-odo]").forEach(el => { const [t, id] = el.dataset.odo.split("-"); el.dataset.v = PRECIOS[id][t] * k; });
