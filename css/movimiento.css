@@ -1,0 +1,52 @@
+:root { --suave: cubic-bezier(0.23, 1, 0.32, 1); }
+
+.mv { opacity: 0; translate: 0 16px; transition: opacity 700ms var(--suave), translate 700ms var(--suave); }
+.mv.mv-in { opacity: 1; translate: 0 0; }
+
+@keyframes aparece { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+@keyframes aclara { from { opacity: .35; } to { opacity: 1; } }
+
+.corta.abierta > :nth-child(n+5), .corta-siempre.abierta > :nth-child(n+5) { animation: aparece 320ms var(--suave) both; }
+.faq details[open] > p { animation: aparece 300ms var(--suave) both; }
+.vista-cel:not([hidden]) { animation: aparece 260ms var(--suave) both; }
+#resumen > div { animation: aparece 260ms var(--suave) both; }
+#resumen > div:nth-child(2) { animation-delay: 40ms; }
+#resumen > div:nth-child(3) { animation-delay: 80ms; }
+#resumen > div:nth-child(4) { animation-delay: 120ms; }
+.cambia { animation: aclara 360ms var(--suave); }
+.menu-abierto-anim { animation: aparece 220ms var(--suave) both; }
+
+.armado .elige label, .extras label, .ver-todo, .dom-op, .m-sw, .m-pildoras label {
+  transition: background-color 200ms var(--suave), color 200ms var(--suave), border-color 200ms var(--suave), box-shadow 200ms var(--suave), scale 140ms var(--suave), opacity 200ms var(--suave);
+}
+.armado .elige label:active, .extras label:active, .ver-todo:active, .m-sw:active, .m-pildoras label:active, .bd-tabs button:active, .fechas button:active { scale: 0.97; }
+
+.sistema, .plan, .caja, .dom-op, .principios > div, .ruta-crece > li, .m-mas li, .crece-reglas > div, .vitrina .vit-vista, .res, .beneficios li, .navegador, .m-vista {
+  transition: translate 260ms var(--suave), box-shadow 260ms var(--suave), border-color 200ms var(--suave), opacity 700ms var(--suave), transform 700ms var(--suave);
+}
+.faq summary { transition: color 200ms var(--suave), padding-left 220ms var(--suave); }
+.faq summary::after { transition: transform 240ms var(--suave); }
+.lista li, .palancas li { transition: translate 220ms var(--suave); }
+
+@media (hover: hover) and (pointer: fine) {
+  .sistema:hover, .plan:hover, .caja:hover, .dom-op:hover, .principios > div:hover, .ruta-crece > li:hover, .m-mas li:hover, .res:hover, .beneficios li:hover {
+    translate: 0 -4px; box-shadow: 0 0 0 1px var(--linea), 0 30px 50px -30px rgba(0, 0, 0, .32);
+  }
+  .plan.recomendado:hover, .sistema.recomendado:hover { box-shadow: 0 0 0 1px var(--tinta), 0 30px 50px -28px rgba(0, 0, 0, .4); }
+  .vitrina:hover .vit-vista { translate: 0 -4px; }
+  .lista li:hover, .palancas li:hover { translate: 4px 0; }
+  .faq summary:hover { padding-left: 6px; }
+  .extras label:hover, .armado .elige label:hover:not(:has(input:checked)) { border-color: var(--tinta3); }
+  .m-pildoras label:hover:not(:has(input:checked)) { border-color: var(--tinta3); }
+}
+
+html.tinendo, html.tinendo body, html.tinendo body *, html.tinendo body *::before, html.tinendo body *::after {
+  transition: color 600ms var(--suave), background-color 600ms var(--suave), border-color 600ms var(--suave), fill 600ms var(--suave), stroke 600ms var(--suave), box-shadow 600ms var(--suave) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mv { translate: none; transition: opacity 400ms linear; }
+  .corta.abierta > :nth-child(n+5), .corta-siempre.abierta > :nth-child(n+5), .faq details[open] > p, .vista-cel:not([hidden]), #resumen > div { animation-name: aclara; }
+  .sistema:hover, .plan:hover, .caja:hover, .dom-op:hover, .principios > div:hover, .ruta-crece > li:hover, .m-mas li:hover, .res:hover, .beneficios li:hover, .vitrina:hover .vit-vista, .lista li:hover, .palancas li:hover { translate: none; }
+  .faq summary:hover { padding-left: 0; }
+}

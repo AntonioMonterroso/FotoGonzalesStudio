@@ -34,7 +34,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .barra nav a { font-weight: 600; }
 .barra nav a[aria-current="true"] { background: #111; color: #fff; }
 .barra nav a[aria-current="true"] small { color: #BDBDBA; }
-.btn-dis { background: #fff; border-color: var(--linea); }
 
 /* Secciones como paneles de vidrio */
 .sec { padding: clamp(14px, 2.4vw, 26px) 0; background: transparent !important; }
