@@ -37,7 +37,7 @@
     preparar(document);
     const iva = document.getElementById("iva");
     if (iva) iva.addEventListener("change", () => {
-      document.querySelectorAll(".desglose, .dom-op .p, .compra-unica .dos-formas, .arranque").forEach(el => {
+      document.querySelectorAll(".dom-op .p, .compra-unica .dos-formas, .arranque").forEach(el => {
         el.classList.remove("cambia"); void el.offsetWidth; el.classList.add("cambia");
       });
     });

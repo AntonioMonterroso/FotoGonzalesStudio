@@ -43,22 +43,19 @@ const PRECIOS = {
     n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350,
     para: "Para que lo encuentren y aparten fecha con anticipo.",
     vista: "land",
-    x: ["<b>Portafolio</b> por categoría", "<b>«Encuentre su sesión»</b>: recomienda el paquete", "<b>Fechas libres en vivo</b>", "Paquetes con anticipo para apartar", "Reseñas y promoción del mes", "Panel sencillo, lista para Google"],
-    desglose: [["Base de datos (US$25)", 195], ["Dominio .com", 10], ["Hospedaje, soporte y cambios", 145]]
+    x: ["<b>Portafolio</b> por categoría", "<b>«Encuentre su sesión»</b>: recomienda el paquete", "<b>Fechas libres en vivo</b>", "Paquetes con anticipo para apartar", "Reseñas y promoción del mes", "Panel sencillo, lista para Google"]
   },
   tienda: {
     n: "Tienda en línea", tipo: "E-commerce", ini: 2000, mes: 450,
     para: "Para vender impresiones y álbumes sin atender cada pedido por chat.",
     vista: "tienda",
-    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: su foto a escala", "Impresiones, álbumes y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b> por familia", "Paquetes y <b>envío gratis desde un monto</b>", "Pago por transferencia o contra entrega", "<b>Recordatorio de carrito olvidado</b>", "Pedido con código que el cliente sigue"],
-    desglose: [["Base de datos (US$25)", 195], ["Fotos y descargas (hasta 150 GB)", 35], ["Dominio .com", 10], ["Hospedaje, soporte y pedidos", 210]]
+    x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: su foto a escala", "Impresiones, álbumes y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b> por familia", "Paquetes y <b>envío gratis desde un monto</b>", "Pago por transferencia o contra entrega", "<b>Recordatorio de carrito olvidado</b>", "Pedido con código que el cliente sigue"]
   },
   completo: {
     n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 2500, mes: 690, conTienda: 850, rec: true,
     para: "Para llevar el estudio de la reserva a la entrega y vender más.",
     vista: "sis",
-    x: ["<b>La página incluida</b>; la tienda, si la quieren", "<b>Ventas que le encuentra cada día</b>, con el mensaje listo", "<b>Cámara en vivo</b> (según la cámara): las fotos llegan solas", "<b>Cada sesión preparada</b>: tomas, luz y clima", "Reservas con anticipo y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, con marca de agua", "<b>Portal de cada familia</b> con enlace y PIN", "<b>Ofertas por WhatsApp</b>, referidos y reseñas", "Clientes, caja y reportes; <b>se instala como app</b>"],
-    desglose: [["Base de datos (US$25)", 195], ["Servidor más grande (US$5)", 40], ["Fotos y descargas (hasta 400 GB)", 65], ["Dominio .com", 10], ["Hospedaje y soporte prioritario", 380]]
+    x: ["<b>La página incluida</b>; la tienda, si la quieren", "<b>Ventas que le encuentra cada día</b>, con el mensaje listo", "<b>Cámara en vivo</b> (según la cámara): las fotos llegan solas", "<b>Cada sesión preparada</b>: tomas, luz y clima", "Reservas con anticipo y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, con marca de agua", "<b>Portal de cada familia</b> con enlace y PIN", "<b>Ofertas por WhatsApp</b>, referidos y reseñas", "Clientes, caja y reportes; <b>se instala como app</b>"]
   }
 };
 const DEMOS = {
@@ -296,7 +293,6 @@ function pintarPlanes() {
       <div><p class="mono tinta2">${p.tipo.toUpperCase()}</p><h3 style="margin-top:6px">${p.n}</h3></div>
       <div class="monto"><b data-odo="mes-${id}">${Q(p.mes * k)}</b><span>/ mes</span></div>
       <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${p.conTienda ? `<p class="arranque alt">Con la tienda: <b data-odo="conTienda-${id}">${Q(p.conTienda * k)}</b> al mes</p>` : ""}
-      <dl class="desglose">${p.desglose.map(([a, v]) => `<dt>${a}</dt><dd>${Q(v * k)}</dd>`).join("")}</dl>
       <a class="btn" href="#plan-form" data-elige="${id}">Escoger este</a>
     </article>`).join("");
   $$("[data-odo]").forEach(el => { const [t, id] = el.dataset.odo.split("-"); el.dataset.v = PRECIOS[id][t] * k; });
@@ -307,10 +303,6 @@ function pintarPlanes() {
 function actualizarPlanes() {
   const k = iva();
   $$("[data-odo]").forEach(el => { const [t, id] = el.dataset.odo.split("-"); odometro(el, PRECIOS[id][t] * k); });
-  $$(".plan").forEach((pl, i) => {
-    const p = Object.values(PRECIOS)[i];
-    $$(".desglose dd", pl).forEach((dd, j) => dd.textContent = Q(p.desglose[j][1] * k));
-  });
   $("#ct-ini").textContent = Q(PRECIOS.completo.ini * k);
   $("#ct-sin").textContent = Q(PRECIOS.completo.mes * k);
   $("#ct-con").textContent = Q(PRECIOS.completo.conTienda * k);
