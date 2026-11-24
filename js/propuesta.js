@@ -67,14 +67,14 @@ const PRECIOS = {
 };
 /* Demos y lo que vende cada sistema */
 const DEMOS = {
-  pagina: { url: "demos/pagina/", gancho: "Convierte al que mira en el que aparta.", palancas: [
+  pagina: { gancho: "Convierte al que mira en el que aparta.", palancas: [
     ["sparkles", "Cuestionario de 3 toques", "Recomienda el paquete y deja el mensaje escrito. Llega una consulta lista para cerrar, no un «info»."],
     ["calendar", "Fechas libres en vivo", "«Quedan 3 sábados en diciembre» es cierto. La gente decide antes cuando ve que se acaba."],
     ["star", "El paquete del medio, destacado", "Junto al Premium, el Clásico se ve como la compra sensata. Casi nadie escoge el más barato."],
     ["users", "Reseñas y reservas reales a la vista", "Ver que otras familias apartan esta semana quita el miedo a pagar el anticipo."],
     ["gift", "Guía gratis a cambio del WhatsApp", "El que todavía no está listo deja su número, y el estudio le vuelve a ofrecer en la temporada."]
   ] },
-  tienda: { url: "demos/tienda/", gancho: "Cada galería termina en algo impreso.", palancas: [
+  tienda: { gancho: "Cada galería termina en algo impreso.", palancas: [
     ["frame", "Su foto, en su pared", "El cliente ve su propia foto a escala junto a un sillón. Así se anima al 60×90 en vez del 30×40."],
     ["package", "Paquetes que ahorran", "Pack abuelos, tríptico de pared, regalo de Navidad: una compra se vuelve tres piezas."],
     ["cart", "Envío gratis desde Q 600 y venta cruzada", "«Le faltan Q 80 para el envío gratis» y el mini álbum se agrega con un toque."],
@@ -83,7 +83,7 @@ const DEMOS = {
     ["send", "Recordatorio de carrito olvidado", "Si dejó dos cuadros sin pagar, le llega un WhatsApp con el carrito listo para terminar."],
     ["gift", "Tarjetas de regalo", "Un cliente le regala una sesión a otra familia: el estudio cobra hoy y gana un cliente nuevo."]
   ] },
-  completo: { url: "demos/completo/", gancho: "Le encuentra ventas al estudio cada mañana.", palancas: [
+  completo: { gancho: "Le encuentra ventas al estudio cada mañana.", palancas: [
     ["bell", "Ventas que le encuentra cada día", "Cumpleaños del bebé, aniversario de boda, galería por vencer, cotización sin respuesta. Con el mensaje listo para mandar."],
     ["heart", "Galería que vende fotos extra", "El paquete trae 10 y la familia quiere 14. La oferta de las extras sale sola, sin que nadie la ofrezca por chat."],
     ["lock", "Marca de agua hasta pagar", "El saldo se cobra sin perseguir: al pagar, las fotos se liberan solas."],
@@ -301,7 +301,6 @@ function pintarSistemas() {
         <p style="color:var(--tinta2);margin:0">${p.para}</p>
         <ul class="lista">${p.x.map(t => `<li>${ico("check")}<span>${t}</span></li>`).join("")}</ul>
         <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.alt || p.ini)}</b> + ${Q(p.mes)}/mes${p.alt ? `<small class="desde-nota">Con 12 meses mínimo. Sin permanencia: ${Q(p.ini)}</small>` : ""}</span></div>
-        <a class="btn btn-tinta btn-demo" href="${DEMOS[id].url}">${ico("play", 16)} Abrir la demo</a>
       </div>
     </article>`).join("");
 }
@@ -311,17 +310,12 @@ function pintarVitrinas() {
   $("#vitrinas").innerHTML = Object.entries(PRECIOS).map(([id, p], i) => {
     const d = DEMOS[id];
     return `<article class="vitrina revela${i % 2 ? " al-reves" : ""}">
-      <a class="vit-vista" href="${d.url}" aria-label="Abrir la demo de ${p.n}">${miniVista(p.vista)}<span class="vit-play">${ico("play", 18)} Abrir demo</span></a>
+      <div class="vit-vista" role="img" aria-label="Vista de la demo de ${p.n}">${miniVista(p.vista)}</div>
       <div class="vit-cuerpo">
         <p class="tipo mono">${String(i + 1).padStart(2, "0")} · ${p.tipo.toUpperCase()}</p>
         <h3>${p.n}</h3>
         <p class="gancho">${d.gancho}</p>
         <ol class="palancas">${d.palancas.map(([ic, t, x]) => `<li><span class="ic">${ico(ic, 16)}</span><div><b>${t}</b><span>${x}</span></div></li>`).join("")}</ol>
-        <div class="vit-acciones">
-          <a class="btn btn-tinta" href="${d.url}">${ico("play", 16)} Abrir la demo</a>
-          <a class="btn" href="${d.url}#vende">${ico("trend", 16)} Abrirla con lo que vende marcado</a>
-          ${d.extra ? `<a class="btn" href="${d.url}${d.extra[0]}">${ico(d.extra[1], 16)} ${d.extra[2]}</a>` : ""}
-        </div>
       </div>
     </article>`;
   }).join("");

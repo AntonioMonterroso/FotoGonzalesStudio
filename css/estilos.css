@@ -663,11 +663,6 @@ p { margin: 0 0 1em; }
 .vit-vista { position: relative; display: block; aspect-ratio: 16 / 11; border-radius: var(--radio); background: var(--papel2); border: 1px solid var(--linea); overflow: hidden; text-decoration: none; }
 .vit-vista .mini { inset: 18px 18px 0 18px; transition: transform 500ms var(--ease-out); }
 .vit-play { position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--tinta); color: var(--papel); font-weight: 600; font-size: .92rem; transition: transform 200ms var(--ease-out); }
-.vit-vista:active .vit-play { transform: scale(0.97); }
-@media (hover: hover) and (pointer: fine) {
-  .vit-vista:hover .mini { transform: translateY(-6px); }
-  .vit-vista:hover .vit-play { transform: translateY(-2px); }
-}
 .vit-cuerpo .tipo { color: var(--acento); margin: 0 0 10px; }
 .vit-cuerpo h3 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); font-stretch: 105%; }
 .vit-cuerpo .gancho { font-family: "Archivo"; font-size: 1.15rem; font-weight: 600; color: var(--tinta2); margin: 10px 0 22px; }

@@ -44,7 +44,6 @@
     document.getElementById("mv-por").textContent = p.por;
     document.getElementById("mv-btn").textContent = "Mandar la oferta · " + fmtQ(p.m);
     document.getElementById("mv-msg").textContent = mensaje(p);
-    document.getElementById("m-ver").href = `demos/completo/?letra=${l.id}&color=${c.id}&de=propuesta`;
   }
   document.getElementById("m-ctrl").addEventListener("change", e => {
     if (!e.target.name) return;
