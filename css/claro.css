@@ -1,11 +1,9 @@
-/* Propuesta · diseño claro (se activa con el interruptor de diseño) */
 :root {
   --papel: #EDEDEB; --papel2: #E4E4E1; --carta: #FFFFFF; --tinta: #111111; --tinta2: #4B4B4B; --tinta3: #8C8C8C; --linea: #E2E2DF;
   --acento: #111111; --acento-suave: #EFEFED; --marca: #8E2234; --oscuro: #0E0E0E;
   --vidrio: rgba(255, 255, 255, .6); --borde-v: rgba(255, 255, 255, .92); --sombra-v: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 26px 50px -36px rgba(0, 0, 0, .35);
 }
 body { background: radial-gradient(120% 80% at 20% 0%, #F7F7F6 0%, #EAEAE8 55%, #E2E2DF 100%) fixed; font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; }
-/* Letra: una sola, títulos gruesos y apretados */
 h1, h2, h3, .faq summary, .dolor .n, .sistema .desde b, .rt-tabla thead th, .ficha .total, .compra-unica b.p, .comp thead th, .beneficios b { font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; font-stretch: 100%; }
 h1, h2 { font-weight: 800; letter-spacing: -.045em; }
 h3 { font-weight: 700; letter-spacing: -.02em; }
@@ -16,7 +14,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .eyebrow .num { color: var(--marca); font-weight: 700; }
 .vivo .eyebrow, .calc .eyebrow { background: rgba(255, 255, 255, .1); box-shadow: 0 0 0 1px rgba(255, 255, 255, .2); color: #EDE8DF; }
 
-/* Botones: píldora negra con el ícono en círculo blanco */
 .btn { border-radius: 999px; min-height: 50px; background: rgba(255, 255, 255, .85); border-color: var(--linea); color: var(--tinta); font-weight: 600; }
 .btn-tinta, .btn-acento { background: #111; border-color: #111; color: #fff; padding-left: 8px; box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .55); }
 .btn-tinta > span:first-child:has(> svg), .btn-acento > span:first-child:has(> svg) { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #fff; color: #111; flex: none; transition: transform 220ms var(--ease-out); }
@@ -27,7 +24,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
   .btn-tinta:hover > span:first-child:has(> svg), .btn-acento:hover > span:first-child:has(> svg) { transform: rotate(-45deg); }
 }
 
-/* Barra flotante en píldora */
 .barra { inset: 12px 12px auto 12px; padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--vidrio); border: 1px solid var(--borde-v); box-shadow: var(--sombra-v);
   -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); }
 .barra nav { padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .55); }
@@ -35,7 +31,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .barra nav a[aria-current="true"] { background: #111; color: #fff; }
 .barra nav a[aria-current="true"] small { color: #BDBDBA; }
 
-/* Secciones como paneles de vidrio */
 .sec { padding: clamp(14px, 2.4vw, 26px) 0; background: transparent !important; }
 .sec > .envoltura { background: var(--vidrio); border: 1px solid var(--borde-v); border-radius: 36px; box-shadow: var(--sombra-v); padding: clamp(24px, 4.6vw, 60px);
   width: calc(100% - 24px); max-width: calc(var(--ancho) + 2 * var(--gutter)); -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3); }
@@ -55,7 +50,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .beneficios li { background: rgba(255, 255, 255, .85); border-color: transparent; box-shadow: 0 0 0 1px var(--linea); border-radius: 20px; }
 .beneficios b { font-weight: 800; letter-spacing: -.02em; }
 
-/* Tarjetas */
 .dolor .n { color: var(--marca); font-weight: 800; }
 .sistema, .plan, .caja, .ficha, .dom-op, .navegador, .m-vista, .rt-tabla, .comp-tabla, .vitrina .vit-vista { border-radius: 28px; }
 .sistema, .caja, .ficha, .dom-op { background: #fff; border-color: transparent; box-shadow: 0 0 0 1px var(--linea), 0 22px 44px -32px rgba(0, 0, 0, .3); }
@@ -77,7 +71,6 @@ h3 { font-weight: 700; letter-spacing: -.02em; }
 .negativo { max-width: calc(var(--ancho) + 2 * var(--gutter)); }
 @media (max-width: 560px) { .sec > .envoltura { padding: 26px 18px; } .caja { padding: 20px 16px; } }
 
-/* Teléfono: más fino */
 @media (max-width: 640px) {
   .sec { padding: 10px 0; }
   .portada { padding-top: 84px; }
@@ -93,3 +86,29 @@ html[data-color] .sec.cierre .btn-acento > span:first-child:has(> svg) { backgro
 @media (hover: hover) and (pointer: fine) {
   html[data-color] .btn-tinta:hover, html[data-color] .btn-acento:hover { background: var(--acento-osc); border-color: var(--acento-osc); }
 }
+
+html[data-color] {
+  --oscuro-c: color-mix(in srgb, var(--acento-osc) 62%, #0A0A0A);
+  --linea: color-mix(in srgb, var(--acento) 16%, #E2E2DF);
+  --papel: color-mix(in srgb, var(--acento-suave) 55%, #EDEDEB);
+  --papel2: color-mix(in srgb, var(--acento-suave) 70%, #E4E4E1);
+}
+html[data-color] body { background: radial-gradient(120% 80% at 20% 0%, rgba(255, 255, 255, .75) 0%, rgba(255, 255, 255, .25) 55%, rgba(255, 255, 255, 0) 100%) fixed, color-mix(in srgb, var(--acento-suave) 85%, #E6E6E3); }
+html[data-color] .sec > .envoltura, html[data-color] .portada > .envoltura { background: color-mix(in srgb, var(--acento-suave) 26%, rgba(255, 255, 255, .7)); }
+@media (max-width: 899px) { html[data-color] .sec > .envoltura { background: color-mix(in srgb, var(--acento-suave) 30%, #fff); } }
+html[data-color] .sec.vivo > .envoltura, html[data-color] .sec.cierre > .envoltura { background: var(--oscuro-c); border-color: var(--oscuro-c); }
+html[data-color] .calc, html[data-color] .plan.recomendado, html[data-color] .negativo { background: var(--oscuro-c); border-color: var(--oscuro-c); }
+html[data-color] .plan.recomendado .cinta, html[data-color] .plan.recomendado .btn { color: var(--acento); }
+html[data-color] .portada h1 em, html[data-color] .portada h1 .pt, html[data-color] .chat .remate b { color: var(--acento); }
+html[data-color] .eyebrow { background: color-mix(in srgb, var(--acento-suave) 55%, #fff); }
+html[data-color] .vivo .eyebrow, html[data-color] .calc .eyebrow { background: rgba(255, 255, 255, .1); }
+html[data-color] .sistema.recomendado { border-color: var(--acento); box-shadow: 0 0 0 2px var(--acento), 0 22px 44px -32px rgba(0, 0, 0, .3); }
+html[data-color] .beneficios li, html[data-color] .compra-unica { background: color-mix(in srgb, var(--acento-suave) 35%, #fff); }
+html[data-color] .faq summary::after { color: var(--acento); }
+html[data-color] ::selection { background: var(--acento-suave); color: var(--tinta); }
+@media (hover: hover) and (pointer: fine) {
+  html[data-color] .btn:not(.btn-tinta):not(.btn-acento):hover { box-shadow: 0 0 0 1px var(--acento) inset; color: var(--acento); }
+}
+
+html[data-letra] :is(h1, h2, h3, .faq summary, .sistema .desde b, .compra-unica b.p, .beneficios b, .monto b, .calc-res b, .resumen dd, .cierre h2) { font-family: var(--letra-titulo); font-stretch: 100%; letter-spacing: -.01em; font-weight: 600; }
+html[data-letra] .cel :is(h4), html[data-letra] .m-vista :is(h1, h2, h3) { font-family: inherit; }

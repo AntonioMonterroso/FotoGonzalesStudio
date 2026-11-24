@@ -43,6 +43,10 @@
     });
     const ctrl = document.getElementById("m-ctrl"), vista = document.querySelector("#m-vista .m-area");
     if (ctrl && vista && !calma) ctrl.addEventListener("change", e => {
+      if (e.target.name === "letra") document.querySelectorAll("h1, h2, h3").forEach(h => {
+        const r = h.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < innerHeight) h.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 360, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+      });
       if (e.target.name === "letra" || e.target.name === "paq" || e.target.name === "tono")
         vista.animate([{ opacity: 0.45, translate: "0 4px" }, { opacity: 1, translate: "0 0" }], { duration: 320, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
     });

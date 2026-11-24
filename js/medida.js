@@ -1,5 +1,3 @@
-/* 11 · A su medida — el estudio prueba color, letra, paquete y tono, y ve su panel al instante.
-   Usa LETRAS, COLORES, cargarLetras, varsLetra y varsColor de demos/completo/letras.js */
 "use strict";
 (function () {
   const caja = document.getElementById("medida");
@@ -50,13 +48,19 @@
     Object.entries({ ...varsColor(c), "--marca": c.a }).forEach(([k, v]) => r.style.setProperty(k, v));
     r.dataset.color = c.id;
   }
+  function letraTodo() {
+    const l = LETRAS.find(x => x.id === st.letra), r = document.documentElement;
+    if (l.id === "jakarta") { delete r.dataset.letra; r.style.removeProperty("--letra-titulo"); return; }
+    r.style.setProperty("--letra-titulo", `"${l.serif}", Georgia, serif`);
+    r.dataset.letra = l.id;
+  }
   document.getElementById("m-ctrl").addEventListener("change", e => {
     if (!e.target.name) return;
     st[e.target.name] = e.target.value;
     if (e.target.name === "color") pintarTodo();
+    if (e.target.name === "letra") letraTodo();
     pintar();
   });
-  // Las letras se descargan solo cuando la sección se acerca
   new IntersectionObserver((ents, o) => {
     if (!ents[0].isIntersecting) return;
     o.disconnect(); cargarLetras(LETRAS_M);
