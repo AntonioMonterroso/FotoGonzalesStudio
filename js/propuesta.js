@@ -52,7 +52,7 @@ const PRECIOS = {
     x: ["<b>Todo lo de la página</b>", "<b>«Véala en su pared»</b>: su foto a escala", "Impresiones, álbumes y <b>tarjetas de regalo</b>", "<b>Fotos de desfiles y eventos</b> por familia", "Paquetes y <b>envío gratis desde un monto</b>", "Pago por transferencia o contra entrega", "<b>Recordatorio de carrito olvidado</b>", "Pedido con código que el cliente sigue"]
   },
   completo: {
-    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 2500, mes: 690, conTienda: 850, rec: true,
+    n: "Sistema completo con landing", tipo: "Sistema web + página", ini: 2500, mes: 750, conTienda: 900, rec: true,
     para: "Para llevar el estudio de la reserva a la entrega y vender más.",
     vista: "sis",
     x: ["<b>La página incluida</b>; la tienda, si la quieren", "<b>Ventas que le encuentra cada día</b>, con el mensaje listo", "<b>Cámara en vivo</b> (según la cámara): las fotos llegan solas", "<b>Cada sesión preparada</b>: tomas, luz y clima", "Reservas con anticipo y <b>recordatorios automáticos</b>", "<b>Galería que vende fotos extra</b>, con marca de agua", "<b>Portal de cada familia</b> con enlace y PIN", "<b>Ofertas por WhatsApp</b>, referidos y reseñas", "Clientes, caja y reportes; <b>se instala como app</b>"]
@@ -82,7 +82,7 @@ const DEMOS = {
 };
 
 const EXTRAS = [
-  { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"], on: true },
+  { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 150, w: "la tienda", solo: ["completo"], on: true },
   { id: "gt", n: "Dominio .com.gt", d: "Además del .com incluido.", ini: 380, anual: true },
   { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, por categoría.", ini: 300 },
   { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas.", ini: 350 }
