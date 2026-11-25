@@ -207,7 +207,7 @@ function pintarSistemas() {
         <h3>${p.n}</h3>
         <p style="color:var(--tinta2);margin:0">${p.para}</p>
         <ul class="lista">${p.x.map(t => `<li>${ico("check")}<span>${t}</span></li>`).join("")}</ul>
-        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${Q(p.mes)}/mes${p.conTienda ? `<small class="desde-nota">Con la tienda (la página va incluida): ${Q(p.conTienda)}/mes</small>` : ""}</span></div>
+        <div class="desde"><span style="color:var(--tinta2)">Desde</span><span><b>${Q(p.ini)}</b> + ${p.conTienda ? `<strong class="desde-fuerte">${Q(p.conTienda)}/mes</strong> con la tienda<small class="desde-nota">Sin la tienda: ${Q(p.mes)}/mes</small>` : `${Q(p.mes)}/mes`}</span></div>
       </div>
     </article>`).join("");
 }
