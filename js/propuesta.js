@@ -40,7 +40,7 @@ const pintarIconos = (r = document) => $$("[data-i]", r).filter(el => ICO[el.dat
 
 const PRECIOS = {
   pagina: {
-    n: "Página del estudio", tipo: "Landing page", ini: 1500, mes: 350,
+    n: "Página del estudio", tipo: "Landing page", ini: 600, mes: 300,
     para: "Para que lo encuentren y aparten fecha con anticipo.",
     vista: "land",
     x: ["<b>Portafolio</b> por categoría", "<b>«Encuentre su sesión»</b>: recomienda el paquete", "<b>Fechas libres en vivo</b>", "Paquetes con anticipo para apartar", "Reseñas y promoción del mes", "Panel sencillo, lista para Google"]
