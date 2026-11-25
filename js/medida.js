@@ -7,13 +7,13 @@
   const LETRAS_M = ["lora", "bodoni", "cormorant", "jakarta"].map(id => LETRAS.find(l => l.id === id));
   const ETIQ_LETRA = { lora: "Tranquila", bodoni: "De revista", cormorant: "Elegante", jakarta: "Moderna" };
   const PAQ = [
-    { id: "primer", n: "Sesión de primer año", msg: "sesión de primer año", m: 650, por: "Le hicieron su sesión de recién nacido y el bebé cumple 1 año el 1 de diciembre.",
+    { id: "primer", foto: "primer-ano-pastel", n: "Sesión de primer año", msg: "sesión de primer año", m: 650, por: "Le hicieron su sesión de recién nacido y el bebé cumple 1 año el 1 de diciembre.",
       f: "Su bebé cumple su primer año el 1 de diciembre", c: "¡Ya casi cumple su primer añito!" },
-    { id: "xv", n: "XV años en estudio", msg: "sesión de XV años", m: 2900, por: "La hija mayor cumple 15 en marzo y la familia ya vino a dos sesiones.",
+    { id: "xv", foto: "xv-1", n: "XV años en estudio", msg: "sesión de XV años", m: 2900, por: "La hija mayor cumple 15 en marzo y la familia ya vino a dos sesiones.",
       f: "Se acercan los XV años de su hija en marzo", c: "¡Ya vienen los XV! Marzo llega rapidito." },
-    { id: "navidad", n: "Mini sesión navideña", msg: "mini sesión navideña", m: 450, por: "Vinieron el diciembre pasado y las fechas de este año se llenan rápido.",
+    { id: "navidad", foto: "familia", n: "Mini sesión navideña", msg: "mini sesión navideña", m: 450, por: "Vinieron el diciembre pasado y las fechas de este año se llenan rápido.",
       f: "Ya abrimos las mini sesiones navideñas de diciembre", c: "¡Ya están las mini sesiones navideñas!" },
-    { id: "embarazo", n: "Sesión de embarazo", msg: "sesión de embarazo", m: 950, por: "En su sesión de pareja contaron que esperan bebé para febrero.",
+    { id: "embarazo", foto: "pareja-sonrisa", n: "Sesión de embarazo", msg: "sesión de embarazo", m: 950, por: "En su sesión de pareja contaron que esperan bebé para febrero.",
       f: "Les deseamos lo mejor en esta espera", c: "¡Qué emoción, ya viene el bebé!" }
   ];
   const TONOS = [{ id: "formal", n: "De usted, formal" }, { id: "cercano", n: "Cercano, de confianza" }];
@@ -39,6 +39,7 @@
     Object.entries({ ...varsColor(c), ...varsLetra(l) }).forEach(([k, v]) => vista.style.setProperty(k, v));
     vista.style.fontSynthesis = l.uno ? "none" : "";
     document.getElementById("mv-paq").textContent = p.n;
+    document.getElementById("mv-foto").src = "img/fotos/" + p.foto + ".jpg";
     document.getElementById("mv-por").textContent = p.por;
     document.getElementById("mv-btn").textContent = "Mandar la oferta · " + fmtQ(p.m);
     document.getElementById("mv-msg").textContent = mensaje(p);
@@ -66,5 +67,6 @@
     o.disconnect(); cargarLetras(LETRAS_M);
   }, { rootMargin: "600px 0px" }).observe(caja);
   if (typeof pintarIconos === "function") pintarIconos(caja);
+  PAQ.forEach(p => { const i = new Image(); i.src = "img/fotos/" + p.foto + ".jpg"; });
   pintar();
 })();

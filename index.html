@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..600&display=swap">
-<link rel="stylesheet" href="css/estilos.css?v=20261124g">
+<link rel="stylesheet" href="css/estilos.css?v=20261124h">
 <link rel="stylesheet" href="demos/foto.css?v=20261113a">
 <link rel="stylesheet" href="css/movimiento.css?v=20261124a">
 <script src="demos/diseno.js?v=20261124a" data-css="css/claro.css?v=20261124b"></script>
@@ -249,16 +249,35 @@
         </form>
         <div class="m-vista" id="m-vista">
           <div class="top"><i></i><i></i><i></i><span class="url mono">panel.fotogonzalezstudio.com</span></div>
-          <div class="m-area">
-            <div class="mv-fecha">Miércoles, 11 de noviembre · Retalhuleu</div>
-            <div class="mv-h1">Buenos días.</div>
-            <p class="mv-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
-            <div class="mv-cifras"><div><small>Ingresos de noviembre</small><b>Q 38,450.00</b></div><div><small>Ticket promedio</small><b>Q 1,602.08</b></div></div>
-            <div class="mv-op">
-              <span class="mv-ic" data-i="gift"></span>
-              <div><small>Lo próximo que le puede vender</small><b id="mv-paq">Sesión de primer año</b><p id="mv-por"></p><span class="mv-btn" id="mv-btn">Mandar la oferta</span></div>
+          <div class="mv-app">
+            <div class="mv-lado" aria-hidden="true">
+              <span class="mv-logo"><img src="img/monograma-fg.png" alt="" width="74" height="113"></span>
+              <span class="on" data-i="sparkles"></span>
+              <span data-i="calendar"></span>
+              <span data-i="users"></span>
+              <span data-i="images"></span>
+              <span data-i="cash"></span>
             </div>
-            <div class="mv-wa" aria-live="polite"><small>Así le llega al cliente por WhatsApp</small><p id="mv-msg"></p></div>
+            <div class="m-area">
+              <div class="mv-cab"><span class="mv-fecha">Miércoles, 11 de noviembre · Retalhuleu</span><span class="mv-yo" aria-hidden="true">FG</span></div>
+              <div class="mv-h1">Buenos días.</div>
+              <p class="mv-sub">Hoy el sistema le encontró <b>6</b> ventas posibles.</p>
+              <div class="mv-cifras">
+                <div><small>Ingresos de noviembre</small><b>Q 38,450.00</b><span class="mv-sube"><i data-i="trend"></i>12 % más que octubre</span></div>
+                <div><small>Ticket promedio</small><b>Q 1,602.08</b><span class="mv-sube"><i data-i="trend"></i>8 % más que octubre</span></div>
+              </div>
+              <div class="mv-op">
+                <img class="mv-foto" id="mv-foto" src="img/fotos/primer-ano-pastel.jpg" alt="" width="72" height="72" decoding="async">
+                <div><small>Lo próximo que le puede vender</small><b id="mv-paq">Sesión de primer año</b><p id="mv-por"></p><span class="mv-btn" id="mv-btn">Mandar la oferta</span></div>
+              </div>
+              <div class="mv-wa">
+                <small>Así le llega al cliente por WhatsApp</small>
+                <div class="mv-chat">
+                  <div class="mv-chat-cab"><span class="mv-av"><img src="img/monograma-fg.png" alt="" width="74" height="113"></span><span><b>Foto González Studio</b><small>Cuenta de empresa</small></span></div>
+                  <div class="mv-chat-fondo"><p aria-live="polite"><span id="mv-msg"></span><time>9:41</time></p></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -387,10 +406,10 @@
 
 <footer class="pie">Monterroso Dev Studio · Propuesta para Foto González Studio · 24 de noviembre de 2026 · Precios en quetzales, sin IVA salvo que se marque · Fotos del estudio, de su Facebook.</footer>
 
-<script src="js/propuesta.js?v=20261124g"></script>
+<script src="js/propuesta.js?v=20261124h"></script>
 <script src="demos/foto.js?v=20261113d" data-visor=".sistema .vista, .vit-vista, .navegador .foto, .m-vista" data-toma=".sistema .vista, .vit-vista"></script>
-<script src="demos/completo/letras.js?v=20261111g"></script>
-<script src="js/medida.js?v=20261124a"></script>
+<script src="demos/completo/letras.js?v=20261124a"></script>
+<script src="js/medida.js?v=20261124b"></script>
 <script src="js/movimiento.js?v=20261124e"></script>
 </body>
 </html>

@@ -28,7 +28,13 @@ const COLORES = [
   { id: "olivo", n: "Verde olivo", a: "#4A6530", o: "#3A5025", s: "#E3EBD9" },
   { id: "terracota", n: "Terracota", a: "#A24A24", o: "#843B1C", s: "#F5E2D8" },
   { id: "ciruela", n: "Ciruela", a: "#6B3F7A", o: "#563163", s: "#ECE0F0" },
-  { id: "grafito", n: "Grafito", a: "#2B2A28", o: "#1A1918", s: "#E6E3DE" }
+  { id: "grafito", n: "Grafito", a: "#2B2A28", o: "#1A1918", s: "#E6E3DE" },
+  { id: "rosa", n: "Rosa empolvado", a: "#A8566A", o: "#8A4456", s: "#F6E3E8" },
+  { id: "mostaza", n: "Mostaza", a: "#8A6A14", o: "#6F5510", s: "#F5ECD2" },
+  { id: "esmeralda", n: "Esmeralda", a: "#1F6B55", o: "#175443", s: "#DCEDE6" },
+  { id: "cielo", n: "Azul cielo", a: "#2F5E8C", o: "#254B71", s: "#DDE7F2" },
+  { id: "cafe", n: "Café", a: "#6B4A2F", o: "#563B25", s: "#EDE3D8" },
+  { id: "coral", n: "Rojo coral", a: "#B23A2E", o: "#922F25", s: "#F7DEDA" }
 ];
 const varsColor = c => ({ "--acento": c.a, "--acento-osc": c.o, "--acento-suave": c.s });
 const urlLetras = lista => "https://fonts.googleapis.com/css2?family=" + lista.map(l => l.q).join("&family=") + "&display=swap";

@@ -82,7 +82,7 @@ const DEMOS = {
 };
 
 const EXTRAS = [
-  { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"] },
+  { id: "tienda", n: "Agregar la tienda", d: k => `Queda con página, sistema y tienda. La mensualidad queda en ${Q(PRECIOS.completo.conTienda * k)}.`, mes: 160, w: "la tienda", solo: ["completo"], on: true },
   { id: "gt", n: "Dominio .com.gt", d: "Además del .com incluido.", ini: 380, anual: true },
   { id: "carga", n: "Pasar su portafolio de Facebook", d: "Hasta 300 fotos, por categoría.", ini: 300 },
   { id: "capa", n: "Capacitación extra", d: "Otra sesión de 2 horas.", ini: 350 }
@@ -242,17 +242,22 @@ function escribirDominio() {
 
 function pintarPlanes() {
   const k = iva();
-  $("#planes").innerHTML = Object.entries(PRECIOS).map(([id, p]) => `
+  $("#planes").innerHTML = Object.entries(PRECIOS).map(([id, p]) => {
+    const t = !!p.conTienda, grande = t ? "conTienda" : "mes";
+    return `
     <article class="plan revela visto${p.rec ? " recomendado" : ""}">
       ${p.rec ? '<span class="cinta">Recomendado</span>' : ""}
-      <div><p class="mono tinta2">${p.tipo.toUpperCase()}</p><h3 style="margin-top:6px">${p.n}</h3></div>
-      <div class="monto"><b data-odo="mes-${id}">${Q(p.mes * k)}</b><span>/ mes</span></div>
-      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${p.conTienda ? `<p class="arranque alt">Con la tienda, la página incluida: <b data-odo="conTienda-${id}">${Q(p.conTienda * k)}</b> al mes</p>` : ""}
-      <a class="btn" href="#plan-form" data-elige="${id}">Escoger este</a>
-    </article>`).join("");
+      <div><p class="mono tinta2">${(t ? p.tipo + " + tienda" : p.tipo).toUpperCase()}</p><h3 style="margin-top:6px">${t ? "Sistema completo con tienda" : p.n}</h3></div>
+      <div class="monto"><b data-odo="${grande}-${id}">${Q(p[grande] * k)}</b><span>/ mes</span></div>
+      <p class="arranque">Arranque: <b data-odo="ini-${id}">${Q(p.ini * k)}</b></p>${t ? `<p class="arranque alt">Sin la tienda: <b data-odo="mes-${id}">${Q(p.mes * k)}</b> al mes</p>` : ""}
+      <a class="btn" href="#plan-form" data-elige="${id}"${t ? " data-tienda" : ""}>Escoger este</a>
+    </article>`;
+  }).join("");
   $$("[data-odo]").forEach(el => { const [t, id] = el.dataset.odo.split("-"); el.dataset.v = PRECIOS[id][t] * k; });
   $$("[data-elige]").forEach(a => a.addEventListener("click", () => {
-    $(`#plan-form input[value="${a.dataset.elige}"]`).checked = true; resumen();
+    $(`#plan-form input[value="${a.dataset.elige}"]`).checked = true;
+    if (a.hasAttribute("data-tienda")) $('#extras input[value="tienda"]').checked = true;
+    resumen();
   }));
 }
 function actualizarPlanes() {
