@@ -1092,20 +1092,20 @@ html.embed .lupa, html.embed .cinta-demo, html.embed .cinta-abrir { display: non
 .tar-nueva input:focus { outline: none; box-shadow: 0 0 0 2px var(--acento); }
 
 /* ===== Más: mosaico ===== */
-.mosaico { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mosaico { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-bottom: 72px; }
 .mos { position: relative; display: block; aspect-ratio: 1 / 1.08; padding: 0; border: 0; border-radius: 22px; overflow: hidden; background: var(--tinta); color: #fff; text-align: left; font: inherit; cursor: pointer; box-shadow: 0 14px 30px -18px rgba(0,0,0,.6); transition: transform 160ms var(--ease-out); }
 .mos:active { transform: scale(0.97); }
 .mos.ancho { grid-column: 1 / -1; aspect-ratio: 2.4 / 1; }
 .mos > .foto { position: absolute; inset: 0; }
-.mos-som { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(12,10,9,.82) 100%); }
-.mos-txt { position: absolute; left: 14px; right: 14px; bottom: 12px; }
+.mos-som { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,10,9,.28) 0%, rgba(12,10,9,0) 26%, rgba(12,10,9,0) 38%, rgba(12,10,9,.62) 64%, rgba(12,10,9,.92) 100%); }
+.mos-txt { position: absolute; left: 16px; right: 16px; bottom: 16px; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
 .mos-txt b { display: block; font-family: var(--serif); font-size: 1.35rem; font-weight: 600; line-height: 1.1; }
 .mos-txt small { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: .84rem; color: #EDE8DF; line-height: 1.25; }
 .mos-txt small svg { width: 14px; height: 14px; color: #F3C27A; flex: none; }
 .mos.alerta { box-shadow: 0 0 0 3px #E8B04A, 0 14px 30px -18px rgba(0,0,0,.6); }
-.mos-x { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 99px; background: var(--acento); color: #fff; font-size: .74rem; font-weight: 700; }
+.mos-x { position: absolute; z-index: 1; top: 12px; right: 12px; padding: 4px 10px; border-radius: 99px; background: var(--acento); color: #fff; font-size: .74rem; font-weight: 700; }
 .mos.eq { background: radial-gradient(120% 120% at 0% 0%, #3A2A22, var(--oscuro)); aspect-ratio: auto; min-height: 120px; }
-.mos-eq { position: absolute; left: 14px; top: 16px; display: flex; gap: 6px; }
+.mos-eq { position: absolute; left: 16px; top: 16px; display: flex; gap: 6px; }
 .mos-eq .av-eq { box-shadow: 0 0 0 2px var(--oscuro); }
 .mos-eq .av-eq i { background: var(--oscuro); color: #fff; box-shadow: none; }
 @container (min-width: 560px) { .mosaico { grid-template-columns: repeat(3, minmax(0, 1fr)); } .mos.ancho { grid-column: span 3; aspect-ratio: 3.4 / 1; } }
