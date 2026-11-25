@@ -458,7 +458,10 @@ function barra() {
     const abierto = menu.classList.toggle("abierto");
     btn.setAttribute("aria-expanded", abierto);
   });
-  $$("a", menu).forEach(a => a.addEventListener("click", () => { menu.classList.remove("abierto"); btn.setAttribute("aria-expanded", "false"); }));
+  const cerrar = () => { menu.classList.remove("abierto"); btn.setAttribute("aria-expanded", "false"); };
+  $$("a", menu).forEach(a => a.addEventListener("click", cerrar));
+  document.addEventListener("click", e => { if (menu.classList.contains("abierto") && !e.target.closest("#barra")) cerrar(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.classList.contains("abierto")) { cerrar(); btn.focus(); } });
   const tel = matchMedia("(max-width: 640px)");
   let ultimo = scrollY;
   addEventListener("scroll", () => {
