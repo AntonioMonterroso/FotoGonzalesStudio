@@ -865,10 +865,10 @@ p { margin: 0 0 1em; }
 .dos-formas span { display: flex; flex-direction: column; gap: 2px; }
 .dos-formas small { color: var(--tinta2); font-size: .78rem; }
 .dos-formas { align-items: flex-end; }
-.compra-unica .dos-formas .fuerte b.p { font-size: 1.75rem; color: var(--acento); line-height: 1.1; }
-.dos-formas .fuerte small { color: var(--acento); font-weight: 600; }
+.compra-unica .dos-formas .fuerte b.p { font-size: 1.75rem; color: var(--marca, var(--acento)); line-height: 1.1; }
+.dos-formas .fuerte small { color: var(--marca, var(--acento)); font-weight: 600; }
 .compra-unica .dos-formas .suave b.p { font-size: 1rem; color: var(--tinta2); font-weight: 600; }
-.desde-fuerte { color: var(--acento); font-weight: 750; font-size: 1.1rem; }
+.desde-fuerte { color: var(--marca, var(--acento)); font-weight: 750; font-size: 1.1rem; }
 
 @media (min-width: 961px) and (max-width: 1240px) {
   .desglose { font-size: .8rem; gap: 6px 8px; }
